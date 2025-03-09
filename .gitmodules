@@ -1,0 +1,3 @@
+[submodule "fwk"]
+	path = fwk
+	url = https://gitlab.desy.de/fpgafw/fwk.git
