@@ -1,0 +1,6 @@
+prj
+out
+*.log
+.*
+.Xil
+!.gitignore

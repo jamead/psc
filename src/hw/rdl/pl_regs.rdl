@@ -1,0 +1,105 @@
+`include "pl_regs.vh" //automatically created and added by fwk with conf variables such a C_VERSION ...
+
+/* default values of defined variables */
+`ifndef C_ID
+`define C_ID 0xE1C00100
+`endif
+`ifndef C_VERSION
+`define C_VERSION 0x00000000
+`endif
+`ifndef C_PRJ_ID
+`define C_PRJ_ID 0xE1C00010
+`endif
+`ifndef C_PRJ_VERSION
+`define C_PRJ_VERSION 0x00000000
+`endif
+`ifndef C_PRJ_TIMESTAMP
+`define C_PRJ_TIMESTAMP 0x00000000
+`endif
+`ifndef C_PRJ_SHASUM
+`define C_PRJ_SHASUM 0x00000000
+`endif
+
+/*
+  module a address space
+*/
+addrmap pl_regs {
+  name = "Example module for the example application";
+  desyrdl_interface = "AXI4L";
+
+
+reg {
+    desc="FPGA Version";
+    default sw = rw;
+    default hw = w;
+    field {} data[32];
+  } fpgaver @0x0;  
+
+
+  reg {
+    desc="PS Leds";
+    default sw = rw;
+    default hw = r;
+    field {} data[8];
+  } leds @0x4;
+
+
+
+
+
+
+  reg {
+    desc = "Module Identification Number";
+    default sw = r;
+    default hw = r;
+    field {} data[32] = `C_ID;
+  } ID @0x400;
+
+  reg {
+    desc = "Module Version Number";
+    default sw = r;
+    default hw = r;
+    field {} changes [8] =  `C_VERSION & 0x000000FF;
+    field {} patch [8]   = (`C_VERSION & 0x0000FF00) >> 8;
+    field {} minor [8]   = (`C_VERSION & 0x00FF0000) >> 16;
+    field {} major [8]   = (`C_VERSION & 0xFF000000) >> 24;
+  } VERSION @0x404;
+
+  reg {
+    desc="Project Identification Number";
+    default sw = r;
+    default hw = r;
+    field {} data[32] = `C_PRJ_ID;
+  } PRJ_ID @0x408;
+
+  reg {
+    desc="Project Version Number";
+    default sw = r;
+    default hw = r;
+    field {} changes [8] =  `C_PRJ_VERSION & 0x000000FF;
+    field {} patch [8]   = (`C_PRJ_VERSION & 0x0000FF00) >> 8;
+    field {} minor [8]   = (`C_PRJ_VERSION & 0x00FF0000) >> 16;
+    field {} major [8]   = (`C_PRJ_VERSION & 0xFF000000) >> 24;
+  } PRJ_VERSION @0x40C;
+
+  reg {
+    desc="Project Repository check sum.";
+    default sw = r;
+    default hw = r;
+      field {} data[32] = `C_PRJ_SHASUM;
+  } PRJ_SHASUM @0x410;
+
+  reg {
+    desc="Project compilation timestamp";
+    default sw = r;
+    default hw = r;
+    field {} data[32] = `C_PRJ_TIMESTAMP;
+  } PRJ_TIMESTAMP @0x414;
+
+
+
+
+
+
+
+};
