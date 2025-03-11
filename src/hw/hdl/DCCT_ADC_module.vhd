@@ -1,7 +1,11 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-use work.ADC_pkg.all;
+
+
+library xil_defaultlib;
+use xil_defaultlib.psc_pkg.ALL;
+--use work.psc_pkg.all;
 
 entity DCCT_ADC_module is
 	port(
@@ -62,7 +66,7 @@ signal all_done : std_logic;
 
 begin
 
-	DCCT_ADC_inst1: ADC_LTC2376_intf
+	DCCT_ADC_inst1: entity work.ADC_LTC2376_intf
 	generic map(DATA_BITS => 40,
 				SPI_CLK_DIV   => 5)  --Dividing the 100 MHz clock to 10MHz 100MHz/(2*5) = 10MHz
 	port map(
@@ -108,7 +112,7 @@ begin
 		);
 
 
-	DCCT_ADC_inst2: ADC_LTC2376_intf
+	DCCT_ADC_inst2: entity work.ADC_LTC2376_intf
 	generic map(DATA_BITS => 40,
 				SPI_CLK_DIV   => 5)
 	port map(
@@ -153,7 +157,7 @@ begin
 		done            => open
 		);
 
-	DCCT_ADC_inst3: ADC_LTC2376_intf
+	DCCT_ADC_inst3: entity work.ADC_LTC2376_intf
 	generic map(DATA_BITS => 40,
 				SPI_CLK_DIV   => 5)
 	port map(
@@ -200,7 +204,7 @@ begin
 
 
 
-	DCCT_ADC_inst4: ADC_LTC2376_intf
+	DCCT_ADC_inst4: entity work.ADC_LTC2376_intf
 	generic map(DATA_BITS => 40,
 				SPI_CLK_DIV   => 5)
 	port map(

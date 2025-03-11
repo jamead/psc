@@ -18,13 +18,16 @@ proc setSources {} {
   #lappend Sources {"../hdl/top_tb.sv" "SystemVerilog"} 
   
   lappend Sources {"../hdl/top.vhd" "VHDL 2008"} 
-  lappend Sources {"../hdl/ADC_pkg.vhd" "VHDL 2008"}
+  lappend Sources {"../hdl/psc_pkg.vhd" "VHDL 2008"}
 
-  lappend Sources {"../hdl/xbpm_package.vhd" "VHDL 2008"} 
+  #lappend Sources {"../hdl/xbpm_package.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/ps_io.vhd" "VHDL 2008"} 
 
   lappend Sources {"../hdl/DCCT_ADC_module.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/ADC_LTC2376_20_intf.vhd" "VHDL 2008"}  
+  lappend Sources {"../hdl/ADC_8CH_module.vhd" "VHDL 2008"} 
+  lappend Sources {"../hdl/ADC_ADS8568_intf.vhd" "VHDL 2008"}   
+  
   lappend Sources {"../hdl/gain_offset.vhd" "VHDL 2008"}     
   
   

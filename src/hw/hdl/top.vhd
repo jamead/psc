@@ -11,11 +11,11 @@ use desyrdl.common.all;
 use desyrdl.pkg_pl_regs.all;
 
 library xil_defaultlib;
-use xil_defaultlib.xbpm_package.ALL;
+use xil_defaultlib.psc_pkg.ALL;
  
 
 library work;
-use work.ADC_pkg.ALL;
+use work.psc_pkg.ALL;
 
 
 entity top is
@@ -52,13 +52,13 @@ generic(
     --Regulator status
     rsts                    : in std_logic_vector(19 downto 0);
     
-    -- 24 16-bit ADC Channels for miscellanous(3 - ADS5868)
-    misc_adc_rst            : out std_logic;
-    misc_adc_cnv            : out std_logic;
-    misc_adc_sck            : out std_logic;
-    misc_adc_fs             : out std_logic; 
-    misc_adc_busy           : in std_logic_vector(2 downto 0);
-    misc_adc_sdo            : in std_logic_vector(2 downto 0);
+    -- 24 16-bit ADC Channels for monitoring (3 - ADS5868)
+    mon_adc_rst            : out std_logic;
+    mon_adc_cnv            : out std_logic;
+    mon_adc_sck            : out std_logic;
+    mon_adc_fs             : out std_logic; 
+    mon_adc_busy           : in std_logic_vector(2 downto 0);
+    mon_adc_sdo            : in std_logic_vector(2 downto 0);
 
     -- 8 20-bit ADC Channels for DCCT (8 - LTC2376)
     dcct_adc_cnv            : out std_logic;
@@ -110,7 +110,7 @@ end top;
 architecture behv of top is
 
    signal pl_reset              : std_logic;
-   signal pl_resetn             : std_logic;
+   signal pl_resetn             : std_logic_vector(0 downto 0);
    signal gtx_reset             : std_logic_vector(7 downto 0);
    signal pl_clk0               : std_logic;
    
@@ -122,8 +122,11 @@ architecture behv of top is
    signal m_axi4_m2s            : t_pl_regs_m2s;
    signal m_axi4_s2m            : t_pl_regs_s2m;
    
-   signal DCCT_in               : t_DCCT;
-   signal DCCT_out              : t_DCCT;
+   signal dcct_adc_in           : t_DCCT;
+   signal dcct_adc_out          : t_DCCT;
+
+   signal mon_adc_in            : t_ADC_8CHANNEL;
+   signal mon_adc_out           : t_ADC_8CHANNEL;
 
 
    signal evr_dbg               : std_logic_vector(19 downto 0);
@@ -142,7 +145,7 @@ architecture behv of top is
 
    --debug signals (connect to ila)
    attribute mark_debug                 : string;
-   attribute mark_debug of misc_adc_cnv     : signal is "true";
+   attribute mark_debug of mon_adc_cnv     : signal is "true";
 
 
 
@@ -152,14 +155,7 @@ begin
 
 fp_leds(7 downto 0) <= leds;  
 
-pl_reset <= not pl_resetn; 
-
-
-
-
-
-
-
+pl_reset <= not pl_resetn(0); 
 
 
 
@@ -183,23 +179,38 @@ fofb_refclk : IBUFDS_GTE2
     IB => gtx_gige_refclk_n
 );
 
-read_dcct: entity work.DCCT_ADC_module
+-- reads 8 channels of DCCT ADC's
+read_dcct_adcs: entity work.DCCT_ADC_module
   port map(
-    --Control inputs
     clk => pl_clk0, 
     reset => pl_reset, 
     start => trig(0), 
-	--Gain and Offset registers
-    DCCT_in  => dcct_in, 
-    DCCT_out => dcct_out,  
-    --ADC Inputs
+    DCCT_in  => dcct_adc_in, 
+    DCCT_out => dcct_adc_out,  
     sdi => dcct_adc_sdo, 
-    --ADC Outputs
     cnv => dcct_adc_cnv, 
     sclk => dcct_adc_sck, 
     sdo => open,
 	done => open 
 );
+
+
+-- reads 24 channels of monitor ADC's
+mon_adc_rst <= '0';
+read_mon_adcs: entity work.ADC_8CH_module
+  port map(
+    clk => pl_clk0, 
+    reset => pl_reset, 
+    start => trig(0), 
+    adc_8ch_in => mon_adc_in,
+    adc_8ch_out => mon_adc_out,
+    adc8c_sdo => mon_adc_sdo,
+    adc8c_conv123 => mon_adc_cnv, 
+    adc8c_fs123 => mon_adc_fs, 
+    adc8c_sck123 => mon_adc_sck,
+    done => open
+);
+
 
 
 
@@ -290,36 +301,7 @@ sys: component system
 
 
 
-
---stretch_1 : entity work.stretch
---  port map (
---	clk => pl_clk0,
---	reset => pl_reset, 
---	sig_in => sa_trig, 
---	len => 1000000, -- ~25ms;
---	sig_out => sa_trig_stretch
---);	  	
-
-
---stretch_2 : entity work.stretch
---  port map (
---	clk  => pl_clk0,
---	reset => pl_reset, 
---	sig_in => evr_gps_trig, 
---	len => 1000000, -- ~25ms;
---	sig_out => evr_gps_trig_stretch
---);	  	 
- 
- 
---stretch_3 : entity work.stretch
---  port map (
---    clk => pl_clk0,
---    reset => pl_reset, 
---    sig_in => evr_usr_trig, 
---    len => 1000000, -- ~25ms;
---    sig_out => evr_usrtrig_stretch
--- );           
- 
+       
     
     
 end behv;

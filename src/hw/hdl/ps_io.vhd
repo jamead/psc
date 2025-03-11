@@ -10,8 +10,8 @@ library desyrdl;
 use desyrdl.common.all;
 use desyrdl.pkg_pl_regs.all;
 
-library xil_defaultlib;
-use xil_defaultlib.xbpm_package.ALL;
+--library xil_defaultlib;
+--use xil_defaultlib.xbpm_package.ALL;
 
 
 

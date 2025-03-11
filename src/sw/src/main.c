@@ -300,7 +300,7 @@ int main()
     struct SAdataMsg SAdata;
     u32 trigstat, wordcnt;
 
-	xil_printf("NSLS2 Electrometer ...\r\n");
+	xil_printf("BNL Power Supply Controller ...\r\n");
     print_firmware_version();
 
 	init_i2c();
