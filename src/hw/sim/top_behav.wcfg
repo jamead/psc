@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="top_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="common" />
+            <top_module name="glbl" />
+            <top_module name="pkg_pl_regs" />
+            <top_module name="psc_pkg" />
+            <top_module name="top" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000000 us"></ZoomStartTime>
+      <ZoomEndTime time="454.251986 us"></ZoomEndTime>
+      <Cursor1Time time="457.615000 us"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="262"></NameColumnWidth>
+      <ValueColumnWidth column_width="66"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="17" />
+   <wvobject type="logic" fp_name="/top/pl_reset">
+      <obj_property name="ElementShortName">pl_reset</obj_property>
+      <obj_property name="ObjectShortName">pl_reset</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top/pl_clk0">
+      <obj_property name="ElementShortName">pl_clk0</obj_property>
+      <obj_property name="ObjectShortName">pl_clk0</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top/adc_start">
+      <obj_property name="ElementShortName">adc_start</obj_property>
+      <obj_property name="ObjectShortName">adc_start</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top/adc_done">
+      <obj_property name="ElementShortName">adc_done</obj_property>
+      <obj_property name="ObjectShortName">adc_done</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top/clk_src/cnt_int">
+      <obj_property name="ElementShortName">cnt_int[15:0]</obj_property>
+      <obj_property name="ObjectShortName">cnt_int[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top/clk_src/internal_10khz">
+      <obj_property name="ElementShortName">internal_10khz</obj_property>
+      <obj_property name="ObjectShortName">internal_10khz</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top/clk_src/trig">
+      <obj_property name="ElementShortName">trig</obj_property>
+      <obj_property name="ObjectShortName">trig</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top/mon_adc_cnv">
+      <obj_property name="ElementShortName">mon_adc_cnv</obj_property>
+      <obj_property name="ObjectShortName">mon_adc_cnv</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top/mon_adc_fs">
+      <obj_property name="ElementShortName">mon_adc_fs</obj_property>
+      <obj_property name="ObjectShortName">mon_adc_fs</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top/mon_adc_sck">
+      <obj_property name="ElementShortName">mon_adc_sck</obj_property>
+      <obj_property name="ObjectShortName">mon_adc_sck</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top/mon_adc_rst">
+      <obj_property name="ElementShortName">mon_adc_rst</obj_property>
+      <obj_property name="ObjectShortName">mon_adc_rst</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top/read_mon_adcs/done">
+      <obj_property name="ElementShortName">done</obj_property>
+      <obj_property name="ObjectShortName">done</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top/mon_adc_sdo">
+      <obj_property name="ElementShortName">mon_adc_sdo[2:0]</obj_property>
+      <obj_property name="ObjectShortName">mon_adc_sdo[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top/dcct_adc_busy">
+      <obj_property name="ElementShortName">dcct_adc_busy[3:0]</obj_property>
+      <obj_property name="ObjectShortName">dcct_adc_busy[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top/dcct_adc_cnv">
+      <obj_property name="ElementShortName">dcct_adc_cnv</obj_property>
+      <obj_property name="ObjectShortName">dcct_adc_cnv</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top/dcct_adc_sck">
+      <obj_property name="ElementShortName">dcct_adc_sck</obj_property>
+      <obj_property name="ObjectShortName">dcct_adc_sck</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top/dcct_adc_sdo">
+      <obj_property name="ElementShortName">dcct_adc_sdo[3:0]</obj_property>
+      <obj_property name="ObjectShortName">dcct_adc_sdo[3:0]</obj_property>
+   </wvobject>
+</wave_config>

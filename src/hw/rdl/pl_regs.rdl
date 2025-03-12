@@ -45,6 +45,64 @@ reg {
 
 
 
+/* DCCT raw ADC values */
+reg {
+    desc="PS1 DCCT 0";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps1_dcct0_adc @0x20;  
+
+reg {
+    desc="PS1 DCCT1";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps1_dcct1_adc @0x24;  
+
+reg {
+    desc="PS2 DCCT 0";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps2_dcct0_adc @0x28;  
+
+reg {
+    desc="PS2 DCCT1";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps2_dcct1_adc @0x2C;  
+
+reg {
+    desc="PS3 DCCT 0";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps3_dcct0_adc @0x30;  
+
+reg {
+    desc="PS3 DCCT1";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps3_dcct1_adc @0x34;  
+
+reg {
+    desc="PS4 DCCT 0";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps4_dcct0_adc @0x38;  
+
+reg {
+    desc="PS4 DCCT1";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps4_dcct1_adc @0x3C;  
+
+
 
 
 

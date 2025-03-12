@@ -122,11 +122,27 @@ architecture behv of top is
    signal m_axi4_m2s            : t_pl_regs_m2s;
    signal m_axi4_s2m            : t_pl_regs_s2m;
    
-   signal dcct_adc_in           : t_DCCT;
-   signal dcct_adc_out          : t_DCCT;
-
-   signal mon_adc_in            : t_ADC_8CHANNEL;
-   signal mon_adc_out           : t_ADC_8CHANNEL;
+   signal adc_start             : std_logic;
+   signal adc_done              : std_logic;
+   
+   signal dcct_adcs             : t_dcct_adcs;
+   signal dcct_adcs_ave         : t_dcct_adcs_ave;
+  
+   signal mon_adcs              : t_mon_adcs;
+   signal mon_adcs_ave          : t_mon_adcs_ave;
+   
+   signal accum_mode            : std_logic_vector(7 downto 0);
+   signal accum_done            : std_logic_vector(3 downto 0);
+   
+   signal dac0                  : t_dac;
+   signal dac0_done             : std_logic;
+   signal dac1                  : t_dac;
+   signal dac1_done             : std_logic;
+   signal dac2                  : t_dac;
+   signal dac2_done             : std_logic;
+   signal dac3                  : t_dac;
+   signal dac3_done             : std_logic;
+   signal dac_jump              : std_logic;
 
 
    signal evr_dbg               : std_logic_vector(19 downto 0);
@@ -179,37 +195,92 @@ fofb_refclk : IBUFDS_GTE2
     IB => gtx_gige_refclk_n
 );
 
+
+	  
+
 -- reads 8 channels of DCCT ADC's
 read_dcct_adcs: entity work.DCCT_ADC_module
   port map(
     clk => pl_clk0, 
     reset => pl_reset, 
-    start => trig(0), 
-    DCCT_in  => dcct_adc_in, 
-    DCCT_out => dcct_adc_out,  
+    start => adc_start, 
+    DCCT_out => dcct_adcs,  
     sdi => dcct_adc_sdo, 
     cnv => dcct_adc_cnv, 
     sclk => dcct_adc_sck, 
     sdo => open,
-	done => open 
+	done => adc_done 
 );
 
 
 -- reads 24 channels of monitor ADC's
 mon_adc_rst <= '0';
-read_mon_adcs: entity work.ADC_8CH_module
+read_mon_adcs: entity work.adc_8ch_module
   port map(
     clk => pl_clk0, 
     reset => pl_reset, 
-    start => trig(0), 
-    adc_8ch_in => mon_adc_in,
-    adc_8ch_out => mon_adc_out,
+    start => adc_start,  
+    mon_adcs => mon_adcs,
     adc8c_sdo => mon_adc_sdo,
     adc8c_conv123 => mon_adc_cnv, 
     adc8c_fs123 => mon_adc_fs, 
     adc8c_sck123 => mon_adc_sck,
     done => open
 );
+
+
+write_stpt_dacs: entity work.dac_ctrlr
+  port map(
+    clk => pl_clk0,  
+    reset => pl_reset, 
+    dac1_in => dac0, 
+    dac2_in => dac1,
+    dac3_in => dac2,  
+    dac4_in => dac3,  	
+    dac1234_jump => dac_jump, 		
+    dac1_done => dac0_done, 
+    dac2_done => dac1_done,  
+    dac3_done => dac2_done,  
+    dac4_done => dac3_done,  
+    n_sync1234	=> stpt_dac_sync,  
+    sclk1234 => stpt_dac_sck, 
+    sdo => stpt_dac_sdo 	
+    );
+
+
+
+--accumulator 
+accum: entity work.adc_accumulator_top
+  generic map (
+    N_DCCT => 18,  
+	N_8CH  => 16 
+  )
+  port map(
+    clk => pl_clk0,
+    reset => pl_reset,
+    start => adc_done,  
+    mode => accum_mode,
+    dcct_adcs => dcct_adcs,
+    mon_adcs => mon_adcs,
+    dcct_adcs_ave => dcct_adcs_ave,
+    mon_adcs_ave => mon_adcs_ave,
+    done => accum_done
+);
+    
+    
+clk_src: entity work.tenkhz_mux 
+  port map(
+    clk => pl_clk0,  
+    reset => pl_reset,  
+	  
+    disable_fldbck => '0', 	
+    switch => '1',  
+    evr_10khz => '0', 
+    fofb_10khz => '0',
+	timer => 16d"10",
+    flt_10kHz => open,  
+	O => adc_start
+    ); 
 
 
 
@@ -238,7 +309,7 @@ evr: entity work.evr_top
 
 
 
-ps_pl: entity work.ps_io
+ps_regs: entity work.ps_io
   generic map (
     FPGA_VERSION => FPGA_VERSION
     )
@@ -247,7 +318,9 @@ ps_pl: entity work.ps_io
     pl_reset => pl_reset, 
     m_axi4_m2s => m_axi4_m2s, 
     m_axi4_s2m => m_axi4_s2m,
-    leds => leds            
+    leds => leds,
+    dcct_adcs => dcct_adcs,
+    mon_adcs => mon_adcs           
   );
 
  

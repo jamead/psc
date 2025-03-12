@@ -10,8 +10,8 @@ library desyrdl;
 use desyrdl.common.all;
 use desyrdl.pkg_pl_regs.all;
 
---library xil_defaultlib;
---use xil_defaultlib.xbpm_package.ALL;
+library xil_defaultlib;
+use xil_defaultlib.psc_pkg.ALL;
 
 
 
@@ -26,7 +26,10 @@ entity ps_io is
     m_axi4_m2s       : in t_pl_regs_m2s;
     m_axi4_s2m       : out t_pl_regs_s2m;   
      
-    leds             : out std_logic_vector(7 downto 0)
+    leds             : out std_logic_vector(7 downto 0);
+    
+    dcct_adcs        : in t_dcct_adcs;
+    mon_adcs         : in t_mon_adcs
    
     
     
@@ -51,10 +54,17 @@ begin
 
 reg_i.fpgaver.data.data <= std_logic_vector(to_unsigned(FPGA_VERSION,32));
 
-
-
 leds <= reg_o.leds.data.data;
 
+-- DCCT ADC slow readbacks
+reg_i.ps1_dcct0_adc.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps1.dcct0), 32));
+reg_i.ps1_dcct1_adc.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps1.dcct1), 32));
+reg_i.ps2_dcct0_adc.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps2.dcct0), 32));
+reg_i.ps2_dcct1_adc.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps2.dcct1), 32));
+reg_i.ps3_dcct0_adc.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps3.dcct0), 32));
+reg_i.ps3_dcct1_adc.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps3.dcct1), 32));
+reg_i.ps4_dcct0_adc.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps4.dcct0), 32));
+reg_i.ps4_dcct1_adc.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps4.dcct1), 32));
 
 
 

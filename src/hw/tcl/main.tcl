@@ -26,10 +26,16 @@ proc setSources {} {
   lappend Sources {"../hdl/DCCT_ADC_module.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/ADC_LTC2376_20_intf.vhd" "VHDL 2008"}  
   lappend Sources {"../hdl/ADC_8CH_module.vhd" "VHDL 2008"} 
-  lappend Sources {"../hdl/ADC_ADS8568_intf.vhd" "VHDL 2008"}   
+  lappend Sources {"../hdl/ADC_ADS8568_intf.vhd" "VHDL 2008"} 
   
-  lappend Sources {"../hdl/gain_offset.vhd" "VHDL 2008"}     
+  lappend Sources {"../hdl/DAC_ctrlr.vhd" "VHDL 2008"} 
+  lappend Sources {"../hdl/DAC_AD5781_intf.vhd" "VHDL 2008"}     
+
+  lappend Sources {"../hdl/adc_accumulator_top.vhd" "VHDL 2008"}   
+  lappend Sources {"../hdl/adc_accumulator.vhd" "VHDL 2008"} 
+  lappend Sources {"../hdl/average.vhd" "VHDL 2008"} 
   
+   lappend Sources {"../hdl/tenkhz_mux.vhd" "VHDL 2008"}  
   
   lappend Sources {"../hdl/evr_top.vhd" "VHDL 2008"}  
   lappend Sources {"../hdl/EventReceiverChannel.v" "Verilog"}  
