@@ -90,7 +90,7 @@ generic(
     trig                    : in std_logic_vector(3 downto 0);
     
     -- Programmable oscillator for EVR reference clock
-    si570_sck               : out std_logic;
+    si570_sck               : inout std_logic;
     si570_sda               : inout std_logic;
     
     -- One wire interface
@@ -113,6 +113,13 @@ architecture behv of top is
    signal pl_resetn             : std_logic_vector(0 downto 0);
    signal gtx_reset             : std_logic_vector(7 downto 0);
    signal pl_clk0               : std_logic;
+   
+   signal i2c0_scl_i            : std_logic;
+   signal i2c0_scl_t            : std_logic;
+   signal i2c0_scl_o            : std_logic;
+   signal i2c0_sda_i            : std_logic;
+   signal i2c0_sda_t            : std_logic;
+   signal i2c0_sda_o            : std_logic;  
    
    signal gtx_gige_refclk       : std_logic;
    signal gtx_evr_refclk        : std_logic;
@@ -169,7 +176,8 @@ begin
 
 
 
-fp_leds(7 downto 0) <= leds;  
+fp_leds <= leds; 
+sfp_leds <= leds;
 
 pl_reset <= not pl_resetn(0); 
 
@@ -268,6 +276,7 @@ accum: entity work.adc_accumulator_top
 );
     
     
+--select the source for ADC converts
 clk_src: entity work.tenkhz_mux 
   port map(
     clk => pl_clk0,  
@@ -348,6 +357,12 @@ sys: component system
     fixed_io_ps_clk => fixed_io_ps_clk,
     fixed_io_ps_porb => fixed_io_ps_porb,
     fixed_io_ps_srstb => fixed_io_ps_srstb,
+    iic_0_scl_i => i2c0_scl_i, 
+    iic_0_scl_o => i2c0_scl_o, 
+    iic_0_scl_t => i2c0_scl_t, 
+    iic_0_sda_i => i2c0_sda_i, 
+    iic_0_sda_o => i2c0_sda_o, 
+    iic_0_sda_t => i2c0_sda_t,
 
     pl_clk0 => pl_clk0,
     pl_resetn => pl_resetn,  
@@ -374,6 +389,9 @@ sys: component system
 
 
 
+-- tri-state buffers for i2c interface from PS to si570
+i2c0_scl_buf : IOBUF port map (O=>i2c0_scl_i, IO=>si570_sck, I=>i2c0_scl_o, T=>i2c0_scl_t);
+i2c0_sda_buf : IOBUF port map (O=>i2c0_sda_i, IO=>si570_sda, I=>i2c0_sda_o, T=>i2c0_sda_t);
        
     
     

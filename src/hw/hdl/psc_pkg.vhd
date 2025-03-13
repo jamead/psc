@@ -170,6 +170,12 @@ component system is
     FIXED_IO_ps_srstb : inout STD_LOGIC;
     FIXED_IO_ps_clk : inout STD_LOGIC;
     FIXED_IO_ps_porb : inout STD_LOGIC;
+    iic_0_scl_i : in STD_LOGIC;
+    iic_0_scl_o : out STD_LOGIC;
+    iic_0_scl_t : out STD_LOGIC;
+    iic_0_sda_i : in STD_LOGIC;
+    iic_0_sda_o : out STD_LOGIC;
+    iic_0_sda_t : out STD_LOGIC; 
     m_axi_awaddr : out STD_LOGIC_VECTOR ( 31 downto 0 );
     m_axi_awprot : out STD_LOGIC_VECTOR ( 2 downto 0 );
     m_axi_awvalid : out STD_LOGIC;
