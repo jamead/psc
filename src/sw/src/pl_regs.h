@@ -2,11 +2,26 @@
 
 //PL AXI4 Bus Registers
 
+
+#define FPGA_VER_REG 0x0
+#define FP_LEDS_REG 0x4
+
+#define PS1_DCCT0 0x20
+#define PS1_DCCT1 0x24
+#define PS2_DCCT0 0x28
+#define PS2_DCCT1 0x2C
+#define PS3_DCCT0 0x30
+#define PS3_DCCT1 0x32
+#define PS4_DCCT0 0x36
+#define PS4_DCCT1 0x40
+
+
+/*
 #define GPIO_IN_REG 0x0
 #define GPIO_OUT_REG 0x4
 #define ADC_TESTMODE_REG 0x8
-#define FP_LEDS_REG 0x14
-#define FPGA_VER_REG 0x1C
+//#define FP_LEDS_REG 0x14
+//#define FPGA_VER_REG 0x1C
 #define SA_DIVIDE_REG 0x20
 #define SA_IRQENB_REG 0x24
 #define FA_DIVIDE_REG 0x28
@@ -87,7 +102,7 @@
 #define FA_RCVD_FIFO_RST_REG 0x224
 #define FA_RCVD_FIFO_DATA_REG 0x228
 #define FA_RCVD_FIFO_CNT_REG 0x22C
-
+*/
 
 
 #define MOD_ID_NUM 0x400

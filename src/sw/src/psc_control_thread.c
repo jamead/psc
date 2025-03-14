@@ -30,56 +30,20 @@ void set_fpleds(u32 msgVal)  {
 
 
 void soft_trig(u32 msgVal) {
-	Xil_Out32(XPAR_M_AXI_BASEADDR + FA_SOFT_TRIG_REG, msgVal);
+	//Xil_Out32(XPAR_M_AXI_BASEADDR + FA_SOFT_TRIG_REG, msgVal);
 }
 
 
 void set_eventno(u32 msgVal) {
-	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_TRIGNUM_REG, msgVal);
-}
-
-
-void set_kxky(u32 axis, u32 msgVal) {
-
-    if (axis == HOR)	{
-       xil_printf("Setting Kx to %d nm\r\n",msgVal);
-       Xil_Out32(XPAR_M_AXI_BASEADDR + KX_REG, msgVal);
-    }
-    else {
-       xil_printf("Setting Ky to %d nm\r\n",msgVal);
-       Xil_Out32(XPAR_M_AXI_BASEADDR + KY_REG, msgVal);
-
-    }
+	//Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_TRIGNUM_REG, msgVal);
 }
 
 
 
 
 
-void set_gain(u32 channel, u32 msgVal) {
 
-switch(channel) {
-    case CHA:
-       Xil_Out32(XPAR_M_AXI_BASEADDR + CHA_GAIN_REG, msgVal);
-       xil_printf("Setting ChA gain to %d \r\n",msgVal);
-	   break;
-	case CHB:
-	   Xil_Out32(XPAR_M_AXI_BASEADDR + CHB_GAIN_REG, msgVal);
-       xil_printf("Setting ChB gain to %d\r\n",msgVal);
-	   break;
-    case CHC:
-       Xil_Out32(XPAR_M_AXI_BASEADDR + CHC_GAIN_REG, msgVal);
-       xil_printf("Setting ChC gain to %d\r\n",msgVal);
-	   break;
-	case CHD:
-	   Xil_Out32(XPAR_M_AXI_BASEADDR + CHD_GAIN_REG, msgVal);
-       xil_printf("Setting ChD gain to %d\r\n",msgVal);
-	   break;
-    default:
-       xil_printf("Invalid gain channel number\r\n");
-	   break;
-    }
-}
+
 
 
 
@@ -159,38 +123,37 @@ reconnect:
         switch(MsgAddr) {
 			case SOFT_TRIG_MSG1:
 				xil_printf("Soft Trigger Message:   Value=%d\r\n",MsgData);
-                soft_trig(MsgData);
                 break;
 
 
 			case KX_MSG1:
 				xil_printf("Kx Message:   Value=%d\r\n",MsgData);
-                set_kxky(HOR,MsgData);
+                //set_kxky(HOR,MsgData);
                 break;
 
 			case KY_MSG1:
 				xil_printf("Ky Message:   Value=%d\r\n",MsgData);
-                set_kxky(VERT,MsgData);
+                //set_kxky(VERT,MsgData);
                 break;
 
             case CHA_GAIN_MSG1:
             	xil_printf("ChA Gain Message:   Value=%d\r\n",MsgData);
-                set_gain(CHA,MsgData);
+                //set_gain(CHA,MsgData);
                 break;
 
             case CHB_GAIN_MSG1:
             	xil_printf("ChB Gain Message:   Value=%d\r\n",MsgData);
-                set_gain(CHB,MsgData);
+                //set_gain(CHB,MsgData);
                 break;
 
             case CHC_GAIN_MSG1:
             	xil_printf("ChC Gain Message:   Value=%d\r\n",MsgData);
-                set_gain(CHC,MsgData);
+                //set_gain(CHC,MsgData);
                 break;
 
             case CHD_GAIN_MSG1:
             	xil_printf("ChD Gain Message:   Value=%d\r\n",MsgData);
-                set_gain(CHD,MsgData);
+                //set_gain(CHD,MsgData);
                 break;
 
             case FINE_TRIG_DLY_MSG1:

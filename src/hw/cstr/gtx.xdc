@@ -22,3 +22,5 @@ set_property PACKAGE_PIN V9 [get_ports gtx_gige_refclk_n]
 set_property LOC GTXE2_CHANNEL_X0Y3 [get_cells evr/evr_gtx_init_i/U0/evr_gtx_i/gt0_evr_gtx_i/gtxe2_i]
 
 
+
+

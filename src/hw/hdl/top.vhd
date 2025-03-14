@@ -169,6 +169,12 @@ architecture behv of top is
    --debug signals (connect to ila)
    attribute mark_debug                 : string;
    attribute mark_debug of mon_adc_cnv     : signal is "true";
+   attribute mark_debug of leds            : signal is "true";
+   attribute mark_debug of pl_reset        : signal is "true";
+   attribute mark_debug of pl_resetn       : signal is "true";
+   attribute mark_debug of adc_start       : signal is "true";
+   attribute mark_debug of m_axi4_m2s      : signal is "true";
+   attribute mark_debug of m_axi4_s2m      : signal is "true";
 
 
 

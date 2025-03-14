@@ -1,14 +1,14 @@
 
 
 # 24 16-bit ADC Channels (3 - ADS5868)
-set_property PACKAGE_PIN C1 [get_ports {mon_adc_rst}]
-set_property IOSTANDARD LVCMOS18 [get_ports {mon_adc_rst}]
-set_property PACKAGE_PIN D1 [get_ports {mon_adc_cnv}]
-set_property IOSTANDARD LVCMOS18 [get_ports {mon_adc_cnv}]
-set_property PACKAGE_PIN B4 [get_ports {mon_adc_sck}]
-set_property IOSTANDARD LVCMOS18 [get_ports {mon_adc_sck}]
-set_property PACKAGE_PIN B3 [get_ports {mon_adc_fs}]
-set_property IOSTANDARD LVCMOS18 [get_ports {mon_adc_fs}]
+set_property PACKAGE_PIN C1 [get_ports mon_adc_rst]
+set_property IOSTANDARD LVCMOS18 [get_ports mon_adc_rst]
+set_property PACKAGE_PIN D1 [get_ports mon_adc_cnv]
+set_property IOSTANDARD LVCMOS18 [get_ports mon_adc_cnv]
+set_property PACKAGE_PIN B4 [get_ports mon_adc_sck]
+set_property IOSTANDARD LVCMOS18 [get_ports mon_adc_sck]
+set_property PACKAGE_PIN B3 [get_ports mon_adc_fs]
+set_property IOSTANDARD LVCMOS18 [get_ports mon_adc_fs]
 set_property PACKAGE_PIN D3 [get_ports {mon_adc_busy[0]}]
 set_property IOSTANDARD LVCMOS18 [get_ports {mon_adc_busy[0]}]
 set_property PACKAGE_PIN C4 [get_ports {mon_adc_busy[1]}]
@@ -24,10 +24,10 @@ set_property IOSTANDARD LVCMOS18 [get_ports {mon_adc_sdo[2]}]
 
 
 # 8 20-bit ADC Channels for DCCT's (8 - LTC2376)
-set_property PACKAGE_PIN E8 [get_ports {dcct_adc_cnv}]
-set_property IOSTANDARD LVCMOS18 [get_ports {dcct_adc_cnv}]
-set_property PACKAGE_PIN D8 [get_ports {dcct_adc_sck}]
-set_property IOSTANDARD LVCMOS18 [get_ports {dcct_adc_sck}]
+set_property PACKAGE_PIN E8 [get_ports dcct_adc_cnv]
+set_property IOSTANDARD LVCMOS18 [get_ports dcct_adc_cnv]
+set_property PACKAGE_PIN D8 [get_ports dcct_adc_sck]
+set_property IOSTANDARD LVCMOS18 [get_ports dcct_adc_sck]
 set_property PACKAGE_PIN B1 [get_ports {dcct_adc_busy[0]}]
 set_property IOSTANDARD LVCMOS18 [get_ports {dcct_adc_busy[0]}]
 set_property PACKAGE_PIN B2 [get_ports {dcct_adc_busy[1]}]
@@ -47,10 +47,10 @@ set_property IOSTANDARD LVCMOS18 [get_ports {dcct_adc_sdo[3]}]
 
 
 # 4 18-bit DAC Channels AD5781
-set_property PACKAGE_PIN A7 [get_ports {stpt_dac_sync}]
-set_property IOSTANDARD LVCMOS18 [get_ports {stpt_dac_sync}]
-set_property PACKAGE_PIN A6 [get_ports {stpt_dac_sck}]
-set_property IOSTANDARD LVCMOS18 [get_ports {stpt_dac_sck}]
+set_property PACKAGE_PIN A7 [get_ports stpt_dac_sync]
+set_property IOSTANDARD LVCMOS18 [get_ports stpt_dac_sync]
+set_property PACKAGE_PIN A6 [get_ports stpt_dac_sck]
+set_property IOSTANDARD LVCMOS18 [get_ports stpt_dac_sck]
 set_property PACKAGE_PIN G7 [get_ports {stpt_dac_sdo[0]}]
 set_property IOSTANDARD LVCMOS18 [get_ports {stpt_dac_sdo[0]}]
 set_property PACKAGE_PIN G8 [get_ports {stpt_dac_sdo[1]}]
@@ -358,21 +358,23 @@ set_property SLEW SLOW [get_ports {sfp_leds[7]}]
 
 
 # Si570 programmable oscillator for EVR reference clock
-set_property PACKAGE_PIN Y19 [get_ports {si570_sck}]
-set_property IOSTANDARD LVCMOS33 [get_ports {si570_sck}]
-set_property PACKAGE_PIN Y18 [get_ports {si570_sda}]
-set_property IOSTANDARD LVCMOS33 [get_ports {si570_sda}]
+set_property PACKAGE_PIN Y19 [get_ports si570_sck]
+set_property IOSTANDARD LVCMOS33 [get_ports si570_sck]
+set_property PACKAGE_PIN Y18 [get_ports si570_sda]
+set_property IOSTANDARD LVCMOS33 [get_ports si570_sda]
 
 # One wire interface
-set_property PACKAGE_PIN H6 [get_ports {onewire_sck}]
-set_property IOSTANDARD LVCMOS18 [get_ports {onewire_sck}]
-set_property PACKAGE_PIN H5 [get_ports {onewire_sda}]
-set_property IOSTANDARD LVCMOS18 [get_ports {onewire_sda}]
+set_property PACKAGE_PIN H6 [get_ports onewire_sck]
+set_property IOSTANDARD LVCMOS18 [get_ports onewire_sck]
+set_property PACKAGE_PIN H5 [get_ports onewire_sda]
+set_property IOSTANDARD LVCMOS18 [get_ports onewire_sda]
 
 
 # MAC ID
-set_property PACKAGE_PIN V14 [get_ports {mac_id}]
-set_property IOSTANDARD LVCMOS33 [get_ports {mac_id}]
+set_property PACKAGE_PIN V14 [get_ports mac_id]
+set_property IOSTANDARD LVCMOS33 [get_ports mac_id]
+
+
 
 
 

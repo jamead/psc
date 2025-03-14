@@ -45,62 +45,245 @@ reg {
 
 
 
-/* DCCT raw ADC values */
+/* PS1 10Hz Data */
 reg {
     desc="PS1 DCCT 0";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps1_dcct0_adc @0x20;  
+  } ps1_dcct0 @0x20;  
 
 reg {
     desc="PS1 DCCT1";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps1_dcct1_adc @0x24;  
+  } ps1_dcct1 @0x24;  
 
+reg {
+    desc="PS1 DAC Setpoint";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps1_dacsp @0x28;  
+
+reg {
+    desc="PS1 Voltage Monitor";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps1_volt @0x2C;  
+
+reg {
+    desc="PS1 GND Monitor";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps1_gnd @0x30; 
+
+reg {
+    desc="PS1 Spare Monitor";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps1_spare @0x34; 
+
+reg {
+    desc="PS1 Regulator Output";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps1_reg @0x38; 
+
+reg {
+    desc="PS1 Error";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps1_err @0x3C; 
+
+
+
+/* PS2 10 Hz Data  */
 reg {
     desc="PS2 DCCT 0";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps2_dcct0_adc @0x28;  
+  } ps2_dcct0 @0x40;  
 
 reg {
     desc="PS2 DCCT1";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps2_dcct1_adc @0x2C;  
+  } ps2_dcct1 @0x44;  
+
+reg {
+    desc="PS2 DAC Setpoint";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps2_dacsp @0x48;  
+
+reg {
+    desc="PS2 Voltage Monitor";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps2_volt @0x4C;  
+
+reg {
+    desc="PS2 GND Monitor";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps2_gnd @0x50; 
+
+reg {
+    desc="PS2 Spare Monitor";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps2_spare @0x54; 
+
+reg {
+    desc="PS2 Regulator Output";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps2_reg @0x58; 
+
+reg {
+    desc="PS2 Error";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps2_err @0x5C; 
+
+
+
+/* PS3 10Hz Data */
 
 reg {
     desc="PS3 DCCT 0";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps3_dcct0_adc @0x30;  
+  } ps3_dcct0 @0x60;  
 
 reg {
     desc="PS3 DCCT1";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps3_dcct1_adc @0x34;  
+  } ps3_dcct1 @0x64;  
+
+reg {
+    desc="PS3 DAC Setpoint";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps3_dacsp @0x68;  
+
+reg {
+    desc="PS3 Voltage Monitor";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps3_volt @0x6C;  
+
+reg {
+    desc="PS3 GND Monitor";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps3_gnd @0x70; 
+
+reg {
+    desc="PS3 Spare Monitor";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps3_spare @0x74; 
+
+reg {
+    desc="PS3 Regulator Output";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps3_reg @0x78; 
+
+reg {
+    desc="PS3 Error";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps3_err @0x7C; 
+
+
+
+/*  PS4 10Hz Data  */
 
 reg {
     desc="PS4 DCCT 0";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps4_dcct0_adc @0x38;  
+  } ps4_dcct0 @0x80;  
 
 reg {
-    desc="PS4 DCCT1";
+    desc="PS3 DCCT1";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps4_dcct1_adc @0x3C;  
+  } ps4_dcct1 @0x84;  
+
+reg {
+    desc="PS4 DAC Setpoint";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps4_dacsp @0x88;  
+
+reg {
+    desc="PS4 Voltage Monitor";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps4_volt @0x8C;  
+
+reg {
+    desc="PS4 GND Monitor";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps4_gnd @0x90; 
+
+reg {
+    desc="PS4 Spare Monitor";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps4_spare @0x94; 
+
+reg {
+    desc="PS4 Regulator Output";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps4_reg @0x98; 
+
+reg {
+    desc="PS4 Error";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } ps4_err @0x9C; 
+
+
+
+
 
 
 

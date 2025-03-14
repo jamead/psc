@@ -61,13 +61,16 @@ typedef struct SAdataMsg {
 	u32 count;        // PSC Offset 0
 	u32 evr_ts_ns;    // PSC Offset 4
 	u32 evr_ts_s;     // PSC Offset 8
-	u32 cha_mag;      // PSC Offset 12
-	u32 chb_mag;      // PSC Offset 16
-	u32 chc_mag;      // PSC Offset 20
-	u32 chd_mag;      // PSC Offset 24
-	u32 sum;          // PSC Offset 28
-	s32 xpos_nm;      // PSC Offset 32
-	s32 ypos_nm;      // PSC Offset 36
+	u32 ps1_dcct[2];  // PSC Offset 12
+	u32 ps1_mon[6];   // PSC Offset 20
+    u32 ps2_dcct[2];  // PSC Offset 40
+	u32 ps2_mon[6];   // PSC Offset
+	u32 ps3_dcct[2];  //
+    u32 ps3_mon[6];   //
+	u32 ps4_dcct[2];
+	u32 ps4_mon[2];
+
+
 } SAdataMsg;
 
 

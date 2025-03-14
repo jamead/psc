@@ -152,58 +152,6 @@ void print_firmware_version()
 
 
 
-void ReadFAWvfmMain() {
-
-    u32 i,j;
-    u32 regval;
-    u32 wordcnt;
-
-    Xil_Out32(XPAR_M_AXI_BASEADDR + FA_FIFO_STREAMENB_REG, 1);
-    Xil_Out32(XPAR_M_AXI_BASEADDR + FA_FIFO_STREAMENB_REG, 0);
-    usleep(100);
-    //xil_printf("Reading ADC FIFO...\r\n");
-    //regval = Xil_In32(XPAR_M_AXI_BASEADDR + ADCFIFO_CNT_REG);
-    //xil_printf("\tWords in ADC FIFO = %d\r\n",regval);
-
-
-	 wordcnt = Xil_In32(XPAR_M_AXI_BASEADDR + FA_FIFO_CNT_REG);
-     xil_printf("Words in FIFO = %d\r\n",wordcnt);
-     while (wordcnt < 1000) {
-    	 wordcnt = Xil_In32(XPAR_M_AXI_BASEADDR + FA_FIFO_CNT_REG);
-         xil_printf("Words in FIFO = %d\r\n",wordcnt);
-         usleep(1000);
-     }
-
-     // stop writing into the FIFO
-     Xil_Out32(XPAR_M_AXI_BASEADDR + FA_TRIG_CLEAR_REG, 1);
-     Xil_Out32(XPAR_M_AXI_BASEADDR + FA_TRIG_CLEAR_REG, 0);
-
-
-    xil_printf("\r\n");
-    for (i=0;i<10;i++) {
-    	for (j=0;j<16;j++) {
-    	   regval = Xil_In32(XPAR_M_AXI_BASEADDR + FA_FIFO_DATA_REG);
-    	   xil_printf("%d   ",regval);
-    	}
-        xil_printf("\r\n");
-    }	
-    
-
-    //printf("Resetting FIFO...\n");
-    xil_printf("Resetting FIFO...\r\n");
-    Xil_Out32(XPAR_M_AXI_BASEADDR + FA_FIFO_RST_REG, 1);
-    usleep(1);
-    Xil_Out32(XPAR_M_AXI_BASEADDR + FA_FIFO_RST_REG, 0);
-    usleep(10);
-	wordcnt = Xil_In32(XPAR_M_AXI_BASEADDR + FA_FIFO_CNT_REG);
-    xil_printf("Words in FIFO = %d\n",wordcnt);
-
-
-}
-
-
-
-
 
 void main_thread(void *p)
 {
@@ -252,10 +200,10 @@ void main_thread(void *p)
 
 
     // Delay for 100ms
-    vTaskDelay(pdMS_TO_TICKS(100));
+    //vTaskDelay(pdMS_TO_TICKS(100));
     // Start the PSC Waveform Thread.  Handles incoming commands from IOC
-    xil_printf("\r\n");
-    sys_thread_new("psc_wvfm_thread", psc_wvfm_thread, 0, THREAD_STACKSIZE, 1);
+    //xil_printf("\r\n");
+    //sys_thread_new("psc_wvfm_thread", psc_wvfm_thread, 0, THREAD_STACKSIZE, 1);
 
 
     // Delay for 100 ms
@@ -295,103 +243,45 @@ int main()
 
     u32 ts_s, ts_ns;
     float temp0, temp1, vin, iin;
-    u32 i,j;
+    u32 i,j,x;
 	s32 adc_raw;
     struct SAdataMsg SAdata;
     u32 trigstat, wordcnt;
+    s32 dcct[8];
 
 	xil_printf("BNL Power Supply Controller ...\r\n");
     print_firmware_version();
 
 	init_i2c();
-
+ 
 	xil_printf("FPGA Version: %d\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + FPGA_VER_REG));
 
-    //set ADC clock source to internal (no EVR)
-	Xil_Out32(XPAR_M_AXI_BASEADDR + MACHCLK_SEL_REG, 0);
+    //set FP LEDs
+	while (1) {
+		Xil_Out32(XPAR_M_AXI_BASEADDR + FP_LEDS_REG, i);
+		i=i+1;
+		  for (x=0;x<32;x++) {
+			dcct[x] = Xil_In32(XPAR_M_AXI_BASEADDR + 0x20+x*4);
+	        xil_printf("%8d ", dcct[x]);
+		}
+		xil_printf("\r\n");
 
-	//Set AFE gain to 10mA range
-	Xil_Out32(XPAR_M_AXI_BASEADDR + AFE_CNTRL_REG, 0);
-	
-
-    //read Temperature and Power
-	for (i=0;i<1;i++) {
-	  temp0 = (float) Xil_In32(XPAR_M_AXI_BASEADDR + TEMP_SENSE0_REG) / 128;
-	  temp1 = (float) Xil_In32(XPAR_M_AXI_BASEADDR + TEMP_SENSE1_REG) / 128;
-	  vin = (float) Xil_In32(XPAR_M_AXI_BASEADDR + PWR_VIN_REG) * 0.00125;
-	  iin = (float) Xil_In32(XPAR_M_AXI_BASEADDR + PWR_IIN_REG) * 0.1;
-      printf("%5.3f   %5.3f   %5.3f   %5.3f \r\n",temp0,temp1,vin,iin);
-      sleep(1);
+		sleep(1);
+        
 	}
 
-	// print raw adc values
-	for (i=0;i<1;i++) {
-	    for (j=0;j<8;j++) {
-		  adc_raw = Xil_In32(XPAR_M_AXI_BASEADDR + ADCRAW_CHA_REG + j*4);
-	      xil_printf("%d  ",adc_raw);
-	    }
-	    xil_printf("\r\n");
-	    sleep(1);
-	    }
-
-
-    // print SA data
-    for (i=0;i<1;i++) {
-      SAdata.count     = Xil_In32(XPAR_M_AXI_BASEADDR + SA_TRIGNUM_REG);
-      SAdata.evr_ts_s  = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S_REG);
-      SAdata.evr_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS_REG);
-      SAdata.cha_mag   = Xil_In32(XPAR_M_AXI_BASEADDR + SA_CHAMAG_REG);
-      SAdata.chb_mag   = Xil_In32(XPAR_M_AXI_BASEADDR + SA_CHBMAG_REG);
-      SAdata.chc_mag   = Xil_In32(XPAR_M_AXI_BASEADDR + SA_CHCMAG_REG);
-      SAdata.chd_mag   = Xil_In32(XPAR_M_AXI_BASEADDR + SA_CHDMAG_REG);
-      SAdata.sum       = Xil_In32(XPAR_M_AXI_BASEADDR + SA_SUM_REG);
-      SAdata.xpos_nm   = Xil_In32(XPAR_M_AXI_BASEADDR + SA_XPOS_REG);
-      SAdata.ypos_nm   = Xil_In32(XPAR_M_AXI_BASEADDR + SA_YPOS_REG);
-      xil_printf("%d:  %d  %d  %d  %d  %d  %d  %d  %d  %d\r\n",
-    		SAdata.count,SAdata.evr_ts_s,SAdata.evr_ts_ns,
-			SAdata.cha_mag,SAdata.chb_mag,SAdata.chc_mag,SAdata.chd_mag,
-			SAdata.sum,SAdata.xpos_nm,SAdata.ypos_nm);
-      sleep(1);
-    }
-/*
-    while (1) {
-      //Read FA
-      //printf("Resetting FIFO...\n");
-      // stop writing into the FIFO
-      xil_printf("Clearing Trigger...\r\n");
-      Xil_Out32(XPAR_M_AXI_BASEADDR + FA_TRIG_CLEAR_REG, 1);
-      Xil_Out32(XPAR_M_AXI_BASEADDR + FA_TRIG_CLEAR_REG, 0);    	
-      xil_printf("Resetting FIFO...\r\n");
-      Xil_Out32(XPAR_M_AXI_BASEADDR + FA_FIFO_RST_REG, 1);
-      usleep(1);
-      Xil_Out32(XPAR_M_AXI_BASEADDR + FA_FIFO_RST_REG, 0);
-      usleep(10);
-      
-	  wordcnt = Xil_In32(XPAR_M_AXI_BASEADDR + FA_FIFO_CNT_REG);	    
-      xil_printf("Words in FIFO = %d\n",wordcnt);   	
-	  trigstat = Xil_In32(XPAR_M_AXI_BASEADDR + FA_TRIG_STAT_REG);	  
-	  xil_printf("Trigger Status: %d\r\n",trigstat);
-	  xil_printf("Issuing soft trigger\r\n");
-	  Xil_Out32(XPAR_M_AXI_BASEADDR + FA_SOFT_TRIG_REG, 1);
-	  Xil_Out32(XPAR_M_AXI_BASEADDR + FA_SOFT_TRIG_REG, 0);
-	  usleep(10);
-	  trigstat = Xil_In32(XPAR_M_AXI_BASEADDR + FA_TRIG_STAT_REG);
-	  xil_printf("Trigger Status: %d\r\n",trigstat);
-      ReadFAWvfmMain();
-      sleep(1);
-    }
-*/
+ 
 
 
 	//EVR reset
-	Xil_Out32(XPAR_M_AXI_BASEADDR + GTX_RESET_REG, 1);
-	Xil_Out32(XPAR_M_AXI_BASEADDR + GTX_RESET_REG, 2);
-    usleep(1000);
+	//Xil_Out32(XPAR_M_AXI_BASEADDR + GTX_RESET_REG, 1);
+	//Xil_Out32(XPAR_M_AXI_BASEADDR + GTX_RESET_REG, 2);
+    //usleep(1000);
 
     //read Timestamp
-    ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S_REG);
-    ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS_REG);
-    xil_printf("ts= %d    %d\r\n",ts_s,ts_ns);
+    //ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S_REG);
+    //ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS_REG);
+    //xil_printf("ts= %d    %d\r\n",ts_s,ts_ns);
 
 
 	main_thread_handle = sys_thread_new("main_thread", main_thread, 0, THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);

@@ -155,14 +155,14 @@ process(clk)
 begin
     if rising_edge(clk) then
         if convert_done = '1' then
-              mon_adcs.ps2.gnd_mon <= ADC_8CH_ADC1(127 downto 112);
-              mon_adcs.ps3.volt_mon <= ADC_8CH_ADC1(111 downto 96);
-              mon_adcs.ps2.volt_mon <= ADC_8CH_ADC1(95 downto 80);
-              mon_adcs.ps3.gnd_mon <= ADC_8CH_ADC1(79 downto 64);
-              mon_adcs.ps3.spare_mon <= ADC_8CH_ADC1(63 downto 48);
-              mon_adcs.ps4.gnd_mon <= ADC_8CH_ADC1(47 downto 32);
-              mon_adcs.ps4.volt_mon <= ADC_8CH_ADC1(31 downto 16);
-              mon_adcs.ps4.spare_mon <= ADC_8CH_ADC1(15 downto 0);                  
+              mon_adcs.ps2.gnd_mon <= ADC_8CH_ADC2(127 downto 112);
+              mon_adcs.ps3.volt_mon <= ADC_8CH_ADC2(111 downto 96);
+              mon_adcs.ps3.volt_mon <= ADC_8CH_ADC2(95 downto 80);
+              mon_adcs.ps3.gnd_mon <= ADC_8CH_ADC2(79 downto 64);
+              mon_adcs.ps3.spare_mon <= ADC_8CH_ADC2(63 downto 48);
+              mon_adcs.ps4.gnd_mon <= ADC_8CH_ADC2(47 downto 32);
+              mon_adcs.ps4.volt_mon <= ADC_8CH_ADC2(31 downto 16);
+              mon_adcs.ps4.spare_mon <= ADC_8CH_ADC2(15 downto 0);                  
 --            ADC_8CH_out.ADC2.CH1.data <= ADC_8CH_ADC2(127 downto 112);
 --            ADC_8CH_out.ADC2.CH2.data <= ADC_8CH_ADC2(111 downto 96);
 --            ADC_8CH_out.ADC2.CH3.data <= ADC_8CH_ADC2(95 downto 80);
@@ -203,14 +203,14 @@ process(clk)
 begin
     if rising_edge(clk) then
         if convert_done = '1' then
-              mon_adcs.ps1.ps_reg <= ADC_8CH_ADC1(127 downto 112);
-              mon_adcs.ps2.ps_reg <= ADC_8CH_ADC1(111 downto 96);
-              mon_adcs.ps1.ps_error <= ADC_8CH_ADC1(95 downto 80);
-              mon_adcs.ps2.ps_error <= ADC_8CH_ADC1(79 downto 64);
-              mon_adcs.ps3.ps_reg <= ADC_8CH_ADC1(63 downto 48);
-              mon_adcs.ps4.ps_reg <= ADC_8CH_ADC1(47 downto 32);
-              mon_adcs.ps4.ps_error <= ADC_8CH_ADC1(31 downto 16);
-              mon_adcs.ps4.ps_error <= ADC_8CH_ADC1(15 downto 0);         
+              mon_adcs.ps1.ps_reg <= ADC_8CH_ADC3(127 downto 112);
+              mon_adcs.ps2.ps_reg <= ADC_8CH_ADC3(111 downto 96);
+              mon_adcs.ps1.ps_error <= ADC_8CH_ADC3(95 downto 80);
+              mon_adcs.ps2.ps_error <= ADC_8CH_ADC3(79 downto 64);
+              mon_adcs.ps3.ps_reg <= ADC_8CH_ADC3(63 downto 48);
+              mon_adcs.ps4.ps_reg <= ADC_8CH_ADC3(47 downto 32);
+              mon_adcs.ps4.ps_error <= ADC_8CH_ADC3(31 downto 16);
+              mon_adcs.ps4.ps_error <= ADC_8CH_ADC3(15 downto 0);         
 --            ADC_8CH_out.ADC3.CH1.data <= ADC_8CH_ADC3(127 downto 112);
 --            ADC_8CH_out.ADC3.CH2.data <= ADC_8CH_ADC3(111 downto 96);
 --            ADC_8CH_out.ADC3.CH3.data <= ADC_8CH_ADC3(95 downto 80);

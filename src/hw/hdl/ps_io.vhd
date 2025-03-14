@@ -47,6 +47,7 @@ architecture behv of ps_io is
 
   attribute mark_debug     : string;
   attribute mark_debug of reg_o: signal is "true";
+  attribute mark_debug of reg_i: signal is "true";
 
 
 
@@ -57,14 +58,42 @@ reg_i.fpgaver.data.data <= std_logic_vector(to_unsigned(FPGA_VERSION,32));
 leds <= reg_o.leds.data.data;
 
 -- DCCT ADC slow readbacks
-reg_i.ps1_dcct0_adc.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps1.dcct0), 32));
-reg_i.ps1_dcct1_adc.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps1.dcct1), 32));
-reg_i.ps2_dcct0_adc.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps2.dcct0), 32));
-reg_i.ps2_dcct1_adc.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps2.dcct1), 32));
-reg_i.ps3_dcct0_adc.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps3.dcct0), 32));
-reg_i.ps3_dcct1_adc.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps3.dcct1), 32));
-reg_i.ps4_dcct0_adc.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps4.dcct0), 32));
-reg_i.ps4_dcct1_adc.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps4.dcct1), 32));
+reg_i.ps1_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps1.dcct0), 32));
+reg_i.ps1_dcct1.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps1.dcct1), 32));
+reg_i.ps1_dacsp.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.dac_sp), 32));
+reg_i.ps1_volt.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.volt_mon), 32));
+reg_i.ps1_gnd.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.gnd_mon), 32));
+reg_i.ps1_spare.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.spare_mon), 32));
+reg_i.ps1_reg.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.ps_reg), 32));
+reg_i.ps1_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.ps_error), 32));
+
+reg_i.ps2_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps2.dcct0), 32));
+reg_i.ps2_dcct1.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps2.dcct1), 32));
+reg_i.ps2_dacsp.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.dac_sp), 32));
+reg_i.ps2_volt.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.volt_mon), 32));
+reg_i.ps2_gnd.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.gnd_mon), 32));
+reg_i.ps2_spare.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.spare_mon), 32));
+reg_i.ps2_reg.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.ps_reg), 32));
+reg_i.ps2_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.ps_error), 32));
+
+reg_i.ps3_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps3.dcct0), 32));
+reg_i.ps3_dcct1.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps3.dcct1), 32));
+reg_i.ps3_dacsp.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.dac_sp), 32));
+reg_i.ps3_volt.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.volt_mon), 32));
+reg_i.ps3_gnd.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.gnd_mon), 32));
+reg_i.ps3_spare.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.spare_mon), 32));
+reg_i.ps3_reg.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.ps_reg), 32));
+reg_i.ps3_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.ps_error), 32));
+
+reg_i.ps4_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps4.dcct0), 32));
+reg_i.ps4_dcct1.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps4.dcct1), 32));
+reg_i.ps4_dacsp.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.dac_sp), 32));
+reg_i.ps4_volt.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.volt_mon), 32));
+reg_i.ps4_gnd.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.gnd_mon), 32));
+reg_i.ps4_spare.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.spare_mon), 32));
+reg_i.ps4_reg.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.ps_reg), 32));
+reg_i.ps4_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.ps_error), 32));
+
 
 
 
