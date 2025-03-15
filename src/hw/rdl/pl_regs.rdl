@@ -283,6 +283,101 @@ reg {
 
 
 
+/* PS1 DAC */
+
+reg {
+    desc="PS1 DAC Offset";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_dac_offset @0x100;
+
+reg {
+    desc="PS1 DAC Gain";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_dac_gain @0x104;
+
+reg {
+    desc="PS1 DAC SetPoint - when in jumpmode";
+    default sw = rw;
+    default hw = r;
+    field {} val[20];
+  } ps1_dac_setpt @0x108;
+  
+reg {
+    desc="PS1 DAC Jump";
+    default sw = rw;
+    default hw = r;
+    default swacc=true;
+    default swmod=true;    
+    field {} val[1];
+  } ps1_dac_jumpmode @0x10C;  
+  
+
+reg {
+    desc="PS1 DAC Control";
+    default sw = rw;
+    default hw = r;   
+    field {} val[8];
+  } ps1_dac_cntrl @0x110;
+
+reg {
+    desc="PS1 DAC Reset";
+    default sw = rw;
+    default hw = r;    
+    field {} val[1];
+  } ps1_dac_reset @0x114;
+
+
+reg {
+    desc="PS1 DAC Ramp Table Length";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_dac_ramplen @0x118; 
+
+
+reg {
+    desc="PS1 DAC Ramp Table Address";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_dac_rampaddr @0x11C; 
+
+reg {
+    desc="PS1 DAC Ramp Table Data";
+    default sw = rw;
+    default hw = r;
+    default swacc=true;
+    default swmod=true;   
+    field {} val[20];
+  } ps1_dac_rampdata @0x120; 
+
+reg {
+    desc="PS1 DAC Run RampTable";
+    default sw = rw;
+    default hw = r;
+    default swacc=true;
+    default swmod=true;    
+    field {} val[1];
+  } ps1_dac_runramp @0x124;
+  
+  reg {
+    desc="PS1 DAC Ramptable Run Active";
+    default sw = rw;
+    default hw = w;
+    field {} val[1];
+  } ps1_dac_rampactive @0x128;
+
+  reg {
+    desc="PS1 DAC Ramptable Run Current Address";
+    default sw = rw;
+    default hw = w;
+    field {} val[16];
+  } ps1_dac_currampaddr @0x12C;
+
 
 
 

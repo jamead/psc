@@ -35,7 +35,7 @@ proc setSources {} {
   lappend Sources {"../hdl/adc_accumulator.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/average.vhd" "VHDL 2008"} 
   
-   lappend Sources {"../hdl/tenkhz_mux.vhd" "VHDL 2008"}  
+  lappend Sources {"../hdl/tenkhz_mux.vhd" "VHDL 2008"}  
   
   lappend Sources {"../hdl/evr_top.vhd" "VHDL 2008"}  
   lappend Sources {"../hdl/EventReceiverChannel.v" "Verilog"}  
@@ -75,7 +75,7 @@ proc doOnCreate {} {
   #set_property used_in_implementation false [get_files  top_tb.v] 
    
   source ${TclPath}/system.tcl
-  #source ${TclPath}/div_gen.tcl
+  source ${TclPath}/dac_dpram.tcl
   #source ${TclPath}/div_gen_mag.tcl
   #source ${TclPath}/dds_simadc.tcl 
   #source ${TclPath}/fa_fifo.tcl 

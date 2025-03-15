@@ -129,7 +129,8 @@ architecture behv of top is
    signal m_axi4_m2s            : t_pl_regs_m2s;
    signal m_axi4_s2m            : t_pl_regs_s2m;
    
-   signal adc_start             : std_logic;
+   signal tenkhz_trig           : std_logic;
+   
    signal adc_done              : std_logic;
    
    signal dcct_adcs             : t_dcct_adcs;
@@ -141,13 +142,11 @@ architecture behv of top is
    signal accum_mode            : std_logic_vector(7 downto 0);
    signal accum_done            : std_logic_vector(3 downto 0);
    
-   signal dac0                  : t_dac;
+   signal dac_cntrl             : t_dac_cntrl;
+   signal dac_stat              : t_dac_stat;   
    signal dac0_done             : std_logic;
-   signal dac1                  : t_dac;
    signal dac1_done             : std_logic;
-   signal dac2                  : t_dac;
    signal dac2_done             : std_logic;
-   signal dac3                  : t_dac;
    signal dac3_done             : std_logic;
    signal dac_jump              : std_logic;
 
@@ -172,7 +171,7 @@ architecture behv of top is
    attribute mark_debug of leds            : signal is "true";
    attribute mark_debug of pl_reset        : signal is "true";
    attribute mark_debug of pl_resetn       : signal is "true";
-   attribute mark_debug of adc_start       : signal is "true";
+   attribute mark_debug of tenkhz_trig     : signal is "true";
    attribute mark_debug of m_axi4_m2s      : signal is "true";
    attribute mark_debug of m_axi4_s2m      : signal is "true";
 
@@ -217,7 +216,7 @@ read_dcct_adcs: entity work.DCCT_ADC_module
   port map(
     clk => pl_clk0, 
     reset => pl_reset, 
-    start => adc_start, 
+    start => tenkhz_trig,  
     DCCT_out => dcct_adcs,  
     sdi => dcct_adc_sdo, 
     cnv => dcct_adc_cnv, 
@@ -233,7 +232,7 @@ read_mon_adcs: entity work.adc_8ch_module
   port map(
     clk => pl_clk0, 
     reset => pl_reset, 
-    start => adc_start,  
+    start => tenkhz_trig,   
     mon_adcs => mon_adcs,
     adc8c_sdo => mon_adc_sdo,
     adc8c_conv123 => mon_adc_cnv, 
@@ -243,14 +242,13 @@ read_mon_adcs: entity work.adc_8ch_module
 );
 
 
-write_stpt_dacs: entity work.dac_ctrlr
+write_dacs: entity work.dac_ctrlr
   port map(
     clk => pl_clk0,  
     reset => pl_reset, 
-    dac1_in => dac0, 
-    dac2_in => dac1,
-    dac3_in => dac2,  
-    dac4_in => dac3,  	
+    tenkhz_trig => tenkhz_trig,
+    dac_cntrl => dac_cntrl,
+    dac_stat => dac_stat,  	
     dac1234_jump => dac_jump, 		
     dac1_done => dac0_done, 
     dac2_done => dac1_done,  
@@ -294,7 +292,7 @@ clk_src: entity work.tenkhz_mux
     fofb_10khz => '0',
 	timer => 16d"10",
     flt_10kHz => open,  
-	O => adc_start
+	O => tenkhz_trig
     ); 
 
 
@@ -335,7 +333,9 @@ ps_regs: entity work.ps_io
     m_axi4_s2m => m_axi4_s2m,
     leds => leds,
     dcct_adcs => dcct_adcs,
-    mon_adcs => mon_adcs           
+    mon_adcs => mon_adcs,
+    dac_cntrl => dac_cntrl,
+    dac_stat => dac_stat               
   );
 
  

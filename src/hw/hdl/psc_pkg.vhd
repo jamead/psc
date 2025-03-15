@@ -8,34 +8,34 @@ package psc_pkg is
 --########################################################################
 --                           Records
 --########################################################################
-type t_DCCT_ADC is record
-  adc_data  : std_logic_vector(19 downto 0);
-  gain      : std_logic_vector(31 downto 0);
-  offset    : std_logic_vector(31 downto 0);
-end record;
+--type t_DCCT_ADC is record
+--  adc_data  : std_logic_vector(19 downto 0);
+--  gain      : std_logic_vector(31 downto 0);
+--  offset    : std_logic_vector(31 downto 0);
+--end record;
 
---DCCT record
-type t_DCCT is record
-  done           : std_logic;
-  ADC1           : t_DCCT_ADC;
-  ADC2           : t_DCCT_ADC;
-  ADC3           : t_DCCT_ADC;
-  ADC4           : t_DCCT_ADC;
-  ADC5           : t_DCCT_ADC;
-  ADC6           : t_DCCT_ADC;
-  ADC7           : t_DCCT_ADC;
-  ADC8           : t_DCCT_ADC;
-end record;
+----DCCT record
+--type t_DCCT is record
+--  done           : std_logic;
+--  ADC1           : t_DCCT_ADC;
+--  ADC2           : t_DCCT_ADC;
+--  ADC3           : t_DCCT_ADC;
+--  ADC4           : t_DCCT_ADC;
+--  ADC5           : t_DCCT_ADC;
+--  ADC6           : t_DCCT_ADC;
+--  ADC7           : t_DCCT_ADC;
+--  ADC8           : t_DCCT_ADC;
+--end record;
 
-type t_ADC_8CH_g_o is record
-  data           : std_logic_vector(15 downto 0);
-  gain           : std_logic_vector(31 downto 0);
-  offset         : std_logic_vector(31 downto 0);
-end record;
-
-
+--type t_ADC_8CH_g_o is record
+--  data           : std_logic_vector(15 downto 0);
+--  gain           : std_logic_vector(31 downto 0);
+--  offset         : std_logic_vector(31 downto 0);
+--end record;
 
 
+
+-- DCCT ADC record types
 
 type t_dcct_adcs_onech is record
   dcct0         : std_logic_vector(17 downto 0);
@@ -64,7 +64,7 @@ end record;
 
 
 
-
+-- Monitor ADC record types
 
 type t_mon_adcs_onech is record
   dac_sp        : std_logic_vector(15 downto 0);
@@ -100,49 +100,47 @@ type t_mon_adcs_ave is record
 end record;
 
 
---type t_ADC_CHANNEL is record
---  CH1            : t_ADC_8CH_g_o;
---  CH2            : t_ADC_8CH_g_o;
---  CH3            : t_ADC_8CH_g_o;
---  CH4            : t_ADC_8CH_g_o;
---  CH5            : t_ADC_8CH_g_o;
---  CH6            : t_ADC_8CH_g_o;
---  CH7            : t_ADC_8CH_g_o;
---  CH8            : t_ADC_8CH_g_o;
---end record;
 
-----8 Channel ADC record
---type t_ADC_8CHANNEL is record
---  --ADC1 Data Regs
---  ADC1       	: t_ADC_CHANNEL;
---  ADC2       	: t_ADC_CHANNEL;
---  ADC3     	: t_ADC_CHANNEL;
---end record;
+-- DAC record types
+
+type t_dac_stat_onech is record
+  active                : std_logic;
+  cur_addr              : std_logic_vector(15 downto 0);
+end record;
+
+type t_dac_stat is record
+  ps1           : t_dac_stat_onech;
+  ps2           : t_dac_stat_onech;
+  ps3           : t_dac_stat_onech;
+  ps4           : t_dac_stat_onech;
+end record;
 
 
-
-
-
-
-
-
-type t_dac is record 
+type t_dac_cntrl_onech is record 
   --DAC controls 
-  setpoint            : std_logic_vector(17 downto 0); 
+  setpoint            : std_logic_vector(19 downto 0); 
   load                : std_logic; 
-  done                : std_logic; 
+  ramplen             : std_logic_vector(15 downto 0);
+  gain                : std_logic_vector(15 downto 0);
+  offset              : std_logic_vector(15 downto 0);
   --Control Register Bits 
-  ctrl_reg            : std_logic_vector(4 downto 0); 
-  --Offset and Gain regs
-  gain                : std_logic_vector(31 downto 0); 
-  offset              : std_logic_vector(31 downto 0); 
+  cntrl               : std_logic_vector(7 downto 0); 
+  -- DPRAM for table
+  dpram_addr          : std_logic_vector(15 downto 0);
+  dpram_data          : std_logic_vector(19 downto 0);
+  dpram_we            : std_logic;
   --Reset
   reset               : std_logic; 
   --For Jump mode
-  dac1234_jump        : std_logic; 
+  jump                : std_logic; 
 end record; 
 
-
+type t_dac_cntrl is record
+  ps1           : t_dac_cntrl_onech;
+  ps2           : t_dac_cntrl_onech;
+  ps3           : t_dac_cntrl_onech;
+  ps4           : t_dac_cntrl_onech;
+end record;
 
 --########################################################################
 --                         Components
@@ -199,6 +197,20 @@ component system is
     pl_resetn : out STD_LOGIC_VECTOR(0 downto 0)
   );
   end component;
+
+component dac_dpram IS
+  port (
+    clka : IN STD_LOGIC;
+    wea : IN STD_LOGIC;  --_VECTOR(0 DOWNTO 0);
+    addra : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+    dina : IN STD_LOGIC_VECTOR(19 DOWNTO 0);
+    clkb : IN STD_LOGIC;
+    enb : IN STD_LOGIC;
+    addrb : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+    doutb : OUT STD_LOGIC_VECTOR(19 DOWNTO 0)
+  );
+END component;
+
 
 
 
