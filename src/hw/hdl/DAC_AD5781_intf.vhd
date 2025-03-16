@@ -105,6 +105,8 @@ begin
             bit_count <= 0; 
             clk_count   <= 0; 
 			setpoint_sent <= '0'; 
+			n_sync <= '1';
+			shift_reg <= (others => '0');
         else    
             case(present_state) is 
             

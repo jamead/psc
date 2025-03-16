@@ -54,14 +54,14 @@ reg {
   } ps1_dcct0 @0x20;  
 
 reg {
-    desc="PS1 DCCT1";
+    desc="PS1 DCCT 1";
     default sw = rw;
     default hw = w;
     field {} val[32];
   } ps1_dcct1 @0x24;  
 
 reg {
-    desc="PS1 DAC Setpoint";
+    desc="PS1 DAC Setpoint Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
@@ -89,7 +89,7 @@ reg {
   } ps1_spare @0x34; 
 
 reg {
-    desc="PS1 Regulator Output";
+    desc="PS1 Regulator Output Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
@@ -113,14 +113,14 @@ reg {
   } ps2_dcct0 @0x40;  
 
 reg {
-    desc="PS2 DCCT1";
+    desc="PS2 DCCT 1";
     default sw = rw;
     default hw = w;
     field {} val[32];
   } ps2_dcct1 @0x44;  
 
 reg {
-    desc="PS2 DAC Setpoint";
+    desc="PS2 DAC Setpoint Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
@@ -148,14 +148,14 @@ reg {
   } ps2_spare @0x54; 
 
 reg {
-    desc="PS2 Regulator Output";
+    desc="PS2 Regulator Output Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
   } ps2_reg @0x58; 
 
 reg {
-    desc="PS2 Error";
+    desc="PS2 Error Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
@@ -173,14 +173,14 @@ reg {
   } ps3_dcct0 @0x60;  
 
 reg {
-    desc="PS3 DCCT1";
+    desc="PS3 DCCT 1";
     default sw = rw;
     default hw = w;
     field {} val[32];
   } ps3_dcct1 @0x64;  
 
 reg {
-    desc="PS3 DAC Setpoint";
+    desc="PS3 DAC Setpoint Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
@@ -208,14 +208,14 @@ reg {
   } ps3_spare @0x74; 
 
 reg {
-    desc="PS3 Regulator Output";
+    desc="PS3 Regulator Output Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
   } ps3_reg @0x78; 
 
 reg {
-    desc="PS3 Error";
+    desc="PS3 Error Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
@@ -233,14 +233,14 @@ reg {
   } ps4_dcct0 @0x80;  
 
 reg {
-    desc="PS3 DCCT1";
+    desc="PS3 DCCT 1";
     default sw = rw;
     default hw = w;
     field {} val[32];
   } ps4_dcct1 @0x84;  
 
 reg {
-    desc="PS4 DAC Setpoint";
+    desc="PS4 DAC Setpoint Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
@@ -275,7 +275,7 @@ reg {
   } ps4_reg @0x98; 
 
 reg {
-    desc="PS4 Error";
+    desc="PS4 Error Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
@@ -307,7 +307,7 @@ reg {
   } ps1_dac_setpt @0x108;
   
 reg {
-    desc="PS1 DAC Jump";
+    desc="PS1 DAC JumpMode";
     default sw = rw;
     default hw = r;
     default swacc=true;
@@ -317,7 +317,7 @@ reg {
   
 
 reg {
-    desc="PS1 DAC Control";
+    desc="PS1 DAC Control bit0=op_gnd, bit1=sdo_dis, bit2=dac_tri, bit3=rbuf, bit4=bin2sc";
     default sw = rw;
     default hw = r;   
     field {} val[8];
@@ -383,6 +383,72 @@ reg {
 
 
 
+
+
+/* Digital I/O */
+
+reg {
+    desc="PS1 Digital Outputs bit0=On1, bit1=On2, bit2=Reset, bit3=spare, bit4=Park";
+    default sw = rw;
+    default hw = r; 
+    field {} val[5];
+  } ps1_digout @0x200; 
+  
+reg {
+    desc="PS1 Digital Inputs bit0=Acon, bit1=Flt1, bit2=Flt2, bit3=spare";
+    default sw = rw;
+    default hw = w; 
+    field {} val[4];
+  } ps1_digin @0x204;   
+  
+ reg {
+    desc="PS2 Digital Outputs bit0=On1, bit1=On2, bit2=Reset, bit3=spare, bit4=Park";
+    default sw = rw;
+    default hw = r; 
+    field {} val[5];
+  } ps2_digout @0x208; 
+  
+reg {
+    desc="PS2 Digital Inputs bit0=Acon, bit1=Flt1, bit2=Flt2, bit3=spare";
+    default sw = rw;
+    default hw = w; 
+    field {} val[4];
+  } ps2_digin @0x20C;  
+
+
+reg {
+    desc="PS3 Digital Outputs bit0=On1, bit1=On2, bit2=Reset, bit3=spare, bit4=Park";
+    default sw = rw;
+    default hw = r; 
+    field {} val[5];
+  } ps3_digout @0x210; 
+  
+reg {
+    desc="PS3 Digital Inputs bit0=Acon, bit1=Flt1, bit2=Flt2, bit3=spare";
+    default sw = rw;
+    default hw = w; 
+    field {} val[4];
+  } ps3_digin @0x214;   
+  
+ reg {
+    desc="PS4 Digital Outputs bit0=On1, bit1=On2, bit2=Reset, bit3=spare, bit4=Park";
+    default sw = rw;
+    default hw = r; 
+    field {} val[5];
+  } ps4_digout @0x218; 
+  
+reg {
+    desc="PS4 Digital Inputs bit0=Acon, bit1=Flt1, bit2=Flt2, bit3=spare";
+    default sw = rw;
+    default hw = w; 
+    field {} val[4];
+  } ps4_digin @0x21C;  
+
+
+
+
+
+/* DESY Version registers */
 
   reg {
     desc = "Module Identification Number";

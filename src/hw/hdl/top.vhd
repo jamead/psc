@@ -335,9 +335,13 @@ ps_regs: entity work.ps_io
     dcct_adcs => dcct_adcs,
     mon_adcs => mon_adcs,
     dac_cntrl => dac_cntrl,
-    dac_stat => dac_stat               
+    dac_stat => dac_stat,
+    rcom => rcom,
+    rsts => rsts               
   );
 
+ 
+ 
  
 
 sys: component system

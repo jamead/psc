@@ -31,7 +31,9 @@ entity ps_io is
     dcct_adcs        : in t_dcct_adcs;
     mon_adcs         : in t_mon_adcs;
     dac_cntrl        : out t_dac_cntrl;
-	dac_stat         : in t_dac_stat
+	dac_stat         : in t_dac_stat;
+	rcom             : out std_logic_vector(19 downto 0);
+	rsts             : in std_logic_vector(19 downto 0)
       
   );
 end ps_io;
@@ -105,10 +107,29 @@ dac_cntrl.ps1.reset <= reg_o.ps1_dac_reset.val.data(0);
 dac_cntrl.ps1.ramplen <= reg_o.ps1_dac_ramplen.val.data;
 dac_cntrl.ps1.dpram_addr <= reg_o.ps1_dac_rampaddr.val.data;
 dac_cntrl.ps1.dpram_data <= reg_o.ps1_dac_rampdata.val.data;
+dac_cntrl.ps1.dpram_we <= reg_o.ps1_dac_rampdata.val.swacc;
 dac_cntrl.ps1.load <= reg_o.ps1_dac_runramp.val.data(0);
 
 reg_i.ps1_dac_rampactive.val.data(0) <= dac_stat.ps1.active;
 reg_i.ps1_dac_currampaddr.val.data <= dac_stat.ps1.cur_addr;
+
+
+
+-- Digital IO
+rcom(3 downto 0) <= reg_o.ps1_digout.val.data(3 downto 0);
+rcom(7 downto 4) <= reg_o.ps1_digout.val.data(3 downto 0);
+rcom(11 downto 8) <= reg_o.ps1_digout.val.data(3 downto 0);
+rcom(15 downto 12) <= reg_o.ps1_digout.val.data(3 downto 0);
+rcom(16) <= reg_o.ps1_digout.val.data(4);  --park bit
+rcom(17) <= reg_o.ps2_digout.val.data(4);  --park bit
+rcom(18) <= reg_o.ps3_digout.val.data(4);  --park bit
+rcom(19) <= reg_o.ps4_digout.val.data(4);  --park_bit
+
+reg_i.ps1_digin.val.data <= rsts(3 downto 0);
+reg_i.ps2_digin.val.data <= rsts(7 downto 4);
+reg_i.ps3_digin.val.data <= rsts(11 downto 8);
+reg_i.ps4_digin.val.data <= rsts(15 downto 12);
+
 
 
 

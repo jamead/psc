@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="top_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="axi_vip_pkg" />
+            <top_module name="common" />
+            <top_module name="glbl" />
+            <top_module name="pkg_pl_regs" />
+            <top_module name="psc_pkg" />
+            <top_module name="std" />
+            <top_module name="top_tb" />
+            <top_module name="xil_common_vip_pkg" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000000000 ms"></ZoomStartTime>
+      <ZoomEndTime time="6.160790001 ms"></ZoomEndTime>
+      <Cursor1Time time="5.663594103 ms"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="262"></NameColumnWidth>
+      <ValueColumnWidth column_width="66"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="32" />
+   <wvobject type="logic" fp_name="/top_tb/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top_tb/reset_n">
+      <obj_property name="ElementShortName">reset_n</obj_property>
+      <obj_property name="ObjectShortName">reset_n</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top_tb/dut/tenkhz_trig">
+      <obj_property name="ElementShortName">tenkhz_trig</obj_property>
+      <obj_property name="ObjectShortName">tenkhz_trig</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider159" type="divider">
+      <obj_property name="label">Monitor ADCs</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top_tb/mon_adc_rst">
+      <obj_property name="ElementShortName">mon_adc_rst</obj_property>
+      <obj_property name="ObjectShortName">mon_adc_rst</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top_tb/mon_adc_cnv">
+      <obj_property name="ElementShortName">mon_adc_cnv</obj_property>
+      <obj_property name="ObjectShortName">mon_adc_cnv</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top_tb/mon_adc_sck">
+      <obj_property name="ElementShortName">mon_adc_sck</obj_property>
+      <obj_property name="ObjectShortName">mon_adc_sck</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top_tb/mon_adc_fs">
+      <obj_property name="ElementShortName">mon_adc_fs</obj_property>
+      <obj_property name="ObjectShortName">mon_adc_fs</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/mon_adc_busy">
+      <obj_property name="ElementShortName">mon_adc_busy[2:0]</obj_property>
+      <obj_property name="ObjectShortName">mon_adc_busy[2:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/mon_adc_sdo">
+      <obj_property name="ElementShortName">mon_adc_sdo[2:0]</obj_property>
+      <obj_property name="ObjectShortName">mon_adc_sdo[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider160" type="divider">
+      <obj_property name="label">DCCT ADCs</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top_tb/dcct_adc_cnv">
+      <obj_property name="ElementShortName">dcct_adc_cnv</obj_property>
+      <obj_property name="ObjectShortName">dcct_adc_cnv</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top_tb/dcct_adc_sck">
+      <obj_property name="ElementShortName">dcct_adc_sck</obj_property>
+      <obj_property name="ObjectShortName">dcct_adc_sck</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dcct_adc_busy">
+      <obj_property name="ElementShortName">dcct_adc_busy[3:0]</obj_property>
+      <obj_property name="ObjectShortName">dcct_adc_busy[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dcct_adc_sdo">
+      <obj_property name="ElementShortName">dcct_adc_sdo[3:0]</obj_property>
+      <obj_property name="ObjectShortName">dcct_adc_sdo[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider163" type="divider">
+      <obj_property name="label">RampTable</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/top_tb/dut/write_dacs/state">
+      <obj_property name="ElementShortName">state</obj_property>
+      <obj_property name="ObjectShortName">state</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/write_dacs/dac_cntrl.ps1">
+      <obj_property name="ElementShortName">.ps1</obj_property>
+      <obj_property name="ObjectShortName">.ps1</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/write_dacs/dac_rdaddr">
+      <obj_property name="ElementShortName">dac_rdaddr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dac_rdaddr[15:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/write_dacs/dac_rddata">
+      <obj_property name="ElementShortName">dac_rddata[19:0]</obj_property>
+      <obj_property name="ObjectShortName">dac_rddata[19:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/write_dacs/dac_setpt">
+      <obj_property name="ElementShortName">dac_setpt[19:0]</obj_property>
+      <obj_property name="ObjectShortName">dac_setpt[19:0]</obj_property>
+      <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
+      <obj_property name="CellHeight">100</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top_tb/dut/write_dacs/dac_rden">
+      <obj_property name="ElementShortName">dac_rden</obj_property>
+      <obj_property name="ObjectShortName">dac_rden</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top_tb/dut/write_dacs/dac_start">
+      <obj_property name="ElementShortName">dac_start</obj_property>
+      <obj_property name="ObjectShortName">dac_start</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider161" type="divider">
+      <obj_property name="label">SetPoint DACs</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top_tb/stpt_dac_sck">
+      <obj_property name="ElementShortName">stpt_dac_sck</obj_property>
+      <obj_property name="ObjectShortName">stpt_dac_sck</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top_tb/stpt_dac_sync">
+      <obj_property name="ElementShortName">stpt_dac_sync</obj_property>
+      <obj_property name="ObjectShortName">stpt_dac_sync</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/stpt_dac_sdo">
+      <obj_property name="ElementShortName">stpt_dac_sdo[3:0]</obj_property>
+      <obj_property name="ObjectShortName">stpt_dac_sdo[3:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+   <wvobject fp_name="divider162" type="divider">
+      <obj_property name="label">GTX</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top_tb/gtx_evr_refclk_p">
+      <obj_property name="ElementShortName">gtx_evr_refclk_p</obj_property>
+      <obj_property name="ObjectShortName">gtx_evr_refclk_p</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top_tb/gtx_evr_refclk_n">
+      <obj_property name="ElementShortName">gtx_evr_refclk_n</obj_property>
+      <obj_property name="ObjectShortName">gtx_evr_refclk_n</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top_tb/gtx_gige_refclk_p">
+      <obj_property name="ElementShortName">gtx_gige_refclk_p</obj_property>
+      <obj_property name="ObjectShortName">gtx_gige_refclk_p</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top_tb/gtx_gige_refclk_n">
+      <obj_property name="ElementShortName">gtx_gige_refclk_n</obj_property>
+      <obj_property name="ObjectShortName">gtx_gige_refclk_n</obj_property>
+   </wvobject>
+</wave_config>

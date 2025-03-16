@@ -66,6 +66,7 @@ begin
             shift_reg <= (others => '0');
             data_out  <= (others => '0');
             data_rdy  <= '0';
+            cnv <= '0';
             present_state <= IDLE; 
         else 
             case(present_state) is 
