@@ -55,28 +55,45 @@ type state_type is (IDLE,RUN_RAMP,UPDATE_DAC);
   --signal result1, result2, result3, result4 : std_logic_vector(17 downto 0); 
   --signal or_load1, or_load2, or_load3, or_load4 : std_logic; 
 
-  signal dac_rdaddr : std_logic_vector(15 downto 0);
-  signal dac_rddata : std_logic_vector(19 downto 0);
-  signal dac_rden   : std_logic;
-  signal dac_setpt  : std_logic_vector(19 downto 0);
-  signal dac_start  : std_logic;
+  signal dac_rdaddr      : std_logic_vector(15 downto 0);
+  signal dac_rddata      : std_logic_vector(19 downto 0);
+  signal dac_rden        : std_logic;
+  signal ramp_dac_setpt  : std_logic_vector(19 downto 0);
+  signal dac_setpt       : std_logic_vector(19 downto 0);
+  signal dac_start       : std_logic;
+  signal dac_trig        : std_logic;
   
   signal state : state_type;
+
+
+
+   --debug signals (connect to ila)
+   attribute mark_debug                 : string;
+   attribute mark_debug of dac_rdaddr: signal is "true";
+   attribute mark_debug of dac_rddata: signal is "true";
+   attribute mark_debug of dac_rden: signal is "true"; 
+   attribute mark_debug of ramp_dac_setpt: signal is "true";
+   attribute mark_debug of dac_setpt: signal is "true";
+   attribute mark_debug of dac_start: signal is "true";     
+   attribute mark_debug of dac_cntrl: signal is "true";     
 
 
 begin
 
 
 
---process(clk) 
---begin 
---    if rising_edge(clk) then 
---        or_load1 <= dac1_in.load or dac1234_jump; 
---        or_load2 <= dac2_in.load or dac1234_jump; 
---        or_load3 <= dac3_in.load or dac1234_jump; 
---        or_load4 <= dac4_in.load or dac1234_jump; 
---    end if; 
---end process; 
+process(clk) 
+begin 
+    if rising_edge(clk) then 
+      if (dac_cntrl.ps1.jump = '1') then
+        dac_setpt <= dac_cntrl.ps1.setpoint; 
+        dac_trig <= tenkhz_trig;
+      else
+        dac_setpt <= ramp_dac_setpt;
+        dac_trig <= dac_start;
+      end if;
+    end if; 
+end process; 
 
 
 
@@ -105,6 +122,7 @@ begin
       dac_rdaddr <= 16d"0";
       dac_rden <= '0';
       dac_start <= '0';
+      ramp_dac_setpt <= (others => '0');
     else 
       case(state) is 
         when IDLE => 
@@ -128,7 +146,7 @@ begin
                state <= idle;
             else
               dac_rdaddr <= std_logic_vector(unsigned(dac_rdaddr) + 1);
-              dac_setpt <= dac_rddata;
+              ramp_dac_setpt <= dac_rddata;
               dac_start <= '1';
               state <= run_ramp;
             end if;  
@@ -151,7 +169,7 @@ setpt_dac1:  entity work.dac_ad5781_intf
 	--Control inputs
     clk => clk,
     reset => dac_cntrl.ps1.reset, 
-	start => dac_start, 
+	start => dac_trig,  
     --DAC Inputs         
     dac_data => dac_setpt(17 downto 0),
     dac_ctrl_bits => dac_cntrl.ps1.cntrl(4 downto 0),
@@ -169,7 +187,7 @@ setpt_dac2:  entity work.dac_ad5781_intf
 	--Control inputs
     clk => clk,
     reset => dac_cntrl.ps1.reset, 
-	start => dac_start, 
+	start => dac_trig,  
     --DAC Inputs         
     dac_data => dac_setpt(17 downto 0),
     dac_ctrl_bits => dac_cntrl.ps1.cntrl(4 downto 0),
@@ -188,7 +206,7 @@ setpt_dac3:  entity work.dac_ad5781_intf
 	--Control inputs
     clk => clk,
     reset => dac_cntrl.ps1.reset, 
-	start => dac_start,
+	start => dac_trig, 
     --DAC Inputs         
     dac_data => dac_setpt(17 downto 0),
     dac_ctrl_bits => dac_cntrl.ps1.cntrl(4 downto 0),
@@ -207,7 +225,7 @@ setpt_dac4:  entity work.dac_ad5781_intf
 	--Control inputs
     clk => clk,
     reset => dac_cntrl.ps1.reset,
-	start => dac_start,
+	start => dac_trig, 
     --DAC Inputs         
     dac_data => dac_setpt(17 downto 0),
     dac_ctrl_bits => dac_cntrl.ps1.cntrl(4 downto 0),

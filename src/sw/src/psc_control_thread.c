@@ -25,7 +25,7 @@
 
 
 void set_fpleds(u32 msgVal)  {
-	Xil_Out32(XPAR_M_AXI_BASEADDR + FP_LEDS_REG, msgVal);
+	Xil_Out32(XPAR_M_AXI_BASEADDR + FPLEDS, msgVal);
 }
 
 

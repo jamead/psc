@@ -137,13 +137,13 @@ void print_firmware_version()
   struct tm *human_time;
   char timebuf[80];
 
-  xil_printf("Module ID Number: %x\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + MOD_ID_NUM));
-  xil_printf("Module Version Number: %x\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + MOD_ID_VER));
-  xil_printf("Project ID Number: %x\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + PROJ_ID_NUM));
-  xil_printf("Project Version Number: %x\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + PROJ_ID_VER));
+  xil_printf("Module ID Number: %x\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + ID));
+  xil_printf("Module Version Number: %x\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + VERSION));
+  xil_printf("Project ID Number: %x\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + PRJ_ID));
+  xil_printf("Project Version Number: %x\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + PRJ_VERSION));
   //compare to git commit with command: git rev-parse --short HEAD
-  xil_printf("Git Checksum: %x\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + GIT_SHASUM));
-  epoch_time = Xil_In32(XPAR_M_AXI_BASEADDR + COMPILE_TIMESTAMP);
+  xil_printf("Git Checksum: %x\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + PRJ_SHASUM));
+  epoch_time = Xil_In32(XPAR_M_AXI_BASEADDR + PRJ_TIMESTAMP);
   human_time = localtime(&epoch_time);
   strftime(timebuf, sizeof(timebuf), "%Y-%m-%d %H:%M:%S", human_time);
   xil_printf("Project Compilation Timestamp: %s\r\n", timebuf);
@@ -248,24 +248,60 @@ int main()
     struct SAdataMsg SAdata;
     u32 trigstat, wordcnt;
     s32 dcct[8];
+    s32 ps1_dacsp, ps2_dacsp, ps3_dacsp, ps4_dacsp;
 
 	xil_printf("BNL Power Supply Controller ...\r\n");
     print_firmware_version();
 
 	init_i2c();
  
-	xil_printf("FPGA Version: %d\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + FPGA_VER_REG));
+	xil_printf("FPGA Version: %d\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + FPGAVER));
 
-    //set FP LEDs
+    // set dac to ramp mode
+	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_JUMPMODE, 1);
+
+    xil_printf("Loading Ramptable\r\n");
+	// load ramptable
+	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPLEN, 3000);
+	for (i=0;i<1000;i++) {
+		Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPADDR, i);
+	    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPDATA, i*100);
+	}
+	for (i=0;i<1000;i++) {
+		Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPADDR, i+1000);
+	    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPDATA, 1000*100);
+	}
+	for (i=0;i<1000;i++) {
+		Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPADDR, i+2000);
+	    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPDATA, 1000*100-i*100);
+	}
+
+
+
+    //run ramp table at 1Hz
 	while (1) {
-		Xil_Out32(XPAR_M_AXI_BASEADDR + FP_LEDS_REG, i);
-		i=i+1;
-		  for (x=0;x<32;x++) {
-			dcct[x] = Xil_In32(XPAR_M_AXI_BASEADDR + 0x20+x*4);
-	        xil_printf("%8d ", dcct[x]);
-		}
-		xil_printf("\r\n");
+	    xil_printf("Running Ramptable\r\n");
+		Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RUNRAMP, 1);
+		Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RUNRAMP, 0);
 
+		//currampaddr = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_CURRAMPADDR);
+		//if (curram)
+		for (i=0;i<100;i++) {
+		    //Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DIGOUT, i);
+		    //Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DIGOUT, i);
+		    //Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DIGOUT, i);
+		    //Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DIGOUT, i);
+		    //Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_SETPT, i);
+
+		    ps1_dacsp = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DACSP);
+		    ps2_dacsp = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DACSP);
+		    ps3_dacsp = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DACSP);
+		    ps4_dacsp = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DACSP);
+
+	        xil_printf("%8d %8d %8d %8d ", ps1_dacsp, ps2_dacsp, ps3_dacsp, ps4_dacsp);
+		    xil_printf("\r\n");
+		    usleep(100);
+		}
 		sleep(1);
         
 	}

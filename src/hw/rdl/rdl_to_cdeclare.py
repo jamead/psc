@@ -12,7 +12,7 @@ def parse_registers(file_path):
     for match in pattern.finditer(content):
         body, name, address = match.groups()
         description = re.search(r'desc\s*=\s*"(.*?)";', body)
-        parsed_data.append((f"#DEFINE {name.upper()}", f"0X{address.upper()}", f"// {description.group(1)}" if description else ""))
+        parsed_data.append((f"#define {name.upper()}", f"0X{address.upper()}", f"// {description.group(1)}" if description else ""))
 
     return parsed_data
 
