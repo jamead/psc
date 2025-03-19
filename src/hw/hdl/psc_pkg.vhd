@@ -119,6 +119,35 @@ type t_dac_cntrl is record
   ps4           : t_dac_cntrl_onech;
 end record;
 
+
+
+type t_pl_snapshot_axi4_m2s is record
+  awaddr :  std_logic_vector(31 downto 0);
+  awburst : std_logic_vector(1 downto 0);
+  awcache : std_logic_vector(3 downto 0);
+  awlen : std_logic_vector(7 downto 0);
+  awlock : std_logic_vector(0 to 0);
+  awprot : std_logic_vector(2 downto 0);
+  awqos : std_logic_vector(3 downto 0);
+  awsize : std_logic_vector(2 downto 0);
+  awvalid : std_logic;
+  wdata : std_logic_vector(31 downto 0);
+  wlast : std_logic;
+  wstrb : std_logic_vector(3 downto 0);
+  wvalid : std_logic;
+  bready : std_logic;
+end record;
+
+
+
+type t_pl_snapshot_axi4_s2m is record
+  awready : std_logic;
+  wready : std_logic;
+  bresp : std_logic_vector(1 downto 0);
+  bvalid : std_logic;
+end record;
+
+
 --########################################################################
 --                         Components
 --########################################################################

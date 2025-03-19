@@ -105,7 +105,7 @@ generic(
 
   );
 end top;
-
+ 
 
 architecture behv of top is
 
@@ -128,6 +128,10 @@ architecture behv of top is
  
    signal m_axi4_m2s            : t_pl_regs_m2s;
    signal m_axi4_s2m            : t_pl_regs_s2m;
+ 
+   signal s_axi4_m2s            : t_pl_snapshot_axi4_m2s;
+   signal s_axi4_s2m            : t_pl_snapshot_axi4_s2m;  
+   
    
    signal tenkhz_trig           : std_logic;
    
@@ -171,28 +175,9 @@ architecture behv of top is
    signal evr_trignum           : std_logic_vector(7 downto 0);
    signal evr_trigdly           : std_logic_vector(31 downto 0);
    signal evr_rcvd_clk          : std_logic;
+ 
    
-   signal s_axi_awaddr : STD_LOGIC_VECTOR ( 31 downto 0 );
-   signal s_axi_awburst : STD_LOGIC_VECTOR ( 1 downto 0 );
-   signal s_axi_awcache : STD_LOGIC_VECTOR ( 3 downto 0 );
-   signal s_axi_awlen : STD_LOGIC_VECTOR ( 7 downto 0 );
-   signal s_axi_awlock : STD_LOGIC_VECTOR ( 0 to 0 );
-   signal s_axi_awprot : STD_LOGIC_VECTOR ( 2 downto 0 );
-   signal s_axi_awqos : STD_LOGIC_VECTOR ( 3 downto 0 );
-   signal s_axi_awready : STD_LOGIC;
-   signal s_axi_awsize : STD_LOGIC_VECTOR ( 2 downto 0 );
-   signal s_axi_awvalid : STD_LOGIC;
-   signal s_axi_bready : STD_LOGIC;
-   signal s_axi_bresp :  STD_LOGIC_VECTOR ( 1 downto 0 );
-   signal s_axi_bvalid : STD_LOGIC;
-   signal s_axi_wdata : STD_LOGIC_VECTOR ( 31 downto 0 );
-   signal s_axi_wlast : STD_LOGIC;
-   signal s_axi_wready :  STD_LOGIC;
-   signal s_axi_wstrb : STD_LOGIC_VECTOR ( 3 downto 0 );
-   signal s_axi_wvalid : STD_LOGIC;      
-   
-   
-
+  
    --debug signals (connect to ila)
    attribute mark_debug                 : string;
    attribute mark_debug of leds            : signal is "true";
@@ -370,35 +355,15 @@ ps_regs: entity work.ps_io
 
     
  
- adc2ddr : entity work.axi4_write_adc
-    port map (
-        clk             => pl_clk0,
-        reset           => pl_reset,
-        trigger         => tenkhz_trig, 
-        s_axi_awaddr    => s_axi_awaddr,
-        s_axi_awburst   => s_axi_awburst,
-        s_axi_awcache   => s_axi_awcache,
-        s_axi_awlen     => s_axi_awlen,
-        s_axi_awlock    => s_axi_awlock,
-        s_axi_awprot    => s_axi_awprot,
-        s_axi_awqos     => s_axi_awqos,
-        s_axi_awready   => s_axi_awready,
-        s_axi_awsize    => s_axi_awsize,
-        s_axi_awvalid   => s_axi_awvalid,
-        s_axi_wdata     => s_axi_wdata,
-        s_axi_wlast     => s_axi_wlast,
-        s_axi_wready    => s_axi_wready,
-        s_axi_wstrb     => s_axi_wstrb,
-        s_axi_wvalid    => s_axi_wvalid,
-        s_axi_bready    => s_axi_bready,
-        s_axi_bresp     => s_axi_bresp,
-        s_axi_bvalid    => s_axi_bvalid
-    );
+adc2ddr : entity work.axi4_write_adc
+  port map (
+    clk => pl_clk0,
+    reset => pl_reset,
+    trigger => tenkhz_trig, 
+    s_axi4_m2s => s_axi4_m2s,
+    s_axi4_s2m => s_axi4_s2m
+  );
 
- 
- 
- 
- 
 
 sys: component system
   port map (
@@ -451,29 +416,24 @@ sys: component system
     m_axi_wready => m_axi4_s2m.wready,
     m_axi_wstrb => m_axi4_m2s.wstrb,
     m_axi_wvalid => m_axi4_m2s.wvalid,
-    s_axi_awaddr => s_axi_awaddr, 
-    s_axi_awburst => s_axi_awburst, 
-    s_axi_awcache => s_axi_awcache, 
-    s_axi_awlen => s_axi_awlen, 
-    s_axi_awlock => s_axi_awlock, 
-    s_axi_awprot => s_axi_awprot, 
-    s_axi_awqos => s_axi_awqos, 
-    s_axi_awready => s_axi_awready, 
-    s_axi_awsize => s_axi_awsize, 
-    s_axi_awvalid => s_axi_awvalid, 
-    s_axi_bready => s_axi_bready, 
-    s_axi_bresp => s_axi_bresp, 
-    s_axi_bvalid => s_axi_bvalid, 
-    s_axi_wdata => s_axi_wdata, 
-    s_axi_wlast => s_axi_wlast, 
-    s_axi_wready => s_axi_wready, 
-    s_axi_wstrb => s_axi_wstrb, 
-    s_axi_wvalid => s_axi_wvalid       
---    s_axis_s2mm_tdata => dma_adc_tdata,
---    s_axis_s2mm_tkeep => dma_adc_tkeep,
---    s_axis_s2mm_tlast => dma_adc_tlast, 
---    s_axis_s2mm_tready => dma_adc_tready,
---    s_axis_s2mm_tvalid => dma_adc_tvalid     
+    s_axi_awaddr => s_axi4_m2s.awaddr, 
+    s_axi_awburst => s_axi4_m2s.awburst, 
+    s_axi_awcache => s_axi4_m2s.awcache, 
+    s_axi_awlen => s_axi4_m2s.awlen, 
+    s_axi_awlock => s_axi4_m2s.awlock, 
+    s_axi_awprot => s_axi4_m2s.awprot, 
+    s_axi_awqos => s_axi4_m2s.awqos, 
+    s_axi_awready => s_axi4_s2m.awready, 
+    s_axi_awsize => s_axi4_m2s.awsize, 
+    s_axi_awvalid => s_axi4_m2s.awvalid, 
+    s_axi_bready => s_axi4_m2s.bready, 
+    s_axi_bresp => s_axi4_s2m.bresp, 
+    s_axi_bvalid => s_axi4_s2m.bvalid, 
+    s_axi_wdata => s_axi4_m2s.wdata, 
+    s_axi_wlast => s_axi4_m2s.wlast, 
+    s_axi_wready => s_axi4_s2m.wready, 
+    s_axi_wstrb => s_axi4_m2s.wstrb, 
+    s_axi_wvalid => s_axi4_m2s.wvalid         
   );
 
 
