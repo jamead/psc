@@ -251,13 +251,29 @@ int main()
     u32 trigstat, wordcnt;
     s32 dcct[8];
     s32 ps1_dacsp, ps2_dacsp, ps3_dacsp, ps4_dacsp;
-    u32 *addr;
+    volatile u32 *addr;
     
     
     
     addr = (u32 *)0x10000000;
     
-    
+    for (i=0;i<1000;i++) {
+    	*addr++ = 0;
+    }
+    Xil_DCacheFlush();
+	//Xil_DCacheInvalidateRange(0x10000000,1e6);
+    addr = (u32 *)0x10000000;
+	xil_printf("\r\n\r\n");
+	  
+	
+	for (j=0;j<20;j++) {
+	  xil_printf("%8x: ",j*8);
+	  for (i=0;i<8;i++) {
+		xil_printf("%8x  ", *addr++);
+	  }
+	  xil_printf("\r\n");
+	}
+	
     //Xil_DCacheDisable();  // Disable Data Cache
     //Xil_ICacheDisable();  // Disable Instruction Cache
 
@@ -269,17 +285,15 @@ int main()
 	init_i2c();
  
 	xil_printf("FPGA Version: %d\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + FPGAVER));
-
+    addr = (u32 *)0x10000000;
 	while (1) {
-		addr = (u32 *)0x10000000;
-		
 		Xil_Out32(XPAR_M_AXI_BASEADDR + FPLEDS, 1);
 		Xil_Out32(XPAR_M_AXI_BASEADDR + FPLEDS, 0);
 		Xil_DCacheInvalidateRange(0x10000000,1e6);
-		//for (i=0;i<8;i++) {
-		//	xil_printf("%8x  ", *addr++);
-		//}
-		//xil_printf("\r\n");
+		for (i=0;i<8;i++) {
+			xil_printf("%8x  ", *addr++);
+		}
+		xil_printf("\r\n");
 	}
 	
     // set dac to ramp mode

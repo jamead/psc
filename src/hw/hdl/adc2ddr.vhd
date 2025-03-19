@@ -45,6 +45,7 @@ architecture rtl of axi4_write_adc is
     signal addr_base : std_logic_vector(31 downto 0) := x"1000_0000";  -- Example DDR address
     
     signal datacnt : std_logic_vector(31 downto 0);
+    signal nextdata : std_logic_vector(31 downto 0);
     signal prev_trigger : std_logic;
 
     --debug signals (connect to ila)
@@ -91,6 +92,7 @@ begin
         s_axi_bready <= '0';
         state <= idle;
         datacnt <= 32d"0";
+        nextdata <= 32d"0";
       else
         case state is 
           when IDLE =>                
@@ -100,9 +102,9 @@ begin
               wordnum <= 0;
               s_axi_awaddr <= addr_base;
               s_axi_awvalid <= '1';
-              s_axi_awburst <= "00"; --"01"; -- Incrementing burst
+              s_axi_awburst <= "01"; --"01"; -- Incrementing burst
               s_axi_awcache <= "0011"; -- Normal non-cacheable bufferable
-              s_axi_awlen <= x"0"; --x"7";  -- 8-beat burst
+              s_axi_awlen <= x"7"; --x"7";  -- 8-beat burst
               s_axi_awlock <= "00";    
               s_axi_awprot <= "000";  -- Unprivileged secure data
               s_axi_awqos <= "0000";   
@@ -114,28 +116,30 @@ begin
              -- Address handshake
              if (s_axi_awready = '1') then
                  s_axi_awvalid <= '0';  -- Address accepted
-                 s_axi_wvalid <= '1';  --assert data valid
+                 --s_axi_wvalid <= '1';  --assert data valid
                  s_axi_wdata <= datacnt;
-                 datacnt <= std_logic_vector(unsigned(datacnt) + 1);
+                 --datacnt <= std_logic_vector(unsigned(datacnt) + 1);
                  s_axi_wstrb <= x"F";
-                 s_axi_wlast <= '1';
-                 state <= awaitresp; --data;
+                 --s_axi_wlast <= '1';
+                 state <= data; --awaitresp; --data;
                  wordnum <= 0;
              end if;
              
           when DATA => 
              -- Write data
---             if (s_axi_wready = '1') then
---                 if (wordnum < 8) then
---                   s_axi_wdata <=  datacnt;  --data_values(wordnum);
---                   datacnt <= std_logic_vector(unsigned(datacnt) + 1);
---                   if wordnum = 7 then
---                      s_axi_wlast <= '1';
---                      state <= awaitresp;
---                   end if;
---                   wordnum <= wordnum + 1;
---                 end if;
---             end if;    
+             if (s_axi_wready = '1') then
+                 if (wordnum < 8) then
+                   s_axi_wvalid <= '1';
+                   s_axi_wdata <=  datacnt;  --data_values(wordnum);
+                   datacnt <= std_logic_vector(unsigned(datacnt) + 1);
+                   if wordnum = 7 then
+                      s_axi_wlast <= '1';
+                      state <= awaitresp;
+                   end if;
+                   wordnum <= wordnum + 1;
+                   nextdata <= datacnt;
+                 end if;
+             end if;    
                 
           when AWAITRESP =>
               s_axi_wlast <= '0';
@@ -143,7 +147,7 @@ begin
               s_axi_bready <= '1';
               -- Clear bready after response
               if s_axi_bvalid = '1' then
-                    addr_base <= std_logic_vector(unsigned(addr_base) + 4);
+                    addr_base <= std_logic_vector(unsigned(addr_base) + 4*8);
                     if (addr_base > x"1100_0000") then 
                       addr_base <= x"1000_0000";
                     end if;
