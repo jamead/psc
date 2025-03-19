@@ -19,6 +19,8 @@
 #include "pl_regs.h"
 #include "psc_msg.h"
 
+#include "xil_cache.h"
+
 
 
 
@@ -249,14 +251,37 @@ int main()
     u32 trigstat, wordcnt;
     s32 dcct[8];
     s32 ps1_dacsp, ps2_dacsp, ps3_dacsp, ps4_dacsp;
+    u32 *addr;
+    
+    
+    
+    addr = (u32 *)0x10000000;
+    
+    
+    //Xil_DCacheDisable();  // Disable Data Cache
+    //Xil_ICacheDisable();  // Disable Instruction Cache
 
 	xil_printf("BNL Power Supply Controller ...\r\n");
     print_firmware_version();
+    
+    
 
 	init_i2c();
  
 	xil_printf("FPGA Version: %d\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + FPGAVER));
 
+	while (1) {
+		addr = (u32 *)0x10000000;
+		
+		Xil_Out32(XPAR_M_AXI_BASEADDR + FPLEDS, 1);
+		Xil_Out32(XPAR_M_AXI_BASEADDR + FPLEDS, 0);
+		Xil_DCacheInvalidateRange(0x10000000,1e6);
+		//for (i=0;i<8;i++) {
+		//	xil_printf("%8x  ", *addr++);
+		//}
+		//xil_printf("\r\n");
+	}
+	
     // set dac to ramp mode
 	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_JUMPMODE, 1);
 

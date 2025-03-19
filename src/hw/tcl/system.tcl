@@ -202,11 +202,42 @@ proc create_root_design { parentCell } {
    CONFIG.PROTOCOL {AXI4LITE} \
    ] $m_axi
 
+  set s_axi [ create_bd_intf_port -mode Slave -vlnv xilinx.com:interface:aximm_rtl:1.0 s_axi ]
+  set_property -dict [ list \
+   CONFIG.ADDR_WIDTH {32} \
+   CONFIG.ARUSER_WIDTH {0} \
+   CONFIG.AWUSER_WIDTH {0} \
+   CONFIG.BUSER_WIDTH {0} \
+   CONFIG.DATA_WIDTH {32} \
+   CONFIG.HAS_BRESP {1} \
+   CONFIG.HAS_BURST {1} \
+   CONFIG.HAS_CACHE {1} \
+   CONFIG.HAS_LOCK {1} \
+   CONFIG.HAS_PROT {1} \
+   CONFIG.HAS_QOS {1} \
+   CONFIG.HAS_REGION {0} \
+   CONFIG.HAS_RRESP {1} \
+   CONFIG.HAS_WSTRB {1} \
+   CONFIG.ID_WIDTH {6} \
+   CONFIG.MAX_BURST_LENGTH {16} \
+   CONFIG.NUM_READ_OUTSTANDING {8} \
+   CONFIG.NUM_READ_THREADS {1} \
+   CONFIG.NUM_WRITE_OUTSTANDING {8} \
+   CONFIG.NUM_WRITE_THREADS {1} \
+   CONFIG.PROTOCOL {AXI3} \
+   CONFIG.READ_WRITE_MODE {WRITE_ONLY} \
+   CONFIG.RUSER_BITS_PER_BYTE {0} \
+   CONFIG.RUSER_WIDTH {0} \
+   CONFIG.SUPPORTS_NARROW_BURST {0} \
+   CONFIG.WUSER_BITS_PER_BYTE {0} \
+   CONFIG.WUSER_WIDTH {0} \
+   ] $s_axi
+
 
   # Create ports
   set pl_clk0 [ create_bd_port -dir O -type clk pl_clk0 ]
   set_property -dict [ list \
-   CONFIG.ASSOCIATED_BUSIF {m_axi} \
+   CONFIG.ASSOCIATED_BUSIF {m_axi:s_axi} \
  ] $pl_clk0
   set pl_resetn [ create_bd_port -dir O -from 0 -to 0 -type rst pl_resetn ]
 
@@ -376,12 +407,6 @@ proc create_root_design { parentCell } {
     CONFIG.PCW_MIO_49_SLEW {slow} \
     CONFIG.PCW_MIO_4_IOTYPE {LVCMOS 1.8V} \
     CONFIG.PCW_MIO_4_SLEW {slow} \
-    CONFIG.PCW_MIO_50_IOTYPE {LVCMOS 1.8V} \
-    CONFIG.PCW_MIO_50_PULLUP {enabled} \
-    CONFIG.PCW_MIO_50_SLEW {slow} \
-    CONFIG.PCW_MIO_51_IOTYPE {LVCMOS 1.8V} \
-    CONFIG.PCW_MIO_51_PULLUP {enabled} \
-    CONFIG.PCW_MIO_51_SLEW {slow} \
     CONFIG.PCW_MIO_52_IOTYPE {LVCMOS 1.8V} \
     CONFIG.PCW_MIO_52_PULLUP {enabled} \
     CONFIG.PCW_MIO_52_SLEW {slow} \
@@ -416,6 +441,7 @@ proc create_root_design { parentCell } {
     CONFIG.PCW_SDIO_PERIPHERAL_FREQMHZ {100} \
     CONFIG.PCW_SDIO_PERIPHERAL_VALID {1} \
     CONFIG.PCW_SINGLE_QSPI_DATA_MODE {x4} \
+    CONFIG.PCW_S_AXI_HP0_DATA_WIDTH {32} \
     CONFIG.PCW_TTC0_PERIPHERAL_ENABLE {1} \
     CONFIG.PCW_TTC0_TTC0_IO {EMIO} \
     CONFIG.PCW_TTC_PERIPHERAL_FREQMHZ {50} \
@@ -449,6 +475,8 @@ proc create_root_design { parentCell } {
     CONFIG.PCW_UIPARAM_DDR_T_RP {7} \
     CONFIG.PCW_USB0_PERIPHERAL_ENABLE {1} \
     CONFIG.PCW_USB0_USB0_IO {MIO 28 .. 39} \
+    CONFIG.PCW_USE_S_AXI_GP0 {0} \
+    CONFIG.PCW_USE_S_AXI_HP0 {1} \
     CONFIG.PCW_WDT_PERIPHERAL_ENABLE {1} \
     CONFIG.PCW_WDT_WDT_IO {EMIO} \
   ] $processing_system7_0
@@ -460,6 +488,7 @@ proc create_root_design { parentCell } {
 
 
   # Create interface connections
+  connect_bd_intf_net -intf_net S_AXI_HP0_0_1 [get_bd_intf_ports s_axi] [get_bd_intf_pins processing_system7_0/S_AXI_HP0]
   connect_bd_intf_net -intf_net processing_system7_0_DDR [get_bd_intf_ports DDR] [get_bd_intf_pins processing_system7_0/DDR]
   connect_bd_intf_net -intf_net processing_system7_0_FIXED_IO [get_bd_intf_ports FIXED_IO] [get_bd_intf_pins processing_system7_0/FIXED_IO]
   connect_bd_intf_net -intf_net processing_system7_0_IIC_0 [get_bd_intf_ports IIC_0] [get_bd_intf_pins processing_system7_0/IIC_0]
@@ -468,11 +497,12 @@ proc create_root_design { parentCell } {
 
   # Create port connections
   connect_bd_net -net proc_sys_reset_0_peripheral_aresetn [get_bd_ports pl_resetn] [get_bd_pins proc_sys_reset_0/peripheral_aresetn] [get_bd_pins smartconnect_0/aresetn]
-  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_ports pl_clk0] [get_bd_pins proc_sys_reset_0/slowest_sync_clk] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins smartconnect_0/aclk]
+  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_ports pl_clk0] [get_bd_pins proc_sys_reset_0/slowest_sync_clk] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins processing_system7_0/S_AXI_HP0_ACLK] [get_bd_pins smartconnect_0/aclk]
   connect_bd_net -net processing_system7_0_FCLK_RESET0_N [get_bd_pins proc_sys_reset_0/ext_reset_in] [get_bd_pins processing_system7_0/FCLK_RESET0_N]
 
   # Create address segments
   assign_bd_address -offset 0x43C00000 -range 0x00010000 -target_address_space [get_bd_addr_spaces processing_system7_0/Data] [get_bd_addr_segs m_axi/Reg] -force
+  assign_bd_address -offset 0x00000000 -range 0x40000000 -target_address_space [get_bd_addr_spaces s_axi] [get_bd_addr_segs processing_system7_0/S_AXI_HP0/HP0_DDR_LOWOCM] -force
 
 
   # Restore current instance

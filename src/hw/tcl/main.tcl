@@ -36,6 +36,8 @@ proc setSources {} {
   
   lappend Sources {"../hdl/tenkhz_mux.vhd" "VHDL 2008"}  
   
+  lappend Sources {"../hdl/adc2ddr.vhd" "VHDL 2008"}  
+  
   lappend Sources {"../hdl/evr_top.vhd" "VHDL 2008"}  
   lappend Sources {"../hdl/EventReceiverChannel.v" "Verilog"}  
   lappend Sources {"../hdl/timeofDayReceiver.v" "Verilog"} 

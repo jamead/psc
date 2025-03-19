@@ -32,6 +32,7 @@ entity ps_io is
     mon_adcs         : in t_mon_adcs;
     dac_cntrl        : out t_dac_cntrl;
 	dac_stat         : in t_dac_stat;
+	dma_params       : out t_dma_params;
 	rcom             : out std_logic_vector(19 downto 0);
 	rsts             : in std_logic_vector(19 downto 0)
       
@@ -47,9 +48,9 @@ architecture behv of ps_io is
   signal reg_i        : t_addrmap_pl_regs_in;
   signal reg_o        : t_addrmap_pl_regs_out;
 
-  attribute mark_debug     : string;
-  attribute mark_debug of reg_o: signal is "true";
-  attribute mark_debug of reg_i: signal is "true";
+--  attribute mark_debug     : string;
+--  attribute mark_debug of reg_o: signal is "true";
+--  attribute mark_debug of reg_i: signal is "true";
 
 
 
@@ -130,7 +131,9 @@ reg_i.ps2_digin.val.data <= rsts(7 downto 4);
 reg_i.ps3_digin.val.data <= rsts(11 downto 8);
 reg_i.ps4_digin.val.data <= rsts(15 downto 12);
 
-
+-- DMA Parameters
+dma_params.len <= 32d"1000";
+dma_params.enb <= '0';
 
 
 regs: pl_regs

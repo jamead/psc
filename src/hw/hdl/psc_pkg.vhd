@@ -5,38 +5,15 @@ use ieee.numeric_std.all;
 package psc_pkg is
 
 
---########################################################################
---                           Records
---########################################################################
---type t_DCCT_ADC is record
---  adc_data  : std_logic_vector(19 downto 0);
---  gain      : std_logic_vector(31 downto 0);
---  offset    : std_logic_vector(31 downto 0);
---end record;
-
-----DCCT record
---type t_DCCT is record
---  done           : std_logic;
---  ADC1           : t_DCCT_ADC;
---  ADC2           : t_DCCT_ADC;
---  ADC3           : t_DCCT_ADC;
---  ADC4           : t_DCCT_ADC;
---  ADC5           : t_DCCT_ADC;
---  ADC6           : t_DCCT_ADC;
---  ADC7           : t_DCCT_ADC;
---  ADC8           : t_DCCT_ADC;
---end record;
-
---type t_ADC_8CH_g_o is record
---  data           : std_logic_vector(15 downto 0);
---  gain           : std_logic_vector(31 downto 0);
---  offset         : std_logic_vector(31 downto 0);
---end record;
+type t_dma_params is record
+    len          : std_logic_vector(31 downto 0);
+    enb          : std_logic;
+    testdata_enb : std_logic;
+end record t_dma_params;
 
 
 
 -- DCCT ADC record types
-
 type t_dcct_adcs_onech is record
   dcct0         : std_logic_vector(17 downto 0);
   dcct1         : std_logic_vector(17 downto 0);
@@ -193,10 +170,52 @@ component system is
     m_axi_rresp : in STD_LOGIC_VECTOR ( 1 downto 0 );
     m_axi_rvalid : in STD_LOGIC;
     m_axi_rready : out STD_LOGIC;
+    s_axi_awaddr : in STD_LOGIC_VECTOR ( 31 downto 0 );
+    s_axi_awburst : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    s_axi_awcache : in STD_LOGIC_VECTOR ( 3 downto 0 );
+    s_axi_awlen : in STD_LOGIC_VECTOR ( 3 downto 0 );
+    s_axi_awlock : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    s_axi_awprot : in STD_LOGIC_VECTOR ( 2 downto 0 );
+    s_axi_awqos : in STD_LOGIC_VECTOR ( 3 downto 0 );
+    s_axi_awready : out STD_LOGIC;
+    s_axi_awsize : in STD_LOGIC_VECTOR ( 2 downto 0 );
+    s_axi_awvalid : in STD_LOGIC;
+    s_axi_bready : in STD_LOGIC;
+    s_axi_bresp : out STD_LOGIC_VECTOR ( 1 downto 0 );
+    s_axi_bvalid : out STD_LOGIC;
+    s_axi_wdata : in STD_LOGIC_VECTOR ( 31 downto 0 );
+    s_axi_wlast : in STD_LOGIC;
+    s_axi_wready : out STD_LOGIC;
+    s_axi_wstrb : in STD_LOGIC_VECTOR ( 3 downto 0 );
+    s_axi_wvalid : in STD_LOGIC;    
+    
+    
+--    s_axis_s2mm_tdata : in STD_LOGIC_VECTOR ( 31 downto 0 );
+--    s_axis_s2mm_tkeep : in STD_LOGIC_VECTOR ( 3 downto 0 );
+--    s_axis_s2mm_tlast : in STD_LOGIC;
+--    s_axis_s2mm_tready : out STD_LOGIC;
+--    s_axis_s2mm_tvalid : in STD_LOGIC;    
     pl_clk0 : out STD_LOGIC;
     pl_resetn : out STD_LOGIC_VECTOR(0 downto 0)
   );
   end component;
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 
 component dac_dpram IS
   port (
