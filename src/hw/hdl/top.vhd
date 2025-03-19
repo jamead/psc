@@ -175,8 +175,8 @@ architecture behv of top is
    signal s_axi_awaddr : STD_LOGIC_VECTOR ( 31 downto 0 );
    signal s_axi_awburst : STD_LOGIC_VECTOR ( 1 downto 0 );
    signal s_axi_awcache : STD_LOGIC_VECTOR ( 3 downto 0 );
-   signal s_axi_awlen : STD_LOGIC_VECTOR ( 3 downto 0 );
-   signal s_axi_awlock : STD_LOGIC_VECTOR ( 1 downto 0 );
+   signal s_axi_awlen : STD_LOGIC_VECTOR ( 7 downto 0 );
+   signal s_axi_awlock : STD_LOGIC_VECTOR ( 0 to 0 );
    signal s_axi_awprot : STD_LOGIC_VECTOR ( 2 downto 0 );
    signal s_axi_awqos : STD_LOGIC_VECTOR ( 3 downto 0 );
    signal s_axi_awready : STD_LOGIC;
@@ -368,27 +368,13 @@ ps_regs: entity work.ps_io
     rsts => (others => '0') --rsts               
   );
 
-
-
---adctoddr: entity work.adc2dma
---  port map(
---    clk => pl_clk0, 
---    reset => pl_reset,                        
---    tenkhz_trig => tenkhz_trig,  
---    dma_params => dma_params, 	 
---	dma_active => dma_adc_active,
---    m_axis_tdata => dma_adc_tdata, 
---    m_axis_tkeep => dma_adc_tkeep,
---    m_axis_tlast => dma_adc_tlast, 
---    m_axis_tready => dma_adc_tready, 
---    m_axis_tvalid => dma_adc_tvalid   
---  );     
+    
  
  adc2ddr : entity work.axi4_write_adc
     port map (
         clk             => pl_clk0,
         reset           => pl_reset,
-        trigger         => leds(0), --tenkhz_trig, 
+        trigger         => tenkhz_trig, 
         s_axi_awaddr    => s_axi_awaddr,
         s_axi_awburst   => s_axi_awburst,
         s_axi_awcache   => s_axi_awcache,

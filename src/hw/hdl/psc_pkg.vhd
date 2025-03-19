@@ -173,8 +173,8 @@ component system is
     s_axi_awaddr : in STD_LOGIC_VECTOR ( 31 downto 0 );
     s_axi_awburst : in STD_LOGIC_VECTOR ( 1 downto 0 );
     s_axi_awcache : in STD_LOGIC_VECTOR ( 3 downto 0 );
-    s_axi_awlen : in STD_LOGIC_VECTOR ( 3 downto 0 );
-    s_axi_awlock : in STD_LOGIC_VECTOR ( 1 downto 0 );
+    s_axi_awlen : in STD_LOGIC_VECTOR ( 7 downto 0 );
+    s_axi_awlock : in STD_LOGIC_VECTOR ( 0 to 0 );
     s_axi_awprot : in STD_LOGIC_VECTOR ( 2 downto 0 );
     s_axi_awqos : in STD_LOGIC_VECTOR ( 3 downto 0 );
     s_axi_awready : out STD_LOGIC;
@@ -188,7 +188,7 @@ component system is
     s_axi_wready : out STD_LOGIC;
     s_axi_wstrb : in STD_LOGIC_VECTOR ( 3 downto 0 );
     s_axi_wvalid : in STD_LOGIC;    
-    
+  
     
 --    s_axis_s2mm_tdata : in STD_LOGIC_VECTOR ( 31 downto 0 );
 --    s_axis_s2mm_tkeep : in STD_LOGIC_VECTOR ( 3 downto 0 );

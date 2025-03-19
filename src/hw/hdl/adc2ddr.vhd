@@ -12,8 +12,8 @@ entity axi4_write_adc is
         s_axi_awaddr : out std_logic_vector(31 downto 0);
         s_axi_awburst : out std_logic_vector(1 downto 0);
         s_axi_awcache : out std_logic_vector(3 downto 0);
-        s_axi_awlen : out std_logic_vector(3 downto 0);
-        s_axi_awlock : out std_logic_vector(1 downto 0);
+        s_axi_awlen : out std_logic_vector(7 downto 0);
+        s_axi_awlock : out std_logic_vector(0 to 0);
         s_axi_awprot : out std_logic_vector(2 downto 0);
         s_axi_awqos : out std_logic_vector(3 downto 0);
         s_axi_awready : in std_logic;
@@ -36,16 +36,18 @@ end entity axi4_write_adc;
 
 architecture rtl of axi4_write_adc is
 
-
+   constant BURST_LEN : integer := 40;
+   constant DDR_BASE_ADDR   : std_logic_vector(31 downto 0) := x"1000_0000";
+   constant DDR_MAX_ADDR    : std_logic_vector(31 downto 0) := x"11E8_4800";  --10KHz * 40beats*4bytes/beat * 20 sec 
+   
    type  state_type is (IDLE, ADDRESS, DATA, AWAITRESP);  
    signal state :  state_type;
 
 
-    signal wordnum : integer range 0 to 8 := 0;
-    signal addr_base : std_logic_vector(31 downto 0) := x"1000_0000";  -- Example DDR address
+    signal wordnum : integer range 0 to 63 := 0;
+    signal addr_base : std_logic_vector(31 downto 0) := DDR_BASE_ADDR;  -- Example DDR address
     
     signal datacnt : std_logic_vector(31 downto 0);
-    signal nextdata : std_logic_vector(31 downto 0);
     signal prev_trigger : std_logic;
 
     --debug signals (connect to ila)
@@ -92,7 +94,6 @@ begin
         s_axi_bready <= '0';
         state <= idle;
         datacnt <= 32d"0";
-        nextdata <= 32d"0";
       else
         case state is 
           when IDLE =>                
@@ -104,8 +105,8 @@ begin
               s_axi_awvalid <= '1';
               s_axi_awburst <= "01"; --"01"; -- Incrementing burst
               s_axi_awcache <= "0011"; -- Normal non-cacheable bufferable
-              s_axi_awlen <= x"7"; --x"7";  -- 8-beat burst
-              s_axi_awlock <= "00";    
+              s_axi_awlen <= std_logic_vector(to_signed(BURST_LEN-1, 8));  -- beats per burst
+              s_axi_awlock <= "0";    
               s_axi_awprot <= "000";  -- Unprivileged secure data
               s_axi_awqos <= "0000";   
               s_axi_awsize <= "010"; -- 4 bytes (32-bit)
@@ -116,28 +117,24 @@ begin
              -- Address handshake
              if (s_axi_awready = '1') then
                  s_axi_awvalid <= '0';  -- Address accepted
-                 --s_axi_wvalid <= '1';  --assert data valid
                  s_axi_wdata <= datacnt;
-                 --datacnt <= std_logic_vector(unsigned(datacnt) + 1);
                  s_axi_wstrb <= x"F";
-                 --s_axi_wlast <= '1';
-                 state <= data; --awaitresp; --data;
+                 state <= data; 
                  wordnum <= 0;
              end if;
              
           when DATA => 
              -- Write data
              if (s_axi_wready = '1') then
-                 if (wordnum < 8) then
+                 if (wordnum < BURST_LEN) then
                    s_axi_wvalid <= '1';
-                   s_axi_wdata <=  datacnt;  --data_values(wordnum);
+                   s_axi_wdata <=  datacnt;  
                    datacnt <= std_logic_vector(unsigned(datacnt) + 1);
-                   if wordnum = 7 then
+                   if wordnum = BURST_LEN - 1 then
                       s_axi_wlast <= '1';
                       state <= awaitresp;
                    end if;
                    wordnum <= wordnum + 1;
-                   nextdata <= datacnt;
                  end if;
              end if;    
                 
@@ -147,9 +144,9 @@ begin
               s_axi_bready <= '1';
               -- Clear bready after response
               if s_axi_bvalid = '1' then
-                    addr_base <= std_logic_vector(unsigned(addr_base) + 4*8);
-                    if (addr_base > x"1100_0000") then 
-                      addr_base <= x"1000_0000";
+                    addr_base <= std_logic_vector(unsigned(addr_base) + 4*BURST_LEN);
+                    if (addr_base > DDR_MAX_ADDR) then 
+                      addr_base <= DDR_BASE_ADDR;
                     end if;
                     s_axi_bready <= '0';
                     state <= idle;
