@@ -32,7 +32,7 @@ entity ps_io is
     mon_adcs         : in t_mon_adcs;
     dac_cntrl        : out t_dac_cntrl;
 	dac_stat         : in t_dac_stat;
-	dma_params       : out t_dma_params;
+	ss_buf_stat      : in t_snapshot_stat; 
 	rcom             : out std_logic_vector(19 downto 0);
 	rsts             : in std_logic_vector(19 downto 0)
       
@@ -131,9 +131,11 @@ reg_i.ps2_digin.val.data <= rsts(7 downto 4);
 reg_i.ps3_digin.val.data <= rsts(11 downto 8);
 reg_i.ps4_digin.val.data <= rsts(15 downto 12);
 
--- DMA Parameters
-dma_params.len <= 32d"1000";
-dma_params.enb <= '0';
+-- Snapshot buffer stats
+reg_i.snapshot_addrptr.val.data <= ss_buf_stat.addr_ptr;
+reg_i.snapshot_totaltrigs.val.data <= ss_buf_stat.tenkhzcnt;
+
+
 
 
 regs: pl_regs

@@ -220,6 +220,7 @@ void psc_status_thread()
 	struct sockaddr_in serv_addr, cli_addr;
     int n,loop=0;
     int sa_trigwait, sa_cnt=0, sa_cnt_prev=0;
+    u32 ssbufptr, totaltrigs;
 
 
 
@@ -269,8 +270,11 @@ reconnect:
 
 		//xil_printf("In Status main loop...\r\n");
 		vTaskDelay(pdMS_TO_TICKS(1000));
+		ssbufptr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
+		totaltrigs = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_TOTALTRIGS);
+		xil_printf("BufPtr: %x\t TotalTrigs: %d\r\n",ssbufptr,totaltrigs);
 
-
+        /*
         ReadSAData(msgid31_buf);
         //write 10Hz msg31 packet
         Host2NetworkConvStatus(msgid31_buf,sizeof(msgid31_buf)+MSGHDRLEN);
@@ -280,7 +284,7 @@ reconnect:
           close(newsockfd);
           goto reconnect;
         }
-
+        */
 
 		loop++;
 

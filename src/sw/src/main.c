@@ -54,11 +54,11 @@ char msgid30_buf[1024];
 char msgid31_buf[1024];
 char msgid32_buf[1024];
 
-char msgid51_buf[MSGID51LEN];
-char msgid52_buf[MSGID52LEN];
-char msgid53_buf[MSGID53LEN];
-char msgid54_buf[MSGID54LEN];
-char msgid55_buf[MSGID55LEN];
+//char msgid51_buf[MSGID51LEN];
+//char msgid52_buf[MSGID52LEN];
+//char msgid53_buf[MSGID53LEN];
+//char msgid54_buf[MSGID54LEN];
+//char msgid55_buf[MSGID55LEN];
 
 
 
@@ -100,9 +100,9 @@ static void assign_ip_settings()
 {
 	u8 data[4];
 
-	xil_printf("Getting IP Address from EEPROM\r\n");
+	//xil_printf("Getting IP Address from EEPROM\r\n");
 	//IP address is stored in EEPROM locations 0,1,2,3
-	i2c_eeprom_readBytes(0, data, 4);
+	//i2c_eeprom_readBytes(0, data, 4);
 	//xil_printf("IP Addr: %u.%u.%u.%u\r\n",data[0],data[1],data[2],data[3]);
 	data[0] = 10;
 	data[1] = 0;
@@ -110,9 +110,9 @@ static void assign_ip_settings()
 	data[3] = 43;
 	IP4_ADDR(&server_netif.ip_addr, data[0],data[1],data[2],data[3]);
 
-	xil_printf("Getting IP Netmask from EEPROM\r\n");
+	//xil_printf("Getting IP Netmask from EEPROM\r\n");
 	//IP netmask is stored in EEPROM locations 16,17,18,19
-	i2c_eeprom_readBytes(16, data, 4);
+	//i2c_eeprom_readBytes(16, data, 4);
 	//xil_printf("IP Netmask: %u.%u.%u.%u\r\n",data[0],data[1],data[2],data[3]);
 	data[0] = 255;
 	data[1] = 255;
@@ -120,8 +120,8 @@ static void assign_ip_settings()
 	data[3] = 0;
 	IP4_ADDR(&server_netif.netmask, data[0],data[1],data[2],data[3]);
 
-	xil_printf("Getting IP Netmask from EEPROM\r\n");
-	i2c_eeprom_readBytes(32, data, 4);
+	//xil_printf("Getting IP Netmask from EEPROM\r\n");
+	//i2c_eeprom_readBytes(32, data, 4);
 	//IP gw is stored in EEPROM locations 32,33,34,35
 	//xil_printf("IP Gateway: %u.%u.%u.%u\r\n",data[0],data[1],data[2],data[3]);
 	data[0] = 10;
@@ -157,13 +157,15 @@ void print_firmware_version()
 
 void main_thread(void *p)
 {
-
+    xil_printf("In Main Thread\r\n");
 	// the mac address of the board. this should be unique per board
 	u8_t mac_ethernet_address[] = { 0x00, 0x0a, 0x35, 0x11, 0x11, 0x12 };
-    i2c_get_mac_address(mac_ethernet_address);
+    //i2c_get_mac_address(mac_ethernet_address);
+    xil_printf("Calling Lwip Init\r\n");
 
 	// initialize lwIP before calling sys_thread_new
 	lwip_init();
+	xil_printf("Lwip Init Complete\r\n");
 
 	// Add network interface to the netif_list, and set it as default
 	if (!xemac_add(&server_netif, NULL, NULL, NULL, mac_ethernet_address,
@@ -252,9 +254,10 @@ int main()
     s32 dcct[8];
     s32 ps1_dacsp, ps2_dacsp, ps3_dacsp, ps4_dacsp;
     volatile u32 *addr;
+    u32 ssbufptr, totaltrigs;
     
     
-    
+ /*   
     addr = (u32 *)0x10000000;
     
     for (i=0;i<1000;i++) {
@@ -277,13 +280,24 @@ int main()
     //Xil_DCacheDisable();  // Disable Data Cache
     //Xil_ICacheDisable();  // Disable Instruction Cache
 
+*/
+	
 	xil_printf("BNL Power Supply Controller ...\r\n");
     print_firmware_version();
     
-    
-
 	init_i2c();
+	
+
+/*    
+	while (1) {
+       ssbufptr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
+	   totaltrigs = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_TOTALTRIGS);
+	   xil_printf("BufPtr: %x\t TotalTrigs: %d\r\n",ssbufptr,totaltrigs);
+       sleep(1);
+	}
+*/
  
+/*	
 	xil_printf("FPGA Version: %d\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + FPGAVER));
     addr = (u32 *)0x10000000;
 	while (1) {
@@ -345,7 +359,7 @@ int main()
         
 	}
 
- 
+ */
 
 
 	//EVR reset

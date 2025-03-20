@@ -47,34 +47,34 @@ generic(
     fixed_io_ps_srstb       : inout std_logic;
     
     -- Regulator command bits
-    --rcom                    : out std_logic_vector(19 downto 0);
+    rcom                    : out std_logic_vector(19 downto 0);
     
     --Regulator status
-    --rsts                    : in std_logic_vector(19 downto 0);
+    rsts                    : in std_logic_vector(19 downto 0);
     
     -- 24 16-bit ADC Channels for monitoring (3 - ADS5868)
-    --mon_adc_rst            : out std_logic;
-    --mon_adc_cnv            : out std_logic;
-    --mon_adc_sck            : out std_logic;
-    --mon_adc_fs             : out std_logic; 
-    --mon_adc_busy           : in std_logic_vector(2 downto 0);
-    --mon_adc_sdo            : in std_logic_vector(2 downto 0);
+    mon_adc_rst            : out std_logic;
+    mon_adc_cnv            : out std_logic;
+    mon_adc_sck            : out std_logic;
+    mon_adc_fs             : out std_logic; 
+    mon_adc_busy           : in std_logic_vector(2 downto 0);
+    mon_adc_sdo            : in std_logic_vector(2 downto 0);
 
     -- 8 20-bit ADC Channels for DCCT (8 - LTC2376)
-    --dcct_adc_cnv            : out std_logic;
-    --dcct_adc_sck            : out std_logic;
-    --dcct_adc_busy           : in std_logic_vector(3 downto 0);
-    --dcct_adc_sdo            : in std_logic_vector(3 downto 0);
+    dcct_adc_cnv            : out std_logic;
+    dcct_adc_sck            : out std_logic;
+    dcct_adc_busy           : in std_logic_vector(3 downto 0);
+    dcct_adc_sdo            : in std_logic_vector(3 downto 0);
 
    -- 4 18-bit DAC Channels (4 - AD5781)
-    --stpt_dac_sck            : out std_logic;
-    --stpt_dac_sync           : out std_logic;
-    --stpt_dac_sdo            : out std_logic_vector(3 downto 0);
+    stpt_dac_sck            : out std_logic;
+    stpt_dac_sync           : out std_logic;
+    stpt_dac_sdo            : out std_logic_vector(3 downto 0);
      
     --sfp i2c
-    --sfp_sck                 : inout std_logic_vector(3 downto 0);
-    --sfp_sda                 : inout std_logic_vector(3 downto 0);
-    --sfp_leds                : out std_logic_vector(7 downto 0);
+    sfp_sck                 : inout std_logic_vector(3 downto 0);
+    sfp_sda                 : inout std_logic_vector(3 downto 0);
+    sfp_leds                : out std_logic_vector(7 downto 0);
           
     -- Embedded Event Receiver
     gtx_evr_refclk_p        : in std_logic;
@@ -84,24 +84,24 @@ generic(
     
     --gigE interface
     gtx_gige_refclk_p       : in std_logic;
-    gtx_gige_refclk_n       : in std_logic
+    gtx_gige_refclk_n       : in std_logic;
     
     --Trigger inputs
-    --trig                    : in std_logic_vector(3 downto 0);
+    trig                    : in std_logic_vector(3 downto 0);
     
     -- Programmable oscillator for EVR reference clock
-    --si570_sck               : inout std_logic;
-    --si570_sda               : inout std_logic;
+    si570_sck               : inout std_logic;
+    si570_sda               : inout std_logic;
     
     -- One wire interface
-    --onewire_sck             : out std_logic;
-    --onewire_sda             : inout std_logic;
+    onewire_sck             : out std_logic;
+    onewire_sda             : inout std_logic;
     
     --MAC ID eeprom (11AA02E48T)
-    --mac_id                  : inout std_logic;
+    mac_id                  : inout std_logic;
    
     --  Front panel LED's
-    --fp_leds                 : out std_logic_vector(7 downto 0)
+    fp_leds                 : out std_logic_vector(7 downto 0)
 
   );
 end top;
@@ -131,6 +131,7 @@ architecture behv of top is
  
    signal s_axi4_m2s            : t_pl_snapshot_axi4_m2s;
    signal s_axi4_s2m            : t_pl_snapshot_axi4_s2m;  
+   signal ss_buf_stat           : t_snapshot_stat; 
    
    
    signal tenkhz_trig           : std_logic;
@@ -154,7 +155,6 @@ architecture behv of top is
    signal dac3_done             : std_logic;
    signal dac_jump              : std_logic;
    
-   signal dma_params            : t_dma_params;
    signal dma_adc_active        : std_logic;
    signal dma_adc_tdata         : std_logic_vector(63 downto 0);
    signal dma_adc_tkeep         : std_logic_vector(7 downto 0);
@@ -193,8 +193,8 @@ begin
 
 
 
---fp_leds <= leds; 
---sfp_leds <= leds;
+fp_leds <= leds; 
+sfp_leds <= leds;
 
 pl_reset <= not pl_resetn(0); 
 
@@ -224,52 +224,52 @@ fofb_refclk : IBUFDS_GTE2
 	  
 
 -- reads 8 channels of DCCT ADC's
---read_dcct_adcs: entity work.DCCT_ADC_module
---  port map(
---    clk => pl_clk0, 
---    reset => pl_reset, 
---    start => tenkhz_trig,  
---    DCCT_out => dcct_adcs,  
---    sdi => dcct_adc_sdo, 
---    cnv => dcct_adc_cnv, 
---    sclk => dcct_adc_sck, 
---    sdo => open,
---	done => adc_done 
---);
+read_dcct_adcs: entity work.DCCT_ADC_module
+  port map(
+    clk => pl_clk0, 
+    reset => pl_reset, 
+    start => tenkhz_trig,  
+    DCCT_out => dcct_adcs,  
+    sdi => dcct_adc_sdo, 
+    cnv => dcct_adc_cnv, 
+    sclk => dcct_adc_sck, 
+    sdo => open,
+	done => adc_done 
+);
 
 
 ---- reads 24 channels of monitor ADC's
---mon_adc_rst <= '0';
---read_mon_adcs: entity work.adc_8ch_module
---  port map(
---    clk => pl_clk0, 
---    reset => pl_reset, 
---    start => tenkhz_trig,   
---    mon_adcs => mon_adcs,
---    adc8c_sdo => mon_adc_sdo,
---    adc8c_conv123 => mon_adc_cnv, 
---    adc8c_fs123 => mon_adc_fs, 
---    adc8c_sck123 => mon_adc_sck,
---    done => open
---);
+mon_adc_rst <= '0';
+read_mon_adcs: entity work.adc_8ch_module
+  port map(
+    clk => pl_clk0, 
+    reset => pl_reset, 
+    start => tenkhz_trig,   
+    mon_adcs => mon_adcs,
+    adc8c_sdo => mon_adc_sdo,
+    adc8c_conv123 => mon_adc_cnv, 
+    adc8c_fs123 => mon_adc_fs, 
+    adc8c_sck123 => mon_adc_sck,
+    done => open
+);
 
 
---write_dacs: entity work.dac_ctrlr
---  port map(
---    clk => pl_clk0,  
---    reset => pl_reset, 
---    tenkhz_trig => tenkhz_trig,
---    dac_cntrl => dac_cntrl,
---    dac_stat => dac_stat,  	
---    dac1234_jump => dac_jump, 		
---    dac1_done => dac0_done, 
---    dac2_done => dac1_done,  
---    dac3_done => dac2_done,  
---    dac4_done => dac3_done,  
---    n_sync1234	=> stpt_dac_sync,  
---    sclk1234 => stpt_dac_sck, 
---    sdo => stpt_dac_sdo 	
---    );
+write_dacs: entity work.dac_ctrlr
+  port map(
+    clk => pl_clk0,  
+    reset => pl_reset, 
+    tenkhz_trig => tenkhz_trig,
+    dac_cntrl => dac_cntrl,
+    dac_stat => dac_stat,  	
+    dac1234_jump => dac_jump, 		
+    dac1_done => dac0_done, 
+    dac2_done => dac1_done,  
+    dac3_done => dac2_done,  
+    dac4_done => dac3_done,  
+    n_sync1234	=> stpt_dac_sync,  
+    sclk1234 => stpt_dac_sck, 
+    sdo => stpt_dac_sdo 	
+    );
 
 
 
@@ -296,8 +296,7 @@ accum: entity work.adc_accumulator_top
 clk_src: entity work.tenkhz_mux 
   port map(
     clk => pl_clk0,  
-    reset => pl_reset,  
-	  
+    reset => pl_reset,  	  
     disable_fldbck => '0', 	
     switch => '1',  
     evr_10khz => '0', 
@@ -348,9 +347,9 @@ ps_regs: entity work.ps_io
     mon_adcs => mon_adcs,
     dac_cntrl => dac_cntrl,
     dac_stat => dac_stat,
-    dma_params => dma_params,
-    rcom => open, --rcom,
-    rsts => (others => '0') --rsts               
+    ss_buf_stat => ss_buf_stat,
+    rcom => rcom,
+    rsts => rsts               
   );
 
     
@@ -361,7 +360,10 @@ adc2ddr : entity work.axi4_write_adc
     reset => pl_reset,
     trigger => tenkhz_trig, 
     s_axi4_m2s => s_axi4_m2s,
-    s_axi4_s2m => s_axi4_s2m
+    s_axi4_s2m => s_axi4_s2m,
+    dcct_adcs => dcct_adcs,
+    mon_adcs => mon_adcs,
+    ss_buf_stat => ss_buf_stat       
   );
 
 
@@ -394,7 +396,6 @@ sys: component system
     iic_0_sda_i => i2c0_sda_i, 
     iic_0_sda_o => i2c0_sda_o, 
     iic_0_sda_t => i2c0_sda_t,
-
     pl_clk0 => pl_clk0,
     pl_resetn => pl_resetn,  
     m_axi_araddr => m_axi4_m2s.araddr, 
@@ -439,8 +440,8 @@ sys: component system
 
 
 -- tri-state buffers for i2c interface from PS to si570
---i2c0_scl_buf : IOBUF port map (O=>i2c0_scl_i, IO=>si570_sck, I=>i2c0_scl_o, T=>i2c0_scl_t);
---i2c0_sda_buf : IOBUF port map (O=>i2c0_sda_i, IO=>si570_sda, I=>i2c0_sda_o, T=>i2c0_sda_t);
+i2c0_scl_buf : IOBUF port map (O=>i2c0_scl_i, IO=>si570_sck, I=>i2c0_scl_o, T=>i2c0_scl_t);
+i2c0_sda_buf : IOBUF port map (O=>i2c0_sda_i, IO=>si570_sda, I=>i2c0_sda_o, T=>i2c0_sda_t);
        
     
     

@@ -21,6 +21,7 @@
 
 /* Hardware support includes */
 #include "zubpm_defs.h"
+#include "pl_regs.h"
 
 
 extern ip_t ip_settings;
@@ -82,6 +83,19 @@ void dump_eeprom(void)
   xil_printf("Reading EEPROM...\r\n");
   eeprom_dump();
 }
+
+void print_snapshot_stats(void)
+{
+  u32 ssbufptr, totaltrigs;
+
+  ssbufptr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
+  totaltrigs = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_TOTALTRIGS);
+  xil_printf("BufPtr: %x\t TotalTrigs: %d\r\n",ssbufptr,totaltrigs);
+
+
+}
+
+
 
 
 void program_ip(void)
@@ -164,11 +178,12 @@ void menu_thread()
 
     static const menu_entry_t menu[] = {
 	    {'A', "Dump EEPROM", dump_eeprom},
-		{'B', "Program IP Settings", program_ip}
+		{'B', "Program IP Settings", program_ip},
+	    {'C', "Display Snapshot Stats", print_snapshot_stats}
 	};
 	static const size_t menulen = sizeof(menu)/sizeof(menu_entry_t);
 
-	printf("Running zuBPM Menu (len = %ld)\r\n", menulen);
+	printf("Running PSC Menu (len = %ld)\r\n", menulen);
 
 	exec_menu("Select an option:", menu, menulen);
 

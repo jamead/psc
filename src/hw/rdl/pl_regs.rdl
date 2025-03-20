@@ -446,6 +446,24 @@ reg {
 
 
 
+/* SnapShot Buffer Stats */
+  reg {
+    desc="Snapshot 20 sec circular buffer current address pointer";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } snapshot_addrptr @0x300;
+
+
+  reg {
+    desc="Snapshot 20 sec circular buffer total data points written";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } snapshot_totaltrigs @0x304;
+
+
+
 
 
 /* DESY Version registers */

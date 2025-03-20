@@ -5,12 +5,6 @@ use ieee.numeric_std.all;
 package psc_pkg is
 
 
-type t_dma_params is record
-    len          : std_logic_vector(31 downto 0);
-    enb          : std_logic;
-    testdata_enb : std_logic;
-end record t_dma_params;
-
 
 
 -- DCCT ADC record types
@@ -42,7 +36,6 @@ end record;
 
 
 -- Monitor ADC record types
-
 type t_mon_adcs_onech is record
   dac_sp        : std_logic_vector(15 downto 0);
   volt_mon      : std_logic_vector(15 downto 0);
@@ -79,7 +72,6 @@ end record;
 
 
 -- DAC record types
-
 type t_dac_stat_onech is record
   active                : std_logic;
   cur_addr              : std_logic_vector(15 downto 0);
@@ -119,6 +111,12 @@ type t_dac_cntrl is record
   ps4           : t_dac_cntrl_onech;
 end record;
 
+
+-- snapshot data (circular buffer) types
+type t_snapshot_stat is record
+  addr_ptr  : std_logic_vector(31 downto 0);
+  tenkhzcnt : std_logic_vector(31 downto 0);
+end record;
 
 
 type t_pl_snapshot_axi4_m2s is record

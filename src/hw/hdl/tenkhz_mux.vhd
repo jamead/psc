@@ -104,7 +104,7 @@ process (clk)
         cnt_int <= 16d"0";
         internal_10khz <= '0';
       else       
-        if (cnt_int = 16d"5000") then
+        if (cnt_int = 16d"10000") then
           internal_10khz <= '1';
           cnt_int <= 16d"0";
         else
