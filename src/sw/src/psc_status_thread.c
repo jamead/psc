@@ -274,7 +274,7 @@ reconnect:
 		totaltrigs = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_TOTALTRIGS);
 		xil_printf("BufPtr: %x\t TotalTrigs: %d\r\n",ssbufptr,totaltrigs);
 
-        /*
+
         ReadSAData(msgid31_buf);
         //write 10Hz msg31 packet
         Host2NetworkConvStatus(msgid31_buf,sizeof(msgid31_buf)+MSGHDRLEN);
@@ -284,7 +284,7 @@ reconnect:
           close(newsockfd);
           goto reconnect;
         }
-        */
+
 
 		loop++;
 
