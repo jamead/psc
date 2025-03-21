@@ -1,7 +1,7 @@
 #!//home/mead/epics/pscdrv/bin/linux-x86_64/pscdemo 
 epicsEnvSet("TOP","/home/mead/epics/pscdrv")
 epicsEnvSet("PSCDIR","$(TOP)")
-epicsEnvSet("PSC_DBDIR","/home/mead/chiesa/psc/ioc")
+epicsEnvSet("PSC_DBDIR","/home/mead/chiesa/psc/epics/ioc")
 
 
 #epicsEnvSet("CNO","40")   ## Cell Number
