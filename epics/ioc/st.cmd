@@ -6,14 +6,14 @@ epicsEnvSet("PSC_DBDIR","/home/mead/chiesa/psc/ioc")
 
 #epicsEnvSet("CNO","40")   ## Cell Number
 #epicsEnvSet("HOSTNAME","diagioc-c$(CNO)")
-epicsEnvSet("IOCNAME", "LN-BI")
+epicsEnvSet("IOCNAME", "lab")
 
 
 
 ###
 epicsEnvSet("EPICS_CA_AUTO_ADDR_LIST", "YES")
 #epicsEnvSet("EPICS_CA_ADDR_LIST", "10.0.142.20")
-epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES", "16000000")
+epicsEnvSet("EPICS_CA_MAX_ARRAY_BYTES", "20000000")
 
 
 ## You may have to change psc to something else
@@ -27,24 +27,27 @@ pscdemo_registerRecordDeviceDriver(pdbbase)
 epicsEnvSet("PSC1_IP", "10.0.142.43");  #4009
 
 
+epicsEnvSet("BLEN",10000);        # Snapshot DMA Length
+
+
 ## Load record instances
-epicsEnvSet("ALIVELEN", "8000");   # ADC Live length
-epicsEnvSet("TLIVELEN", "8000");   # ADC Live length
-epicsEnvSet("ALEN",1000000);        # ADC DMA Length
-epicsEnvSet("TLEN", "100000");      # TbT Length
 
 ########## use template
 
 ### PVs for first LINAC ZBPM:
 dbLoadRecords("$(PSC_DBDIR)/adc10hz.db", "P=$(IOCNAME), NO=1")
+dbLoadRecords("$(PSC_DBDIR)/control.db", "P=$(IOCNAME), NO=1")
+dbLoadRecords("$(PSC_DBDIR)/snapshot.db", "P=$(IOCNAME), NO=1, BUF_LEN=$(BLEN)")
+
+
 
 #####################################################
 var(PSCDebug, 5)	#5 full debug
 
-#bpm1 Create the PSC
-createPSC("aie_tx_1", $(PSC1_IP), 7, 0)
-#createPSC("aie_wfm_rx_1", $(PSC1_IP), 20, 2)
-createPSC("Rx1", $(PSC1_IP), 600, 2)
+#psc1 Create the PSC
+createPSC("Tx1", $(PSC1_IP), 7, 0)
+#createPSC("wfm1", $(PSC1_IP), 20, 1)
+createPSC("Rx1", $(PSC1_IP), 600, 1)
 
 ###########
 iocInit

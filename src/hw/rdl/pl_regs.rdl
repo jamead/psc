@@ -32,16 +32,36 @@ reg {
     desc="FPGA Version";
     default sw = rw;
     default hw = w;
-    field {} data[32];
+    field {} val[32];
   } fpgaver @0x0;  
 
 
-  reg {
+reg {
     desc="PS Leds";
     default sw = rw;
     default hw = r;
-    field {} data[8];
+    field {} val[8];
   } leds @0x4;
+  
+
+reg {
+    desc="Soft Trig";
+    default sw = rw;
+    default hw = r;  
+    default swacc=true;
+    default swmod=true;          
+    field {} val[8];
+  } softtrig @0x8; 
+ 
+  
+reg {
+    desc="Soft Trig Buffer Ptr.  Buffer Point latched value gets put here on soft trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } softtrig_bufptr @0xC; 
+
+
 
 
 

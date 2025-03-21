@@ -32,7 +32,8 @@
 
 #define PORT  20
 
-
+    //Xil_DCacheFlush();
+	//Xil_DCacheInvalidateRange(0x10000000,1e6);
 
 
 void Host2NetworkConvWvfm(char *inbuf, int len) {
@@ -54,7 +55,61 @@ void Host2NetworkConvWvfm(char *inbuf, int len) {
 
 
 
+void ReadDMABuf(char *msg) {
 
+    u32 *buf_data;
+    u32 *msg_u32ptr;
+    u32 i,j;
+
+
+	xil_printf("\r\nReading Snapshot Data from DDR...\r\n");
+
+    //write the PSC Header
+    msg_u32ptr = (u32 *)msg;
+    msg[0] = 'P';
+    msg[1] = 'S';
+    msg[2] = 0;
+    msg[3] = (short int) MSGID51;
+    *++msg_u32ptr = htonl(MSGID51LEN); //body length
+	msg_u32ptr++;
+
+	/* For testing, initialize array
+	xil_printf("Initializing DDR...\r\n");
+    buf_data = (u32 *) AXI_CIRBUFBASE;
+    for (i=0;i<100000;i++)
+    	for (j=0;j<40;j++)
+    	   *buf_data++ = i;
+    */
+	// Invalidate cache for the area we are going to read from
+	Xil_DCacheInvalidateRange(0x10000000,16e6);
+    xil_printf("Copying DMA data to PSC Buffer\r\n");
+    //copy the DMA'd ADC data into the msgid53 buffer
+    buf_data = (u32 *) AXI_CIRBUFBASE;
+	for (i=0;i<MSGID51LEN/4;i++) {
+	    *msg_u32ptr++ = *buf_data++;
+	     }
+
+    /* print buffer (debug)
+    msg_u32ptr = (u32 *)msg;
+    msg_u32ptr++;
+    msg_u32ptr++;
+    for (i=0;i<125000;i=i+1000) {
+    	xil_printf("%6d: ",i);
+    	msg_u32ptr = msg_u32ptr + 1000;
+    	for (j=0;j<40;j++)
+    	   xil_printf("%8d",*msg_u32ptr++);
+    	xil_printf("\r\n");
+    }
+    */
+
+
+	xil_printf("Done Reading ADC Data\r\n");
+
+
+
+
+
+}
 
 
 
@@ -69,6 +124,8 @@ void psc_wvfm_thread()
 	int clilen;
 	struct sockaddr_in serv_addr, cli_addr;
     u32 loopcnt=0;
+    s32 n;
+    u32 ssbufptr, ssbufptr_softtrig, ssbufptr_softtrig_prev;
 
 
 
@@ -112,34 +169,45 @@ reconnect:
     xil_printf("PSC Waveform: Entering while loop...\r\n");
 
 
-
+    ssbufptr_softtrig_prev = 0;
 
 	while (1) {
 
 		//xil_printf("Wvfm: In main waveform loop...\r\n");
 		loopcnt++;
-		vTaskDelay(pdMS_TO_TICKS(1000));
+		//vTaskDelay(pdMS_TO_TICKS(1000));
 
-		/*
-        //Issue a soft trigger and read fifo
-		//trigstat = Xil_In32(XPAR_M_AXI_BASEADDR + FA_TRIG_STAT_REG);
-		xil_printf("Trigger Status: %d\r\n",trigstat);
-		xil_printf("Issuing soft trigger\r\n");
-	    //Xil_Out32(XPAR_M_AXI_BASEADDR + FA_SOFT_TRIG_REG, 1);
-	    //Xil_Out32(XPAR_M_AXI_BASEADDR + FA_SOFT_TRIG_REG, 0);
-	    vTaskDelay(pdMS_TO_TICKS(10));
-		trigstat = Xil_In32(XPAR_M_AXI_BASEADDR + FA_TRIG_STAT_REG);
-		xil_printf("Trigger Status: %d\r\n",trigstat);
-        ReadFAWvfm(msgid51_buf);
-        //write out Live ADC data (msg51)
+
+		do {
+		   ssbufptr_softtrig = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG_BUFPTR);
+		   //ssbufptr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
+		   //xil_printf("Buffer Ptr: %x\r\n", ssbufptr);
+		   vTaskDelay(pdMS_TO_TICKS(10));
+		}
+		while (ssbufptr_softtrig == ssbufptr_softtrig_prev);
+
+		xil_printf("Buffer Ptr at Trigger: %x\r\n", ssbufptr_softtrig);
+		ssbufptr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
+		xil_printf("Current Buffer Ptr   : %x\r\n", ssbufptr);
+		ssbufptr_softtrig_prev = ssbufptr_softtrig;
+
+		xil_printf("Triggered... Calling ReadDMABuf...\r\n");
+		ReadDMABuf(msgid51_buf);
+
+        //write out Snapshot data (msg51)
+		xil_printf("Tx 10 sec of Snapshot Data\r\n");
         Host2NetworkConvWvfm(msgid51_buf,sizeof(msgid51_buf)+MSGHDRLEN);
         n = write(newsockfd,msgid51_buf,MSGID51LEN+MSGHDRLEN);
+        xil_printf("Transferred %d bytes\r\n", n);
+
         if (n < 0) {
         	printf("PSC Waveform: ERROR writing MSG 51 - ADC Waveform\n");
         	close(newsockfd);
         	goto reconnect;
         }
-        */
+        else
+            xil_printf("Tx Success...\r\n");
+
 
 
     }

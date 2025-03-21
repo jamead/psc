@@ -1,9 +1,13 @@
+#define AXI_CIRBUFBASE 0x10000000
+
 
 
 //PL AXI4 Bus Registers
 
 #define FPGAVER               0X0       // FPGA Version
 #define FPLEDS                0X4       // PS Leds
+#define SOFTTRIG              0x8       // Soft Trigger from IOC
+#define SOFTTRIG_BUFPTR       0xC       // Soft Trig Buffer Ptr.  Buffer Point latched value gets put here on soft trigger
 #define PS1_DCCT0             0X20      // PS1 DCCT 0
 #define PS1_DCCT1             0X24      // PS1 DCCT 1
 #define PS1_DACSP             0X28      // PS1 DAC Setpoint Monitor

@@ -1,0 +1,309 @@
+#############################################################
+#
+#       PSC Database for pscDrv IOC
+#
+#############################################################
+
+
+
+
+ 
+
+############# 10Hz Status PV's (MSG ID 30) #########################
+
+
+record(longin, "$(P){PSC:$(NO)}CNT-I") {
+    field(DESC, "10Hz Counter")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 0")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){PSC:$(NO)}TS-NS-I") {
+    field(DESC, "EVR Timestamp (ns)")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 4")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){PSC:$(NO)}TS-S-I") {
+    field(DESC, "EVR Timestamp (s)")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 8")
+    field(SCAN,"I/O Intr")
+}
+
+
+### PS1 ADC's
+
+record(longin, "$(P){PSC:$(NO)}PS1:DCCT1-I") {
+    field(DESC, "DCCT 1 Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 12")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS1:DCCT2-I") {
+    field(DESC, "DCCT 2 Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 16")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}Chan1-DAC-SP") {
+    field(DESC, "DAC Setpoint Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 20")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS1:Volt-I") {
+    field(DESC, "Voltage Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 24")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS1:Gnd-I") {
+    field(DESC, "Ground Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 28")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS1:Spare-I") {
+    field(DESC, "Spare Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 32")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS1:Reg-I") {
+    field(DESC, "Regulator Output Voltage Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 36")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS1:Error-I") {
+    field(DESC, "Error Voltage Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 40")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+### PS2 ADC's
+
+
+record(longin, "$(P){PSC:$(NO)}PS2:DCCT1-I") {
+    field(DESC, "DCCT 1 Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 44")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS2:DCCT2-I") {
+    field(DESC, "DCCT 2 Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 48")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS2:DAC-I") {
+    field(DESC, "DAC Setpoint Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 52")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS2:Volt-I") {
+    field(DESC, "Voltage Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 56")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS2:Gnd-I") {
+    field(DESC, "Ground Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 60")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS2:Spare-I") {
+    field(DESC, "Spare Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 64")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS2:Reg-I") {
+    field(DESC, "Regulator Output Voltage Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 68")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS2:Error-I") {
+    field(DESC, "Error Voltage Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 72")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+### PS3 ADC's
+
+
+record(longin, "$(P){PSC:$(NO)}PS3:DCCT1-I") {
+    field(DESC, "DCCT 1 Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 76")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS3:DCCT2-I") {
+    field(DESC, "DCCT 2 Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 80")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS3:DAC-I") {
+    field(DESC, "DAC Setpoint Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 84")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS3:Volt-I") {
+    field(DESC, "Voltage Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 88")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS3:Gnd-I") {
+    field(DESC, "Ground Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 92")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS3:Spare-I") {
+    field(DESC, "Spare Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 96")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS3:Reg-I") {
+    field(DESC, "Regulator Output Voltage Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 100")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS3:Error-I") {
+    field(DESC, "Error Voltage Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 104")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+### PS4 ADC's
+
+
+record(longin, "$(P){PSC:$(NO)}PS4:DCCT1-I") {
+    field(DESC, "DCCT 1 Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 108")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS4:DCCT2-I") {
+    field(DESC, "DCCT 2 Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 112")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS4:DAC-I") {
+    field(DESC, "DAC Setpoint Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 116")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS4:Volt-I") {
+    field(DESC, "Voltage Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 120")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS4:Gnd-I") {
+    field(DESC, "Ground Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 124")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS4:Spare-I") {
+    field(DESC, "Spare Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 128")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS4:Reg-I") {
+    field(DESC, "Regulator Output Voltage Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 132")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){PSC:$(NO)}PS4:Error-I") {
+    field(DESC, "Error Voltage Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 136")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+
+

@@ -50,11 +50,11 @@ static sys_thread_t main_thread_handle;
 struct netif server_netif;
 
 //global buffers
-char msgid30_buf[1024];
-char msgid31_buf[1024];
-char msgid32_buf[1024];
+char msgid30_buf[MSGID30LEN+MSGHDRLEN];
+char msgid31_buf[MSGID31LEN+MSGHDRLEN];
+char msgid32_buf[MSGID32LEN+MSGHDRLEN];
 
-//char msgid51_buf[MSGID51LEN];
+char msgid51_buf[MSGID51LEN+MSGHDRLEN];
 //char msgid52_buf[MSGID52LEN];
 //char msgid53_buf[MSGID53LEN];
 //char msgid54_buf[MSGID54LEN];
@@ -204,9 +204,9 @@ void main_thread(void *p)
 
 
     // Delay for 100ms
-    //vTaskDelay(pdMS_TO_TICKS(100));
+    vTaskDelay(pdMS_TO_TICKS(100));
     // Start the PSC Waveform Thread.  Handles incoming commands from IOC
-    //xil_printf("\r\n");
+    xil_printf("\r\n");
     //sys_thread_new("psc_wvfm_thread", psc_wvfm_thread, 0, THREAD_STACKSIZE, 1);
 
 
@@ -254,33 +254,8 @@ int main()
     s32 dcct[8];
     s32 ps1_dacsp, ps2_dacsp, ps3_dacsp, ps4_dacsp;
     volatile u32 *addr;
-    u32 ssbufptr, totaltrigs;
-    
-    
- /*   
-    addr = (u32 *)0x10000000;
-    
-    for (i=0;i<1000;i++) {
-    	*addr++ = 0;
-    }
-    Xil_DCacheFlush();
-	//Xil_DCacheInvalidateRange(0x10000000,1e6);
-    addr = (u32 *)0x10000000;
-	xil_printf("\r\n\r\n");
-	  
-	
-	for (j=0;j<20;j++) {
-	  xil_printf("%8x: ",j*8);
-	  for (i=0;i<8;i++) {
-		xil_printf("%8x  ", *addr++);
-	  }
-	  xil_printf("\r\n");
-	}
-	
-    //Xil_DCacheDisable();  // Disable Data Cache
-    //Xil_ICacheDisable();  // Disable Instruction Cache
+    u32 val;
 
-*/
 	
 	xil_printf("BNL Power Supply Controller ...\r\n");
     print_firmware_version();
@@ -288,27 +263,16 @@ int main()
 	init_i2c();
 	
 
-/*    
-	while (1) {
-       ssbufptr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
-	   totaltrigs = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_TOTALTRIGS);
-	   xil_printf("BufPtr: %x\t TotalTrigs: %d\r\n",ssbufptr,totaltrigs);
-       sleep(1);
+/*
+
+	for (i=0;i<100;i++) {
+	Xil_Out32(XPAR_M_AXI_BASEADDR + SOFTTRIG, i);
+	val = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG);
+	xil_printf("i=%d  val=%d\r\n",i,val);
+	sleep(1);
 	}
-*/
- 
-/*	
-	xil_printf("FPGA Version: %d\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + FPGAVER));
-    addr = (u32 *)0x10000000;
-	while (1) {
-		Xil_Out32(XPAR_M_AXI_BASEADDR + FPLEDS, 1);
-		Xil_Out32(XPAR_M_AXI_BASEADDR + FPLEDS, 0);
-		Xil_DCacheInvalidateRange(0x10000000,1e6);
-		for (i=0;i<8;i++) {
-			xil_printf("%8x  ", *addr++);
-		}
-		xil_printf("\r\n");
-	}
+
+
 	
     // set dac to ramp mode
 	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_JUMPMODE, 1);

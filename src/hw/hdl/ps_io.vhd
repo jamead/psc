@@ -45,20 +45,25 @@ architecture behv of ps_io is
   
 
   
-  signal reg_i        : t_addrmap_pl_regs_in;
-  signal reg_o        : t_addrmap_pl_regs_out;
+  signal reg_i           : t_addrmap_pl_regs_in;
+  signal reg_o           : t_addrmap_pl_regs_out;
+  
+  signal soft_trig       : std_logic;
+  signal soft_trig_prev  : std_logic;
 
---  attribute mark_debug     : string;
---  attribute mark_debug of reg_o: signal is "true";
---  attribute mark_debug of reg_i: signal is "true";
+  
+  attribute mark_debug     : string;
+  attribute mark_debug of soft_trig: signal is "true";
+  attribute mark_debug of reg_i: signal is "true";
+  
 
 
 
 begin
 
-reg_i.fpgaver.data.data <= std_logic_vector(to_unsigned(FPGA_VERSION,32));
+reg_i.fpgaver.val.data <= std_logic_vector(to_unsigned(FPGA_VERSION,32));
 
-leds <= reg_o.leds.data.data;
+leds <= reg_o.leds.val.data;
 
 -- DCCT and Monitor ADC slow readbacks
 reg_i.ps1_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps1.dcct0), 32));
@@ -134,6 +139,26 @@ reg_i.ps4_digin.val.data <= rsts(15 downto 12);
 -- Snapshot buffer stats
 reg_i.snapshot_addrptr.val.data <= ss_buf_stat.addr_ptr;
 reg_i.snapshot_totaltrigs.val.data <= ss_buf_stat.tenkhzcnt;
+
+
+soft_trig <= reg_o.softtrig.val.data(0);
+
+process (pl_clock)
+begin
+  if (rising_edge(pl_clock)) then
+    if (pl_reset = '1') then
+      reg_i.softtrig_bufptr.val.data <= 32d"0";
+    else
+      soft_trig_prev <= soft_trig;
+      if (soft_trig = '1' and soft_trig_prev = '0') then     
+        reg_i.softtrig_bufptr.val.data <= ss_buf_stat.addr_ptr;
+      end if;
+    end if;
+  end if;
+end process;  
+
+
+
 
 
 

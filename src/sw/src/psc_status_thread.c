@@ -132,6 +132,7 @@ void ReadSAData(char *msg) {
 
     u32 *msg_u32ptr;
     struct SAdataMsg sadata;
+    u32 i;
 
 
     //write the PSC header
@@ -147,13 +148,48 @@ void ReadSAData(char *msg) {
     sadata.evr_ts_s =  2;
     sadata.ps1_dcct[0] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT0);
     sadata.ps1_dcct[1] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT1);
+    sadata.ps1_mon[0]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DACSP);
+    sadata.ps1_mon[1]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_VOLT);
+    sadata.ps1_mon[2]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_GND);
+    sadata.ps1_mon[3]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_SPARE);
+    sadata.ps1_mon[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_REG);
+    sadata.ps1_mon[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_ERR);
     sadata.ps2_dcct[0] = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_DCCT0);
     sadata.ps2_dcct[1] = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_DCCT1);
+    sadata.ps2_mon[0]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_DACSP);
+    sadata.ps2_mon[1]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_VOLT);
+    sadata.ps2_mon[2]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_GND);
+    sadata.ps2_mon[3]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_SPARE);
+    sadata.ps2_mon[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_REG);
+    sadata.ps2_mon[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_ERR);
     sadata.ps3_dcct[0] = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_DCCT0);
     sadata.ps3_dcct[1] = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_DCCT1);
+    sadata.ps3_mon[0]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_DACSP);
+    sadata.ps3_mon[1]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_VOLT);
+    sadata.ps3_mon[2]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_GND);
+    sadata.ps3_mon[3]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_SPARE);
+    sadata.ps3_mon[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_REG);
+    sadata.ps3_mon[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_ERR);
     sadata.ps4_dcct[0] = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_DCCT0);
     sadata.ps4_dcct[1] = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_DCCT1);
+    sadata.ps4_mon[0]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_DACSP);
+    sadata.ps4_mon[1]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_VOLT);
+    sadata.ps4_mon[2]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_GND);
+    sadata.ps4_mon[3]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_SPARE);
+    sadata.ps4_mon[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_REG);
+    sadata.ps4_mon[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_ERR);
 
+
+
+    /*
+    for (i=0;i<=1;i++) {
+    	xil_printf("%8d ",sadata.ps1_dcct[i]);
+    }
+    for (i=0;i<=5;i++) {
+    	xil_printf("%8d ",sadata.ps1_mon[i]);
+    }
+    xil_printf("\r\n");
+    */
 
 
 
@@ -269,10 +305,10 @@ reconnect:
 	while (1) {
 
 		//xil_printf("In Status main loop...\r\n");
-		vTaskDelay(pdMS_TO_TICKS(1000));
+		vTaskDelay(pdMS_TO_TICKS(100));
 		ssbufptr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
 		totaltrigs = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_TOTALTRIGS);
-		xil_printf("BufPtr: %x\t TotalTrigs: %d\r\n",ssbufptr,totaltrigs);
+		//xil_printf("BufPtr: %x\t TotalTrigs: %d\r\n",ssbufptr,totaltrigs);
 
 
         ReadSAData(msgid31_buf);

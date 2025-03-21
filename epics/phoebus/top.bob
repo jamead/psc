@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2025-03-21 17:15:37 by mead-->
+<display version="2.0.0">
+  <name>PSC Top</name>
+  <width>1100</width>
+  <height>900</height>
+  <background_color>
+    <color red="240" green="240" blue="240">
+    </color>
+  </background_color>
+  <actions>
+  </actions>
+  <grid_step_x>6</grid_step_x>
+  <grid_step_y>6</grid_step_y>
+  <widget type="label" version="2.0.0">
+    <name>Label_7</name>
+    <text>NSLS II PAGE</text>
+    <x>36</x>
+    <y>126</y>
+    <width>207</width>
+    <height>55</height>
+    <font>
+      <font name="Header 1" family="Liberation Sans" style="BOLD" size="22.0">
+      </font>
+    </font>
+    <foreground_color>
+      <color red="63" green="74" blue="191">
+      </color>
+    </foreground_color>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <wrap_words>false</wrap_words>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="37" green="10" blue="247">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_26</name>
+    <actions>
+      <action type="open_display">
+        <file>_Psc1.opi</file>
+        <macros>
+          <PSC>PSC</PSC>
+          <CHAN>Chan1</CHAN>
+          <PriSys>lab</PriSys>
+        </macros>
+        <target>replace</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>Channel 1</text>
+    <x>294</x>
+    <y>138</y>
+    <width>113</width>
+    <height>31</height>
+    <font>
+      <font name="Header1" family="Sans" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <tooltip>$(actions)</tooltip>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_1</name>
+    <actions>
+      <action type="open_display">
+        <file>_Psc1.opi</file>
+        <macros>
+          <PSC>zPSC1_IVU_ID9</PSC>
+          <CHAN>Chan2</CHAN>
+          <PriSys>SR:C08-MG</PriSys>
+        </macros>
+        <target>replace</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>Channel 2</text>
+    <x>463</x>
+    <y>138</y>
+    <width>113</width>
+    <height>31</height>
+    <font>
+      <font name="Header1" family="Sans" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <tooltip>$(actions)</tooltip>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_2</name>
+    <actions>
+      <action type="open_display">
+        <file>_Psc1.opi</file>
+        <macros>
+          <PSC>zPSC1_IVU_ID9</PSC>
+          <CHAN>Chan3</CHAN>
+          <PriSys>SR:C08-MG</PriSys>
+        </macros>
+        <target>replace</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>Channel 3</text>
+    <x>627</x>
+    <y>138</y>
+    <width>113</width>
+    <height>31</height>
+    <font>
+      <font name="Header1" family="Sans" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <tooltip>$(actions)</tooltip>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_3</name>
+    <actions>
+      <action type="open_display">
+        <file>_Psc1.opi</file>
+        <macros>
+          <PSC>zPSC1_IVU_ID9</PSC>
+          <CHAN>Chan4</CHAN>
+          <PriSys>SR:C08-MG</PriSys>
+        </macros>
+        <target>replace</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>Channel 4</text>
+    <x>796</x>
+    <y>138</y>
+    <width>113</width>
+    <height>31</height>
+    <font>
+      <font name="Header1" family="Sans" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <tooltip>$(actions)</tooltip>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_16</name>
+    <pv_name>SR:C08-MG{zPSC1_IVU_ID9}Chan1:Sum1-Sts</pv_name>
+    <x>268</x>
+    <y>146</y>
+    <width>16</width>
+    <height>16</height>
+    <off_color>
+      <color red="255" green="0" blue="0">
+      </color>
+    </off_color>
+    <foreground_color>
+      <color red="192" green="192" blue="192">
+      </color>
+    </foreground_color>
+    <line_color>
+      <color red="150" green="150" blue="150">
+      </color>
+    </line_color>
+    <actions>
+    </actions>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_17</name>
+    <pv_name>SR:C08-MG{zPSC1_IVU_ID9}Chan2:Sum1-Sts</pv_name>
+    <x>442</x>
+    <y>146</y>
+    <width>16</width>
+    <height>16</height>
+    <off_color>
+      <color red="255" green="0" blue="0">
+      </color>
+    </off_color>
+    <foreground_color>
+      <color red="192" green="192" blue="192">
+      </color>
+    </foreground_color>
+    <line_color>
+      <color red="150" green="150" blue="150">
+      </color>
+    </line_color>
+    <actions>
+    </actions>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_18</name>
+    <pv_name>SR:C08-MG{zPSC1_IVU_ID9}Chan3:Sum1-Sts</pv_name>
+    <x>604</x>
+    <y>146</y>
+    <width>16</width>
+    <height>16</height>
+    <off_color>
+      <color red="255" green="0" blue="0">
+      </color>
+    </off_color>
+    <foreground_color>
+      <color red="192" green="192" blue="192">
+      </color>
+    </foreground_color>
+    <line_color>
+      <color red="150" green="150" blue="150">
+      </color>
+    </line_color>
+    <actions>
+    </actions>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_19</name>
+    <pv_name>SR:C08-MG{zPSC1_IVU_ID9}Chan4:Sum1-Sts</pv_name>
+    <x>772</x>
+    <y>146</y>
+    <width>16</width>
+    <height>16</height>
+    <off_color>
+      <color red="255" green="0" blue="0">
+      </color>
+    </off_color>
+    <foreground_color>
+      <color red="192" green="192" blue="192">
+      </color>
+    </foreground_color>
+    <line_color>
+      <color red="150" green="150" blue="150">
+      </color>
+    </line_color>
+    <actions>
+    </actions>
+  </widget>
+</display>

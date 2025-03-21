@@ -16,44 +16,19 @@
 
 
 
-//This message is for ADC Live waveform
-//10000 pts * 4vals * 2bytes/val
+//This message is for Snapshot 10KHz data
+//10KS/s * 10sec *160bytes/sample = 16Mbytes
 #define MSGID51 51 
-#define MSGID51LEN 80000   //in bytes
-
-//This message is for TbT waveform
-//1024 pts * 7vals * 4bytes/val (a,b,c,d,x,y,sum)
-#define MSGID52 52 
-#define MSGID52LEN 230000  //in bytes
-
-//This message is for ADC DMA
-//1e6 pts * 4vals * 2bytes/val
-#define MSGID53 53
-#define MSGID53LEN 8000000  //in bytes
-
-//This message is for TBT DMA
-//100e3 pts * 16vals * 4bytes/val
-#define MSGID54 54
-#define MSGID54LEN 6400000  //in bytes
-
-//This message is for FA DMA
-//20e3 pts * 10vals * 4bytes/val
-#define MSGID55 55
-#define MSGID55LEN 800000  //in bytes
-
-
+#define MSGID51LEN 16000000   //in bytes
 
 
 //global buffers
-extern char msgid30_buf[MSGID30LEN];
-extern char msgid31_buf[MSGID31LEN];
-extern char msgid32_buf[MSGID32LEN];
+extern char msgid30_buf[MSGID30LEN+MSGHDRLEN];
+extern char msgid31_buf[MSGID31LEN+MSGHDRLEN];
+extern char msgid32_buf[MSGID32LEN+MSGHDRLEN];
 
-extern char msgid51_buf[MSGID51LEN];
-extern char msgid52_buf[MSGID52LEN];
-extern char msgid53_buf[MSGID53LEN];
-extern char msgid54_buf[MSGID54LEN];
-extern char msgid55_buf[MSGID55LEN];
+extern char msgid51_buf[MSGID51LEN+MSGHDRLEN];
+
 
 
 // PSC Message ID 31
@@ -68,8 +43,8 @@ typedef struct SAdataMsg {
 	u32 ps3_dcct[2];  //
     u32 ps3_mon[6];   //
 	u32 ps4_dcct[2];
-	u32 ps4_mon[2];
-
+	u32 ps4_mon[6];
+	u32 rsvd[10];
 
 } SAdataMsg;
 
@@ -129,34 +104,6 @@ typedef struct StatusMsg {
 // Control Message Offsets
 #define SOFT_TRIG_MSG1 0
 #define FP_LED_MSG1 4
-#define PILOT_TONE_ENB_MSG1 8
-#define ADC_IDLY_MSG1 12
-#define ADC_MMCM0_MSG1 16
-#define ADC_MMCM1_MSG1 20
-#define ADC_SPI_MSG1 24
-#define EVENT_SRC_SEL_MSG1 36 
-#define DMA_TRIG_SRC_MSG1 52
-#define DMA_ADCLEN_MSG1 56
-#define DMA_TBTLEN_MSG1 60
-#define DMA_FALEN_MSG1 64
-#define MACHINE_SEL_MSG1 76
-#define PILOT_TONE_SPI_MSG1 104
-#define RF_ATTEN_MSG1 132
-#define PT_ATTEN_MSG1 136
-#define KX_MSG1 144
-#define KY_MSG1 148
-#define BBA_XOFF_MSG1 152
-#define BBA_YOFF_MSG1 156
-#define CHA_GAIN_MSG1 160
-#define CHB_GAIN_MSG1 164
-#define CHC_GAIN_MSG1 168
-#define CHD_GAIN_MSG1 172
-#define FINE_TRIG_DLY_MSG1 192  //Geo Delay
-#define TBT_GATE_WIDTH_MSG1 196
-#define COARSE_TRIG_DLY_MSG1 272
-#define TRIGTOBEAM_THRESH_MSG1 276
-#define EVENT_NO_MSG1 320
-
 
 
 

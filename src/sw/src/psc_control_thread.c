@@ -30,7 +30,8 @@ void set_fpleds(u32 msgVal)  {
 
 
 void soft_trig(u32 msgVal) {
-	//Xil_Out32(XPAR_M_AXI_BASEADDR + FA_SOFT_TRIG_REG, msgVal);
+	xil_printf("MsgVal = %d\r\n",msgVal);
+	Xil_Out32(XPAR_M_AXI_BASEADDR + SOFTTRIG, msgVal);
 }
 
 
@@ -123,64 +124,13 @@ reconnect:
         switch(MsgAddr) {
 			case SOFT_TRIG_MSG1:
 				xil_printf("Soft Trigger Message:   Value=%d\r\n",MsgData);
-                break;
-
-
-			case KX_MSG1:
-				xil_printf("Kx Message:   Value=%d\r\n",MsgData);
-                //set_kxky(HOR,MsgData);
-                break;
-
-			case KY_MSG1:
-				xil_printf("Ky Message:   Value=%d\r\n",MsgData);
-                //set_kxky(VERT,MsgData);
-                break;
-
-            case CHA_GAIN_MSG1:
-            	xil_printf("ChA Gain Message:   Value=%d\r\n",MsgData);
-                //set_gain(CHA,MsgData);
-                break;
-
-            case CHB_GAIN_MSG1:
-            	xil_printf("ChB Gain Message:   Value=%d\r\n",MsgData);
-                //set_gain(CHB,MsgData);
-                break;
-
-            case CHC_GAIN_MSG1:
-            	xil_printf("ChC Gain Message:   Value=%d\r\n",MsgData);
-                //set_gain(CHC,MsgData);
-                break;
-
-            case CHD_GAIN_MSG1:
-            	xil_printf("ChD Gain Message:   Value=%d\r\n",MsgData);
-                //set_gain(CHD,MsgData);
-                break;
-
-            case FINE_TRIG_DLY_MSG1:
-            	xil_printf("Fine Trig Delay Message:   Value=%d\r\n",MsgData);
-                //set_geo_dly(MsgData);
-                break;
-
-            case COARSE_TRIG_DLY_MSG1:
-            	xil_printf("Coarse Trig Delay Message:   Value=%d\r\n",MsgData);
-            	//set_coarse_dly(MsgData);
-            	break;
-
-            case TRIGTOBEAM_THRESH_MSG1:
-            	xil_printf("Trigger to Beam Threshold Message:   Value=%d\r\n",MsgData);
-            	//set_trigtobeam_thresh(MsgData);
-            	break;
-
-
-            case EVENT_NO_MSG1:
-            	xil_printf("DMA Event Number Message:   Value=%d\r\n",MsgData);
-                set_eventno(MsgData);
+				soft_trig(MsgData);
                 break;
 
 
             case FP_LED_MSG1:
             	xil_printf("Setting FP LED:   Value=%d\r\n",MsgData);
-            	//set_fpleds(MsgData);
+            	set_fpleds(MsgData);
             	break;
 
 

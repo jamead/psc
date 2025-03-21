@@ -1,0 +1,42 @@
+
+####  Reconnects and PSC write 
+
+
+
+# Flush reg to socket buffer, trigger send to send all socket buffer to PSC 
+record(bo, "$(P){PSC:$(NO)}send") { 
+    field(DTYP, "PSC Ctrl Send All") 
+    field(OUT , "@Tx$(NO)") 
+    field(ZNAM, "Send") 
+    field(ONAM, "Send") 
+} 
+ 
+# Write a single register
+record(longout, "$(P){PSC:$(NO)}GoRegSingleWrite") {
+    field(DTYP, "PSC Ctrl Send")
+    field(OUT , "@Tx$(NO)")
+    field(VAL , "1") 
+    field(FLNK, "$(P){PSC:$(NO)}send")
+}
+
+
+############# Control PV's ##########################################
+
+
+record(bo, "$(P){PSC:$(NO)}Trig:Strig-SP") {
+    field(DESC, "Soft Trigger by user")
+    field(DTYP, "PSC Single U32")
+    field(OUT , "@Tx$(NO) 1 0")
+#    field(ZNAM,"Rdy")
+#    field(ONAM,"Trig")
+    field(FLNK, "$(P){PSC:$(NO)}GoRegSingleWrite")
+    field(HIGH,".2")    #500 ms after low
+}
+
+
+record(bo, "$(P){PSC:$(NO)}LEDs-SP") {
+    field(DESC, "Control the LEDs on the PSC")
+    field(DTYP, "PSC Single U32")
+    field(OUT , "@Tx$(NO) 1 4")
+    field(FLNK, "$(P){PSC:$(NO)}GoRegSingleWrite")
+}
