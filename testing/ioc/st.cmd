@@ -27,17 +27,18 @@ pscdemo_registerRecordDeviceDriver(pdbbase)
 epicsEnvSet("PSC1_IP", "10.0.142.43");  #4009
 
 
-epicsEnvSet("BLEN",10000);        # Snapshot DMA Length
+epicsEnvSet("BLEN",100000);        # Snapshot DMA Length
 
 
 ## Load record instances
 
-########## use template
-
-### PVs for first LINAC ZBPM:
+### PVs for PSC:
 dbLoadRecords("$(PSC_DBDIR)/adc10hz.db", "P=$(IOCNAME), NO=1")
 dbLoadRecords("$(PSC_DBDIR)/control.db", "P=$(IOCNAME), NO=1")
+
 dbLoadRecords("$(PSC_DBDIR)/snapshot.db", "P=$(IOCNAME), NO=1, BUF_LEN=$(BLEN)")
+dbLoadRecords("$(PSC_DBDIR)/wfmstats.db", "P=$(IOCNAME), PSC=1")
+
 
 
 
@@ -46,7 +47,7 @@ var(PSCDebug, 5)	#5 full debug
 
 #psc1 Create the PSC
 createPSC("Tx1", $(PSC1_IP), 7, 0)
-createPSC("wfm1", $(PSC1_IP), 20, 1)
+createPSC("Wfm1", $(PSC1_IP), 20, 1)
 createPSC("Rx1", $(PSC1_IP), 600, 1)
 
 ###########

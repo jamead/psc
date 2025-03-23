@@ -2,24 +2,33 @@
 //The PSC Header is always 8 bytes
 #define MSGHDRLEN 8
 
-//This message is for System Health
+//Status Thread: This message is for System Health
 #define MSGID30 30
 #define MSGID30LEN 1024 //748   //in bytes
 
-//This message is for 10Hz data
-#define MSGID31 31
-#define MSGID31LEN 1024  //316   //in bytes
+//Status Thread: This message is for 10Hz data
+//#define MSGID31 31
+//#define MSGID31LEN 1024  //316   //in bytes
+#define MSGSTAT10Hz 31
+#define MSGSTAT10HzLEN 1024  //316   //in bytes
 
-//This message is for system info
+//Status Thread: This message is for system info
 #define MSGID32 32
 #define MSGID32LEN 1024  //400  //in bytes
 
 
 
-//This message is for Snapshot 10KHz data
+//Waveform Thread: This message is for Snapshot 10KHz data
 //10KS/s * 10sec *160bytes/sample = 16Mbytes
 #define MSGID51 51 
 #define MSGID51LEN 16000000   //in bytes
+
+
+//Waveform Thread: Snapshot Statistics (pointers, etc)
+// Updated at 10Hz, keeps waveform connection alive
+#define MSGWFMSTATS 52
+#define MSGWFMSTATSLEN 128
+
 
 
 
@@ -28,10 +37,11 @@
 extern char ramp_buf[MAX_RAMP_TABLE];
 
 extern char msgid30_buf[MSGID30LEN+MSGHDRLEN];
-extern char msgid31_buf[MSGID31LEN+MSGHDRLEN];
+extern char msgStat10Hz_buf[MSGSTAT10HzLEN+MSGHDRLEN];
 extern char msgid32_buf[MSGID32LEN+MSGHDRLEN];
 
 extern char msgid51_buf[MSGID51LEN+MSGHDRLEN];
+extern char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];
 
 
 

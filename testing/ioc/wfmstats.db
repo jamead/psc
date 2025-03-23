@@ -1,0 +1,15 @@
+record(longin, "$(P){$(PSC)}SS:CurrBufptr-I") {
+    field(DESC, "Current DDR Address of Snapshot Pointer")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 52 0")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:TotalTrigs-I") {
+    field(DESC, "Total Number of 10Khz DMA writes")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 52 4")
+    field(SCAN,"I/O Intr")
+}
+
+

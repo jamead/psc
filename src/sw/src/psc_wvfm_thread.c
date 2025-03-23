@@ -4,7 +4,7 @@
 *  4-17-24
 *
 *  This thread is responsible for sending all waveform data to the IOC.   It does
-*  this over to message ID's (51 = ADC Data, 52 = TbT data)
+*  this over to message ID's (51 = Snapshot, )
 *
 *  It starts a listening server on
 *  port 600.  Upon establishing a connection with a client, it begins to send out
@@ -53,13 +53,45 @@ void Host2NetworkConvWvfm(char *inbuf, int len) {
 
 }
 
+void ReadSnapShotStats(char *msg) {
+
+   u32 *msg_u32ptr;
+   u32 ssbufaddr, totaltrigs;
+   u32 i;
+
+   //write the PSC Header
+   msg_u32ptr = (u32 *)msg;
+   msg[0] = 'P';
+   msg[1] = 'S';
+   msg[2] = 0;
+   msg[3] = (short int) MSGWFMSTATS;
+   *++msg_u32ptr = htonl(MSGWFMSTATSLEN); //body length
+	msg_u32ptr++;
+
+   /*
+   for (i=0;i<30;i++) {
+	   msg_u32ptr[i] = i;
+   }
+   */
+
+   ssbufaddr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
+   totaltrigs = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_TOTALTRIGS);
+   msg_u32ptr[0] = ssbufaddr;
+   msg_u32ptr[1] = totaltrigs;
+
+   xil_printf("BufPtr: %x\t TotalTrigs: %d\r\n",msg_u32ptr[0],msg_u32ptr[1]);
+
+
+}
+
+
 
 
 void ReadDMABuf(char *msg) {
 
     u32 *buf_data;
     u32 *msg_u32ptr;
-    u32 i,j;
+    u32 i;
 
 
 	xil_printf("\r\nReading Snapshot Data from DDR...\r\n");
@@ -104,9 +136,6 @@ void ReadDMABuf(char *msg) {
 
 
 	xil_printf("Done Reading ADC Data\r\n");
-
-
-
 
 
 }
@@ -179,10 +208,18 @@ reconnect:
 
 
 		do {
+		   ReadSnapShotStats(msgWfmStats_buf);
+	       Host2NetworkConvWvfm(msgWfmStats_buf,sizeof(msgWfmStats_buf)+MSGHDRLEN);
+	       n = write(newsockfd,msgWfmStats_buf,MSGWFMSTATSLEN+MSGHDRLEN);
+	       if (n < 0) {
+	        xil_printf("PSC Waveform: ERROR writing WfmStats...\r\n");
+	        close(newsockfd);
+	        goto reconnect;
+	       }
 		   ssbufptr_softtrig = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG_BUFPTR);
 		   //ssbufptr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
 		   //xil_printf("Buffer Ptr: %x\r\n", ssbufptr);
-		   vTaskDelay(pdMS_TO_TICKS(10));
+		   vTaskDelay(pdMS_TO_TICKS(100));
 		}
 		while (ssbufptr_softtrig == ssbufptr_softtrig_prev);
 

@@ -54,12 +54,14 @@ struct netif server_netif;
 //Ramping Buffer, 10s
 char ramp_buf[400000];
 
-//Status Buffers
+//Status Thread Buffers
 char msgid30_buf[MSGID30LEN+MSGHDRLEN];
-char msgid31_buf[MSGID31LEN+MSGHDRLEN];
+char msgStat10Hz_buf[MSGSTAT10HzLEN+MSGHDRLEN];
 char msgid32_buf[MSGID32LEN+MSGHDRLEN];
 
+//Waveform Thread Buffers
 char msgid51_buf[MSGID51LEN+MSGHDRLEN];
+char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];
 //char msgid52_buf[MSGID52LEN];
 //char msgid53_buf[MSGID53LEN];
 //char msgid54_buf[MSGID54LEN];
@@ -223,7 +225,7 @@ void main_thread(void *p)
     vTaskDelay(pdMS_TO_TICKS(100));
     // Start the PSC Control Thread.  Handles incoming commands from IOC
     xil_printf("\r\n");
-    sys_thread_new("psc_cntrl_thread", psc_control_thread, 0, THREAD_STACKSIZE, 2);
+    sys_thread_new("psc_cntrl_thread", psc_control_thread, 0, THREAD_STACKSIZE, 1);
 
 	//setup an Uptime Timer
 	xUptimeTimer = xTimerCreate("UptimeTimer", pdMS_TO_TICKS(1000), pdTRUE, (void *)0, vUptimeTimerCallback);

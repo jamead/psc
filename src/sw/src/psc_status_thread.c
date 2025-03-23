@@ -132,7 +132,7 @@ void ReadSAData(char *msg) {
 
     u32 *msg_u32ptr;
     struct SAdataMsg sadata;
-    u32 i;
+
 
 
     //write the PSC header
@@ -140,8 +140,8 @@ void ReadSAData(char *msg) {
     msg[0] = 'P';
     msg[1] = 'S';
     msg[2] = 0;
-    msg[3] = (short int) MSGID31;
-    *++msg_u32ptr = htonl(MSGID30LEN); //body length
+    msg[3] = (short int) MSGSTAT10Hz;
+    *++msg_u32ptr = htonl(MSGSTAT10HzLEN); //body length
 
     sadata.count = 0;
     sadata.evr_ts_ns = 1;
@@ -257,7 +257,7 @@ void psc_status_thread()
 	int clilen;
 	struct sockaddr_in serv_addr, cli_addr;
     int n,loop=0;
-    int sa_trigwait, sa_cnt=0, sa_cnt_prev=0;
+    //int sa_trigwait, sa_cnt=0, sa_cnt_prev=0;
     u32 ssbufptr, totaltrigs;
 
 
@@ -313,10 +313,10 @@ reconnect:
 		//xil_printf("BufPtr: %x\t TotalTrigs: %d\r\n",ssbufptr,totaltrigs);
 
 
-        ReadSAData(msgid31_buf);
+        ReadSAData(msgStat10Hz_buf);
         //write 10Hz msg31 packet
-        Host2NetworkConvStatus(msgid31_buf,sizeof(msgid31_buf)+MSGHDRLEN);
-	    n = write(newsockfd,msgid31_buf,MSGID31LEN+MSGHDRLEN);
+        Host2NetworkConvStatus(msgStat10Hz_buf,sizeof(msgStat10Hz_buf)+MSGHDRLEN);
+	    n = write(newsockfd,msgStat10Hz_buf,MSGSTAT10HzLEN+MSGHDRLEN);
         if (n < 0) {
           printf("Status socket: ERROR writing MSG 31 - Pos Info\n");
           close(newsockfd);

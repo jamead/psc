@@ -64,7 +64,7 @@ void write_ramptable(u32 ps_num, u32 ramp_len, u32 ramp_table[])
   }
 
   for (i=0;i<ramp_len;i++) {
-	if (i < 1000)
+	if (i < 10)
       xil_printf("%d: %d\r\n",i,ntohl(ramp_table[i]));
 	Xil_Out32(XPAR_M_AXI_BASEADDR + dpram_addr, i);
     Xil_Out32(XPAR_M_AXI_BASEADDR + dpram_data, ntohl(ramp_table[i]));
