@@ -205,28 +205,25 @@ void main_thread(void *p)
     // Start the PSC Status Thread.  Handles incoming commands from IOC
     vTaskDelay(pdMS_TO_TICKS(100));
     xil_printf("\r\n");
-    //sys_thread_new("psc_status_thread", psc_status_thread, 0,THREAD_STACKSIZE, 1);
+    sys_thread_new("psc_status_thread", psc_status_thread, 0,THREAD_STACKSIZE, 1);
 
 
     // Delay for 100ms
     vTaskDelay(pdMS_TO_TICKS(100));
     // Start the PSC Waveform Thread.  Handles incoming commands from IOC
     xil_printf("\r\n");
-    //sys_thread_new("psc_wvfm_thread", psc_wvfm_thread, 0, THREAD_STACKSIZE, 1);
+    sys_thread_new("psc_wvfm_thread", psc_wvfm_thread, 0, THREAD_STACKSIZE, 1);
 
     // Start the PSC Ramping Thread.  Handles incoming commands from IOC
     vTaskDelay(pdMS_TO_TICKS(100));
     xil_printf("\r\n");
-    sys_thread_new("psc_ramping_thread", psc_ramping_thread, 0,THREAD_STACKSIZE, 3);
-
-
+    sys_thread_new("psc_ramping_thread", psc_ramping_thread, 0,THREAD_STACKSIZE, 1);
 
     // Delay for 100 ms
     vTaskDelay(pdMS_TO_TICKS(100));
     // Start the PSC Control Thread.  Handles incoming commands from IOC
     xil_printf("\r\n");
     sys_thread_new("psc_cntrl_thread", psc_control_thread, 0, THREAD_STACKSIZE, 2);
-
 
 	//setup an Uptime Timer
 	xUptimeTimer = xTimerCreate("UptimeTimer", pdMS_TO_TICKS(1000), pdTRUE, (void *)0, vUptimeTimerCallback);
@@ -256,87 +253,13 @@ void main_thread(void *p)
 int main()
 {
 
-    u32 ts_s, ts_ns;
-    float temp0, temp1, vin, iin;
-    u32 i,j,x;
-	s32 adc_raw;
-    struct SAdataMsg SAdata;
-    u32 trigstat, wordcnt;
-    s32 dcct[8];
-    s32 ps1_dacsp, ps2_dacsp, ps3_dacsp, ps4_dacsp;
-    volatile u32 *addr;
-    u32 val;
 
-	
 	xil_printf("BNL Power Supply Controller ...\r\n");
     print_firmware_version();
     
 	init_i2c();
 	
-
-/*
-
-	for (i=0;i<100;i++) {
-	Xil_Out32(XPAR_M_AXI_BASEADDR + SOFTTRIG, i);
-	val = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG);
-	xil_printf("i=%d  val=%d\r\n",i,val);
-	sleep(1);
-	}
-
-
 	
-    // set dac to ramp mode
-	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_JUMPMODE, 1);
-
-    xil_printf("Loading Ramptable\r\n");
-	// load ramptable
-	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPLEN, 3000);
-	for (i=0;i<1000;i++) {
-		Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPADDR, i);
-	    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPDATA, i*100);
-	}
-	for (i=0;i<1000;i++) {
-		Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPADDR, i+1000);
-	    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPDATA, 1000*100);
-	}
-	for (i=0;i<1000;i++) {
-		Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPADDR, i+2000);
-	    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPDATA, 1000*100-i*100);
-	}
-
-
-
-    //run ramp table at 1Hz
-	while (1) {
-	    xil_printf("Running Ramptable\r\n");
-		Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RUNRAMP, 1);
-		Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RUNRAMP, 0);
-
-		//currampaddr = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_CURRAMPADDR);
-		//if (curram)
-		for (i=0;i<100;i++) {
-		    //Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DIGOUT, i);
-		    //Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DIGOUT, i);
-		    //Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DIGOUT, i);
-		    //Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DIGOUT, i);
-		    //Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_SETPT, i);
-
-		    ps1_dacsp = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DACSP);
-		    ps2_dacsp = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DACSP);
-		    ps3_dacsp = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DACSP);
-		    ps4_dacsp = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DACSP);
-
-	        xil_printf("%8d %8d %8d %8d ", ps1_dacsp, ps2_dacsp, ps3_dacsp, ps4_dacsp);
-		    xil_printf("\r\n");
-		    usleep(100);
-		}
-		sleep(1);
-        
-	}
-
- */
-
-
 	//EVR reset
 	//Xil_Out32(XPAR_M_AXI_BASEADDR + GTX_RESET_REG, 1);
 	//Xil_Out32(XPAR_M_AXI_BASEADDR + GTX_RESET_REG, 2);

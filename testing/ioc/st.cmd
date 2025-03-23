@@ -1,7 +1,7 @@
 #!//home/mead/epics/pscdrv/bin/linux-x86_64/pscdemo 
 epicsEnvSet("TOP","/home/mead/epics/pscdrv")
 epicsEnvSet("PSCDIR","$(TOP)")
-epicsEnvSet("PSC_DBDIR","/home/mead/chiesa/psc/epics/ioc")
+epicsEnvSet("PSC_DBDIR","/home/mead/chiesa/psc/testing/ioc")
 
 
 #epicsEnvSet("CNO","40")   ## Cell Number
@@ -46,7 +46,7 @@ var(PSCDebug, 5)	#5 full debug
 
 #psc1 Create the PSC
 createPSC("Tx1", $(PSC1_IP), 7, 0)
-#createPSC("wfm1", $(PSC1_IP), 20, 1)
+createPSC("wfm1", $(PSC1_IP), 20, 1)
 createPSC("Rx1", $(PSC1_IP), 600, 1)
 
 ###########
