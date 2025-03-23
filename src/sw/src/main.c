@@ -50,6 +50,11 @@ static sys_thread_t main_thread_handle;
 struct netif server_netif;
 
 //global buffers
+
+//Ramping Buffer, 10s
+char ramp_buf[400000];
+
+//Status Buffers
 char msgid30_buf[MSGID30LEN+MSGHDRLEN];
 char msgid31_buf[MSGID31LEN+MSGHDRLEN];
 char msgid32_buf[MSGID32LEN+MSGHDRLEN];
@@ -200,7 +205,7 @@ void main_thread(void *p)
     // Start the PSC Status Thread.  Handles incoming commands from IOC
     vTaskDelay(pdMS_TO_TICKS(100));
     xil_printf("\r\n");
-    sys_thread_new("psc_status_thread", psc_status_thread, 0,THREAD_STACKSIZE, 1);
+    //sys_thread_new("psc_status_thread", psc_status_thread, 0,THREAD_STACKSIZE, 1);
 
 
     // Delay for 100ms
@@ -208,6 +213,12 @@ void main_thread(void *p)
     // Start the PSC Waveform Thread.  Handles incoming commands from IOC
     xil_printf("\r\n");
     //sys_thread_new("psc_wvfm_thread", psc_wvfm_thread, 0, THREAD_STACKSIZE, 1);
+
+    // Start the PSC Ramping Thread.  Handles incoming commands from IOC
+    vTaskDelay(pdMS_TO_TICKS(100));
+    xil_printf("\r\n");
+    sys_thread_new("psc_ramping_thread", psc_ramping_thread, 0,THREAD_STACKSIZE, 3);
+
 
 
     // Delay for 100 ms

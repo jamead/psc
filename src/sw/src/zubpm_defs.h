@@ -41,14 +41,14 @@ void i2c_eeprom_writeBytes(u8, u8 *, u8);
 void eeprom_dump();
 void menu_get_ipaddr();
 
-void prog_ad9510();
-void ltc2195_init();
+
 
 void dma_arm();
 void menu_thread();
 void psc_control_thread();
 void psc_status_thread();
 void psc_wvfm_thread();
+void psc_ramping_thread();
 
 void init_i2c();
 s32 i2c_read(u8 *, u8, u8);

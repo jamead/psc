@@ -22,7 +22,11 @@
 #define MSGID51LEN 16000000   //in bytes
 
 
+
 //global buffers
+#define MAX_RAMP_TABLE 400000 //num bytes for 10s of ramp table
+extern char ramp_buf[MAX_RAMP_TABLE];
+
 extern char msgid30_buf[MSGID30LEN+MSGHDRLEN];
 extern char msgid31_buf[MSGID31LEN+MSGHDRLEN];
 extern char msgid32_buf[MSGID32LEN+MSGHDRLEN];
