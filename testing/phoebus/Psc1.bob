@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-03-23 15:59:02 by mead-->
+<!--Saved on 2025-03-24 06:41:53 by mead-->
 <display version="2.0.0">
   <name>$(CHAN):$(PriSys)</name>
   <height>800</height>
@@ -13,7 +13,7 @@
   <grid_step_y>6</grid_step_y>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_47</name>
-    <pv_name>$(PriSys){$(PSC)}SS:CurrBufptr-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}SS:Currbufaddr-I</pv_name>
     <x>218</x>
     <y>72</y>
     <width>90</width>
@@ -38,10 +38,10 @@
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_36</name>
-    <text>Current SnapShot Ptr</text>
-    <x>48</x>
+    <text>Current Addr</text>
+    <x>85</x>
     <y>72</y>
-    <width>170</width>
+    <width>132</width>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
@@ -229,5 +229,49 @@
         <visible>true</visible>
       </trace>
     </traces>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_48</name>
+    <pv_name>$(PriSys){$(PSC)}SS:Latsoftbufaddr-I</pv_name>
+    <x>218</x>
+    <y>102</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>4</format>
+    <precision>6</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_38</name>
+    <text>Soft Trig Latched Addr</text>
+    <x>42</x>
+    <y>102</y>
+    <width>170</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
   </widget>
 </display>

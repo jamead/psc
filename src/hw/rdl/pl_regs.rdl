@@ -327,12 +327,12 @@ reg {
   } ps1_dac_setpt @0x108;
   
 reg {
-    desc="PS1 DAC JumpMode";
+    desc="PS1 DAC Mode 0=smooth ramp, 1=ramp table, 2=FOFB, 3=Jump Mode";
     default sw = rw;
     default hw = r;
     default swacc=true;
     default swmod=true;    
-    field {} val[1];
+    field {} val[2];
   } ps1_dac_jumpmode @0x10C;  
   
 

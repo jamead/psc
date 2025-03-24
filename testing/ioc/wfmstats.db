@@ -1,4 +1,4 @@
-record(longin, "$(P){$(PSC)}SS:CurrBufptr-I") {
+record(longin, "$(P){$(PSC)}SS:Currbufaddr-I") {
     field(DESC, "Current DDR Address of Snapshot Pointer")
     field(DTYP, "PSC Reg")
     field(INP , "@Wfm$(PSC) 52 0")
@@ -12,4 +12,9 @@ record(longin, "$(P){$(PSC)}SS:TotalTrigs-I") {
     field(SCAN,"I/O Intr")
 }
 
-
+record(longin, "$(P){$(PSC)}SS:Latsoftbufaddr-I") {
+    field(DESC, "Latched DDR Address on last soft trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 52 8")
+    field(SCAN,"I/O Intr")
+}

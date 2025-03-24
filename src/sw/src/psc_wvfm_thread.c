@@ -53,10 +53,12 @@ void Host2NetworkConvWvfm(char *inbuf, int len) {
 
 }
 
+
+
 void ReadSnapShotStats(char *msg) {
 
    u32 *msg_u32ptr;
-   u32 ssbufaddr, totaltrigs;
+   u32 ssbufaddr, totaltrigs, latbufaddr_soft;
    u32 i;
 
    //write the PSC Header
@@ -75,11 +77,14 @@ void ReadSnapShotStats(char *msg) {
    */
 
    ssbufaddr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
+   latbufaddr_soft = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG_BUFPTR);
    totaltrigs = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_TOTALTRIGS);
    msg_u32ptr[0] = ssbufaddr;
    msg_u32ptr[1] = totaltrigs;
+   msg_u32ptr[2] = latbufaddr_soft;
 
-   xil_printf("BufPtr: %x\t TotalTrigs: %d\r\n",msg_u32ptr[0],msg_u32ptr[1]);
+   //xil_printf("BufPtr: %x\t LatBufPtr: %x\tTotalTrigs: %d\r\n",
+	//	   msg_u32ptr[0],msg_u32ptr[2], msg_u32ptr[1]);
 
 
 }
@@ -87,12 +92,26 @@ void ReadSnapShotStats(char *msg) {
 
 
 
-void ReadDMABuf(char *msg) {
+void ReadDMABuf(char *msg, u32 lataddr) {
 
     u32 *buf_data;
     u32 *msg_u32ptr;
     u32 i;
+    u32 curaddr;
+    u32 posttriglen;
+    u32 startaddr, stopaddr;
 
+    //find start and stop addresses for snapshot dump
+    //start with 2 sec pretrigger
+    //each trigger is 10kHz
+    //Each point is 160 bytes
+    startaddr = lataddr - 50000*160;
+    stopaddr = lataddr + 50000*160;
+    xil_printf("LatAddr: 0x%x    StartAddr: 0x%x    StopAddr: 0x%x\r\n",lataddr,startaddr,stopaddr);
+    if (startaddr < 0x10000000)
+	   xil_printf("    Pretrigger wraps\r\n");
+    if (stopaddr > 0x11E84800)
+	   xil_printf("    Postrigger wraps\r\n");
 
 	xil_printf("\r\nReading Snapshot Data from DDR...\r\n");
 
@@ -155,6 +174,8 @@ void psc_wvfm_thread()
     u32 loopcnt=0;
     s32 n;
     u32 ssbufptr, ssbufptr_softtrig, ssbufptr_softtrig_prev;
+    u32 got_trig=0, post_trig_cnt, send_buf;
+
 
 
 
@@ -204,47 +225,71 @@ reconnect:
 
 		//xil_printf("Wvfm: In main waveform loop...\r\n");
 		loopcnt++;
-		//vTaskDelay(pdMS_TO_TICKS(1000));
+		vTaskDelay(pdMS_TO_TICKS(100));
 
 
-		do {
-		   ReadSnapShotStats(msgWfmStats_buf);
-	       Host2NetworkConvWvfm(msgWfmStats_buf,sizeof(msgWfmStats_buf)+MSGHDRLEN);
-	       n = write(newsockfd,msgWfmStats_buf,MSGWFMSTATSLEN+MSGHDRLEN);
-	       if (n < 0) {
-	        xil_printf("PSC Waveform: ERROR writing WfmStats...\r\n");
-	        close(newsockfd);
-	        goto reconnect;
-	       }
-		   ssbufptr_softtrig = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG_BUFPTR);
-		   //ssbufptr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
-		   //xil_printf("Buffer Ptr: %x\r\n", ssbufptr);
-		   vTaskDelay(pdMS_TO_TICKS(100));
+
+        //Check if new soft trigger
+	    ssbufptr_softtrig = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG_BUFPTR);
+	    if ((ssbufptr_softtrig != ssbufptr_softtrig_prev) && (got_trig == 0)) {
+	    	ssbufptr_softtrig_prev = ssbufptr_softtrig;
+	    	xil_printf("Got Trigger...\r\n");
+	    	got_trig = 1;
+	    	post_trig_cnt = 0;
+		    xil_printf("Buffer Ptr at Trigger: %x\r\n", ssbufptr_softtrig);
+		    ssbufptr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
+		    xil_printf("Current Buffer Ptr   : %x\r\n", ssbufptr);
+		    ssbufptr_softtrig_prev = ssbufptr_softtrig;
+	    }
+
+
+        if (got_trig == 1) {
+        	//wait for the post trigger time
+        	xil_printf("Waiting Post Trigger Time... %d\r\n",post_trig_cnt);
+        	post_trig_cnt++;
+			// set to 2 seconds for now
+			if (post_trig_cnt == 20) {
+				xil_printf("Done waiting...\r\n");
+				send_buf = 1;
+				got_trig = 0;
+			}
+
+
 		}
-		while (ssbufptr_softtrig == ssbufptr_softtrig_prev);
 
-		xil_printf("Buffer Ptr at Trigger: %x\r\n", ssbufptr_softtrig);
-		ssbufptr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
-		xil_printf("Current Buffer Ptr   : %x\r\n", ssbufptr);
-		ssbufptr_softtrig_prev = ssbufptr_softtrig;
 
-		xil_printf("Triggered... Calling ReadDMABuf...\r\n");
-		ReadDMABuf(msgid51_buf);
 
-        //write out Snapshot data (msg51)
-		xil_printf("Tx 10 sec of Snapshot Data\r\n");
-        Host2NetworkConvWvfm(msgid51_buf,sizeof(msgid51_buf)+MSGHDRLEN);
-        n = write(newsockfd,msgid51_buf,MSGID51LEN+MSGHDRLEN);
-        xil_printf("Transferred %d bytes\r\n", n);
+        if (send_buf == 1)	{
+           send_buf = 0;
+		   xil_printf("Calling ReadDMABuf...\r\n");
+		   ReadDMABuf(msgid51_buf,ssbufptr_softtrig);
 
-        if (n < 0) {
+           //write out Snapshot data (msg51)
+		   xil_printf("Tx 10 sec of Snapshot Data\r\n");
+           Host2NetworkConvWvfm(msgid51_buf,sizeof(msgid51_buf)+MSGHDRLEN);
+           n = write(newsockfd,msgid51_buf,MSGID51LEN+MSGHDRLEN);
+           xil_printf("Transferred %d bytes\r\n", n);
+
+           if (n < 0) {
         	printf("PSC Waveform: ERROR writing MSG 51 - ADC Waveform\n");
         	close(newsockfd);
         	goto reconnect;
-        }
-        else
+           }
+           else
             xil_printf("Tx Success...\r\n");
+        }
 
+
+        // Send out Wfm Stats
+		//xil_printf("Sending SnapShot Stats...\r\n");
+		ReadSnapShotStats(msgWfmStats_buf);
+	    Host2NetworkConvWvfm(msgWfmStats_buf,sizeof(msgWfmStats_buf)+MSGHDRLEN);
+	    n = write(newsockfd,msgWfmStats_buf,MSGWFMSTATSLEN+MSGHDRLEN);
+	    if (n < 0) {
+	      xil_printf("PSC Waveform: ERROR writing WfmStats...\r\n");
+	      close(newsockfd);
+	      goto reconnect;
+	    }
 
 
     }

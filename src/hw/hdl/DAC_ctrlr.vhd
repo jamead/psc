@@ -30,12 +30,6 @@ port(
 			--Inputs
 			dac_cntrl            : in t_dac_cntrl;
 			dac_stat             : out t_dac_stat;
-			dac1234_jump         : in std_logic; 		
-		    --Outputs
-            dac1_done            : out std_logic; 
-            dac2_done            : out std_logic; 
-            dac3_done            : out std_logic; 
-            dac4_done            : out std_logic; 
 		    --SPI Outputs
 			n_sync1234		     : out std_logic; 
 			sclk1234   		     : out std_logic; 
@@ -60,7 +54,7 @@ type state_type is (IDLE,RUN_RAMP,UPDATE_DAC);
   signal dac_rden        : std_logic;
   signal ramp_dac_setpt  : std_logic_vector(19 downto 0);
   signal dac_setpt       : std_logic_vector(19 downto 0);
-  signal dac_start       : std_logic;
+  signal ramp_active     : std_logic;
   signal dac_trig        : std_logic;
   
   signal state : state_type;
@@ -74,23 +68,23 @@ type state_type is (IDLE,RUN_RAMP,UPDATE_DAC);
    attribute mark_debug of dac_rden: signal is "true"; 
    attribute mark_debug of ramp_dac_setpt: signal is "true";
    attribute mark_debug of dac_setpt: signal is "true";
-   attribute mark_debug of dac_start: signal is "true";     
+   attribute mark_debug of ramp_active: signal is "true";     
    attribute mark_debug of dac_cntrl: signal is "true";     
 
 
 begin
 
 
-
+--Source of DAC data depenods on Mode
+--Because DAC sync's are tied together, must always update every DAC
+--  0=smooth ramp, 1=ramp table, 2=FOFB, 3=Jump Mode
 process(clk) 
 begin 
-    if rising_edge(clk) then 
-      if (dac_cntrl.ps1.jump = '1') then
-        dac_setpt <= dac_cntrl.ps1.setpoint; 
-        dac_trig <= tenkhz_trig;
-      else
+    if rising_edge(clk) then    
+      if (dac_cntrl.ps1.mode = "01" and ramp_active = '1') then
         dac_setpt <= ramp_dac_setpt;
-        dac_trig <= dac_start;
+      else
+        dac_setpt <= dac_cntrl.ps1.setpoint;    
       end if;
     end if; 
 end process; 
@@ -121,20 +115,20 @@ begin
       state <= IDLE; 
       dac_rdaddr <= 16d"0";
       dac_rden <= '0';
-      dac_start <= '0';
+      ramp_active <= '0';
       ramp_dac_setpt <= (others => '0');
     else 
       case(state) is 
         when IDLE => 
-          if dac_cntrl.ps1.load = '1' then 
+          if dac_cntrl.ps1.ramprun = '1' then 
             state <= run_ramp;
             dac_rdaddr <= 16d"0";
             dac_rden <= '0';
-            dac_start <= '0';
+            ramp_active <= '0';
           end if;                 
 
         when RUN_RAMP => 
-            dac_start <= '0';
+            ramp_active <= '0';
             if (tenkhz_trig = '1') then
                dac_rden <= '1';
                state <= update_dac;
@@ -147,7 +141,7 @@ begin
             else
               dac_rdaddr <= std_logic_vector(unsigned(dac_rdaddr) + 1);
               ramp_dac_setpt <= dac_rddata;
-              dac_start <= '1';
+              ramp_active <= '1';
               state <= run_ramp;
             end if;  
       end case;
@@ -169,7 +163,7 @@ setpt_dac1:  entity work.dac_ad5781_intf
 	--Control inputs
     clk => clk,
     reset => dac_cntrl.ps1.reset, 
-	start => dac_trig,  
+	start => tenkhz_trig, --dac_trig,  
     --DAC Inputs         
     dac_data => dac_setpt(17 downto 0),
     dac_ctrl_bits => dac_cntrl.ps1.cntrl(4 downto 0),
@@ -177,7 +171,7 @@ setpt_dac1:  entity work.dac_ad5781_intf
     n_sync => n_sync1234, 
     sclk => sclk1234,
     sdo => sdo(0), --sdo1,
-    done => dac1_done
+    done => open
 );
 
 setpt_dac2:  entity work.dac_ad5781_intf 
@@ -187,7 +181,7 @@ setpt_dac2:  entity work.dac_ad5781_intf
 	--Control inputs
     clk => clk,
     reset => dac_cntrl.ps1.reset, 
-	start => dac_trig,  
+	start => tenkhz_trig, --dac_trig,  
     --DAC Inputs         
     dac_data => dac_setpt(17 downto 0),
     dac_ctrl_bits => dac_cntrl.ps1.cntrl(4 downto 0),
@@ -195,7 +189,7 @@ setpt_dac2:  entity work.dac_ad5781_intf
     n_sync => open, 
     sclk => open, 
     sdo => sdo(1), 
-    done => dac2_done
+    done => open
 );
 
 
@@ -206,7 +200,7 @@ setpt_dac3:  entity work.dac_ad5781_intf
 	--Control inputs
     clk => clk,
     reset => dac_cntrl.ps1.reset, 
-	start => dac_trig, 
+	start => tenkhz_trig, --dac_trig, 
     --DAC Inputs         
     dac_data => dac_setpt(17 downto 0),
     dac_ctrl_bits => dac_cntrl.ps1.cntrl(4 downto 0),
@@ -214,7 +208,7 @@ setpt_dac3:  entity work.dac_ad5781_intf
     n_sync => open,
     sclk => open,
     sdo => sdo(2), 
-    done => dac3_done
+    done => open
 );
 		
 
@@ -225,7 +219,7 @@ setpt_dac4:  entity work.dac_ad5781_intf
 	--Control inputs
     clk => clk,
     reset => dac_cntrl.ps1.reset,
-	start => dac_trig, 
+	start => tenkhz_trig, --dac_trig, 
     --DAC Inputs         
     dac_data => dac_setpt(17 downto 0),
     dac_ctrl_bits => dac_cntrl.ps1.cntrl(4 downto 0),
@@ -233,7 +227,7 @@ setpt_dac4:  entity work.dac_ad5781_intf
     n_sync => open,
     sclk => open,
     sdo => sdo(3), 
-    done => dac4_done
+    done => open
 );
 
 end arch;

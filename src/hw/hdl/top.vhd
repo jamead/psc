@@ -149,12 +149,7 @@ architecture behv of top is
    
    signal dac_cntrl             : t_dac_cntrl;
    signal dac_stat              : t_dac_stat;   
-   signal dac0_done             : std_logic;
-   signal dac1_done             : std_logic;
-   signal dac2_done             : std_logic;
-   signal dac3_done             : std_logic;
-   signal dac_jump              : std_logic;
-   
+ 
    signal dma_adc_active        : std_logic;
    signal dma_adc_tdata         : std_logic_vector(63 downto 0);
    signal dma_adc_tkeep         : std_logic_vector(7 downto 0);
@@ -261,11 +256,6 @@ write_dacs: entity work.dac_ctrlr
     tenkhz_trig => tenkhz_trig,
     dac_cntrl => dac_cntrl,
     dac_stat => dac_stat,  	
-    dac1234_jump => dac_jump, 		
-    dac1_done => dac0_done, 
-    dac2_done => dac1_done,  
-    dac3_done => dac2_done,  
-    dac4_done => dac3_done,  
     n_sync1234	=> stpt_dac_sync,  
     sclk1234 => stpt_dac_sck, 
     sdo => stpt_dac_sdo 	

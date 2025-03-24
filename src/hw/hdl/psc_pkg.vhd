@@ -88,7 +88,7 @@ end record;
 type t_dac_cntrl_onech is record 
   --DAC controls 
   setpoint            : std_logic_vector(19 downto 0); 
-  load                : std_logic; 
+  ramprun             : std_logic; 
   ramplen             : std_logic_vector(15 downto 0);
   gain                : std_logic_vector(15 downto 0);
   offset              : std_logic_vector(15 downto 0);
@@ -100,8 +100,8 @@ type t_dac_cntrl_onech is record
   dpram_we            : std_logic;
   --Reset
   reset               : std_logic; 
-  --For Jump mode
-  jump                : std_logic; 
+  --mode  0=smooth ramp, 1=ramp table, 2=FOFB, 3=Jump Mode
+  mode                : std_logic_vector(1 downto 0); 
 end record; 
 
 type t_dac_cntrl is record

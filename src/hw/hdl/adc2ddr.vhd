@@ -88,7 +88,6 @@ begin
           when IDLE =>                
             prev_trigger <= trigger;
             if (trigger = '1' and prev_trigger = '0') then
-              datacnt <= std_logic_vector(unsigned(datacnt) + 1);
               ss_buf_stat.addr_ptr <= addr_base;
               ss_buf_stat.tenkhzcnt <= datacnt;
               wordnum <= 0;
@@ -175,8 +174,10 @@ begin
               -- Clear bready after response
               if s_axi4_s2m.bvalid = '1' then
                 if (addr_base < DDR_MAX_ADDR) then
+                   datacnt <= std_logic_vector(unsigned(datacnt) + 1);
                    addr_base <= std_logic_vector(unsigned(addr_base) + 4*BURST_LEN);
                 else
+                   datacnt <= 32d"0";
                    addr_base <= DDR_BASE_ADDR;
                 end if;
                 s_axi4_m2s.bready <= '0';

@@ -107,14 +107,14 @@ reg_i.ps4_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.ps_error),
 dac_cntrl.ps1.offset <= reg_o.ps1_dac_offset.val.data; 
 dac_cntrl.ps1.gain <= reg_o.ps1_dac_gain.val.data; 
 dac_cntrl.ps1.setpoint <= reg_o.ps1_dac_setpt.val.data;
-dac_cntrl.ps1.jump <= reg_o.ps1_dac_jumpmode.val.data(0);
+dac_cntrl.ps1.mode <= reg_o.ps1_dac_jumpmode.val.data;
 dac_cntrl.ps1.cntrl <= reg_o.ps1_dac_cntrl.val.data;
 dac_cntrl.ps1.reset <= reg_o.ps1_dac_reset.val.data(0);
 dac_cntrl.ps1.ramplen <= reg_o.ps1_dac_ramplen.val.data;
 dac_cntrl.ps1.dpram_addr <= reg_o.ps1_dac_rampaddr.val.data;
 dac_cntrl.ps1.dpram_data <= reg_o.ps1_dac_rampdata.val.data;
 dac_cntrl.ps1.dpram_we <= reg_o.ps1_dac_rampdata.val.swacc;
-dac_cntrl.ps1.load <= reg_o.ps1_dac_runramp.val.data(0);
+dac_cntrl.ps1.ramprun <= reg_o.ps1_dac_runramp.val.data(0);
 
 reg_i.ps1_dac_rampactive.val.data(0) <= dac_stat.ps1.active;
 reg_i.ps1_dac_currampaddr.val.data <= dac_stat.ps1.cur_addr;
@@ -141,6 +141,10 @@ reg_i.snapshot_addrptr.val.data <= ss_buf_stat.addr_ptr;
 reg_i.snapshot_totaltrigs.val.data <= ss_buf_stat.tenkhzcnt;
 
 
+
+
+
+-- user issues a soft trigger, latch the current snapshot buffer address
 soft_trig <= reg_o.softtrig.val.data(0);
 
 process (pl_clock)
