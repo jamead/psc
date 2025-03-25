@@ -59,7 +59,7 @@ void ReadSnapShotStats(char *msg) {
 
    u32 *msg_u32ptr;
    u32 ssbufaddr, totaltrigs, latbufaddr_soft;
-   u32 i;
+
 
    //write the PSC Header
    msg_u32ptr = (u32 *)msg;
@@ -94,26 +94,18 @@ void ReadSnapShotStats(char *msg) {
 
 void ReadDMABuf(char *msg, u32 lataddr) {
 
-    u32 *buf_data;
+	u32 BUFSTART = 0x10000000;
+	u32 BUFLEN   = 0x01E84800;
+	//u32 BUFEND   = 0x11E84800;
+	u32 const BUFSTEPBYTES  = 0xA0; //160 bytes
+    u32 const BUFSTEPWORDS = BUFSTEPBYTES/4;
+    u32 const WORDSPERSAMPLE = 40;
+	u32 *buf_data;
     u32 *msg_u32ptr;
     u32 i;
-    u32 curaddr;
-    u32 posttriglen;
     u32 startaddr, stopaddr;
-
-    //find start and stop addresses for snapshot dump
-    //start with 2 sec pretrigger
-    //each trigger is 10kHz
-    //Each point is 160 bytes
-    startaddr = lataddr - 50000*160;
-    stopaddr = lataddr + 50000*160;
-    xil_printf("LatAddr: 0x%x    StartAddr: 0x%x    StopAddr: 0x%x\r\n",lataddr,startaddr,stopaddr);
-    if (startaddr < 0x10000000)
-	   xil_printf("    Pretrigger wraps\r\n");
-    if (stopaddr > 0x11E84800)
-	   xil_printf("    Postrigger wraps\r\n");
-
-	xil_printf("\r\nReading Snapshot Data from DDR...\r\n");
+    u32 postfirstnumwords, postsecnumwords, postfirstnumpts, postsecnumpts;
+    u32 prefirstnumwords, presecnumwords, prefirstnumpts, presecnumpts;
 
     //write the PSC Header
     msg_u32ptr = (u32 *)msg;
@@ -124,37 +116,123 @@ void ReadDMABuf(char *msg, u32 lataddr) {
     *++msg_u32ptr = htonl(MSGID51LEN); //body length
 	msg_u32ptr++;
 
-	/* For testing, initialize array
-	xil_printf("Initializing DDR...\r\n");
-    buf_data = (u32 *) AXI_CIRBUFBASE;
-    for (i=0;i<100000;i++)
-    	for (j=0;j<40;j++)
-    	   *buf_data++ = i;
-    */
-	// Invalidate cache for the area we are going to read from
-	Xil_DCacheInvalidateRange(0x10000000,16e6);
-    xil_printf("Copying DMA data to PSC Buffer\r\n");
-    //copy the DMA'd ADC data into the msgid53 buffer
-    buf_data = (u32 *) AXI_CIRBUFBASE;
-	for (i=0;i<MSGID51LEN/4;i++) {
-	    *msg_u32ptr++ = *buf_data++;
-	     }
 
-    /* print buffer (debug)
-    msg_u32ptr = (u32 *)msg;
-    msg_u32ptr++;
-    msg_u32ptr++;
-    for (i=0;i<125000;i=i+1000) {
-    	xil_printf("%6d: ",i);
-    	msg_u32ptr = msg_u32ptr + 1000;
-    	for (j=0;j<40;j++)
-    	   xil_printf("%8d",*msg_u32ptr++);
-    	xil_printf("\r\n");
+	xil_printf("Copying Snapshot Data from CircBuf to PSC Message...\r\n");
+
+	// Invalidate cache of entire circular buffer
+	Xil_DCacheInvalidateRange(0x10000000,32e6);
+
+    //find start and stop addresses for snapshot dump
+    //start with 2 sec pretrigger
+    //each trigger is 10kHz
+    //Each point is 160 bytes
+    startaddr = lataddr - 50000*BUFSTEPBYTES;
+    stopaddr = lataddr + 50000*BUFSTEPBYTES;
+    xil_printf("LatAddr: 0x%x    StartAddr: 0x%x    StopAddr: 0x%x\r\n",lataddr,startaddr,stopaddr);
+    if (startaddr < 0x10000000) {
+	   xil_printf("    Pretrigger wraps\r\n");
+	   presecnumwords = (lataddr - BUFSTART) >> 2;
+	   presecnumpts   = presecnumwords / WORDSPERSAMPLE;
+	   prefirstnumwords   = 50000*WORDSPERSAMPLE - presecnumwords;
+	   prefirstnumpts = prefirstnumwords / BUFSTEPWORDS;
+	   startaddr = BUFSTART+BUFLEN - prefirstnumwords*4;
+	   xil_printf("    Start Addr          : %9d   0x%x\r\n", startaddr,startaddr);
+	   xil_printf("    Latch Addr          : %9d   0x%x\r\n", lataddr, lataddr);
+	   xil_printf("    BUFSTART+BUFLEN     : %9d   0x%x\r\n", BUFSTART+BUFLEN,BUFSTART+BUFLEN);
+	   xil_printf("    SecPreNumWords      : %9d   0x%x\r\n", presecnumwords, presecnumwords);
+	   xil_printf("    SecPreNumPts        : %9d\r\n", presecnumpts);
+	   xil_printf("    FirstPreLen         : %9d   0x%x\r\n", prefirstnumwords, prefirstnumwords);
+	   xil_printf("    FirstPreNumPts      : %9d\r\n", prefirstnumpts);
+	   xil_printf("    TotalPreLen         : %9d   0x%x\r\n", prefirstnumwords+presecnumwords, prefirstnumwords+presecnumwords);
+	   xil_printf("    TotalPrePts         : %9d\r\n", prefirstnumpts+presecnumpts);
+	   //Now that we have all the lengths, copy to the message buffer
+	   //copy pre-trigger
+	   xil_printf("    Copying 1st part of pre-trigger points\r\n");
+	   buf_data = (u32 *) startaddr;
+       for (i=0;i<prefirstnumwords;i++) {
+		 //if ((i % 4000) == 1)
+		 //  xil_printf("      %d: 0x%x\r\n",i,buf_data[i]);
+		 *msg_u32ptr++ = buf_data[i];
+       }
+		//copy first postbuf
+	   xil_printf("    Copying 2nd part of pre-trigger points\r\n");
+	   buf_data = (u32 *) BUFSTART;
+       for (i=0;i<presecnumwords;i++) {
+         //if ((i % 4000) == 1)
+ 		 //  xil_printf("      %d: 0x%x\r\n",i,buf_data[i]);
+		 *msg_u32ptr++ = buf_data[i];  // why doesn't *buf_data++ work?
+       }
+  	   //copy second postbuf
+  	   xil_printf("    Copying post-trigger points\r\n");
+  	   buf_data = (u32 *) lataddr;
+       for (i=0;i<50000*BUFSTEPWORDS;i++) {
+		 //if ((i % 4000) == 1)
+		 //  xil_printf("      %d: 0x%x\r\n",i,buf_data[i]);
+    	 *msg_u32ptr++ = buf_data[i];
+       }
+
+
+
+
     }
-    */
+    else if (stopaddr > BUFSTART+BUFLEN) {
+	   xil_printf("    Postrigger wraps\r\n");
+
+	   postfirstnumwords = (BUFSTART+BUFLEN - lataddr) >> 2;
+	   postfirstnumpts   = postfirstnumwords / WORDSPERSAMPLE;
+	   postsecnumwords   = 50000*WORDSPERSAMPLE - postfirstnumwords;
+	   postsecnumpts = postsecnumwords / BUFSTEPWORDS;
+	   xil_printf("    Latch Addr          : %9d   0x%x\r\n", lataddr, lataddr);
+	   xil_printf("    BUFSTART+BUFLEN     : %9d   0x%x\r\n", BUFSTART+BUFLEN,BUFSTART+BUFLEN);
+	   xil_printf("    FirstPostNumWords   : %9d   0x%x\r\n", postfirstnumwords, postfirstnumwords);
+	   xil_printf("    FirstPostNumPts     : %9d\r\n", postfirstnumpts);
+	   xil_printf("    SecPostLen          : %9d   0x%x\r\n", postsecnumwords, postsecnumwords);
+	   xil_printf("    SecPostNumPts       : %9d\r\n", postsecnumpts);
+	   xil_printf("    TotalPostLen        : %9d   0x%x\r\n", postfirstnumwords+postsecnumwords, postfirstnumwords+postsecnumwords);
+	   xil_printf("    TotalPostPts        : %9d\r\n", postfirstnumpts+postsecnumpts);
+	   //Now that we have all the lengths, copy to the message buffer
+	   //copy pre-trigger
+	   xil_printf("    Copying pre-trigger points\r\n");
+	   buf_data = (u32 *) startaddr;
+       for (i=0;i<50000*BUFSTEPWORDS;i++) {
+		 //if ((i % 4000) == 1)
+		 //  xil_printf("      %d: 0x%x\r\n",i,buf_data[i]);
+		 *msg_u32ptr++ = buf_data[i];
+       }
+		//copy first postbuf
+	   xil_printf("    Copying 1st part of post-trigger points\r\n");
+	   buf_data = (u32 *) lataddr;
+       for (i=0;i<postfirstnumwords;i++) {
+         //if ((i % 4000) == 1)
+ 		 //  xil_printf("      %d: 0x%x\r\n",i,buf_data[i]);
+		 *msg_u32ptr++ = buf_data[i];  // why doesn't *buf_data++ work?
+       }
+  	   //copy second postbuf
+  	   xil_printf("    Copying 2nd part of post-trigger points\r\n");
+  	   buf_data = (u32 *) BUFSTART;
+       for (i=0;i<postsecnumwords;i++) {
+		 //if ((i % 4000) == 1)
+		 //  xil_printf("      %d: 0x%x\r\n",i,buf_data[i]);
+    	 *msg_u32ptr++ = buf_data[i];
+       }
+    }
+    else {
+       xil_printf("    No Wraps\r\n");
+	   xil_printf("    Copying Buffer\r\n");
+	   buf_data = (u32 *) startaddr;
+	   xil_printf("    Buf_data : %x\r\n",buf_data);
+		 for (i=0;i<100000*BUFSTEPWORDS;i++) {
+			//if (i<50)
+			//   xil_printf("      %d: 0x%x\r\n",i,buf_data[i]);
+		    *msg_u32ptr++ = buf_data[i];
+		 }
+
+       xil_printf("    TotalLen: %d\r\n", stopaddr-startaddr);
+    }
+
+	xil_printf("Done Copying Snapshot Data from CircBuf to PSC Message...\r\n");
 
 
-	xil_printf("Done Reading ADC Data\r\n");
 
 
 }
@@ -248,7 +326,7 @@ reconnect:
         	xil_printf("Waiting Post Trigger Time... %d\r\n",post_trig_cnt);
         	post_trig_cnt++;
 			// set to 2 seconds for now
-			if (post_trig_cnt == 20) {
+			if (post_trig_cnt == 51) {
 				xil_printf("Done waiting...\r\n");
 				send_buf = 1;
 				got_trig = 0;
