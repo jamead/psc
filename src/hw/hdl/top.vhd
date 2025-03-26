@@ -353,6 +353,7 @@ adc2ddr : entity work.axi4_write_adc
     s_axi4_s2m => s_axi4_s2m,
     dcct_adcs => dcct_adcs,
     mon_adcs => mon_adcs,
+    dac_stat => dac_stat,
     ss_buf_stat => ss_buf_stat       
   );
 

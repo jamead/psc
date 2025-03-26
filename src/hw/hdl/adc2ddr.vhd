@@ -16,6 +16,7 @@ entity axi4_write_adc is
             
     dcct_adcs        : in t_dcct_adcs;
     mon_adcs         : in t_mon_adcs;
+    dac_stat         : in t_dac_stat;
 	ss_buf_stat      : out t_snapshot_stat        
     );
 end entity axi4_write_adc;
@@ -90,6 +91,7 @@ begin
             if (trigger = '1' and prev_trigger = '0') then
               ss_buf_stat.addr_ptr <= addr_base;
               ss_buf_stat.tenkhzcnt <= datacnt;
+              datacnt <= std_logic_vector(unsigned(datacnt) + 1);             
               wordnum <= 0;
               s_axi4_m2s.awaddr <= addr_base;
               s_axi4_m2s.awvalid <= '1';
@@ -152,7 +154,7 @@ begin
           when PS4_MON5 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, std_logic_vector(resize(signed(mon_adcs.ps4.ps_reg), 32)), PS4_MON6);   
           when PS4_MON6 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, std_logic_vector(resize(signed(mon_adcs.ps4.ps_error), 32)), WRD35);
 
-          when WRD35 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, 32d"0", WRD36);
+          when WRD35 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, std_logic_vector(resize(signed(dac_stat.ps1.dac_setpt), 32)), WRD36);
           when WRD36 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, 32d"0", WRD37);
           when WRD37 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, 32d"0", WRD38);
           when WRD38 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, 32d"0", WRD39);         
@@ -174,10 +176,8 @@ begin
               -- Clear bready after response
               if s_axi4_s2m.bvalid = '1' then
                 if (addr_base < DDR_MAX_ADDR) then
-                   datacnt <= std_logic_vector(unsigned(datacnt) + 1);
                    addr_base <= std_logic_vector(unsigned(addr_base) + 4*BURST_LEN);
                 else
-                   datacnt <= 32d"0";
                    addr_base <= DDR_BASE_ADDR;
                 end if;
                 s_axi4_m2s.bready <= '0';

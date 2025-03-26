@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2025-03-26 14:56:47 by mead-->
+<display version="2.0.0">
+  <name>$(CHAN):$(PriSys)</name>
+  <width>1000</width>
+  <height>800</height>
+  <background_color>
+    <color red="200" green="215" blue="255">
+    </color>
+  </background_color>
+  <actions>
+  </actions>
+  <grid_step_x>6</grid_step_x>
+  <grid_step_y>6</grid_step_y>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_49</name>
+    <pv_name>$(PriSys){$(PSC)}DAC_SetPt-SP</pv_name>
+    <x>106</x>
+    <y>252</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_39</name>
+    <text>DAC Set Point</text>
+    <x>85</x>
+    <y>234</y>
+    <width>132</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="bool_button" version="2.0.0">
+    <name>Boolean Button_1</name>
+    <pv_name>$(PriSys){$(PSC)}DAC_RampRun-SP</pv_name>
+    <x>101</x>
+    <y>186</y>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_40</name>
+    <text>Ramp Run</text>
+    <x>66</x>
+    <y>162</y>
+    <width>170</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_41</name>
+    <text>DAC Op Mode</text>
+    <x>85</x>
+    <y>301</y>
+    <width>132</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="choice" version="2.0.0">
+    <name>Choice Button_1</name>
+    <pv_name>$(PriSys){$(PSC)}DAC_OpMode-SP</pv_name>
+    <x>101</x>
+    <y>321</y>
+    <height>85</height>
+    <horizontal>false</horizontal>
+    <items>
+      <item>Item 1</item>
+      <item>Item 2</item>
+    </items>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_3</name>
+    <actions>
+      <action type="command">
+        <command>/home/mead/chiesa/psc/testing/ramptable/tx_ramptable  /home/mead/chiesa/psc/testing/ramptable/sine_wave.txt</command>
+        <description>Load RampTable</description>
+      </action>
+    </actions>
+    <x>98</x>
+    <y>532</y>
+    <width>106</width>
+    <height>52</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="fileselector" version="2.0.0">
+    <name>File Selector</name>
+    <pv_name>$(PriSys){$(PSC)}RampTableFile</pv_name>
+    <component>2</component>
+    <x>100</x>
+    <y>604</y>
+    <width>102</width>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_51</name>
+    <pv_name>$(PriSys){$(PSC)}DAC_RampLen-SP</pv_name>
+    <x>106</x>
+    <y>472</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_42</name>
+    <text>DAC Ramp Length</text>
+    <x>85</x>
+    <y>454</y>
+    <width>132</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_4</name>
+    <actions>
+      <action type="open_display">
+        <file>Psc1_global.bob</file>
+        <macros>
+          <PSC>1</PSC>
+          <PriSys>lab</PriSys>
+        </macros>
+        <target>replace</target>
+        <description>Global</description>
+      </action>
+    </actions>
+    <width>90</width>
+    <height>42</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_5</name>
+    <actions>
+      <action type="open_display">
+        <file>Psc1_ramptable.bob</file>
+        <macros>
+          <PSC>1</PSC>
+          <CHAN>lab</CHAN>
+        </macros>
+        <target>replace</target>
+        <description>RampTable</description>
+      </action>
+    </actions>
+    <x>90</x>
+    <width>90</width>
+    <height>42</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_6</name>
+    <actions>
+      <action type="open_display">
+        <file>Psc1_snapshot.bob</file>
+        <macros>
+          <PSC>1</PSC>
+          <CHAN>lab</CHAN>
+        </macros>
+        <target>replace</target>
+        <description>SnapShot</description>
+      </action>
+    </actions>
+    <text>SnapShot</text>
+    <x>180</x>
+    <width>90</width>
+    <height>42</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+</display>

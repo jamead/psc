@@ -116,8 +116,13 @@ typedef struct StatusMsg {
 
 
 // Control Message Offsets
-#define SOFT_TRIG_MSG1 0
-#define FP_LED_MSG1 4
+#define SOFT_TRIG_MSG 0
+#define FP_LED_MSG 4
+#define DAC_OPMODE 8
+#define DAC_SETPT 12
+#define DAC_RUNRAMP 16
+#define DAC_RAMPLEN 20
+
 
 
 

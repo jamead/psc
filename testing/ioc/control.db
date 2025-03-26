@@ -22,6 +22,12 @@ record(longout, "$(P){$(NO)}GoRegSingleWrite") {
 
 ############# Control PV's ##########################################
 
+record(stringin, "$(P){$(NO)}RampTableFile") {
+    field(DESC, "Selected File Path")
+    field(VAL, "/default/path/to/file.txt")
+}
+
+
 
 record(bo, "$(P){$(NO)}Trig:Strig-SP") {
     field(DESC, "Soft Trigger by user")
@@ -40,3 +46,56 @@ record(bo, "$(P){$(NO)}LEDs-SP") {
     field(OUT , "@Tx$(NO) 1 4")
     field(FLNK, "$(P){$(NO)}GoRegSingleWrite")
 }
+
+
+
+record(mbbo, "$(P){$(NO)}DAC_OpMode-SP") {
+    field(DESC, "Sets the DAC operating Mode")
+    field(DTYP, "PSC Single U32")
+    field(OUT , "@Tx$(NO) 1 8")
+    #field( PINI, "YES")
+    field( ZRST, "SmoothRamp")
+    field( ONST, "RampTable")
+    field( TWST, "FOFB")
+    field( THST, "Jump")
+    field( ZRVL, "0")
+    field( ONVL, "1")
+    field( TWVL, "2")
+    field( THVL, "3")
+    #field( IVOA, "Don't drive outputs")
+    info(autosaveFields, "VAL")
+    field(FLNK, "$(P){$(NO)}GoRegSingleWrite")
+}
+
+
+record(longout, "$(P){$(NO)}DAC_SetPt-SP") {
+    field(DESC, "DAC Setpoint")
+    field(DTYP, "PSC Single I32")
+    field(OUT , "@Tx$(NO) 1 12")
+    info(autosaveFields, "VAL")
+    field(FLNK, "$(P){$(NO)}GoRegSingleWrite")
+}
+
+
+record(bo, "$(P){$(NO)}DAC_RampRun-SP") {
+    field(DESC, "DAC Run the Ramp Table")
+    field(DTYP, "PSC Single U32")
+    field(OUT , "@Tx$(NO) 1 16")
+#    field(ZNAM,"Rdy")
+#    field(ONAM,"Trig")
+    field(FLNK, "$(P){$(NO)}GoRegSingleWrite")
+    field(HIGH,".01")    #500 ms after low
+}
+
+
+record(longout, "$(P){$(NO)}DAC_RampLen-SP") {
+    field(DESC, "DAC RampLength ")
+    field(DTYP, "PSC Single I32")
+    field(OUT , "@Tx$(NO) 1 20")
+    info(autosaveFields, "VAL")
+    field(FLNK, "$(P){$(NO)}GoRegSingleWrite")
+}
+
+
+
+

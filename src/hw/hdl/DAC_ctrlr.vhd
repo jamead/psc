@@ -69,11 +69,14 @@ type state_type is (IDLE,RUN_RAMP,UPDATE_DAC);
    attribute mark_debug of ramp_dac_setpt: signal is "true";
    attribute mark_debug of dac_setpt: signal is "true";
    attribute mark_debug of ramp_active: signal is "true";     
-   attribute mark_debug of dac_cntrl: signal is "true";     
+   attribute mark_debug of dac_cntrl: signal is "true";    
+   attribute mark_debug of state: signal is "true"; 
 
 
 begin
 
+
+dac_stat.ps1.dac_setpt <= dac_setpt;
 
 --Source of DAC data depenods on Mode
 --Because DAC sync's are tied together, must always update every DAC
@@ -128,7 +131,7 @@ begin
           end if;                 
 
         when RUN_RAMP => 
-            ramp_active <= '0';
+            ramp_active <= '1';
             if (tenkhz_trig = '1') then
                dac_rden <= '1';
                state <= update_dac;

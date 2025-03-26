@@ -75,6 +75,7 @@ end record;
 type t_dac_stat_onech is record
   active                : std_logic;
   cur_addr              : std_logic_vector(15 downto 0);
+  dac_setpt             : std_logic_vector(19 downto 0);
 end record;
 
 type t_dac_stat is record

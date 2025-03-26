@@ -2,9 +2,9 @@ import numpy as np
 import math
 
 # Parameters
-frequency = 10  # Hz
+frequency = 1  # Hz
 sample_rate = 10000  # Hz
-duration = 1.0  # seconds
+duration = 4.0  # seconds
 amplitude = 32767  # Max integer value for signed 16-bit
 
 # Time vector

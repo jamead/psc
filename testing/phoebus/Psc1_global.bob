@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2025-03-26 14:56:14 by mead-->
+<display version="2.0.0">
+  <name>$(CHAN):$(PriSys)</name>
+  <width>1000</width>
+  <height>800</height>
+  <background_color>
+    <color red="200" green="215" blue="255">
+    </color>
+  </background_color>
+  <actions>
+  </actions>
+  <grid_step_x>6</grid_step_x>
+  <grid_step_y>6</grid_step_y>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_4</name>
+    <actions>
+      <action type="open_display">
+        <file>Psc1_global.bob</file>
+        <macros>
+          <PSC>1</PSC>
+          <PriSys>lab</PriSys>
+        </macros>
+        <target>replace</target>
+        <description>Global</description>
+      </action>
+    </actions>
+    <width>90</width>
+    <height>42</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_5</name>
+    <actions>
+      <action type="open_display">
+        <file>Psc1_ramptable.bob</file>
+        <macros>
+          <PSC>1</PSC>
+          <CHAN>lab</CHAN>
+        </macros>
+        <target>replace</target>
+        <description>RampTable</description>
+      </action>
+    </actions>
+    <x>90</x>
+    <width>90</width>
+    <height>42</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_6</name>
+    <actions>
+      <action type="open_display">
+        <file>Psc1_snapshot.bob</file>
+        <macros>
+          <PSC>1</PSC>
+          <CHAN>lab</CHAN>
+        </macros>
+        <target>replace</target>
+        <description>SnapShot</description>
+      </action>
+    </actions>
+    <text>SnapShot</text>
+    <x>180</x>
+    <width>90</width>
+    <height>42</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+</display>

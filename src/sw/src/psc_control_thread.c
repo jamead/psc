@@ -122,16 +122,43 @@ reconnect:
 
 
         switch(MsgAddr) {
-			case SOFT_TRIG_MSG1:
+			case SOFT_TRIG_MSG:
 				xil_printf("Soft Trigger Message:   Value=%d\r\n",MsgData);
 				soft_trig(MsgData);
                 break;
 
 
-            case FP_LED_MSG1:
+            case FP_LED_MSG:
             	xil_printf("Setting FP LED:   Value=%d\r\n",MsgData);
             	set_fpleds(MsgData);
             	break;
+
+
+            case DAC_OPMODE:
+            	xil_printf("Setting DAC Operating Mode:   Value=%d\r\n",MsgData);
+            	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_JUMPMODE, MsgData);
+            	break;
+
+            case DAC_SETPT:
+            	xil_printf("Setting DAC SetPoint:   Value=%d\r\n",MsgData);
+            	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_SETPT, MsgData);
+            	break;
+
+
+            case DAC_RAMPLEN:
+             	xil_printf("Setting RampTable Length:   Value=%d\r\n",MsgData);
+             	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPLEN, MsgData);
+             	break;
+
+            case DAC_RUNRAMP:
+            	xil_printf("Running Ramptable:   Value=%d\r\n",MsgData);
+            	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RUNRAMP, MsgData);
+            	break;
+
+
+
+
+
 
 
 
