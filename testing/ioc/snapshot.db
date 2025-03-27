@@ -18,15 +18,15 @@ record(waveform,"$(P){$(NO)}SS:Cnt-Wfm") {
 
 ###   PS1 
 
-record(waveform,"$(P){$(NO)}SS:PS1:DCCT1-Wfm") {
+record(waveform,"$(P){$(NO)}Chan1:SS:DCCT1-Wfm") {
     field(DTYP, "PSC Block I32 In")
-    field(INP , "@Wfm$(NO) 51 8 160")
+    field(INP , "@Wfm$(NO) 51 136 160")
     field(SCAN,"I/O Intr")
     field(FTVL,"DOUBLE")
     field(NELM,"$(BUF_LEN)")
 }
 
-record(waveform,"$(P){$(NO)}SS:PS1:DCCT2-Wfm") {
+record(waveform,"$(P){$(NO)}Chan1:SS:DCCT2-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 12 160")
     field(SCAN,"I/O Intr")
@@ -34,7 +34,7 @@ record(waveform,"$(P){$(NO)}SS:PS1:DCCT2-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }
 
-record(waveform,"$(P){$(NO)}SS:PS1:DAC-Wfm") {
+record(waveform,"$(P){$(NO)}Chan1:SS:DAC-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 16 160")
     field(SCAN,"I/O Intr")
@@ -42,7 +42,7 @@ record(waveform,"$(P){$(NO)}SS:PS1:DAC-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }
 
-record(waveform,"$(P){$(NO)}SS:PS1:Volt-Wfm") {
+record(waveform,"$(P){$(NO)}Chan1:SS:Volt-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 20 160")
     field(SCAN,"I/O Intr")
@@ -50,7 +50,7 @@ record(waveform,"$(P){$(NO)}SS:PS1:Volt-Wfm") {
     field(NELM,"$(BUF_LEN)")
 } 
     
-record(waveform,"$(P){$(NO)}SS:PS1:Gnd-Wfm") {
+record(waveform,"$(P){$(NO)}Chan1:SS:Gnd-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 24 160")
     field(SCAN,"I/O Intr")
@@ -58,7 +58,7 @@ record(waveform,"$(P){$(NO)}SS:PS1:Gnd-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }
  
-record(waveform,"$(P){$(NO)}SS:PS1:Spare-Wfm") {
+record(waveform,"$(P){$(NO)}Chan1:SS:Spare-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 28 160")
     field(SCAN,"I/O Intr")
@@ -66,7 +66,7 @@ record(waveform,"$(P){$(NO)}SS:PS1:Spare-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }
   
-record(waveform,"$(P){$(NO)}SS:PS1:Reg-Wfm") {
+record(waveform,"$(P){$(NO)}Chan1:SS:Reg-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 32 160")
     field(SCAN,"I/O Intr")
@@ -75,7 +75,7 @@ record(waveform,"$(P){$(NO)}SS:PS1:Reg-Wfm") {
 } 
  
     
-record(waveform,"$(P){$(NO)}SS:PS1:Error-Wfm") {
+record(waveform,"$(P){$(NO)}Chan1:SS:Error-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 36 160")
     field(SCAN,"I/O Intr")
@@ -87,7 +87,7 @@ record(waveform,"$(P){$(NO)}SS:PS1:Error-Wfm") {
     
  ###   PS2 
 
-record(waveform,"$(P){$(NO)}SS:PS2:DCCT1-Wfm") {
+record(waveform,"$(P){$(NO)}Chan2:SS:DCCT1-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 40 160")
     field(SCAN,"I/O Intr")
@@ -95,7 +95,7 @@ record(waveform,"$(P){$(NO)}SS:PS2:DCCT1-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }
 
-record(waveform,"$(P){$(NO)}SS:PS2:DCCT2-Wfm") {
+record(waveform,"$(P){$(NO)}Chan2:SS:DCCT2-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 44 160")
     field(SCAN,"I/O Intr")
@@ -103,7 +103,7 @@ record(waveform,"$(P){$(NO)}SS:PS2:DCCT2-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }
 
-record(waveform,"$(P){$(NO)}SS:PS2:DAC-Wfm") {
+record(waveform,"$(P){$(NO)}Chan2:SS:DAC-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 48 160")
     field(SCAN,"I/O Intr")
@@ -111,7 +111,7 @@ record(waveform,"$(P){$(NO)}SS:PS2:DAC-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }    
 
-record(waveform,"$(P){$(NO)}SS:PS2:Volt-Wfm") {
+record(waveform,"$(P){$(NO)}Chan2:Volt-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 52 160")
     field(SCAN,"I/O Intr")
@@ -119,7 +119,7 @@ record(waveform,"$(P){$(NO)}SS:PS2:Volt-Wfm") {
     field(NELM,"$(BUF_LEN)")
 } 
     
-record(waveform,"$(P){$(NO)}SS:PS2:Gnd-Wfm") {
+record(waveform,"$(P){$(NO)}Chan2:SS:Gnd-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 56 160")
     field(SCAN,"I/O Intr")
@@ -127,7 +127,7 @@ record(waveform,"$(P){$(NO)}SS:PS2:Gnd-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }
     
-record(waveform,"$(P){$(NO)}SS:PS2:Spare-Wfm") {
+record(waveform,"$(P){$(NO)}Chan2:SS:Spare-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 60 160")
     field(SCAN,"I/O Intr")
@@ -135,7 +135,7 @@ record(waveform,"$(P){$(NO)}SS:PS2:Spare-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }
     
-record(waveform,"$(P){$(NO)}SS:PS2:Reg-Wfm") {
+record(waveform,"$(P){$(NO)}Chan2:SS:Reg-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 64 160")
     field(SCAN,"I/O Intr")
@@ -143,7 +143,7 @@ record(waveform,"$(P){$(NO)}SS:PS2:Reg-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }
     
- record(waveform,"$(P){$(NO)}SS:PS2:Error-Wfm") {
+ record(waveform,"$(P){$(NO)}Chan2:SS:Error-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 68 160")
     field(SCAN,"I/O Intr")
@@ -154,7 +154,7 @@ record(waveform,"$(P){$(NO)}SS:PS2:Reg-Wfm") {
     
 ###   PS3 
 
-record(waveform,"$(P){$(NO)}SS:PS3:DCCT1-Wfm") {
+record(waveform,"$(P){$(NO)}Chan3:SS:DCCT1-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 72 160")
     field(SCAN,"I/O Intr")
@@ -162,7 +162,7 @@ record(waveform,"$(P){$(NO)}SS:PS3:DCCT1-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }
 
-record(waveform,"$(P){$(NO)}SS:PS3:DCCT2-Wfm") {
+record(waveform,"$(P){$(NO)}Chan3:SS:DCCT2-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 76 160")
     field(SCAN,"I/O Intr")
@@ -170,7 +170,7 @@ record(waveform,"$(P){$(NO)}SS:PS3:DCCT2-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }
 
-record(waveform,"$(P){$(NO)}SS:PS3:DAC-Wfm") {
+record(waveform,"$(P){$(NO)}Chan3:SS:DAC-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 80 160")
     field(SCAN,"I/O Intr")
@@ -179,7 +179,7 @@ record(waveform,"$(P){$(NO)}SS:PS3:DAC-Wfm") {
 }
 
 
-record(waveform,"$(P){$(NO)}SS:PS3:Volt-Wfm") {
+record(waveform,"$(P){$(NO)}Chan3:SS:Volt-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 84 160")
     field(SCAN,"I/O Intr")
@@ -188,7 +188,7 @@ record(waveform,"$(P){$(NO)}SS:PS3:Volt-Wfm") {
 } 
  
     
-record(waveform,"$(P){$(NO)}SS:PS3:Gnd-Wfm") {
+record(waveform,"$(P){$(NO)}Chan3:SS:Gnd-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 88 160")
     field(SCAN,"I/O Intr")
@@ -197,7 +197,7 @@ record(waveform,"$(P){$(NO)}SS:PS3:Gnd-Wfm") {
 }   
    
     
-record(waveform,"$(P){$(NO)}SS:PS3:Spare-Wfm") {
+record(waveform,"$(P){$(NO)}Chan3:SS:Spare-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 92 160")
     field(SCAN,"I/O Intr")
@@ -206,7 +206,7 @@ record(waveform,"$(P){$(NO)}SS:PS3:Spare-Wfm") {
 }  
   
     
-record(waveform,"$(P){$(NO)}SS:PS3:Reg-Wfm") {
+record(waveform,"$(P){$(NO)}Chan3:SS:Reg-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 96 160")
     field(SCAN,"I/O Intr")
@@ -215,7 +215,7 @@ record(waveform,"$(P){$(NO)}SS:PS3:Reg-Wfm") {
 } 
  
     
-record(waveform,"$(P){$(NO)}SS:PS3:Error-Wfm") {
+record(waveform,"$(P){$(NO)}Chan3:SS:Error-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 100 160")
     field(SCAN,"I/O Intr")
@@ -226,7 +226,7 @@ record(waveform,"$(P){$(NO)}SS:PS3:Error-Wfm") {
     
 ###   PS4 
 
-record(waveform,"$(P){$(NO)}SS:PS4:DCCT1-Wfm") {
+record(waveform,"$(P){$(NO)}Chan4:SS:DCCT1-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 104 160")
     field(SCAN,"I/O Intr")
@@ -234,7 +234,7 @@ record(waveform,"$(P){$(NO)}SS:PS4:DCCT1-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }
 
-record(waveform,"$(P){$(NO)}SS:PS4:DCCT2-Wfm") {
+record(waveform,"$(P){$(NO)}Chan4:SS:DCCT2-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 108 160")
     field(SCAN,"I/O Intr")
@@ -242,7 +242,7 @@ record(waveform,"$(P){$(NO)}SS:PS4:DCCT2-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }
 
-record(waveform,"$(P){$(NO)}SS:PS4:DAC-Wfm") {
+record(waveform,"$(P){$(NO)}Chan4:SS:DAC-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 112 160")
     field(SCAN,"I/O Intr")
@@ -250,7 +250,7 @@ record(waveform,"$(P){$(NO)}SS:PS4:DAC-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }
 
-record(waveform,"$(P){$(NO)}SS:PS4:Volt-Wfm") {
+record(waveform,"$(P){$(NO)}Chan4:SS:Volt-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 116 160")
     field(SCAN,"I/O Intr")
@@ -258,7 +258,7 @@ record(waveform,"$(P){$(NO)}SS:PS4:Volt-Wfm") {
     field(NELM,"$(BUF_LEN)")
  }
     
-record(waveform,"$(P){$(NO)}SS:PS4:Gnd-Wfm") {
+record(waveform,"$(P){$(NO)}Chan4:SS:Gnd-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 120 160")
     field(SCAN,"I/O Intr")
@@ -266,7 +266,7 @@ record(waveform,"$(P){$(NO)}SS:PS4:Gnd-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }
     
-record(waveform,"$(P){$(NO)}SS:PS4:Spare-Wfm") {
+record(waveform,"$(P){$(NO)}Chan4:SS:Spare-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 124 160")
     field(SCAN,"I/O Intr")
@@ -274,7 +274,7 @@ record(waveform,"$(P){$(NO)}SS:PS4:Spare-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }
   
-record(waveform,"$(P){$(NO)}SS:PS4:Reg-Wfm") {
+record(waveform,"$(P){$(NO)}Chan4:SS:Reg-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 128 160")
     field(SCAN,"I/O Intr")
@@ -282,7 +282,7 @@ record(waveform,"$(P){$(NO)}SS:PS4:Reg-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }
     
-record(waveform,"$(P){$(NO)}SS:PS4:Error-Wfm") {
+record(waveform,"$(P){$(NO)}Chan4:SS:Error-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 132 160")
     field(SCAN,"I/O Intr")

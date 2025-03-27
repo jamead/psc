@@ -6,7 +6,16 @@ epicsEnvSet("PSC_DBDIR","/home/mead/chiesa/psc/testing/ioc")
 
 #epicsEnvSet("CNO","40")   ## Cell Number
 #epicsEnvSet("HOSTNAME","diagioc-c$(CNO)")
+
 epicsEnvSet("IOCNAME", "lab")
+epicsEnvSet("CHAN1", "Chan1")
+epicsEnvSet("CHAN2", "Chan2")
+epicsEnvSet("CHAN3", "Chan3")
+epicsEnvSet("CHAN4", "Chan4")
+
+
+
+
 
 
 
@@ -33,7 +42,11 @@ epicsEnvSet("BLEN",100000);        # Snapshot DMA Length
 ## Load record instances
 
 ### PVs for PSC:
-dbLoadRecords("$(PSC_DBDIR)/adc10hz.db", "P=$(IOCNAME), NO=1")
+dbLoadRecords("$(PSC_DBDIR)/sa_adc.db", "P=$(IOCNAME), NO=1, CHAN=$(CHAN1)")
+dbLoadRecords("$(PSC_DBDIR)/sa_adc.db", "P=$(IOCNAME), NO=1, CHAN=$(CHAN2)")
+dbLoadRecords("$(PSC_DBDIR)/sa_adc.db", "P=$(IOCNAME), NO=1, CHAN=$(CHAN3)")
+dbLoadRecords("$(PSC_DBDIR)/sa_adc.db", "P=$(IOCNAME), NO=1, CHAN=$(CHAN4)")
+
 dbLoadRecords("$(PSC_DBDIR)/control.db", "P=$(IOCNAME), NO=1")
 
 dbLoadRecords("$(PSC_DBDIR)/snapshot.db", "P=$(IOCNAME), NO=1, BUF_LEN=$(BLEN)")

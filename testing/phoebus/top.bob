@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-03-26 14:24:42 by mead-->
+<!--Saved on 2025-03-27 15:30:31 by mead-->
 <display version="2.0.0">
   <name>PSC Top</name>
   <width>300</width>
@@ -41,11 +41,11 @@
     <name>Action Button_26</name>
     <actions>
       <action type="open_display">
-        <file>Psc1_global.opi</file>
+        <file>Psc1_sa.opi</file>
         <macros>
+          <PriSys>lab</PriSys>
           <PSC>1</PSC>
           <CHAN>Chan1</CHAN>
-          <PriSys>lab</PriSys>
         </macros>
         <target>window</target>
         <description>Open Display</description>
@@ -64,16 +64,16 @@
     <border_alarm_sensitive>false</border_alarm_sensitive>
   </widget>
   <widget type="action_button" version="3.0.0">
-    <name>Action Button_1</name>
+    <name>Action Button_27</name>
     <actions>
       <action type="open_display">
-        <file>_Psc1.opi</file>
+        <file>Psc1_sa.opi</file>
         <macros>
-          <PSC>zPSC1_IVU_ID9</PSC>
+          <PriSys>lab</PriSys>
+          <PSC>1</PSC>
           <CHAN>Chan2</CHAN>
-          <PriSys>SR:C08-MG</PriSys>
         </macros>
-        <target>replace</target>
+        <target>window</target>
         <description>Open Display</description>
       </action>
     </actions>
@@ -90,16 +90,16 @@
     <border_alarm_sensitive>false</border_alarm_sensitive>
   </widget>
   <widget type="action_button" version="3.0.0">
-    <name>Action Button_2</name>
+    <name>Action Button_28</name>
     <actions>
       <action type="open_display">
-        <file>_Psc1.opi</file>
+        <file>Psc1_sa.opi</file>
         <macros>
-          <PSC>zPSC1_IVU_ID9</PSC>
+          <PriSys>lab</PriSys>
+          <PSC>1</PSC>
           <CHAN>Chan3</CHAN>
-          <PriSys>SR:C08-MG</PriSys>
         </macros>
-        <target>replace</target>
+        <target>window</target>
         <description>Open Display</description>
       </action>
     </actions>
@@ -116,16 +116,16 @@
     <border_alarm_sensitive>false</border_alarm_sensitive>
   </widget>
   <widget type="action_button" version="3.0.0">
-    <name>Action Button_3</name>
+    <name>Action Button_29</name>
     <actions>
       <action type="open_display">
-        <file>_Psc1.opi</file>
+        <file>Psc1_sa.opi</file>
         <macros>
-          <PSC>zPSC1_IVU_ID9</PSC>
+          <PriSys>lab</PriSys>
+          <PSC>1</PSC>
           <CHAN>Chan4</CHAN>
-          <PriSys>SR:C08-MG</PriSys>
         </macros>
-        <target>replace</target>
+        <target>window</target>
         <description>Open Display</description>
       </action>
     </actions>

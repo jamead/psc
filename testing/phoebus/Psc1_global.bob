@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-03-26 14:56:14 by mead-->
+<!--Saved on 2025-03-27 15:24:47 by mead-->
 <display version="2.0.0">
   <name>$(CHAN):$(PriSys)</name>
   <width>1000</width>
@@ -18,8 +18,9 @@
       <action type="open_display">
         <file>Psc1_global.bob</file>
         <macros>
-          <PSC>1</PSC>
-          <PriSys>lab</PriSys>
+          <PriSys>${PriSys}</PriSys>
+          <PSC>${PSC}</PSC>
+          <CHAN>${CHAN}</CHAN>
         </macros>
         <target>replace</target>
         <description>Global</description>
@@ -35,8 +36,9 @@
       <action type="open_display">
         <file>Psc1_ramptable.bob</file>
         <macros>
-          <PSC>1</PSC>
-          <CHAN>lab</CHAN>
+          <PriSys>${PriSys}</PriSys>
+          <PSC>${PSC}</PSC>
+          <CHAN>${CHAN}</CHAN>
         </macros>
         <target>replace</target>
         <description>RampTable</description>
@@ -53,8 +55,9 @@
       <action type="open_display">
         <file>Psc1_snapshot.bob</file>
         <macros>
-          <PSC>1</PSC>
-          <CHAN>lab</CHAN>
+          <PriSys>${PriSys}</PriSys>
+          <PSC>${PSC}</PSC>
+          <CHAN>${CHAN}</CHAN>
         </macros>
         <target>replace</target>
         <description>SnapShot</description>
@@ -65,5 +68,112 @@
     <width>90</width>
     <height>42</height>
     <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_7</name>
+    <actions>
+      <action type="open_display">
+        <file>Psc1_sa.bob</file>
+        <macros>
+          <PriSys>${PriSys}</PriSys>
+          <PSC>${PSC}</PSC>
+          <CHAN>${CHAN}</CHAN>
+        </macros>
+        <target>replace</target>
+        <description>SA</description>
+      </action>
+    </actions>
+    <text>SA</text>
+    <x>270</x>
+    <width>90</width>
+    <height>42</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Text Input</name>
+    <macros>
+      <pv_name></pv_name>
+    </macros>
+    <text>${PriSys}</text>
+    <x>90</x>
+    <y>102</y>
+    <width>77</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="OpTitleBG" red="175" green="238" blue="175">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Text Input_1</name>
+    <macros>
+      <pv_name></pv_name>
+    </macros>
+    <text>${CHAN}</text>
+    <x>244</x>
+    <y>102</y>
+    <width>77</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="OpTitleBG" red="175" green="238" blue="175">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Text Input_2</name>
+    <macros>
+      <pv_name></pv_name>
+    </macros>
+    <text>${PSC}</text>
+    <x>167</x>
+    <y>102</y>
+    <width>77</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color name="OpTitleBG" red="175" green="238" blue="175">
+      </color>
+    </background_color>
+    <transparent>false</transparent>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
   </widget>
 </display>

@@ -264,6 +264,8 @@ int main()
     
 	init_i2c();
 	
+	/*
+
     xil_printf("Read si570 registers\r\n");
 	for (i=0;i<6;i++) {
 	    buf[0] = i+7;
@@ -358,7 +360,7 @@ int main()
  	 }
       xil_printf("\r\n");
 
-
+    */
 
 	//EVR reset
 	//Xil_Out32(XPAR_M_AXI_BASEADDR + GTX_RESET_REG, 1);
