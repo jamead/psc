@@ -63,6 +63,20 @@ reg {
 
 
 
+reg {
+    desc="EVR Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } evr_ts_s @0x10; 
+
+reg {
+    desc="EVR Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } evr_ts_ns @0x14; 
+
 
 
 /* PS1 10Hz Data */

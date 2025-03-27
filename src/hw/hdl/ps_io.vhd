@@ -32,7 +32,8 @@ entity ps_io is
     mon_adcs         : in t_mon_adcs;
     dac_cntrl        : out t_dac_cntrl;
 	dac_stat         : in t_dac_stat;
-	ss_buf_stat      : in t_snapshot_stat; 
+	ss_buf_stat      : in t_snapshot_stat;
+	evr_timestamp    : in std_logic_vector(63 downto 0); 
 	rcom             : out std_logic_vector(19 downto 0);
 	rsts             : in std_logic_vector(19 downto 0)
       
@@ -62,6 +63,11 @@ architecture behv of ps_io is
 begin
 
 reg_i.fpgaver.val.data <= std_logic_vector(to_unsigned(FPGA_VERSION,32));
+
+
+reg_i.evr_ts_s.val.data <= evr_timestamp(63 downto 32);
+reg_i.evr_ts_ns.val.data <= evr_timestamp(31 downto 0);
+
 
 leds <= reg_o.leds.val.data;
 

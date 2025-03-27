@@ -341,6 +341,7 @@ ps_regs: entity work.ps_io
     dac_cntrl => dac_cntrl,
     dac_stat => dac_stat,
     ss_buf_stat => ss_buf_stat,
+    evr_timestamp => evr_timestamp,
     rcom => rcom,
     rsts => rsts               
   );
