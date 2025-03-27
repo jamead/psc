@@ -273,6 +273,40 @@ int main()
 	 }
      xil_printf("\r\n");
 
+
+
+     xil_printf("Freeze DCO\r\n");
+     buf[0]  = 137;
+     buf[1] = 0x10;
+     i2c_write(buf,2,0x55);
+
+     xil_printf("Load Frequency from NVM\r\n");
+     buf[0]  = 135;
+     buf[1] = 0x1;
+     i2c_write(buf,2,0x55);
+
+     xil_printf("UnFreeze DCO\r\n");
+     buf[0]  = 137;
+     buf[1] = 0x0;
+     i2c_write(buf,2,0x55);
+
+     xil_printf("Enable New Freq\r\n");
+     buf[0]  = 135;
+     buf[1] = 0x40;
+     i2c_write(buf,2,0x55);
+
+
+     xil_printf("Read si570 registers after load from NVM\r\n");
+  	 for (i=0;i<6;i++) {
+  	    buf[0] = i+7;
+  	    i2c_write(buf,1,0x55);
+  		stat = i2c_read(buf, 1, 0x55);
+  	   xil_printf("Stat: %d:   val0:%x  \r\n",stat, buf[0]);
+  	 }
+       xil_printf("\r\n");
+
+
+
      xil_printf("Freeze DCO\r\n");
      buf[0]  = 137;
      buf[1] = 0x10;
@@ -332,10 +366,11 @@ int main()
     //usleep(1000);
 
     //read Timestamp
+    //while (1) {
     //ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S_REG);
     //ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS_REG);
     //xil_printf("ts= %d    %d\r\n",ts_s,ts_ns);
-
+   // }
 
 	main_thread_handle = sys_thread_new("main_thread", main_thread, 0, THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
 

@@ -203,27 +203,27 @@ end component;
    
 
 
---   --debug signals (connect to ila)
---   attribute mark_debug     : string;
---   attribute mark_debug of eventstream: signal is "true";
---   attribute mark_debug of datastream: signal is "true";
---   attribute mark_debug of timestamp: signal is "true";
---   attribute mark_debug of eventclock: signal is "true";
---   attribute mark_debug of prev_datastream: signal is "true";
---   attribute mark_debug of tbt_trig: signal is "true";
---   attribute mark_debug of tbt_trig_i: signal is "true";   
---   attribute mark_debug of trignum: signal is "true";
---   attribute mark_debug of trigdly: signal is "true";
---   attribute mark_debug of tbt_trig_stretch: signal is "true";
---   attribute mark_debug of tbt_cnt: signal is "true";   
---   attribute mark_debug of rxdata: signal is "true";
---   attribute mark_debug of rxcharisk: signal is "true";
+   --debug signals (connect to ila)
+   attribute mark_debug     : string;
+   attribute mark_debug of eventstream: signal is "true";
+   attribute mark_debug of datastream: signal is "true";
+   attribute mark_debug of timestamp: signal is "true";
+   attribute mark_debug of eventclock: signal is "true";
+   attribute mark_debug of prev_datastream: signal is "true";
+   attribute mark_debug of tbt_trig: signal is "true";
+   attribute mark_debug of tbt_trig_i: signal is "true";   
+   attribute mark_debug of trignum: signal is "true";
+   attribute mark_debug of trigdly: signal is "true";
+   attribute mark_debug of tbt_trig_stretch: signal is "true";
+   attribute mark_debug of tbt_cnt: signal is "true";   
+   attribute mark_debug of rxdata: signal is "true";
+   attribute mark_debug of rxcharisk: signal is "true";
    
---   attribute mark_debug of rxresetdone: signal is "true"; 
---   attribute mark_debug of tx_fsm_reset_done: signal is "true"; 
---   attribute mark_debug of rx_fsm_reset_done: signal is "true"; 
---   attribute mark_debug of cplllock: signal is "true";          
---   attribute mark_debug of cpllfbcklost: signal is "true"; 
+   attribute mark_debug of rxresetdone: signal is "true"; 
+   attribute mark_debug of tx_fsm_reset_done: signal is "true"; 
+   attribute mark_debug of rx_fsm_reset_done: signal is "true"; 
+   attribute mark_debug of cplllock: signal is "true";          
+   attribute mark_debug of cpllfbcklost: signal is "true"; 
 
    
 

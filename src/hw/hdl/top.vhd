@@ -187,9 +187,12 @@ architecture behv of top is
 begin
 
 
-
-fp_leds <= leds; 
-sfp_leds <= leds;
+fp_leds(0) <= gtx_evr_refclk;
+fp_leds(1) <= '0';
+fp_leds(2) <= '0';
+fp_leds(3) <= evr_rcvd_clk; --pl_clk0; 
+fp_leds(7 downto 4) <= sfp_leds(3 downto 0);
+--sfp_leds <= leds;
 
 pl_reset <= not pl_resetn(0); 
 
