@@ -69,4 +69,21 @@ record(longin, "$(P){$(NO)}$(CHAN):Error-I") {
 }
 
 
+record(longin, "$(P){$(NO)}$(CHAN):TS-S-I") {
+    field(DESC, "EVR Timestamp (S)")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 4")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}$(CHAN):TS-NS-I") {
+    field(DESC, "EVR Timestamp (S)")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 8")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
 

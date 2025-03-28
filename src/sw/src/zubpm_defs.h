@@ -40,6 +40,7 @@ void i2c_eeprom_readBytes(u8, u8 *, u8);
 void i2c_eeprom_writeBytes(u8, u8 *, u8);
 void eeprom_dump();
 void menu_get_ipaddr();
+void prog_si570();
 
 
 

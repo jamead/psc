@@ -20,7 +20,7 @@ record(waveform,"$(P){$(NO)}SS:Cnt-Wfm") {
 
 record(waveform,"$(P){$(NO)}Chan1:SS:DCCT1-Wfm") {
     field(DTYP, "PSC Block I32 In")
-    field(INP , "@Wfm$(NO) 51 136 160")
+    field(INP , "@Wfm$(NO) 51 8 160")
     field(SCAN,"I/O Intr")
     field(FTVL,"DOUBLE")
     field(NELM,"$(BUF_LEN)")
@@ -111,7 +111,7 @@ record(waveform,"$(P){$(NO)}Chan2:SS:DAC-Wfm") {
     field(NELM,"$(BUF_LEN)")
 }    
 
-record(waveform,"$(P){$(NO)}Chan2:Volt-Wfm") {
+record(waveform,"$(P){$(NO)}Chan2:SS:Volt-Wfm") {
     field(DTYP, "PSC Block I32 In")
     field(INP , "@Wfm$(NO) 51 52 160")
     field(SCAN,"I/O Intr")

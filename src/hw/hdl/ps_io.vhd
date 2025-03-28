@@ -33,7 +33,8 @@ entity ps_io is
     dac_cntrl        : out t_dac_cntrl;
 	dac_stat         : in t_dac_stat;
 	ss_buf_stat      : in t_snapshot_stat;
-	evr_timestamp    : in std_logic_vector(63 downto 0); 
+	evr_timestamp    : in std_logic_vector(63 downto 0);
+	evr_reset        : out std_logic_vector(7 downto 0); 
 	rcom             : out std_logic_vector(19 downto 0);
 	rsts             : in std_logic_vector(19 downto 0)
       
@@ -68,6 +69,7 @@ reg_i.fpgaver.val.data <= std_logic_vector(to_unsigned(FPGA_VERSION,32));
 reg_i.evr_ts_s.val.data <= evr_timestamp(63 downto 32);
 reg_i.evr_ts_ns.val.data <= evr_timestamp(31 downto 0);
 
+evr_reset <= reg_o.evr_reset.val.data;
 
 leds <= reg_o.leds.val.data;
 

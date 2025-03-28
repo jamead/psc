@@ -1,28 +1,8 @@
 
---//////////////////////////////////////////////////////////////////////////////////
---// Company: 
---// Engineer: 
---// 
---// Create Date: 05/14/2015 02:56:06 PM
---// Design Name: 
---// Module Name: evr_top
---// Project Name: 
---// Target Devices: 
---// Tool Versions: 
---// Description: 
---// 
---// Dependencies: 
---// 
---// Revision:
---// Revision 0.01 - File Created
---// Additional Comments:
---//
---//
---//	SFP 5    - X0Y1
---//	SFP 6    - X0Y2   --- EVR Port
---//
---// 
---//////////////////////////////////////////////////////////////////////////////////
+-- The evr_top module is a top-level entity for an Event Receiver (EVR) system, 
+-- designed to decode timing and control events in a high-precision timing environment. 
+-- The design leverages Gigabit Transceiver (GTX) functionality for data reception 
+
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -30,6 +10,9 @@ use ieee.numeric_std.all;
 use ieee.std_logic_unsigned.all;
 library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
+
+library work;
+use work.psc_pkg.ALL;
 
 
 entity evr_top is
@@ -64,115 +47,6 @@ end evr_top;
 architecture behv of evr_top is
 	
 
-component timeofDayReceiver is
-   port (
-       clock        : in std_logic;
-       reset        : in std_logic; 
-       eventstream  : in std_logic_vector(7 downto 0);
-       timestamp    : out std_logic_vector(63 downto 0); 
-       seconds      : out std_logic_vector(31 downto 0); 
-       offset       : out std_logic_vector(31 downto 0); 
-       position     : out std_logic_vector(4 downto 0);
-       eventclock   : out std_logic
- );
-end component;
-
-
-component EventReceiverChannel is 
-    port (
-       clock        : in std_logic;
-       reset        : in std_logic;
-       eventstream  : in std_logic_vector(7 downto 0); 
-       myevent      : in std_logic_vector(7 downto 0);
-       mydelay      : in std_logic_vector(31 downto 0); 
-       mywidth      : in std_logic_vector(31 downto 0); 
-       mypolarity   : in std_logic;
-       trigger      : out std_logic 
-);
-end component;
-
-
-component evr_gtx
- 
-port
-(
-    SYSCLK_IN                               : in   std_logic;
-    SOFT_RESET_RX_IN                        : in   std_logic;
-    DONT_RESET_ON_DATA_ERROR_IN             : in   std_logic;
-    GT0_TX_FSM_RESET_DONE_OUT               : out  std_logic;
-    GT0_RX_FSM_RESET_DONE_OUT               : out  std_logic;
-    GT0_DATA_VALID_IN                       : in   std_logic;
-
-    --_________________________________________________________________________
-    --GT0  (X1Y0)
-    --____________________________CHANNEL PORTS________________________________
-    --------------------------------- CPLL Ports -------------------------------
-    gt0_cpllfbclklost_out                   : out  std_logic;
-    gt0_cplllock_out                        : out  std_logic;
-    gt0_cplllockdetclk_in                   : in   std_logic;
-    gt0_cpllreset_in                        : in   std_logic;
-    -------------------------- Channel - Clocking Ports ------------------------
-    gt0_gtrefclk0_in                        : in   std_logic;
-    gt0_gtrefclk1_in                        : in   std_logic;
-    ---------------------------- Channel - DRP Ports  --------------------------
-    gt0_drpaddr_in                          : in   std_logic_vector(8 downto 0);
-    gt0_drpclk_in                           : in   std_logic;
-    gt0_drpdi_in                            : in   std_logic_vector(15 downto 0);
-    gt0_drpdo_out                           : out  std_logic_vector(15 downto 0);
-    gt0_drpen_in                            : in   std_logic;
-    gt0_drprdy_out                          : out  std_logic;
-    gt0_drpwe_in                            : in   std_logic;
-    --------------------------- Digital Monitor Ports --------------------------
-    gt0_dmonitorout_out                     : out  std_logic_vector(7 downto 0);
-    --------------------- RX Initialization and Reset Ports --------------------
-    gt0_eyescanreset_in                     : in   std_logic;
-    gt0_rxuserrdy_in                        : in   std_logic;
-    -------------------------- RX Margin Analysis Ports ------------------------
-    gt0_eyescandataerror_out                : out  std_logic;
-    gt0_eyescantrigger_in                   : in   std_logic;
-    ------------------ Receive Ports - FPGA RX Interface Ports -----------------
-    gt0_rxusrclk_in                         : in   std_logic;
-    gt0_rxusrclk2_in                        : in   std_logic;
-    ------------------ Receive Ports - FPGA RX interface Ports -----------------
-    gt0_rxdata_out                          : out  std_logic_vector(15 downto 0);
-    ------------------ Receive Ports - RX 8B/10B Decoder Ports -----------------
-    gt0_rxdisperr_out                       : out  std_logic_vector(1 downto 0);
-    gt0_rxnotintable_out                    : out  std_logic_vector(1 downto 0);
-    --------------------------- Receive Ports - RX AFE -------------------------
-    gt0_gtxrxp_in                           : in   std_logic;
-    ------------------------ Receive Ports - RX AFE Ports ----------------------
-    gt0_gtxrxn_in                           : in   std_logic;
-    -------------- Receive Ports - RX Byte and Word Alignment Ports ------------
-    gt0_rxcommadet_out                      : out  std_logic;
-    --------------------- Receive Ports - RX Equalizer Ports -------------------
-    gt0_rxdfelpmreset_in                    : in   std_logic;
-    gt0_rxmonitorout_out                    : out  std_logic_vector(6 downto 0);
-    gt0_rxmonitorsel_in                     : in   std_logic_vector(1 downto 0);
-    --------------- Receive Ports - RX Fabric Output Control Ports -------------
-    gt0_rxoutclk_out                        : out  std_logic;
-    gt0_rxoutclkfabric_out                  : out  std_logic;
-    ------------- Receive Ports - RX Initialization and Reset Ports ------------
-    gt0_gtrxreset_in                        : in   std_logic;
-    gt0_rxpmareset_in                       : in   std_logic;
-    ------------------- Receive Ports - RX8B/10B Decoder Ports -----------------
-    gt0_rxchariscomma_out                   : out  std_logic_vector(1 downto 0);
-    gt0_rxcharisk_out                       : out  std_logic_vector(1 downto 0);
-    -------------- Receive Ports -RX Initialization and Reset Ports ------------
-    gt0_rxresetdone_out                     : out  std_logic;
-    --------------------- TX Initialization and Reset Ports --------------------
-    gt0_gttxreset_in                        : in   std_logic;
-
-
-    --____________________________COMMON PORTS________________________________
-     GT0_QPLLOUTCLK_IN  : in std_logic;
-     GT0_QPLLOUTREFCLK_IN : in std_logic
-
-);
-
-end component;
-
-
-
 
    type  state_type is (IDLE, ACTIVE);  
    signal state :  state_type;
@@ -204,26 +78,27 @@ end component;
 
 
    --debug signals (connect to ila)
-   attribute mark_debug     : string;
-   attribute mark_debug of eventstream: signal is "true";
-   attribute mark_debug of datastream: signal is "true";
-   attribute mark_debug of timestamp: signal is "true";
-   attribute mark_debug of eventclock: signal is "true";
-   attribute mark_debug of prev_datastream: signal is "true";
-   attribute mark_debug of tbt_trig: signal is "true";
-   attribute mark_debug of tbt_trig_i: signal is "true";   
-   attribute mark_debug of trignum: signal is "true";
-   attribute mark_debug of trigdly: signal is "true";
-   attribute mark_debug of tbt_trig_stretch: signal is "true";
-   attribute mark_debug of tbt_cnt: signal is "true";   
-   attribute mark_debug of rxdata: signal is "true";
-   attribute mark_debug of rxcharisk: signal is "true";
+--   attribute mark_debug     : string;
+--   attribute mark_debug of eventstream: signal is "true";
+--   attribute mark_debug of datastream: signal is "true";
+--   attribute mark_debug of timestamp: signal is "true";
+--   attribute mark_debug of eventclock: signal is "true";
+--   attribute mark_debug of prev_datastream: signal is "true";
+--   attribute mark_debug of tbt_trig: signal is "true";
+--   attribute mark_debug of tbt_trig_i: signal is "true";   
+--   attribute mark_debug of trignum: signal is "true";
+--   attribute mark_debug of trigdly: signal is "true";
+--   attribute mark_debug of tbt_trig_stretch: signal is "true";
+--   attribute mark_debug of tbt_cnt: signal is "true";   
+--   attribute mark_debug of rxdata: signal is "true";
+--   attribute mark_debug of rxcharisk: signal is "true";
+--   attribute mark_debug of gtx_reset: signal is "true";
    
-   attribute mark_debug of rxresetdone: signal is "true"; 
-   attribute mark_debug of tx_fsm_reset_done: signal is "true"; 
-   attribute mark_debug of rx_fsm_reset_done: signal is "true"; 
-   attribute mark_debug of cplllock: signal is "true";          
-   attribute mark_debug of cpllfbcklost: signal is "true"; 
+--   attribute mark_debug of rxresetdone: signal is "true"; 
+--   attribute mark_debug of tx_fsm_reset_done: signal is "true"; 
+--   attribute mark_debug of rx_fsm_reset_done: signal is "true"; 
+--   attribute mark_debug of cplllock: signal is "true";          
+--   attribute mark_debug of cpllfbcklost: signal is "true"; 
 
    
 
@@ -295,9 +170,8 @@ eventstream <= rxdata(7 downto 0);
 
 
 
-	
 -- timestamp decoder
-ts : timeofDayReceiver
+ts : entity work.event_rcv_ts
    port map(
        clock => rxusr_clk,
        reset => sys_rst,
@@ -312,7 +186,7 @@ ts : timeofDayReceiver
 
 	
 -- 1 Hz GPS tick	
-event_gps : EventReceiverChannel
+event_gps : entity work.event_rcv_chan 
     port map(
        clock => rxusr_clk,
        reset => sys_rst,
@@ -327,7 +201,7 @@ event_gps : EventReceiverChannel
 
 
 -- 10 Hz 	
-event_10Hz : EventReceiverChannel
+event_10Hz : entity work.event_rcv_chan
     port map(
        clock => rxusr_clk,
        reset => sys_rst,
@@ -340,8 +214,10 @@ event_10Hz : EventReceiverChannel
 );
 
 
+
+
 -- 10 KHz 	
-event_10KHz : EventReceiverChannel
+event_10KHz : entity work.event_rcv_chan
     port map(
        clock => rxusr_clk,
        reset => sys_rst,
@@ -355,7 +231,7 @@ event_10KHz : EventReceiverChannel
 		
 		
 -- On demand 	
-event_usr : EventReceiverChannel
+event_usr : entity work.event_rcv_chan
     port map(
        clock => rxusr_clk,
        reset => sys_rst,
@@ -368,7 +244,7 @@ event_usr : EventReceiverChannel
 );
 
 
-    evr_gtx_init_i : evr_gtx
+evr_gtx_init_i : evr_gtx
     port map
     (
         sysclk_in                       =>      sys_clk,
@@ -442,94 +318,6 @@ event_usr : EventReceiverChannel
         gt0_qplloutrefclk_in            =>      '0'
     );
 
-
-
-
-	
---evr_gtx_support_i : evr_gtx_support
---    generic map(
---     EXAMPLE_SIM_GTRESET_SPEEDUP     =>     "TRUE",
---     STABLE_CLOCK_PERIOD             =>      10
--- )
--- port map
--- (
---     SOFT_RESET_RX_IN                =>      ('0'), 
---     DONT_RESET_ON_DATA_ERROR_IN     =>      ('1'), 
---     Q0_CLK0_GTREFCLK_PAD_N_IN       =>  refclk_n, 
---     Q0_CLK0_GTREFCLK_PAD_P_IN       =>  refclk_p, 
---     GT0_TX_FSM_RESET_DONE_OUT       =>  open,
---     GT0_RX_FSM_RESET_DONE_OUT       =>  open,
---     GT0_DATA_VALID_IN               =>  ('1'), 
-
---     GT0_RXUSRCLK_OUT                => gt0_rxusrclk,
---     GT0_RXUSRCLK2_OUT               => gt0_rxusrclk2,
-
-
-
---     --_____________________________________________________________________
---     --_____________________________________________________________________
---     --GT0  (X1Y0)
-
---     --------------------------------- CPLL Ports -------------------------------
---     gt0_cpllfbclklost_out           =>      open, 
---     gt0_cplllock_out                =>      open, 
---     gt0_cpllreset_in                =>      ('0'), 
---     ---------------------------- Channel - DRP Ports  --------------------------
---     gt0_drpaddr_in                  =>      (others => '0'),
---     gt0_drpdi_in                    =>      (others => '0'),
---     gt0_drpdo_out                   =>      open,
---     gt0_drpen_in                    =>      ('0'),
---     gt0_drprdy_out                  =>      open,
---     gt0_drpwe_in                    =>      ('0'),
---     --------------------------- Digital Monitor Ports --------------------------
---     gt0_dmonitorout_out             =>      open,
---     --------------------- RX Initialization and Reset Ports --------------------
---     gt0_eyescanreset_in             =>      ('0'),
---     gt0_rxuserrdy_in                =>      ('1'), 
---     -------------------------- RX Margin Analysis Ports ------------------------
---     gt0_eyescandataerror_out        =>      open, 
---     gt0_eyescantrigger_in           =>      ('0'), 
---     ------------------ Receive Ports - FPGA RX interface Ports -----------------
---     gt0_rxdata_out                  =>      gt0_rxdata,
---     ------------------ Receive Ports - RX 8B/10B Decoder Ports -----------------
---     gt0_rxdisperr_out               =>      open, 
---     gt0_rxnotintable_out            =>      open, 
---     --------------------------- Receive Ports - RX AFE -------------------------
---     gt0_gtxrxp_in                   =>      rx_p, 
---     ------------------------ Receive Ports - RX AFE Ports ----------------------
---     gt0_gtxrxn_in                   =>      rx_n, 
---     -------------- Receive Ports - RX Byte and Word Alignment Ports ------------
---     gt0_rxcommadet_out              =>      open,
---     --------------------- Receive Ports - RX Equalizer Ports -------------------
---     gt0_rxdfelpmreset_in            =>      ('0'), 
---     gt0_rxmonitorout_out            =>      open,
---     gt0_rxmonitorsel_in             =>      "00",
---     --------------- Receive Ports - RX Fabric Output Control Ports -------------
---     gt0_rxoutclkfabric_out          =>      open, 
---     ------------- Receive Ports - RX Initialization and Reset Ports ------------
---     gt0_gtrxreset_in                =>      ('0'), 
---     gt0_rxpmareset_in               =>      ('0'), 
---     ------------------- Receive Ports - RX8B/10B Decoder Ports -----------------
---     gt0_rxchariscomma_out           =>      gt0_rxchariscomma,
---     gt0_rxcharisk_out               =>      gt0_rxcharisk,
---     -------------- Receive Ports -RX Initialization and Reset Ports ------------
---     gt0_rxresetdone_out             =>      open, 
---     --------------------- TX Initialization and Reset Ports --------------------
---     gt0_gttxreset_in                =>      ('0'), 
-
-
-
---     GT0_DRPADDR_COMMON_IN => "00000000",
---     GT0_DRPDI_COMMON_IN => "0000000000000000",
---     GT0_DRPDO_COMMON_OUT => open,
---     GT0_DRPEN_COMMON_IN => '0',
---     GT0_DRPRDY_COMMON_OUT => open,
---     GT0_DRPWE_COMMON_IN => '0',
---     --____________________________COMMON PORTS________________________________
---     GT0_QPLLOUTCLK_OUT  => open,
---     GT0_QPLLOUTREFCLK_OUT => open,
---     sysclk_in => sys_clk
--- );
 
 
 

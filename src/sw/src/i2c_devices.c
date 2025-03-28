@@ -11,19 +11,26 @@
 extern XIicPs IicPsInstance;			/* Instance of the IIC Device */
 
 
-static const u32 si570_values [] = {
-		0x00, 0xC2, 0xBB, 0xBE, 0x6E, 0x69,
+//static const u32 si570_values [] = {
+//		0x00, 0xC2, 0xBB, 0xBE, 0x6E, 0x69,
+//};
+
+
+// Registers to program si570 to 312.3MHz.
+static const uint8_t si570_values[][2] = {
+	{137, 0x10}, //Freeze DCO
+	{7, 0x00},
+    {8, 0xC2},
+    {9, 0xBB},
+    {10, 0xBE},
+    {11, 0x6E},
+    {12, 0x69},
+    {137, 0x0},  //Unfreeze DCO
+	{135, 0x40}  //Enable New Frequency
 };
 
 
 
-static const u32 lmk61e2_values [] = {
-		0x0010, 0x010B, 0x0233, 0x08B0, 0x0901, 0x1000, 0x1180, 0x1502,
-		0x1600, 0x170F, 0x1900, 0x1A2E, 0x1B00, 0x1C00, 0x1DA9, 0x1E00,
-		0x1F00, 0x20C8, 0x2103, 0x2224, 0x2327, 0x2422, 0x2502, 0x2600,
-		0x2707, 0x2F00, 0x3000, 0x3110, 0x3200, 0x3300, 0x3400, 0x3500,
-		0x3800, 0x4802,
-};
 
 
 
@@ -63,6 +70,37 @@ s32 i2c_read(u8 *buf, u8 len, u8 addr) {
     return status;
 
 }
+
+void read_si570() {
+   u8 i, buf[2], stat;
+
+   xil_printf("Read si570 registers\r\n");
+   for (i=0;i<6;i++) {
+       buf[0] = i+7;
+       i2c_write(buf,1,0x55);
+       stat = i2c_read(buf, 1, 0x55);
+       xil_printf("Stat: %d:   val0:%x  \r\n",stat, buf[0]);
+	}
+	xil_printf("\r\n");
+}
+
+
+
+void prog_si570() {
+	u8 buf[2];
+
+	xil_printf("Si570 Registers before re-programming...\r\n");
+	read_si570();
+	//Program New Registers
+	for (size_t i = 0; i < sizeof(si570_values) / sizeof(si570_values[0]); i++) {
+	    buf[0] = si570_values[i][0];
+	    buf[1] = si570_values[i][1];
+	    i2c_write(buf, 2, 0x55);
+	}
+	xil_printf("Si570 Registers after re-programming...\r\n");
+    read_si570();
+}
+
 
 
 
@@ -142,28 +180,6 @@ void i2c_set_port_expander(u32 addr, u32 port)  {
     XIicPs_MasterSendPolled(&IicPsInstance, buf, len, addr);
 }
 
-
-void write_lmk61e2()
-{
-   u8 buf[4] = {0};
-   u32 regval, i;
-
-
-   u32 num_values = sizeof(lmk61e2_values) / sizeof(lmk61e2_values[0]);  // Get the number of elements in the array
-
-   i2c_set_port_expander(I2C_PORTEXP1_ADDR,0x20);
-   for (i=0; i<num_values; i++) {
-	  regval = lmk61e2_values[i];
-      buf[0] = (char) ((regval & 0x00FF00) >> 8);
-      buf[1] = (char) (regval & 0xFF);
-      i2c_write(buf,2,0x5A);
-      printf("LMK61e2 Write = 0x%x\t    B0 = %x    B1 = %x\n",regval, buf[0], buf[1]);
-   };
-
-
-
-
-}
 
 
 

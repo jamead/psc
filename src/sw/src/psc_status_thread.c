@@ -144,8 +144,10 @@ void ReadSAData(char *msg) {
     *++msg_u32ptr = htonl(MSGSTAT10HzLEN); //body length
 
     sadata.count = 0;
-    sadata.evr_ts_ns = 1;
-    sadata.evr_ts_s =  2;
+    sadata.evr_ts_s =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S);
+    sadata.evr_ts_ns =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS);
+    //xil_printf("%d  %d\r\n",sadata.evr_ts_s, sadata.evr_ts_ns);
+
     sadata.ps1_dcct[0] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT0);
     sadata.ps1_dcct[1] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT1);
     sadata.ps1_mon[0]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DACSP);
@@ -178,8 +180,6 @@ void ReadSAData(char *msg) {
     sadata.ps4_mon[3]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_SPARE);
     sadata.ps4_mon[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_REG);
     sadata.ps4_mon[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_ERR);
-
-
 
 
 

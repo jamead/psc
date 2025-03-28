@@ -254,125 +254,31 @@ void main_thread(void *p)
 
 int main()
 {
-
-    u8 buf[3];
-    int i,stat;
+    u32 i;
+    u32 ts_s, ts_ns;
 
 
 	xil_printf("BNL Power Supply Controller ...\r\n");
     print_firmware_version();
     
 	init_i2c();
+	prog_si570();
 	
-	/*
-
-    xil_printf("Read si570 registers\r\n");
-	for (i=0;i<6;i++) {
-	    buf[0] = i+7;
-	    i2c_write(buf,1,0x55);
-		stat = i2c_read(buf, 1, 0x55);
-	   xil_printf("Stat: %d:   val0:%x  \r\n",stat, buf[0]);
-	 }
-     xil_printf("\r\n");
-
-
-
-     xil_printf("Freeze DCO\r\n");
-     buf[0]  = 137;
-     buf[1] = 0x10;
-     i2c_write(buf,2,0x55);
-
-     xil_printf("Load Frequency from NVM\r\n");
-     buf[0]  = 135;
-     buf[1] = 0x1;
-     i2c_write(buf,2,0x55);
-
-     xil_printf("UnFreeze DCO\r\n");
-     buf[0]  = 137;
-     buf[1] = 0x0;
-     i2c_write(buf,2,0x55);
-
-     xil_printf("Enable New Freq\r\n");
-     buf[0]  = 135;
-     buf[1] = 0x40;
-     i2c_write(buf,2,0x55);
-
-
-     xil_printf("Read si570 registers after load from NVM\r\n");
-  	 for (i=0;i<6;i++) {
-  	    buf[0] = i+7;
-  	    i2c_write(buf,1,0x55);
-  		stat = i2c_read(buf, 1, 0x55);
-  	   xil_printf("Stat: %d:   val0:%x  \r\n",stat, buf[0]);
-  	 }
-       xil_printf("\r\n");
-
-
-
-     xil_printf("Freeze DCO\r\n");
-     buf[0]  = 137;
-     buf[1] = 0x10;
-     i2c_write(buf,2,0x55);
-
-
-
-     xil_printf("Load new registers...\r\n");
-     buf[0] = 7;
-     buf[1] = 0;
-     i2c_write(buf,2,0x55);
-
-     buf[0] = 8;
-     buf[1] = 0xC2;
-     i2c_write(buf,2,0x55);
-
-     buf[0] = 9;
-     buf[1] = 0xBB;
-     i2c_write(buf,2,0x55);
-
-     buf[0] = 10;
-     buf[1] = 0xBE;
-     i2c_write(buf,2,0x55);
-
-     buf[0] = 11;
-     buf[1] = 0x6E;
-     i2c_write(buf,2,0x55);
-
-     buf[0] = 12;
-     buf[1] = 0x69;
-     i2c_write(buf,2,0x55);
-
-     xil_printf("UnFreeze DCO\r\n");
-     buf[0]  = 137;
-     buf[1] = 0x0;
-     i2c_write(buf,2,0x55);
-
-     xil_printf("Enable New Freq\r\n");
-     buf[0]  = 135;
-     buf[1] = 0x40;
-     i2c_write(buf,2,0x55);
-
-    xil_printf("New Registers...\r\n");
- 	for (i=0;i<6;i++) {
- 	    buf[0] = i+7;
- 	    i2c_write(buf,1,0x55);
- 		stat = i2c_read(buf, 1, 0x55);
- 	   xil_printf("Stat: %d:   val0:%x  \r\n",stat, buf[0]);
- 	 }
-      xil_printf("\r\n");
-
-    */
+    sleep(1);
 
 	//EVR reset
-	//Xil_Out32(XPAR_M_AXI_BASEADDR + GTX_RESET_REG, 1);
-	//Xil_Out32(XPAR_M_AXI_BASEADDR + GTX_RESET_REG, 2);
-    //usleep(1000);
+    xil_printf("Resetting EVR GTX...\r\n");
+	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET, 0xFF);
+	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET, 0);
+    usleep(1000);
 
     //read Timestamp
-    //while (1) {
-    //ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S_REG);
-    //ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS_REG);
-    //xil_printf("ts= %d    %d\r\n",ts_s,ts_ns);
-   // }
+    for (i=0;i<5;i++) {
+      ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S);
+      ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS);
+      xil_printf("ts= %d    %d\r\n",ts_s,ts_ns);
+      sleep(1);
+    }
 
 	main_thread_handle = sys_thread_new("main_thread", main_thread, 0, THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
 

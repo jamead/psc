@@ -170,7 +170,7 @@ architecture behv of top is
    signal evr_trignum           : std_logic_vector(7 downto 0);
    signal evr_trigdly           : std_logic_vector(31 downto 0);
    signal evr_rcvd_clk          : std_logic;
- 
+   signal sa_trig_stretch       : std_logic;
    
   
    --debug signals (connect to ila)
@@ -191,8 +191,13 @@ fp_leds(0) <= gtx_evr_refclk;
 fp_leds(1) <= '0';
 fp_leds(2) <= '0';
 fp_leds(3) <= evr_rcvd_clk; --pl_clk0; 
-fp_leds(7 downto 4) <= sfp_leds(3 downto 0);
+fp_leds(7 downto 4) <= "0000";
 --sfp_leds <= leds;
+
+sfp_leds(3 downto 0) <= "0000";
+sfp_leds(4) <= sa_trig_stretch;
+sfp_leds(7 downto 5) <= "000";
+
 
 pl_reset <= not pl_resetn(0); 
 
@@ -342,6 +347,7 @@ ps_regs: entity work.ps_io
     dac_stat => dac_stat,
     ss_buf_stat => ss_buf_stat,
     evr_timestamp => evr_timestamp,
+    evr_reset => gtx_reset,
     rcom => rcom,
     rsts => rsts               
   );
@@ -431,6 +437,17 @@ sys: component system
     s_axi_wstrb => s_axi4_m2s.wstrb, 
     s_axi_wvalid => s_axi4_m2s.wvalid         
   );
+
+
+--stretch the sa_trig signal so can be seen on LED
+sa_led : entity work.stretch
+  port map (
+	clk => pl_clk0,
+	reset => pl_reset, 
+	sig_in => evr_sa_trig, 
+	len => 3000000, -- ~25ms;
+	sig_out => sa_trig_stretch
+);	  	
 
 
 

@@ -76,6 +76,15 @@ reg {
     default hw = w;
     field {} val[32];
   } evr_ts_ns @0x14; 
+  
+reg {
+    desc="EVR Reset";
+    default sw = rw;
+    default hw = r;
+    field {} val[8];
+  } evr_reset @0x18;
+
+
 
 
 
