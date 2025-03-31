@@ -15,7 +15,7 @@
 
 
 /* Hardware support includes */
-#include "zubpm_defs.h"
+#include "psc_defs.h"
 #include "pl_regs.h"
 #include "psc_msg.h"
 
@@ -57,10 +57,14 @@ char ramp_buf[400000];
 //Status Thread Buffers
 char msgid30_buf[MSGID30LEN+MSGHDRLEN];
 char msgStat10Hz_buf[MSGSTAT10HzLEN+MSGHDRLEN];
-char msgid32_buf[MSGID32LEN+MSGHDRLEN];
+char temp[1000];  //temp buffer, msgStat10Hz_buf was overwriting msgid51_buf sometimes
+
 
 //Waveform Thread Buffers
-char msgid51_buf[MSGID51LEN+MSGHDRLEN];
+char msgSoft_buf[MSGSOFTLEN+MSGHDRLEN];
+
+char msgFltCh1_buf[MSGFLTCH1LEN+MSGHDRLEN];
+
 char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];
 //char msgid52_buf[MSGID52LEN];
 //char msgid53_buf[MSGID53LEN];
@@ -262,7 +266,7 @@ int main()
     print_firmware_version();
     
 	init_i2c();
-	prog_si570();
+	//prog_si570();
 	
     sleep(1);
 
@@ -273,12 +277,14 @@ int main()
     usleep(1000);
 
     //read Timestamp
+    /*
     for (i=0;i<5;i++) {
       ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S);
       ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS);
       xil_printf("ts= %d    %d\r\n",ts_s,ts_ns);
       sleep(1);
     }
+    */
 
 	main_thread_handle = sys_thread_new("main_thread", main_thread, 0, THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
 

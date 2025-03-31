@@ -12,9 +12,75 @@ record(longin, "$(P){$(PSC)}SS:TotalTrigs-I") {
     field(SCAN,"I/O Intr")
 }
 
-record(longin, "$(P){$(PSC)}SS:Latsoftbufaddr-I") {
+record(longin, "$(P){$(PSC)}SS:Latsoft_bufaddr-I") {
     field(DESC, "Latched DDR Address on last soft trigger")
     field(DTYP, "PSC Reg")
     field(INP , "@Wfm$(PSC) 52 8")
     field(SCAN,"I/O Intr")
 }
+
+record(longin, "$(P){$(PSC)}SS:Latflt1_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last soft trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 52 12")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:Latflt2_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last soft trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 52 16")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:Latflt3_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last soft trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 52 20")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:Latflt4_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last soft trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 52 24")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatErr1_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last soft trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 52 28")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatErr2_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last soft trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 52 32")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatErr3_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last soft trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 52 36")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatErr4_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last soft trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 52 40")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatEVR_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last soft trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 52 44")
+    field(SCAN,"I/O Intr")
+}
+
+
+

@@ -52,14 +52,27 @@ architecture behv of ps_io is
   
   signal soft_trig       : std_logic;
   signal soft_trig_prev  : std_logic;
+  
+  signal flt_trig        : std_logic_vector(3 downto 0);
+  signal err_trig        : std_logic_vector(3 downto 0);
+  signal evr_trig        : std_logic;
+
+  signal flt_trig_prev   : std_logic_vector(3 downto 0);
+  signal err_trig_prev   : std_logic_vector(3 downto 0);
+  signal evr_trig_prev   : std_logic;
 
   
   attribute mark_debug     : string;
   attribute mark_debug of soft_trig: signal is "true";
+  attribute mark_debug of soft_trig_prev: signal is "true";  
   attribute mark_debug of reg_i: signal is "true";
-  
-
-
+  attribute mark_debug of ss_buf_stat: signal is "true";
+  attribute mark_debug of flt_trig: signal is "true";
+  attribute mark_debug of flt_trig_prev: signal is "true";  
+  attribute mark_debug of err_trig: signal is "true";
+  attribute mark_debug of err_trig_prev: signal is "true"; 
+  attribute mark_debug of evr_trig: signal is "true";
+  attribute mark_debug of evr_trig_prev: signal is "true"; 
 
 begin
 
@@ -154,17 +167,68 @@ reg_i.snapshot_totaltrigs.val.data <= ss_buf_stat.tenkhzcnt;
 
 -- user issues a soft trigger, latch the current snapshot buffer address
 soft_trig <= reg_o.softtrig.val.data(0);
+flt_trig(0) <= reg_o.testtrig.val.data(0);
+flt_trig(1) <= reg_o.testtrig.val.data(1);
+flt_trig(2) <= reg_o.testtrig.val.data(2);
+flt_trig(3) <= reg_o.testtrig.val.data(3);
+err_trig(0) <= reg_o.testtrig.val.data(4);
+err_trig(1) <= reg_o.testtrig.val.data(5);
+err_trig(2) <= reg_o.testtrig.val.data(6);
+err_trig(3) <= reg_o.testtrig.val.data(7);
+evr_trig    <= reg_o.testtrig.val.data(8);
 
+
+
+-- latch the buffer address (and eventually timestamp) on trigger.
 process (pl_clock)
 begin
   if (rising_edge(pl_clock)) then
     if (pl_reset = '1') then
       reg_i.softtrig_bufptr.val.data <= 32d"0";
-    else
+      reg_i.flt1trig_bufptr.val.data <= 32d"0";
+      reg_i.flt2trig_bufptr.val.data <= 32d"0";  
+      reg_i.flt3trig_bufptr.val.data <= 32d"0";
+      reg_i.flt4trig_bufptr.val.data <= 32d"0";  
+      reg_i.err1trig_bufptr.val.data <= 32d"0";
+      reg_i.err2trig_bufptr.val.data <= 32d"0";  
+      reg_i.err3trig_bufptr.val.data <= 32d"0";
+      reg_i.err4trig_bufptr.val.data <= 32d"0";       
+      reg_i.evrtrig_bufptr.val.data  <= 32d"0";                   
+    else    
       soft_trig_prev <= soft_trig;
+      flt_trig_prev <= flt_trig;
+      err_trig_prev <= err_trig;
+      evr_trig_prev <= evr_trig;
       if (soft_trig = '1' and soft_trig_prev = '0') then     
         reg_i.softtrig_bufptr.val.data <= ss_buf_stat.addr_ptr;
       end if;
+      if (flt_trig(0) = '1' and flt_trig_prev(0) = '0') then
+        reg_i.flt1trig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+      end if;
+      if (flt_trig(1) = '1' and flt_trig_prev(1) = '0') then
+        reg_i.flt2trig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+      end if;      
+      if (flt_trig(2) = '1' and flt_trig_prev(2) = '0') then
+        reg_i.flt3trig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+      end if;
+      if (flt_trig(3) = '1' and flt_trig_prev(3) = '0') then
+        reg_i.flt4trig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+      end if;        
+      if (err_trig(0) = '1' and err_trig_prev(0) = '0') then
+        reg_i.err1trig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+      end if;
+      if (err_trig(1) = '1' and flt_trig_prev(1) = '0') then
+        reg_i.err2trig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+      end if;      
+      if (err_trig(2) = '1' and flt_trig_prev(2) = '0') then
+        reg_i.err3trig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+      end if;
+      if (err_trig(3) = '1' and flt_trig_prev(3) = '0') then
+        reg_i.err4trig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+      end if;  
+      if (evr_trig = '1' and evr_trig_prev = '0') then
+        reg_i.evrtrig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+      end if;      
     end if;
   end if;
 end process;  

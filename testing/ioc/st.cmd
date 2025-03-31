@@ -42,10 +42,7 @@ epicsEnvSet("BLEN",100000);        # Snapshot DMA Length
 ## Load record instances
 
 ### PVs for PSC:
-dbLoadRecords("$(PSC_DBDIR)/sa_adc.db", "P=$(IOCNAME), NO=1, CHAN=$(CHAN1)")
-dbLoadRecords("$(PSC_DBDIR)/sa_adc.db", "P=$(IOCNAME), NO=1, CHAN=$(CHAN2)")
-dbLoadRecords("$(PSC_DBDIR)/sa_adc.db", "P=$(IOCNAME), NO=1, CHAN=$(CHAN3)")
-dbLoadRecords("$(PSC_DBDIR)/sa_adc.db", "P=$(IOCNAME), NO=1, CHAN=$(CHAN4)")
+dbLoadRecords("$(PSC_DBDIR)/status10hz.db", "P=$(IOCNAME), NO=1")
 
 dbLoadRecords("$(PSC_DBDIR)/control.db", "P=$(IOCNAME), NO=1")
 
@@ -56,7 +53,7 @@ dbLoadRecords("$(PSC_DBDIR)/wfmstats.db", "P=$(IOCNAME), PSC=1")
 
 
 #####################################################
-var(PSCDebug, 5)	#5 full debug
+var(PSCDebug, 2)	#5 full debug
 
 #psc1 Create the PSC
 createPSC("Tx1", $(PSC1_IP), 7, 0)

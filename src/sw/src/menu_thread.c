@@ -20,7 +20,7 @@
 #include "task.h"
 
 /* Hardware support includes */
-#include "zubpm_defs.h"
+#include "psc_defs.h"
 #include "pl_regs.h"
 
 

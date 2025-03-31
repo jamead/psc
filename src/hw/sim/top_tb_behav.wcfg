@@ -17,15 +17,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000000000 ms"></ZoomStartTime>
-      <ZoomEndTime time="6.160790001 ms"></ZoomEndTime>
-      <Cursor1Time time="5.663594103 ms"></Cursor1Time>
+      <ZoomStartTime time="2,264.759 ns"></ZoomStartTime>
+      <ZoomEndTime time="3,240.315 ns"></ZoomEndTime>
+      <Cursor1Time time="100,855.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="262"></NameColumnWidth>
+      <NameColumnWidth column_width="258"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="32" />
+   <WVObjectSize size="44" />
    <wvobject type="logic" fp_name="/top_tb/clk">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -119,10 +119,6 @@
       <obj_property name="ElementShortName">dac_rden</obj_property>
       <obj_property name="ObjectShortName">dac_rden</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/top_tb/dut/write_dacs/dac_start">
-      <obj_property name="ElementShortName">dac_start</obj_property>
-      <obj_property name="ObjectShortName">dac_start</obj_property>
-   </wvobject>
    <wvobject fp_name="divider161" type="divider">
       <obj_property name="label">SetPoint DACs</obj_property>
       <obj_property name="DisplayName">label</obj_property>
@@ -159,5 +155,57 @@
    <wvobject type="logic" fp_name="/top_tb/gtx_gige_refclk_n">
       <obj_property name="ElementShortName">gtx_gige_refclk_n</obj_property>
       <obj_property name="ObjectShortName">gtx_gige_refclk_n</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider105" type="divider">
+      <obj_property name="label">triggers</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/ps_regs/flt_trig">
+      <obj_property name="ElementShortName">flt_trig[3:0]</obj_property>
+      <obj_property name="ObjectShortName">flt_trig[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/ps_regs/flt_trig_prev">
+      <obj_property name="ElementShortName">flt_trig_prev[3:0]</obj_property>
+      <obj_property name="ObjectShortName">flt_trig_prev[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/ps_regs/reg_i.softtrig_bufptr">
+      <obj_property name="ElementShortName">.softtrig_bufptr</obj_property>
+      <obj_property name="ObjectShortName">.softtrig_bufptr</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/ps_regs/reg_i.flt1trig_bufptr">
+      <obj_property name="ElementShortName">.flt1trig_bufptr</obj_property>
+      <obj_property name="ObjectShortName">.flt1trig_bufptr</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/ps_regs/reg_i.flt2trig_bufptr">
+      <obj_property name="ElementShortName">.flt2trig_bufptr</obj_property>
+      <obj_property name="ObjectShortName">.flt2trig_bufptr</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/ps_regs/reg_i.flt3trig_bufptr">
+      <obj_property name="ElementShortName">.flt3trig_bufptr</obj_property>
+      <obj_property name="ObjectShortName">.flt3trig_bufptr</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/ps_regs/reg_i.flt4trig_bufptr">
+      <obj_property name="ElementShortName">.flt4trig_bufptr</obj_property>
+      <obj_property name="ObjectShortName">.flt4trig_bufptr</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/ps_regs/reg_i.err1trig_bufptr">
+      <obj_property name="ElementShortName">.err1trig_bufptr</obj_property>
+      <obj_property name="ObjectShortName">.err1trig_bufptr</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/ps_regs/reg_i.err2trig_bufptr">
+      <obj_property name="ElementShortName">.err2trig_bufptr</obj_property>
+      <obj_property name="ObjectShortName">.err2trig_bufptr</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/ps_regs/reg_i.err3trig_bufptr">
+      <obj_property name="ElementShortName">.err3trig_bufptr</obj_property>
+      <obj_property name="ObjectShortName">.err3trig_bufptr</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/ps_regs/reg_i.err4trig_bufptr">
+      <obj_property name="ElementShortName">.err4trig_bufptr</obj_property>
+      <obj_property name="ObjectShortName">.err4trig_bufptr</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/ps_regs/reg_i.evrtrig_bufptr">
+      <obj_property name="ElementShortName">.evrtrig_bufptr</obj_property>
+      <obj_property name="ObjectShortName">.evrtrig_bufptr</obj_property>
    </wvobject>
 </wave_config>

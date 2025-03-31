@@ -25,7 +25,7 @@
 #include "task.h"
 
 /* Hardware support includes */
-#include "zubpm_defs.h"
+#include "psc_defs.h"
 #include "pl_regs.h"
 #include "psc_msg.h"
 
@@ -257,8 +257,7 @@ void psc_status_thread()
 	int clilen;
 	struct sockaddr_in serv_addr, cli_addr;
     int n,loop=0;
-    //int sa_trigwait, sa_cnt=0, sa_cnt_prev=0;
-    u32 ssbufptr, totaltrigs;
+    //u32 ssbufptr, totaltrigs;
 
 
 
@@ -308,8 +307,8 @@ reconnect:
 
 		//xil_printf("In Status main loop...\r\n");
 		vTaskDelay(pdMS_TO_TICKS(100));
-		ssbufptr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
-		totaltrigs = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_TOTALTRIGS);
+		//ssbufptr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
+		//totaltrigs = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_TOTALTRIGS);
 		//xil_printf("BufPtr: %x\t TotalTrigs: %d\r\n",ssbufptr,totaltrigs);
 
 

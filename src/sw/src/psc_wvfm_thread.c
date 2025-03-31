@@ -25,15 +25,13 @@
 #include "task.h"
 
 /* Hardware support includes */
-#include "zubpm_defs.h"
+#include "psc_defs.h"
 #include "pl_regs.h"
 #include "psc_msg.h"
 
 
 #define PORT  20
 
-    //Xil_DCacheFlush();
-	//Xil_DCacheInvalidateRange(0x10000000,1e6);
 
 
 void Host2NetworkConvWvfm(char *inbuf, int len) {
@@ -54,7 +52,7 @@ void Host2NetworkConvWvfm(char *inbuf, int len) {
 }
 
 
-
+// This information is send to the IOC at ~10Hz
 void ReadSnapShotStats(char *msg) {
 
    u32 *msg_u32ptr;
@@ -70,24 +68,116 @@ void ReadSnapShotStats(char *msg) {
    *++msg_u32ptr = htonl(MSGWFMSTATSLEN); //body length
 	msg_u32ptr++;
 
-   /*
-   for (i=0;i<30;i++) {
-	   msg_u32ptr[i] = i;
-   }
-   */
-
    ssbufaddr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
    latbufaddr_soft = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG_BUFPTR);
    totaltrigs = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_TOTALTRIGS);
    msg_u32ptr[0] = ssbufaddr;
    msg_u32ptr[1] = totaltrigs;
    msg_u32ptr[2] = latbufaddr_soft;
+   msg_u32ptr[3] = Xil_In32(XPAR_M_AXI_BASEADDR + FLT1TRIG_BUFPTR);
+   msg_u32ptr[4] = Xil_In32(XPAR_M_AXI_BASEADDR + FLT2TRIG_BUFPTR);
+   msg_u32ptr[5] = Xil_In32(XPAR_M_AXI_BASEADDR + FLT3TRIG_BUFPTR);
+   msg_u32ptr[6] = Xil_In32(XPAR_M_AXI_BASEADDR + FLT4TRIG_BUFPTR);
+   msg_u32ptr[7] = Xil_In32(XPAR_M_AXI_BASEADDR + ERR1TRIG_BUFPTR);
+   msg_u32ptr[8] = Xil_In32(XPAR_M_AXI_BASEADDR + ERR2TRIG_BUFPTR);
+   msg_u32ptr[9] = Xil_In32(XPAR_M_AXI_BASEADDR + ERR3TRIG_BUFPTR);
+   msg_u32ptr[10] = Xil_In32(XPAR_M_AXI_BASEADDR + ERR4TRIG_BUFPTR);
+   msg_u32ptr[11] = Xil_In32(XPAR_M_AXI_BASEADDR + EVRTRIG_BUFPTR);
 
-   //xil_printf("BufPtr: %x\t LatBufPtr: %x\tTotalTrigs: %d\r\n",
-	//	   msg_u32ptr[0],msg_u32ptr[2], msg_u32ptr[1]);
 
 
 }
+
+void ProcessTrigger(u32 *trig_addr, u32 *trig_last_addr, u32 *got_trig,
+                     u32 *post_dly_cnt, u32 *send_buf, const char *trig_name) {
+
+
+    if ((*trig_addr != *trig_last_addr) && (*got_trig == 0)) {
+        *got_trig = 1;
+        *trig_last_addr = *trig_addr;
+        xil_printf("Got %s Trigger...\r\n", trig_name);
+        xil_printf("Buffer Ptr at Trigger: %x\r\n", *trig_addr);
+        *post_dly_cnt = 0;
+    }
+
+    if (*got_trig == 1) {
+        if (*post_dly_cnt < 51) {
+            (*post_dly_cnt)++;
+            xil_printf("Waiting Post Trigger Time... %d\r\n", *post_dly_cnt);
+        } else {
+            *send_buf = 1;
+            xil_printf("Send Buf...\r\n");
+        }
+    }
+}
+
+
+
+void CheckforTriggers(TriggerInfo *trig) {
+
+    trig->softtrigaddr = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG_BUFPTR);
+	ProcessTrigger(&trig->softtrigaddr, &trig->softtrigaddr_last, &trig->got_softtrig,
+                   &trig->softtrig_postdlycnt, &trig->softtrig_sendbuf, "Soft");
+
+    trig->flt1trigaddr = Xil_In32(XPAR_M_AXI_BASEADDR + FLT1TRIG_BUFPTR);
+    ProcessTrigger(&trig->flt1trigaddr, &trig->flt1trigaddr_last, &trig->got_flt1trig,
+                   &trig->flt1trig_postdlycnt, &trig->flt1trig_sendbuf, "Flt1");
+
+
+}
+
+
+/*
+void CheckforTriggers(TriggerInfo *trig) {
+
+    //Check if new soft trigger
+    trig->softtrigaddr = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG_BUFPTR);
+
+
+
+    if ((trig->softtrigaddr != trig->softtrigaddr_last) && (trig->got_softtrig == 0))  {
+    	trig->got_softtrig = 1;
+    	trig->softtrigaddr_last = trig->softtrigaddr;
+    	xil_printf("Got Soft Trigger...\r\n");
+    	trig->softtrig_postdlycnt = 0;
+	    xil_printf("Buffer Ptr at Trigger: %x\r\n", trig->softtrigaddr);
+    }
+
+    if (trig->got_softtrig == 1) {
+    	if (trig->softtrig_postdlycnt < 51) {
+    	   trig->softtrig_postdlycnt++;
+    	   xil_printf("Waiting Post Trigger Time... %d\r\n",trig->softtrig_postdlycnt);
+    	}
+    	else {
+    	   trig->softtrig_sendbuf = 1;
+    	   xil_printf("Send Buf...\r\n");
+    	}
+    }
+
+    // check if flt1 trigger
+    trig->flt1trigaddr = Xil_In32(XPAR_M_AXI_BASEADDR + FLT1TRIG_BUFPTR);
+    if ((trig->flt1trigaddr != trig->flt1trigaddr_last) && (trig->got_flt1trig == 0))  {
+    	trig->got_flt1trig = 1;
+    	trig->flt1trigaddr_last = trig->flt1trigaddr;
+    	xil_printf("Got Flt1 Trigger...\r\n");
+    	trig->flt1trig_postdlycnt = 0;
+	    xil_printf("Buffer Ptr at Trigger: %x\r\n", trig->flt1trigaddr);
+    }
+
+    if (trig->got_flt1trig == 1) {
+    	if (trig->flt1trig_postdlycnt < 51) {
+    	   trig->flt1trig_postdlycnt++;
+    	   xil_printf("Waiting Post Trigger Time... %d\r\n",trig->flt1trig_postdlycnt);
+    	}
+    	else {
+    	   trig->flt1trig_sendbuf = 1;
+    	   xil_printf("Send Buf...\r\n");
+    	}
+    }
+
+}
+*/
+
 
 
 
@@ -112,8 +202,8 @@ void ReadDMABuf(char *msg, u32 lataddr) {
     msg[0] = 'P';
     msg[1] = 'S';
     msg[2] = 0;
-    msg[3] = (short int) MSGID51;
-    *++msg_u32ptr = htonl(MSGID51LEN); //body length
+    msg[3] = (short int) MSGSOFT;
+    *++msg_u32ptr = htonl(MSGSOFTLEN); //body length
 	msg_u32ptr++;
 
 
@@ -249,10 +339,11 @@ void psc_wvfm_thread()
 	int sockfd, newsockfd;
 	int clilen;
 	struct sockaddr_in serv_addr, cli_addr;
+	struct TriggerInfo trig;
     u32 loopcnt=0;
     s32 n;
-    u32 ssbufptr, ssbufptr_softtrig, ssbufptr_softtrig_prev;
-    u32 got_trig=0, post_trig_cnt, send_buf;
+    //u32 ssbufptr, ssbufptr_softtrig, ssbufptr_softtrig_prev;
+    //u32 got_trig=0, post_trig_cnt, send_buf;
 
 
 
@@ -283,6 +374,10 @@ void psc_wvfm_thread()
     xil_printf("PSC Waveform:  Server listening on port %d...\r\n",PORT);
 
 
+	trig.softtrigaddr_last = trig.softtrigaddr = trig.got_softtrig = trig.softtrig_sendbuf = 0;
+	trig.flt1trigaddr_last = trig.flt1trigaddr = trig.got_flt1trig = trig.flt1trig_sendbuf = 0;
+
+
 reconnect:
 
 	clilen = sizeof(cli_addr);
@@ -297,7 +392,6 @@ reconnect:
     xil_printf("PSC Waveform: Entering while loop...\r\n");
 
 
-    ssbufptr_softtrig_prev = 0;
 
 	while (1) {
 
@@ -305,49 +399,25 @@ reconnect:
 		loopcnt++;
 		vTaskDelay(pdMS_TO_TICKS(100));
 
+		CheckforTriggers(&trig);
 
 
-        //Check if new soft trigger
-	    ssbufptr_softtrig = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG_BUFPTR);
-	    if ((ssbufptr_softtrig != ssbufptr_softtrig_prev) && (got_trig == 0)) {
-	    	ssbufptr_softtrig_prev = ssbufptr_softtrig;
-	    	xil_printf("Got Trigger...\r\n");
-	    	got_trig = 1;
-	    	post_trig_cnt = 0;
-		    xil_printf("Buffer Ptr at Trigger: %x\r\n", ssbufptr_softtrig);
-		    ssbufptr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
-		    xil_printf("Current Buffer Ptr   : %x\r\n", ssbufptr);
-		    ssbufptr_softtrig_prev = ssbufptr_softtrig;
-	    }
-
-
-        if (got_trig == 1) {
-        	//wait for the post trigger time
-        	xil_printf("Waiting Post Trigger Time... %d\r\n",post_trig_cnt);
-        	post_trig_cnt++;
-			// set to 2 seconds for now
-			if (post_trig_cnt == 51) {
-				xil_printf("Done waiting...\r\n");
-				send_buf = 1;
-				got_trig = 0;
-			}
-
-
+		if (trig.flt1trig_sendbuf == 1) {
+	       trig.flt1trig_sendbuf = 0;
+	       trig.got_flt1trig = 0;
 		}
 
-
-
-        if (send_buf == 1)	{
-           send_buf = 0;
+        if (trig.softtrig_sendbuf == 1)	{
+           trig.softtrig_sendbuf = 0;
+           trig.got_softtrig = 0;
 		   xil_printf("Calling ReadDMABuf...\r\n");
-		   ReadDMABuf(msgid51_buf,ssbufptr_softtrig);
+		   ReadDMABuf(msgSoft_buf,trig.softtrigaddr);
 
            //write out Snapshot data (msg51)
 		   xil_printf("Tx 10 sec of Snapshot Data\r\n");
-           Host2NetworkConvWvfm(msgid51_buf,sizeof(msgid51_buf)+MSGHDRLEN);
-           n = write(newsockfd,msgid51_buf,MSGID51LEN+MSGHDRLEN);
+           Host2NetworkConvWvfm(msgSoft_buf,sizeof(msgSoft_buf)+MSGHDRLEN);
+           n = write(newsockfd,msgSoft_buf,MSGSOFTLEN+MSGHDRLEN);
            xil_printf("Transferred %d bytes\r\n", n);
-
            if (n < 0) {
         	printf("PSC Waveform: ERROR writing MSG 51 - ADC Waveform\n");
         	close(newsockfd);
@@ -358,11 +428,14 @@ reconnect:
         }
 
 
+
+
         // Send out Wfm Stats
 		//xil_printf("Sending SnapShot Stats...\r\n");
 		ReadSnapShotStats(msgWfmStats_buf);
 	    Host2NetworkConvWvfm(msgWfmStats_buf,sizeof(msgWfmStats_buf)+MSGHDRLEN);
 	    n = write(newsockfd,msgWfmStats_buf,MSGWFMSTATSLEN+MSGHDRLEN);
+	    //xil_printf("Sent %d bytes\r\n",n);
 	    if (n < 0) {
 	      xil_printf("PSC Waveform: ERROR writing WfmStats...\r\n");
 	      close(newsockfd);

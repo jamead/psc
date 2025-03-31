@@ -36,7 +36,7 @@ record(bo, "$(P){$(NO)}Trig:Strig-SP") {
 #    field(ZNAM,"Rdy")
 #    field(ONAM,"Trig")
     field(FLNK, "$(P){$(NO)}GoRegSingleWrite")
-    field(HIGH,".01")    #500 ms after low
+    #field(HIGH,".5")    #500 ms after low
 }
 
 
@@ -95,6 +95,39 @@ record(longout, "$(P){$(NO)}DAC_RampLen-SP") {
     info(autosaveFields, "VAL")
     field(FLNK, "$(P){$(NO)}GoRegSingleWrite")
 }
+
+
+
+# Testing PV's, will be removed
+
+record(mbbo, "$(P){$(NO)}Trig:Fault-SP") {
+    field(DESC, "Simulate a fault trigger")
+    field(DTYP, "PSC Single U32")
+    field(OUT , "@Tx$(NO) 1 100")
+    #field( PINI, "YES")
+    field( ZRST, "Flt Chan1")
+    field( ONST, "Flt Chan2")
+    field( TWST, "Flt Chan3")
+    field( THST, "Flt Chan4")
+    field( FRST, "Err Chan1")
+    field( FVST, "Err Chan2")
+    field( SXST, "Err Chan3")
+    field( SVST, "Err Chan4")
+    field( EIST, "EVR")     
+    field( ZRVL, "1")
+    field( ONVL, "2")
+    field( TWVL, "4")
+    field( THVL, "8")
+    field( FRVL, "16")    # Bit 4
+    field( FVVL, "32")    # Bit 5
+    field( SXVL, "64")    # Bit 6
+    field( SVVL, "128")   # Bit 7
+    field( EIVL, "256")   # Bit 8  
+    field(FLNK, "$(P){$(NO)}GoRegSingleWrite")
+ 
+}
+
+
 
 
 

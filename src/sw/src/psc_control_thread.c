@@ -12,7 +12,7 @@
 #include "task.h"
 
 /* Hardware support includes */
-#include "zubpm_defs.h"
+#include "psc_defs.h"
 #include "pl_regs.h"
 #include "psc_msg.h"
 
@@ -25,13 +25,15 @@
 
 
 void set_fpleds(u32 msgVal)  {
-	Xil_Out32(XPAR_M_AXI_BASEADDR + FPLEDS, msgVal);
+	Xil_Out32(XPAR_M_AXI_BASEADDR + LEDS, msgVal);
 }
 
 
 void soft_trig(u32 msgVal) {
 	xil_printf("MsgVal = %d\r\n",msgVal);
 	Xil_Out32(XPAR_M_AXI_BASEADDR + SOFTTRIG, msgVal);
+	Xil_Out32(XPAR_M_AXI_BASEADDR + SOFTTRIG, 0);
+
 }
 
 
@@ -125,6 +127,12 @@ reconnect:
 			case SOFT_TRIG_MSG:
 				xil_printf("Soft Trigger Message:   Value=%d\r\n",MsgData);
 				soft_trig(MsgData);
+                break;
+
+			case TEST_TRIG_MSG:
+				xil_printf("Test Trigger Message:   Value=%d\r\n",MsgData);
+				Xil_Out32(XPAR_M_AXI_BASEADDR + TESTTRIG, MsgData);
+				Xil_Out32(XPAR_M_AXI_BASEADDR + TESTTRIG, 0);
                 break;
 
 

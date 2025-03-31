@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-03-27 15:30:31 by mead-->
+<!--Saved on 2025-03-29 09:26:10 by mead-->
 <display version="2.0.0">
   <name>PSC Top</name>
   <width>300</width>
@@ -15,8 +15,7 @@
   <widget type="label" version="2.0.0">
     <name>Label_7</name>
     <text>PSC Testing Top</text>
-    <x>36</x>
-    <y>48</y>
+    <x>42</x>
     <width>207</width>
     <height>55</height>
     <font>
@@ -132,6 +131,31 @@
     <text>Channel 4</text>
     <x>78</x>
     <y>228</y>
+    <width>113</width>
+    <height>31</height>
+    <font>
+      <font name="Header1" family="Sans" style="BOLD" size="9.900990099009901">
+      </font>
+    </font>
+    <tooltip>$(actions)</tooltip>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_30</name>
+    <actions>
+      <action type="open_display">
+        <file>Psc1_global.opi</file>
+        <macros>
+          <PriSys>lab</PriSys>
+          <PSC>1</PSC>
+        </macros>
+        <target>window</target>
+        <description>Open Display</description>
+      </action>
+    </actions>
+    <text>Global</text>
+    <x>78</x>
+    <y>55</y>
     <width>113</width>
     <height>31</height>
     <font>

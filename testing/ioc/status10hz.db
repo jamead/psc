@@ -1,11 +1,3 @@
-#############################################################
-#
-#       PSC Database for pscDrv IOC
-#
-#############################################################
-
-
-
 
  
 
@@ -34,9 +26,11 @@ record(longin, "$(P){$(NO)}TS-S-I") {
 }
 
 
+
+
 ### PS1 ADC's
 
-record(longin, "$(P){$(NO)}PS1:DCCT1-I") {
+record(longin, "$(P){$(NO)}Chan1:DCCT1-I") {
     field(DESC, "DCCT 1 Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 12")
@@ -44,7 +38,7 @@ record(longin, "$(P){$(NO)}PS1:DCCT1-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS1:DCCT2-I") {
+record(longin, "$(P){$(NO)}Chan1:DCCT2-I") {
     field(DESC, "DCCT 2 Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 16")
@@ -52,7 +46,7 @@ record(longin, "$(P){$(NO)}PS1:DCCT2-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}Chan1-DAC-I") {
+record(longin, "$(P){$(NO)}Chan1:DAC-I") {
     field(DESC, "DAC Setpoint Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 20")
@@ -60,7 +54,7 @@ record(longin, "$(P){$(NO)}Chan1-DAC-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS1:Volt-I") {
+record(longin, "$(P){$(NO)}Chan1:Volt-I") {
     field(DESC, "Voltage Monitor Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 24")
@@ -68,7 +62,7 @@ record(longin, "$(P){$(NO)}PS1:Volt-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS1:Gnd-I") {
+record(longin, "$(P){$(NO)}Chan1:Gnd-I") {
     field(DESC, "Ground Monitor Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 28")
@@ -76,7 +70,7 @@ record(longin, "$(P){$(NO)}PS1:Gnd-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS1:Spare-I") {
+record(longin, "$(P){$(NO)}Chan1:Spare-I") {
     field(DESC, "Spare Monitor Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 32")
@@ -84,7 +78,7 @@ record(longin, "$(P){$(NO)}PS1:Spare-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS1:Reg-I") {
+record(longin, "$(P){$(NO)}Chan1:Reg-I") {
     field(DESC, "Regulator Output Voltage Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 36")
@@ -92,7 +86,7 @@ record(longin, "$(P){$(NO)}PS1:Reg-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS1:Error-I") {
+record(longin, "$(P){$(NO)}Chan1:Error-I") {
     field(DESC, "Error Voltage Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 40")
@@ -104,7 +98,7 @@ record(longin, "$(P){$(NO)}PS1:Error-I") {
 ### PS2 ADC's
 
 
-record(longin, "$(P){$(NO)}PS2:DCCT1-I") {
+record(longin, "$(P){$(NO)}Chan2:DCCT1-I") {
     field(DESC, "DCCT 1 Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 44")
@@ -112,7 +106,7 @@ record(longin, "$(P){$(NO)}PS2:DCCT1-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS2:DCCT2-I") {
+record(longin, "$(P){$(NO)}Chan2:DCCT2-I") {
     field(DESC, "DCCT 2 Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 48")
@@ -120,7 +114,7 @@ record(longin, "$(P){$(NO)}PS2:DCCT2-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS2:DAC-I") {
+record(longin, "$(P){$(NO)}Chan2:DAC-I") {
     field(DESC, "DAC Setpoint Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 52")
@@ -128,7 +122,7 @@ record(longin, "$(P){$(NO)}PS2:DAC-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS2:Volt-I") {
+record(longin, "$(P){$(NO)}Chan2:Volt-I") {
     field(DESC, "Voltage Monitor Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 56")
@@ -136,7 +130,7 @@ record(longin, "$(P){$(NO)}PS2:Volt-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS2:Gnd-I") {
+record(longin, "$(P){$(NO)}Chan2:Gnd-I") {
     field(DESC, "Ground Monitor Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 60")
@@ -144,7 +138,7 @@ record(longin, "$(P){$(NO)}PS2:Gnd-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS2:Spare-I") {
+record(longin, "$(P){$(NO)}Chan2:Spare-I") {
     field(DESC, "Spare Monitor Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 64")
@@ -152,7 +146,7 @@ record(longin, "$(P){$(NO)}PS2:Spare-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS2:Reg-I") {
+record(longin, "$(P){$(NO)}Chan2:Reg-I") {
     field(DESC, "Regulator Output Voltage Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 68")
@@ -160,7 +154,7 @@ record(longin, "$(P){$(NO)}PS2:Reg-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS2:Error-I") {
+record(longin, "$(P){$(NO)}Chan2:Error-I") {
     field(DESC, "Error Voltage Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 72")
@@ -172,7 +166,7 @@ record(longin, "$(P){$(NO)}PS2:Error-I") {
 ### PS3 ADC's
 
 
-record(longin, "$(P){$(NO)}PS3:DCCT1-I") {
+record(longin, "$(P){$(NO)}Chan3:DCCT1-I") {
     field(DESC, "DCCT 1 Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 76")
@@ -180,7 +174,7 @@ record(longin, "$(P){$(NO)}PS3:DCCT1-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS3:DCCT2-I") {
+record(longin, "$(P){$(NO)}Chan3:DCCT2-I") {
     field(DESC, "DCCT 2 Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 80")
@@ -188,7 +182,7 @@ record(longin, "$(P){$(NO)}PS3:DCCT2-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS3:DAC-I") {
+record(longin, "$(P){$(NO)}Chan3:DAC-I") {
     field(DESC, "DAC Setpoint Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 84")
@@ -196,7 +190,7 @@ record(longin, "$(P){$(NO)}PS3:DAC-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS3:Volt-I") {
+record(longin, "$(P){$(NO)}Chan3:Volt-I") {
     field(DESC, "Voltage Monitor Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 88")
@@ -204,7 +198,7 @@ record(longin, "$(P){$(NO)}PS3:Volt-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS3:Gnd-I") {
+record(longin, "$(P){$(NO)}Chan3:Gnd-I") {
     field(DESC, "Ground Monitor Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 92")
@@ -212,7 +206,7 @@ record(longin, "$(P){$(NO)}PS3:Gnd-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS3:Spare-I") {
+record(longin, "$(P){$(NO)}Chan3:Spare-I") {
     field(DESC, "Spare Monitor Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 96")
@@ -220,7 +214,7 @@ record(longin, "$(P){$(NO)}PS3:Spare-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS3:Reg-I") {
+record(longin, "$(P){$(NO)}Chan3:Reg-I") {
     field(DESC, "Regulator Output Voltage Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 100")
@@ -228,7 +222,7 @@ record(longin, "$(P){$(NO)}PS3:Reg-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS3:Error-I") {
+record(longin, "$(P){$(NO)}Chan3:Error-I") {
     field(DESC, "Error Voltage Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 104")
@@ -240,7 +234,7 @@ record(longin, "$(P){$(NO)}PS3:Error-I") {
 ### PS4 ADC's
 
 
-record(longin, "$(P){$(NO)}PS4:DCCT1-I") {
+record(longin, "$(P){$(NO)}Chan4:DCCT1-I") {
     field(DESC, "DCCT 1 Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 108")
@@ -248,7 +242,7 @@ record(longin, "$(P){$(NO)}PS4:DCCT1-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS4:DCCT2-I") {
+record(longin, "$(P){$(NO)}Chan4:DCCT2-I") {
     field(DESC, "DCCT 2 Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 112")
@@ -256,7 +250,7 @@ record(longin, "$(P){$(NO)}PS4:DCCT2-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS4:DAC-I") {
+record(longin, "$(P){$(NO)}Chan4:DAC-I") {
     field(DESC, "DAC Setpoint Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 116")
@@ -264,7 +258,7 @@ record(longin, "$(P){$(NO)}PS4:DAC-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS4:Volt-I") {
+record(longin, "$(P){$(NO)}Chan4:Volt-I") {
     field(DESC, "Voltage Monitor Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 120")
@@ -272,7 +266,7 @@ record(longin, "$(P){$(NO)}PS4:Volt-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS4:Gnd-I") {
+record(longin, "$(P){$(NO)}Chan4:Gnd-I") {
     field(DESC, "Ground Monitor Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 124")
@@ -280,7 +274,7 @@ record(longin, "$(P){$(NO)}PS4:Gnd-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS4:Spare-I") {
+record(longin, "$(P){$(NO)}Chan4:Spare-I") {
     field(DESC, "Spare Monitor Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 128")
@@ -288,7 +282,7 @@ record(longin, "$(P){$(NO)}PS4:Spare-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS4:Reg-I") {
+record(longin, "$(P){$(NO)}Chan4:Reg-I") {
     field(DESC, "Regulator Output Voltage Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 132")
@@ -296,7 +290,7 @@ record(longin, "$(P){$(NO)}PS4:Reg-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}PS4:Error-I") {
+record(longin, "$(P){$(NO)}Chan4:Error-I") {
     field(DESC, "Error Voltage Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 136")

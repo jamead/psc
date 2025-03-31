@@ -3,14 +3,11 @@
 
 
 //PL AXI4 Bus Registers
-
 #define FPGAVER               0X0       // FPGA Version
-#define FPLEDS                0X4       // PS Leds
-#define SOFTTRIG              0x8       // Soft Trigger from IOC
-#define SOFTTRIG_BUFPTR       0xC       // Soft Trig Buffer Ptr.  Buffer Point latched value gets put here on soft trigger
+#define LEDS                  0X4       // PS Leds
 #define EVR_TS_S              0X10      // EVR Timestamp (s)
 #define EVR_TS_NS             0X14      // EVR Timestamp (ns)
-#define EVR_RESET             0X18
+#define EVR_RESET             0X18      // EVR Reset
 #define PS1_DCCT0             0X20      // PS1 DCCT 0
 #define PS1_DCCT1             0X24      // PS1 DCCT 1
 #define PS1_DACSP             0X28      // PS1 DAC Setpoint Monitor
@@ -46,7 +43,7 @@
 #define PS1_DAC_OFFSET        0X100     // PS1 DAC Offset
 #define PS1_DAC_GAIN          0X104     // PS1 DAC Gain
 #define PS1_DAC_SETPT         0X108     // PS1 DAC SetPoint - when in jumpmode
-#define PS1_DAC_JUMPMODE      0X10C     // PS1 DAC JumpMode
+#define PS1_DAC_JUMPMODE      0X10C     // PS1 DAC Mode 0=smooth ramp, 1=ramp table, 2=FOFB, 3=Jump Mode
 #define PS1_DAC_CNTRL         0X110     // PS1 DAC Control bit0=op_gnd, bit1=sdo_dis, bit2=dac_tri, bit3=rbuf, bit4=bin2sc
 #define PS1_DAC_RESET         0X114     // PS1 DAC Reset
 #define PS1_DAC_RAMPLEN       0X118     // PS1 DAC Ramp Table Length
@@ -65,21 +62,24 @@
 #define PS4_DIGIN             0X21C     // PS4 Digital Inputs bit0=Acon, bit1=Flt1, bit2=Flt2, bit3=spare
 #define SNAPSHOT_ADDRPTR      0X300     // Snapshot 20 sec circular buffer current address pointer
 #define SNAPSHOT_TOTALTRIGS   0X304     // Snapshot 20 sec circular buffer total data points written
-
-
-
-
+#define SOFTTRIG              0X308     // Soft Trig
+#define TESTTRIG              0X30C     // Test Trig - Test the 4-Fault, 4-Error and EVR Trigger
+#define SOFTTRIG_BUFPTR       0X310     // Soft Trig Buffer Ptr.  Buffer Point latched value gets put here on soft trigger
+#define FLT1TRIG_BUFPTR       0X314     // Fault1 Buffer Ptr.  Buffer Point latched value gets put here on Fault1 trigger
+#define FLT2TRIG_BUFPTR       0X318     // Fault2 Buffer Ptr.  Buffer Point latched value gets put here on Fault2 trigger
+#define FLT3TRIG_BUFPTR       0X31C     // Fault3 Buffer Ptr.  Buffer Point latched value gets put here on Fault3 trigger
+#define FLT4TRIG_BUFPTR       0X320     // Fault4 Buffer Ptr.  Buffer Point latched value gets put here on Fault4 trigger
+#define ERR1TRIG_BUFPTR       0X324     // Err1 Buffer Ptr.  Buffer Point latched value gets put here on Err1 trigger
+#define ERR2TRIG_BUFPTR       0X328     // Err2 Buffer Ptr.  Buffer Point latched value gets put here on Err2 trigger
+#define ERR3TRIG_BUFPTR       0X32C     // Err3 Buffer Ptr.  Buffer Point latched value gets put here on Err3 trigger
+#define ERR4TRIG_BUFPTR       0X330     // Err4 Buffer Ptr.  Buffer Point latched value gets put here on Err4 trigger
+#define EVRTRIG_BUFPTR        0X334     // EVR Buffer Ptr.  Buffer Point latched value gets put here on Err4 trigger
 #define ID                    0X400     // Module Identification Number
 #define VERSION               0X404     // Module Version Number
 #define PRJ_ID                0X408     // Project Identification Number
 #define PRJ_VERSION           0X40C     // Project Version Number
 #define PRJ_SHASUM            0X410     // Project Repository check sum.
 #define PRJ_TIMESTAMP         0X414     // Project compilation timestamp
-
-
-
-
-
 
 
 

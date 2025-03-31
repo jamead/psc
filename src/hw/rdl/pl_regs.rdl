@@ -44,22 +44,7 @@ reg {
   } leds @0x4;
   
 
-reg {
-    desc="Soft Trig";
-    default sw = rw;
-    default hw = r;  
-    default swacc=true;
-    default swmod=true;          
-    field {} val[8];
-  } softtrig @0x8; 
- 
-  
-reg {
-    desc="Soft Trig Buffer Ptr.  Buffer Point latched value gets put here on soft trigger";
-    default sw = rw;
-    default hw = w;
-    field {} val[32];
-  } softtrig_bufptr @0xC; 
+
 
 
 
@@ -490,7 +475,8 @@ reg {
 
 
 /* SnapShot Buffer Stats */
-  reg {
+
+reg {
     desc="Snapshot 20 sec circular buffer current address pointer";
     default sw = rw;
     default hw = w;
@@ -498,12 +484,107 @@ reg {
   } snapshot_addrptr @0x300;
 
 
-  reg {
+reg {
     desc="Snapshot 20 sec circular buffer total data points written";
     default sw = rw;
     default hw = w;
     field {} val[32];
   } snapshot_totaltrigs @0x304;
+
+
+
+reg {
+    desc="Soft Trig";
+    default sw = rw;
+    default hw = r;  
+    default swacc=true;
+    default swmod=true;          
+    field {} val[8];
+  } softtrig @0x308; 
+ 
+ 
+reg {
+    desc="Test Trig - Test the 4-Fault, 4-Error and EVR Trigger";
+    default sw = rw;
+    default hw = r;  
+    default swacc=true;
+    default swmod=true;          
+    field {} val[9];
+  } testtrig @0x30C; 
+  
+ 
+  
+reg {
+    desc="Soft Trig Buffer Ptr.  Buffer Point latched value gets put here on soft trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } softtrig_bufptr @0x310; 
+
+reg {
+    desc="Fault1 Buffer Ptr.  Buffer Point latched value gets put here on Fault1 trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } flt1trig_bufptr @0x314; 
+
+reg {
+    desc="Fault2 Buffer Ptr.  Buffer Point latched value gets put here on Fault2 trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } flt2trig_bufptr @0x318; 
+
+
+reg {
+    desc="Fault3 Buffer Ptr.  Buffer Point latched value gets put here on Fault3 trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } flt3trig_bufptr @0x31C; 
+
+reg {
+    desc="Fault4 Buffer Ptr.  Buffer Point latched value gets put here on Fault4 trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } flt4trig_bufptr @0x320; 
+
+reg {
+    desc="Err1 Buffer Ptr.  Buffer Point latched value gets put here on Err1 trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } err1trig_bufptr @0x324; 
+
+reg {
+    desc="Err2 Buffer Ptr.  Buffer Point latched value gets put here on Err2 trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } err2trig_bufptr @0x328; 
+
+
+reg {
+    desc="Err3 Buffer Ptr.  Buffer Point latched value gets put here on Err3 trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } err3trig_bufptr @0x32C; 
+
+reg {
+    desc="Err4 Buffer Ptr.  Buffer Point latched value gets put here on Err4 trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } err4trig_bufptr @0x330; 
+
+reg {
+    desc="EVR Buffer Ptr.  Buffer Point latched value gets put here on Err4 trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } evrtrig_bufptr @0x334; 
 
 
 

@@ -177,7 +177,12 @@ module top_tb;
     //Write the FP LEDs
     `zynq.write_data(32'h43C00004,4, 32'h1, resp);      
     `zynq.write_data(32'h43C00004,4, 32'h2, resp);    
-    `zynq.write_data(32'h43C00004,4, 32'h3, resp);             
+    `zynq.write_data(32'h43C00004,4, 32'h3, resp);  
+    
+    `zynq.write_data(32'h43C0030C,4, 32'h1, resp);  
+    #100;
+    `zynq.write_data(32'h43C0030C,4, 32'h0, resp);    
+    #1000;           
 
     `zynq.write_data(32'h43C00118,4, 32'd100, resp);  //set ramplen
     for (int i = 0; i <= 100; i++) begin

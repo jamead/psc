@@ -1,6 +1,6 @@
 #include "xparameters.h"
 #include "xiicps.h"
-#include "zubpm_defs.h"
+#include "psc_defs.h"
 #include <sleep.h>
 #include "xil_printf.h"
 #include <stdio.h>
