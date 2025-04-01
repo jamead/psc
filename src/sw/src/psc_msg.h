@@ -19,10 +19,16 @@
 //Waveform Thread: This message is for Snapshot 10KHz data
 //10KS/s * 10sec *160bytes/sample = 16Mbytes
 #define MSGSOFT 51
-#define MSGSOFTLEN 16000000   //in bytes
-
 #define MSGFLTCH1 52
-#define MSGFLTCH1LEN 16000000
+#define MSGFLTCH2 53
+#define MSGFLTCH3 54
+#define MSGFLTCH4 55
+
+
+#define MSGWFMLEN 16000000   //in bytes
+
+
+//#define MSGFLTCH1LEN 16000000
 
 
 //Waveform Thread: Snapshot Statistics (pointers, etc)
@@ -40,8 +46,13 @@ extern char ramp_buf[MAX_RAMP_TABLE];
 extern char msgid30_buf[MSGID30LEN+MSGHDRLEN];
 extern char msgStat10Hz_buf[MSGSTAT10HzLEN+MSGHDRLEN];
 
-extern char msgSoft_buf[MSGSOFTLEN+MSGHDRLEN];
-extern char msgFltCh1_buf[MSGFLTCH1LEN+MSGHDRLEN];
+extern char msgSoft_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgFltCh1_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgFltCh2_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgFltCh3_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgFltCh4_buf[MSGWFMLEN+MSGHDRLEN];
+
+
 extern char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];
 
 

@@ -148,6 +148,19 @@ void CheckforTriggers(TriggerTypes *trig) {
        trig->flt1.addr = Xil_In32(XPAR_M_AXI_BASEADDR + FLT1TRIG_BUFPTR);
     ProcessTrigger(&trig->flt1, "Flt1");
 
+    if (trig->flt2.active == 0)
+       trig->flt2.addr = Xil_In32(XPAR_M_AXI_BASEADDR + FLT2TRIG_BUFPTR);
+    ProcessTrigger(&trig->flt2, "Flt2");
+
+    if (trig->flt3.active == 0)
+       trig->flt3.addr = Xil_In32(XPAR_M_AXI_BASEADDR + FLT3TRIG_BUFPTR);
+    ProcessTrigger(&trig->flt3, "Flt3");
+
+    if (trig->flt4.active == 0)
+       trig->flt4.addr = Xil_In32(XPAR_M_AXI_BASEADDR + FLT4TRIG_BUFPTR);
+    ProcessTrigger(&trig->flt4, "Flt4");
+
+
     //debug messages
     if (trig->soft.active == 1)
         xil_printf("Soft: Addr: %x    Active: %d   SendBuf: %d   Posttrigcnt: %d\r\n",
@@ -155,6 +168,15 @@ void CheckforTriggers(TriggerTypes *trig) {
     if (trig->flt1.active == 1)
        xil_printf("Flt1: Addr: %x    Active: %d   SendBuf: %d   Posttrigcnt: %d\r\n",
     		 trig->flt1.addr, trig->flt1.active, trig->flt1.sendbuf, trig->flt1.postdlycnt);
+    if (trig->flt2.active == 1)
+       xil_printf("Flt2: Addr: %x    Active: %d   SendBuf: %d   Posttrigcnt: %d\r\n",
+    		 trig->flt2.addr, trig->flt2.active, trig->flt2.sendbuf, trig->flt2.postdlycnt);
+    if (trig->flt3.active == 1)
+       xil_printf("Flt3: Addr: %x    Active: %d   SendBuf: %d   Posttrigcnt: %d\r\n",
+    		 trig->flt3.addr, trig->flt3.active, trig->flt3.sendbuf, trig->flt3.postdlycnt);
+    if (trig->flt4.active == 1)
+       xil_printf("Flt4: Addr: %x    Active: %d   SendBuf: %d   Posttrigcnt: %d\r\n",
+    		 trig->flt4.addr, trig->flt4.active, trig->flt4.sendbuf, trig->flt4.postdlycnt);
 
 }
 
@@ -185,7 +207,7 @@ void ReadDMABuf(char *msg, TriggerInfo *trig) {
     msg[1] = 'S';
     msg[2] = 0;
     msg[3] = (short int) trig->msgID; //MSGSOFT;
-    *++msg_u32ptr = htonl(MSGSOFTLEN); //body length
+    *++msg_u32ptr = htonl(MSGWFMLEN); //body length
 	msg_u32ptr++;
 
 
@@ -314,28 +336,19 @@ void ReadDMABuf(char *msg, TriggerInfo *trig) {
 s32 SendWfmData(int newsockfd, char *msg, TriggerInfo *trig) {
 
     int n, i;
+
     xil_printf("In SendWfmData...\r\n");
     trig->sendbuf = 0;
     trig->active = 0;
-    //trig->flt1.sendbuf = 0;
-    //trig->flt1.active = 0;
-    u32 *msg_u32ptr;
 
-    msg_u32ptr = (u32 *)msg;
 	xil_printf("Calling ReadDMABuf...\r\n");
 	ReadDMABuf(msg,trig);
-    //for(i=0;i<100;i++)
-    //	xil_printf("%d: %x\r\n",i,msg_u32ptr[i]);
 
     //write out Snapshot data (msg51)
 	xil_printf("Tx 10 sec of Snapshot Data\r\n");
-	xil_printf("msgSoft_buf: %d\r\n",&msgSoft_buf);
-	xil_printf("msg        : %d\r\n",&msg);
     Host2NetworkConvWvfm(msg,sizeof(msgSoft_buf)+MSGHDRLEN);
-    //for(i=0;i<100;i++)
-    //	xil_printf("%d: %d\r\n",i,msg_u32ptr[i]);
 
-    n = write(newsockfd,msg,MSGSOFTLEN+MSGHDRLEN);
+    n = write(newsockfd,msg,MSGWFMLEN+MSGHDRLEN);
     xil_printf("Transferred %d bytes\r\n", n);
     if (n < 0) {
   	   printf("PSC Waveform: ERROR writing Snapshot Waveform\n");
@@ -392,16 +405,18 @@ void psc_wvfm_thread()
 
     xil_printf("PSC Waveform:  Server listening on port %d...\r\n",PORT);
 
-
-	//trig.softtrigaddr_last = trig.softtrigaddr = trig.got_softtrig = trig.softtrig_sendbuf = 0;
-	//trig.flt1trigaddr_last = trig.flt1trigaddr = trig.got_flt1trig = trig.flt1trig_sendbuf = 0;
-
+    //initialize data structures
 	trig.soft.addr_last = trig.soft.addr = trig.soft.active = trig.soft.sendbuf = trig.soft.postdlycnt = 0;
 	trig.flt1.addr_last = trig.flt1.addr = trig.flt1.active = trig.flt1.sendbuf = trig.flt1.postdlycnt = 0;
-    trig.soft.msgID = MSGSOFT;
+	trig.flt2.addr_last = trig.flt2.addr = trig.flt2.active = trig.flt2.sendbuf = trig.flt2.postdlycnt = 0;
+	trig.flt3.addr_last = trig.flt3.addr = trig.flt3.active = trig.flt3.sendbuf = trig.flt3.postdlycnt = 0;
+	trig.flt4.addr_last = trig.flt4.addr = trig.flt4.active = trig.flt4.sendbuf = trig.flt4.postdlycnt = 0;
+
+	trig.soft.msgID = MSGSOFT;
     trig.flt1.msgID = MSGFLTCH1;
-
-
+    trig.flt2.msgID = MSGFLTCH2;
+    trig.flt3.msgID = MSGFLTCH3;
+    trig.flt4.msgID = MSGFLTCH4;
 
 reconnect:
 
@@ -433,9 +448,14 @@ reconnect:
         if (trig.flt1.sendbuf == 1)
          	if ((n = SendWfmData(newsockfd,msgFltCh1_buf,&trig.flt1)) < 0) goto reconnect;
 
+        if (trig.flt2.sendbuf == 1)
+         	if ((n = SendWfmData(newsockfd,msgFltCh2_buf,&trig.flt2)) < 0) goto reconnect;
 
+        if (trig.flt3.sendbuf == 1)
+         	if ((n = SendWfmData(newsockfd,msgFltCh3_buf,&trig.flt3)) < 0) goto reconnect;
 
-
+        if (trig.flt4.sendbuf == 1)
+         	if ((n = SendWfmData(newsockfd,msgFltCh4_buf,&trig.flt4)) < 0) goto reconnect;
 
 
 

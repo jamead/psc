@@ -61,10 +61,13 @@ char temp[1000];  //temp buffer, msgStat10Hz_buf was overwriting msgid51_buf som
 
 
 //Waveform Thread Buffers
-char msgSoft_buf[MSGSOFTLEN+MSGHDRLEN];
-char temp[1000];
-char msgFltCh1_buf[MSGFLTCH1LEN+MSGHDRLEN];
-char temp[1000];
+char msgSoft_buf[MSGWFMLEN+MSGHDRLEN];
+
+char msgFltCh1_buf[MSGWFMLEN+MSGHDRLEN];
+char msgFltCh2_buf[MSGWFMLEN+MSGHDRLEN];
+char msgFltCh3_buf[MSGWFMLEN+MSGHDRLEN];
+char msgFltCh4_buf[MSGWFMLEN+MSGHDRLEN];
+
 char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];
 //char msgid52_buf[MSGID52LEN];
 //char msgid53_buf[MSGID53LEN];

@@ -25,21 +25,6 @@
 
 
 
-/*
-typedef struct TriggerInfo {
-	u32 softtrigaddr;
-	u32 softtrigaddr_last;
-	u32 got_softtrig;
-	u32 softtrig_postdlycnt;
-	u32 softtrig_sendbuf;
-	u32 flt1trigaddr;
-	u32 flt1trigaddr_last;
-	u32 got_flt1trig;
-	u32 flt1trig_postdlycnt;
-	u32 flt1trig_sendbuf;
-} TriggerInfo;
-*/
-
 typedef struct TriggerInfo {
 	u32 addr;
 	u32 addr_last;
