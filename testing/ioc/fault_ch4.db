@@ -1,0 +1,140 @@
+
+
+record(waveform,"$(P){$(NO)}Chan4:FLT:Hdr-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) 55 0 160")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+}
+
+record(waveform,"$(P){$(NO)}Chan4:FLT:Cnt-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) 55 4 160")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+}
+
+###   PS4 
+
+record(waveform,"$(P){$(NO)}Chan4:FLT:DCCT1-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) 55 104 160")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+}
+
+record(waveform,"$(P){$(NO)}Chan4:FLT:DCCT2-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) 55 108 160")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+}
+
+record(waveform,"$(P){$(NO)}Chan4:FLT:DAC-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) 55 112 160")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+}
+
+record(waveform,"$(P){$(NO)}Chan4:FLT:Volt-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) 55 116 160")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+} 
+    
+record(waveform,"$(P){$(NO)}Chan4:FLT:Gnd-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) 55 120 160")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+}
+ 
+record(waveform,"$(P){$(NO)}Chan4:FLT:Spare-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) 55 124 160")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+}
+  
+record(waveform,"$(P){$(NO)}Chan4:FLT:Reg-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) 55 128 160")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+} 
+ 
+    
+record(waveform,"$(P){$(NO)}Chan4:FLT:Error-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) 55 132 160")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")   
+}    
+    
+    
+    
+
+  
+### Future  
+  
+record(waveform,"$(P){$(NO)}Chan4:FLT:Wrd35-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) 55 136 160")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")     
+}    
+    
+record(waveform,"$(P){$(NO)}Chan4:FLT:Wrd36-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) 55 140 160")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")      
+ }   
+    
+record(waveform,"$(P){$(NO)}Chan4:FLT:Wrd37-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) 55 144 160")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")     
+}    
+    
+record(waveform,"$(P){$(NO)}Chan4:FLT:Wrd38-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) 55 148 160")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")      
+}    
+  
+record(waveform,"$(P){$(NO)}Chan4:FLT:Wrd39-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) 55 152 160")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")    
+}    
+    
+record(waveform,"$(P){$(NO)}Chan4:FLT:Wrd40-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) 55 152 160")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")    
+}    
+      
+    

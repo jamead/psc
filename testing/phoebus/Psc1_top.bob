@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-03-29 09:26:10 by mead-->
+<!--Saved on 2025-04-01 15:17:25 by mead-->
 <display version="2.0.0">
   <name>PSC Top</name>
   <width>300</width>
@@ -40,7 +40,7 @@
     <name>Action Button_26</name>
     <actions>
       <action type="open_display">
-        <file>Psc1_sa.opi</file>
+        <file>Psc1_channel.opi</file>
         <macros>
           <PriSys>lab</PriSys>
           <PSC>1</PSC>
@@ -66,7 +66,7 @@
     <name>Action Button_27</name>
     <actions>
       <action type="open_display">
-        <file>Psc1_sa.opi</file>
+        <file>Psc1_channel.opi</file>
         <macros>
           <PriSys>lab</PriSys>
           <PSC>1</PSC>
@@ -92,7 +92,7 @@
     <name>Action Button_28</name>
     <actions>
       <action type="open_display">
-        <file>Psc1_sa.opi</file>
+        <file>Psc1_channel.opi</file>
         <macros>
           <PriSys>lab</PriSys>
           <PSC>1</PSC>
@@ -118,7 +118,7 @@
     <name>Action Button_29</name>
     <actions>
       <action type="open_display">
-        <file>Psc1_sa.opi</file>
+        <file>Psc1_channel.opi</file>
         <macros>
           <PriSys>lab</PriSys>
           <PSC>1</PSC>

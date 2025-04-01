@@ -27,7 +27,7 @@
 
 //Waveform Thread: Snapshot Statistics (pointers, etc)
 // Updated at 10Hz, keeps waveform connection alive
-#define MSGWFMSTATS 52
+#define MSGWFMSTATS 50
 #define MSGWFMSTATSLEN 128
 
 
@@ -41,7 +41,7 @@ extern char msgid30_buf[MSGID30LEN+MSGHDRLEN];
 extern char msgStat10Hz_buf[MSGSTAT10HzLEN+MSGHDRLEN];
 
 extern char msgSoft_buf[MSGSOFTLEN+MSGHDRLEN];
-extern char msgfltch1_buf[MSGFLTCH1LEN+MSGHDRLEN];
+extern char msgFltCh1_buf[MSGFLTCH1LEN+MSGHDRLEN];
 extern char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];
 
 

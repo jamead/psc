@@ -24,7 +24,8 @@
 #define I2C_PORTEXP1_ADDR 0x71
 
 
-// PSC Message ID 31
+
+/*
 typedef struct TriggerInfo {
 	u32 softtrigaddr;
 	u32 softtrigaddr_last;
@@ -36,10 +37,27 @@ typedef struct TriggerInfo {
 	u32 got_flt1trig;
 	u32 flt1trig_postdlycnt;
 	u32 flt1trig_sendbuf;
+} TriggerInfo;
+*/
 
+typedef struct TriggerInfo {
+	u32 addr;
+	u32 addr_last;
+	u32 active;
+	u32 postdlycnt;
+	u32 sendbuf;
+	u32 msgID;
 } TriggerInfo;
 
 
+
+typedef struct TriggerTypes {
+	struct TriggerInfo soft;
+	struct TriggerInfo flt1;
+	struct TriggerInfo flt2;
+	struct TriggerInfo flt3;
+	struct TriggerInfo flt4;
+} TriggerTypes;
 
 
 

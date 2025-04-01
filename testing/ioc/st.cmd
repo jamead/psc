@@ -47,13 +47,18 @@ dbLoadRecords("$(PSC_DBDIR)/status10hz.db", "P=$(IOCNAME), NO=1")
 dbLoadRecords("$(PSC_DBDIR)/control.db", "P=$(IOCNAME), NO=1")
 
 dbLoadRecords("$(PSC_DBDIR)/snapshot.db", "P=$(IOCNAME), NO=1, BUF_LEN=$(BLEN)")
+dbLoadRecords("$(PSC_DBDIR)/fault_ch1.db", "P=$(IOCNAME), NO=1, BUF_LEN=$(BLEN)")
+dbLoadRecords("$(PSC_DBDIR)/fault_ch2.db", "P=$(IOCNAME), NO=1, BUF_LEN=$(BLEN)")
+dbLoadRecords("$(PSC_DBDIR)/fault_ch3.db", "P=$(IOCNAME), NO=1, BUF_LEN=$(BLEN)")
+dbLoadRecords("$(PSC_DBDIR)/fault_ch4.db", "P=$(IOCNAME), NO=1, BUF_LEN=$(BLEN)")
+
 dbLoadRecords("$(PSC_DBDIR)/wfmstats.db", "P=$(IOCNAME), PSC=1")
 
 
 
 
 #####################################################
-var(PSCDebug, 2)	#5 full debug
+var(PSCDebug, 5)	#5 full debug
 
 #psc1 Create the PSC
 createPSC("Tx1", $(PSC1_IP), 7, 0)
