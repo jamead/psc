@@ -42,6 +42,12 @@ typedef struct TriggerTypes {
 	struct TriggerInfo flt2;
 	struct TriggerInfo flt3;
 	struct TriggerInfo flt4;
+	struct TriggerInfo err1;
+	struct TriggerInfo err2;
+	struct TriggerInfo err3;
+	struct TriggerInfo err4;
+	struct TriggerInfo evr;
+
 } TriggerTypes;
 
 

@@ -12,75 +12,305 @@ record(longin, "$(P){$(PSC)}SS:TotalTrigs-I") {
     field(SCAN,"I/O Intr")
 }
 
-record(longin, "$(P){$(PSC)}SS:Latsoft_bufaddr-I") {
+
+
+record(longin, "$(P){$(PSC)}SS:LatSoft_bufaddr-I") {
     field(DESC, "Latched DDR Address on last soft trigger")
     field(DTYP, "PSC Reg")
     field(INP , "@Wfm$(PSC) 50 8")
     field(SCAN,"I/O Intr")
 }
 
-record(longin, "$(P){$(PSC)}SS:Latflt1_bufaddr-I") {
-    field(DESC, "Latched DDR Address on last soft trigger")
+record(longin, "$(P){$(PSC)}SS:LatSoft_active-I") {
+    field(DESC, "Soft Trigger active ")
     field(DTYP, "PSC Reg")
     field(INP , "@Wfm$(PSC) 50 12")
     field(SCAN,"I/O Intr")
 }
 
-record(longin, "$(P){$(PSC)}SS:Latflt2_bufaddr-I") {
-    field(DESC, "Latched DDR Address on last soft trigger")
+record(longin, "$(P){$(PSC)}SS:LatSoft_ts_s-I") {
+    field(DESC, "Latched Timestamp on last soft trigger")
     field(DTYP, "PSC Reg")
     field(INP , "@Wfm$(PSC) 50 16")
     field(SCAN,"I/O Intr")
 }
 
-record(longin, "$(P){$(PSC)}SS:Latflt3_bufaddr-I") {
-    field(DESC, "Latched DDR Address on last soft trigger")
+record(longin, "$(P){$(PSC)}SS:LatSoft_ts_ns-I") {
+    field(DESC, "Latched Timestamp on last soft trigger")
     field(DTYP, "PSC Reg")
     field(INP , "@Wfm$(PSC) 50 20")
     field(SCAN,"I/O Intr")
 }
 
-record(longin, "$(P){$(PSC)}SS:Latflt4_bufaddr-I") {
-    field(DESC, "Latched DDR Address on last soft trigger")
+
+record(longin, "$(P){$(PSC)}SS:LatFlt1_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last Flt1 trigger")
     field(DTYP, "PSC Reg")
     field(INP , "@Wfm$(PSC) 50 24")
     field(SCAN,"I/O Intr")
 }
 
-record(longin, "$(P){$(PSC)}SS:LatErr1_bufaddr-I") {
-    field(DESC, "Latched DDR Address on last soft trigger")
+record(longin, "$(P){$(PSC)}SS:LatFlt1_active-I") {
+    field(DESC, "Flt1 Trigger active ")
     field(DTYP, "PSC Reg")
     field(INP , "@Wfm$(PSC) 50 28")
     field(SCAN,"I/O Intr")
 }
 
-record(longin, "$(P){$(PSC)}SS:LatErr2_bufaddr-I") {
-    field(DESC, "Latched DDR Address on last soft trigger")
+record(longin, "$(P){$(PSC)}SS:LatFlt1_ts_s-I") {
+    field(DESC, "Latched Timestamp on last Flt1 trigger")
     field(DTYP, "PSC Reg")
     field(INP , "@Wfm$(PSC) 50 32")
     field(SCAN,"I/O Intr")
 }
 
-record(longin, "$(P){$(PSC)}SS:LatErr3_bufaddr-I") {
-    field(DESC, "Latched DDR Address on last soft trigger")
+record(longin, "$(P){$(PSC)}SS:LatFlt1_ts_ns-I") {
+    field(DESC, "Latched Timestamp on last Flt1 trigger")
     field(DTYP, "PSC Reg")
     field(INP , "@Wfm$(PSC) 50 36")
     field(SCAN,"I/O Intr")
 }
 
-record(longin, "$(P){$(PSC)}SS:LatErr4_bufaddr-I") {
-    field(DESC, "Latched DDR Address on last soft trigger")
+
+
+record(longin, "$(P){$(PSC)}SS:LatFlt2_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last Flt2 trigger")
     field(DTYP, "PSC Reg")
     field(INP , "@Wfm$(PSC) 50 40")
     field(SCAN,"I/O Intr")
 }
 
-record(longin, "$(P){$(PSC)}SS:LatEVR_bufaddr-I") {
-    field(DESC, "Latched DDR Address on last soft trigger")
+record(longin, "$(P){$(PSC)}SS:LatFlt2_active-I") {
+    field(DESC, "Flt2 Trigger active ")
     field(DTYP, "PSC Reg")
     field(INP , "@Wfm$(PSC) 50 44")
     field(SCAN,"I/O Intr")
 }
+
+record(longin, "$(P){$(PSC)}SS:LatFlt2_ts_s-I") {
+    field(DESC, "Latched Timestamp on last Flt2 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 48")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatFlt2_ts_ns-I") {
+    field(DESC, "Latched Timestamp on last Flt2 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 52")
+    field(SCAN,"I/O Intr")
+}
+
+
+record(longin, "$(P){$(PSC)}SS:LatFlt3_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last Flt3 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 56")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatFlt3_active-I") {
+    field(DESC, "Flt3 Trigger active ")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 60")
+    field(SCAN,"I/O Intr")
+}
+
+
+record(longin, "$(P){$(PSC)}SS:LatFlt3_ts_s-I") {
+    field(DESC, "Latched Timestamp on last Flt3 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 64")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatFlt3_ts_ns-I") {
+    field(DESC, "Latched Timestamp on last Flt3 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 68")
+    field(SCAN,"I/O Intr")
+}
+
+
+
+record(longin, "$(P){$(PSC)}SS:LatFlt4_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last Flt4 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 72")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatFlt4_active-I") {
+    field(DESC, "Flt4 Trigger active ")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 76")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatFlt4_ts_s-I") {
+    field(DESC, "Latched Timestamp on last Flt4 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 80")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatFlt4_ts_ns-I") {
+    field(DESC, "Latched Timestamp on last Flt4 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 84")
+    field(SCAN,"I/O Intr")
+}
+
+
+record(longin, "$(P){$(PSC)}SS:LatErr1_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last Err1 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 88")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatErr1_active-I") {
+    field(DESC, "Err1 Trigger active ")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 92")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatErr1_ts_s-I") {
+    field(DESC, "Latched Timestamp on last Err1 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 96")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatErr1_ts_ns-I") {
+    field(DESC, "Latched Timestamp on last Err1 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 100")
+    field(SCAN,"I/O Intr")
+}
+
+
+
+record(longin, "$(P){$(PSC)}SS:LatErr2_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last soft trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 104")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatErr2_active-I") {
+    field(DESC, "Err2 Trigger active ")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 108")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatErr2_ts_s-I") {
+    field(DESC, "Latched Timestamp on last Err2 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 112")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatErr2_ts_ns-I") {
+    field(DESC, "Latched Timestamp on last Err2 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 116")
+    field(SCAN,"I/O Intr")
+}
+
+
+
+
+record(longin, "$(P){$(PSC)}SS:LatErr3_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last Err3 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 120")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatErr3_active-I") {
+    field(DESC, "Soft Trigger active ")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 124")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatErr3_ts_s-I") {
+    field(DESC, "Latched Timestamp on last Err3 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 128")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatErr3_ts_ns-I") {
+    field(DESC, "Latched Timestamp on last Err3 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 132")
+    field(SCAN,"I/O Intr")
+}
+
+
+
+record(longin, "$(P){$(PSC)}SS:LatErr4_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last Err4 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 136")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatErr4_active-I") {
+    field(DESC, "Err4 Trigger active ")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 140")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatErr4_ts_s-I") {
+    field(DESC, "Latched Timestamp on last Err4 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 144")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatErr4_ts_ns-I") {
+    field(DESC, "Latched Timestamp on last Err4 trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 148")
+    field(SCAN,"I/O Intr")
+}
+
+
+
+record(longin, "$(P){$(PSC)}SS:LatEVR_bufaddr-I") {
+    field(DESC, "Latched DDR Address on last soft trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 152")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatEVR_active-I") {
+    field(DESC, "EVR Trigger active ")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 156")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatEVR_ts_s-I") {
+    field(DESC, "Latched Timestamp on last EVR trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 160")
+    field(SCAN,"I/O Intr")
+}
+
+record(longin, "$(P){$(PSC)}SS:LatEVR_ts_ns-I") {
+    field(DESC, "Latched Timestamp on last EVR trigger")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Wfm$(PSC) 50 164")
+    field(SCAN,"I/O Intr")
+}
+
 
 
 

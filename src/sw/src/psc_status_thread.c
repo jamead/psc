@@ -143,7 +143,7 @@ void ReadSAData(char *msg) {
     msg[3] = (short int) MSGSTAT10Hz;
     *++msg_u32ptr = htonl(MSGSTAT10HzLEN); //body length
 
-    sadata.count = 0;
+    sadata.count = UptimeCounter;
     sadata.evr_ts_s =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S);
     sadata.evr_ts_ns =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS);
     //xil_printf("%d  %d\r\n",sadata.evr_ts_s, sadata.evr_ts_ns);

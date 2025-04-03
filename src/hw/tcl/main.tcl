@@ -28,6 +28,7 @@ proc setSources {} {
   lappend Sources {"../hdl/ADC_ADS8568_intf.vhd" "VHDL 2008"} 
   
   lappend Sources {"../hdl/DAC_ctrlr.vhd" "VHDL 2008"} 
+  lappend Sources {"../hdl/dac_chan.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/DAC_AD5781_intf.vhd" "VHDL 2008"}     
 
   lappend Sources {"../hdl/adc_accumulator_top.vhd" "VHDL 2008"}   

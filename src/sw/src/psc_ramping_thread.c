@@ -23,7 +23,7 @@
 
 // Writes Ramptable to Fabric, currently using DPRAM for storage
 // Will switch to DDR in future to support longer tables
-void write_ramptable(u32 ps_num, u32 ramp_len, u32 ramp_table[])
+void write_ramptable(u32 chan_num, u32 ramp_len, u32 ramp_table[])
 {
   u32 i,dpram_addr, dpram_data;
 
@@ -35,13 +35,13 @@ void write_ramptable(u32 ps_num, u32 ramp_len, u32 ramp_table[])
 	  return;
   }
 
-  switch (ps_num) {
+  switch (chan_num) {
      case 1:
     	 dpram_addr = PS1_DAC_RAMPADDR;
     	 dpram_data = PS1_DAC_RAMPDATA;
     	 Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPLEN, ramp_len);
     	 break;
-/*
+
      case 2:
     	 dpram_addr = PS2_DAC_RAMPADDR;
     	 dpram_data = PS2_DAC_RAMPDATA;
@@ -57,7 +57,7 @@ void write_ramptable(u32 ps_num, u32 ramp_len, u32 ramp_table[])
     	 dpram_data = PS4_DAC_RAMPDATA;
     	 Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DAC_RAMPLEN, ramp_len);
     	 break;
-*/
+
      default :
     	 xil_printf("Invalid PS Number\r\n");
     	 return;

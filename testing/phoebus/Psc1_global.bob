@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-03-29 09:47:17 by mead-->
+<!--Saved on 2025-04-03 08:58:49 by mead-->
 <display version="2.0.0">
   <name>$(PriSys):$(PSC)</name>
-  <width>1000</width>
-  <height>800</height>
+  <width>700</width>
   <background_color>
     <color red="200" green="215" blue="255">
     </color>
@@ -12,13 +11,47 @@
   </actions>
   <grid_step_x>6</grid_step_x>
   <grid_step_y>6</grid_step_y>
+  <widget type="group" version="3.0.0">
+    <name>Triggers</name>
+    <x>42</x>
+    <y>255</y>
+    <width>588</width>
+    <height>318</height>
+    <style>1</style>
+    <foreground_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <line_color>
+      <color red="65" green="105" blue="225">
+      </color>
+    </line_color>
+    <transparent>true</transparent>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>General Readbacks</name>
+    <x>132</x>
+    <y>82</y>
+    <width>378</width>
+    <height>162</height>
+    <style>1</style>
+    <foreground_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </foreground_color>
+    <line_color>
+      <color red="65" green="105" blue="225">
+      </color>
+    </line_color>
+    <transparent>true</transparent>
+  </widget>
   <widget type="label" version="2.0.0">
     <name>Text Input</name>
     <macros>
       <pv_name></pv_name>
     </macros>
     <text>${PriSys}</text>
-    <x>492</x>
+    <x>396</x>
     <y>42</y>
     <width>77</width>
     <font>
@@ -47,7 +80,7 @@ $(pv_value)</tooltip>
       <pv_name></pv_name>
     </macros>
     <text>${PSC}</text>
-    <x>569</x>
+    <x>473</x>
     <y>42</y>
     <width>77</width>
     <font>
@@ -73,8 +106,8 @@ $(pv_value)</tooltip>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_47</name>
     <pv_name>$(PriSys){$(PSC)}SS:Currbufaddr-I</pv_name>
-    <x>248</x>
-    <y>156</y>
+    <x>288</x>
+    <y>144</y>
     <width>90</width>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -95,30 +128,11 @@ $(pv_value)</tooltip>
       </color>
     </border_color>
   </widget>
-  <widget type="label" version="2.0.0">
-    <name>Label_36</name>
-    <text>Snapshot Buffer Addr</text>
-    <x>57</x>
-    <y>179</y>
-    <width>205</width>
-    <font>
-      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
-      </font>
-    </font>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <actions>
-    </actions>
-    <border_color>
-      <color red="0" green="128" blue="255">
-      </color>
-    </border_color>
-  </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_48</name>
-    <pv_name>$(PriSys){$(PSC)}SS:Latsoft_bufaddr-I</pv_name>
-    <x>248</x>
-    <y>181</y>
+    <pv_name>$(PriSys){$(PSC)}SS:LatSoft_bufaddr-I</pv_name>
+    <x>269</x>
+    <y>318</y>
     <width>90</width>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -141,15 +155,15 @@ $(pv_value)</tooltip>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_38</name>
-    <text>Soft Trig Latched Addr</text>
-    <x>72</x>
-    <y>157</y>
-    <width>170</width>
+    <text>Buffer Addr</text>
+    <x>167</x>
+    <y>143</y>
+    <width>105</width>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
     </font>
-    <horizontal_alignment>1</horizontal_alignment>
+    <horizontal_alignment>2</horizontal_alignment>
     <vertical_alignment>1</vertical_alignment>
     <actions>
     </actions>
@@ -161,8 +175,8 @@ $(pv_value)</tooltip>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_52</name>
     <pv_name>$(PriSys){$(PSC)}SS:TotalTrigs-I</pv_name>
-    <x>247</x>
-    <y>132</y>
+    <x>288</x>
+    <y>124</y>
     <width>90</width>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -186,14 +200,14 @@ $(pv_value)</tooltip>
   <widget type="label" version="2.0.0">
     <name>Label_43</name>
     <text>10KHz Count</text>
-    <x>115</x>
-    <y>132</y>
-    <width>132</width>
+    <x>156</x>
+    <y>124</y>
+    <width>116</width>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
     </font>
-    <horizontal_alignment>1</horizontal_alignment>
+    <horizontal_alignment>2</horizontal_alignment>
     <vertical_alignment>1</vertical_alignment>
     <actions>
     </actions>
@@ -205,15 +219,23 @@ $(pv_value)</tooltip>
   <widget type="bool_button" version="2.0.0">
     <name>Boolean Button</name>
     <pv_name>$(PriSys){$(PSC)}Trig:Strig-SP</pv_name>
-    <x>474</x>
-    <y>162</y>
+    <x>159</x>
+    <y>318</y>
+    <height>20</height>
+    <off_label>Soft</off_label>
+    <off_color>
+      <color name="Button_Background" red="210" green="210" blue="210">
+      </color>
+    </off_color>
+    <on_label>Soft</on_label>
+    <show_led>false</show_led>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Label_44</name>
-    <text>Soft Trigger SnapShot Buffer</text>
-    <x>444</x>
-    <y>132</y>
-    <width>170</width>
+    <text>Soft Trigger </text>
+    <x>42</x>
+    <y>318</y>
+    <width>117</width>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
@@ -230,7 +252,7 @@ $(pv_value)</tooltip>
   <widget type="label" version="2.0.0">
     <name>Label_45</name>
     <text>PriSys</text>
-    <x>497</x>
+    <x>401</x>
     <y>24</y>
     <width>78</width>
     <font>
@@ -249,7 +271,7 @@ $(pv_value)</tooltip>
   <widget type="label" version="2.0.0">
     <name>Label_46</name>
     <text>PSC</text>
-    <x>569</x>
+    <x>473</x>
     <y>24</y>
     <width>78</width>
     <font>
@@ -268,7 +290,7 @@ $(pv_value)</tooltip>
   <widget type="label" version="2.0.0">
     <name>Label_47</name>
     <text>PSC Global</text>
-    <x>276</x>
+    <x>198</x>
     <y>24</y>
     <width>180</width>
     <height>38</height>
@@ -289,8 +311,8 @@ $(pv_value)</tooltip>
     <name>Label_48</name>
     <text>    Simulate  
 Fault Triggers</text>
-    <x>154</x>
-    <y>270</y>
+    <x>53</x>
+    <y>370</y>
     <height>56</height>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -308,9 +330,9 @@ Fault Triggers</text>
   <widget type="choice" version="2.0.0">
     <name>Choice Button_1</name>
     <pv_name>$(PriSys){$(PSC)}Trig:Fault-SP</pv_name>
-    <x>154</x>
-    <y>326</y>
-    <height>190</height>
+    <x>159</x>
+    <y>350</y>
+    <height>180</height>
     <horizontal>false</horizontal>
     <items>
       <item>Item 1</item>
@@ -326,9 +348,9 @@ Fault Triggers</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_53</name>
-    <pv_name>$(PriSys){$(PSC)}SS:Latflt1_bufaddr-I</pv_name>
-    <x>264</x>
-    <y>326</y>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt1_bufaddr-I</pv_name>
+    <x>269</x>
+    <y>350</y>
     <width>90</width>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -353,9 +375,9 @@ Fault Triggers</text>
     <name>Label_49</name>
     <text>   Latched 
 Buffer Addr</text>
-    <x>262</x>
-    <y>272</y>
-    <height>56</height>
+    <x>269</x>
+    <y>278</y>
+    <height>36</height>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
       </font>
@@ -371,9 +393,9 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_54</name>
-    <pv_name>$(PriSys){$(PSC)}SS:Latflt2_bufaddr-I</pv_name>
-    <x>264</x>
-    <y>346</y>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt2_bufaddr-I</pv_name>
+    <x>269</x>
+    <y>370</y>
     <width>90</width>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -396,9 +418,9 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_55</name>
-    <pv_name>$(PriSys){$(PSC)}SS:Latflt3_bufaddr-I</pv_name>
-    <x>264</x>
-    <y>366</y>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt3_bufaddr-I</pv_name>
+    <x>269</x>
+    <y>390</y>
     <width>90</width>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -421,9 +443,9 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_56</name>
-    <pv_name>$(PriSys){$(PSC)}SS:Latflt4_bufaddr-I</pv_name>
-    <x>264</x>
-    <y>386</y>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt4_bufaddr-I</pv_name>
+    <x>269</x>
+    <y>410</y>
     <width>90</width>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -447,8 +469,8 @@ Buffer Addr</text>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_57</name>
     <pv_name>$(PriSys){$(PSC)}SS:LatErr1_bufaddr-I</pv_name>
-    <x>264</x>
-    <y>406</y>
+    <x>269</x>
+    <y>430</y>
     <width>90</width>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -472,8 +494,8 @@ Buffer Addr</text>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_58</name>
     <pv_name>$(PriSys){$(PSC)}SS:LatErr2_bufaddr-I</pv_name>
-    <x>264</x>
-    <y>426</y>
+    <x>269</x>
+    <y>450</y>
     <width>90</width>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -497,8 +519,8 @@ Buffer Addr</text>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_59</name>
     <pv_name>$(PriSys){$(PSC)}SS:LatErr3_bufaddr-I</pv_name>
-    <x>264</x>
-    <y>446</y>
+    <x>269</x>
+    <y>470</y>
     <width>90</width>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -522,8 +544,8 @@ Buffer Addr</text>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_60</name>
     <pv_name>$(PriSys){$(PSC)}SS:LatErr4_bufaddr-I</pv_name>
-    <x>264</x>
-    <y>466</y>
+    <x>269</x>
+    <y>490</y>
     <width>90</width>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -547,8 +569,8 @@ Buffer Addr</text>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_61</name>
     <pv_name>$(PriSys){$(PSC)}SS:LatEVR_bufaddr-I</pv_name>
-    <x>264</x>
-    <y>486</y>
+    <x>269</x>
+    <y>510</y>
     <width>90</width>
     <font>
       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -568,5 +590,731 @@ Buffer Addr</text>
       <color red="0" green="128" blue="255">
       </color>
     </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_62</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt1_ts_s-I</pv_name>
+    <x>378</x>
+    <y>351</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_63</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt1_ts_ns-I</pv_name>
+    <x>474</x>
+    <y>351</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_64</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt2_ts_s-I</pv_name>
+    <x>378</x>
+    <y>371</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_65</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt2_ts_ns-I</pv_name>
+    <x>474</x>
+    <y>371</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_66</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt3_ts_s-I</pv_name>
+    <x>378</x>
+    <y>391</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_67</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt3_ts_ns-I</pv_name>
+    <x>474</x>
+    <y>391</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_68</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt4_ts_s-I</pv_name>
+    <x>378</x>
+    <y>411</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_69</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt4_ts_ns-I</pv_name>
+    <x>474</x>
+    <y>411</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_70</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatErr1_ts_s-I</pv_name>
+    <x>378</x>
+    <y>431</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_71</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatErr1_ts_ns-I</pv_name>
+    <x>474</x>
+    <y>431</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_72</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatErr2_ts_s-I</pv_name>
+    <x>378</x>
+    <y>451</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_73</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatErr2_ts_ns-I</pv_name>
+    <x>474</x>
+    <y>451</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_74</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatErr3_ts_s-I</pv_name>
+    <x>378</x>
+    <y>471</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_75</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatErr3_ts_ns-I</pv_name>
+    <x>474</x>
+    <y>471</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_76</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatErr4_ts_s-I</pv_name>
+    <x>378</x>
+    <y>491</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_77</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatErr4_ts_ns-I</pv_name>
+    <x>474</x>
+    <y>491</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_78</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatEVR_ts_s-I</pv_name>
+    <x>378</x>
+    <y>511</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_79</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatEVR_ts_ns-I</pv_name>
+    <x>474</x>
+    <y>511</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_50</name>
+    <text>Latched TimeStamp</text>
+    <x>396</x>
+    <y>278</y>
+    <width>136</width>
+    <height>24</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_51</name>
+    <text>sec</text>
+    <x>413</x>
+    <y>292</y>
+    <width>36</width>
+    <height>24</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_52</name>
+    <text>ns</text>
+    <x>485</x>
+    <y>292</y>
+    <width>36</width>
+    <height>24</height>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>1</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_80</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt1_ts_s-I</pv_name>
+    <x>378</x>
+    <y>318</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_81</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt1_ts_ns-I</pv_name>
+    <x>474</x>
+    <y>318</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_82</name>
+    <pv_name>$(PriSys){$(PSC)}TS-S-I</pv_name>
+    <x>288</x>
+    <y>190</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_83</name>
+    <pv_name>$(PriSys){$(PSC)}TS-NS-I</pv_name>
+    <x>385</x>
+    <y>190</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <precision>0</precision>
+    <show_units>false</show_units>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_53</name>
+    <text>TimeStamp</text>
+    <x>156</x>
+    <y>190</y>
+    <width>116</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>2</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="textentry" version="3.0.0">
+    <name>Text Update_84</name>
+    <pv_name>$(PriSys){$(PSC)}LiveTime-I</pv_name>
+    <x>288</x>
+    <y>106</y>
+    <width>90</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <background_color>
+      <color red="255" green="255" blue="255">
+      </color>
+    </background_color>
+    <format>1</format>
+    <precision>0</precision>
+    <horizontal_alignment>1</horizontal_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_56</name>
+    <text>LiveTime</text>
+    <x>158</x>
+    <y>106</y>
+    <width>114</width>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <horizontal_alignment>2</horizontal_alignment>
+    <vertical_alignment>1</vertical_alignment>
+    <actions>
+    </actions>
+    <border_color>
+      <color red="0" green="128" blue="255">
+      </color>
+    </border_color>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatSoft_active-I</pv_name>
+    <x>588</x>
+    <y>318</y>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_1</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt1_active-I</pv_name>
+    <x>588</x>
+    <y>351</y>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_2</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt2_active-I</pv_name>
+    <x>588</x>
+    <y>371</y>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_3</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt3_active-I</pv_name>
+    <x>588</x>
+    <y>391</y>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_4</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatFlt4_active-I</pv_name>
+    <x>588</x>
+    <y>411</y>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_5</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatErr1_active-I</pv_name>
+    <x>588</x>
+    <y>431</y>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_6</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatErr2_active-I</pv_name>
+    <x>588</x>
+    <y>451</y>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_7</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatErr3_active-I</pv_name>
+    <x>588</x>
+    <y>471</y>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_8</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatErr4_active-I</pv_name>
+    <x>588</x>
+    <y>491</y>
+  </widget>
+  <widget type="led" version="2.0.0">
+    <name>LED_9</name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatEVR_active-I</pv_name>
+    <x>588</x>
+    <y>511</y>
   </widget>
 </display>

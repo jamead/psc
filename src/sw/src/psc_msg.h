@@ -23,6 +23,11 @@
 #define MSGFLTCH2 53
 #define MSGFLTCH3 54
 #define MSGFLTCH4 55
+#define MSGERRCH1 56
+#define MSGERRCH2 57
+#define MSGERRCH3 58
+#define MSGERRCH4 59
+#define MSGEVR 60
 
 
 #define MSGWFMLEN 16000000   //in bytes
@@ -34,7 +39,7 @@
 //Waveform Thread: Snapshot Statistics (pointers, etc)
 // Updated at 10Hz, keeps waveform connection alive
 #define MSGWFMSTATS 50
-#define MSGWFMSTATSLEN 128
+#define MSGWFMSTATSLEN 256
 
 
 
@@ -51,7 +56,11 @@ extern char msgFltCh1_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgFltCh2_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgFltCh3_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgFltCh4_buf[MSGWFMLEN+MSGHDRLEN];
-
+extern char msgErrCh1_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgErrCh2_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgErrCh3_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgErrCh4_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgEVR_buf[MSGWFMLEN+MSGHDRLEN];
 
 extern char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];
 
@@ -72,6 +81,59 @@ typedef struct SAdataMsg {
 	u32 ps4_mon[6];   // PSC Offset 100
 	u32 rsvd[10];
 } SAdataMsg;
+
+
+
+// PSC Snapshot Stats Message ID 50
+typedef struct SnapStatsMsg {
+	u32 cur_bufaddr;     // PSC Offset 0
+	u32 totalfacnt;      // PSC Offset 4
+	u32 soft_lataddr;    // PSC Offset 8
+	u32 soft_active;     // PSC Offset 12
+	u32 soft_ts_s;       // PSC Offset 16
+	u32 soft_ts_ns;      // PSC Offset 20
+    u32 flt1_lataddr;    // PSC Offset 24
+    u32 flt1_active;     // PSC Offset 28
+    u32 flt1_ts_s;       // PSC Offset 32
+    u32 flt1_ts_ns;      // PSC Offset 36
+    u32 flt2_lataddr;    // PSC Offset 40
+    u32 flt2_active;     // PSC Offset 44
+    u32 flt2_ts_s;       // PSC Offset 48
+    u32 flt2_ts_ns;      // PSC Offset 52
+    u32 flt3_lataddr;    // PSC Offset 56
+    u32 flt3_active;     // PSC Offset 60
+    u32 flt3_ts_s;       // PSC Offset 64
+    u32 flt3_ts_ns;      // PSC Offset 68
+    u32 flt4_lataddr;    // PSC Offset 72
+    u32 flt4_active;     // PSC Offset 76
+    u32 flt4_ts_s;       // PSC Offset 80
+    u32 flt4_ts_ns;      // PSC Offset 84
+    u32 err1_lataddr;    // PSC Offset 88
+    u32 err1_active;     // PSC Offset 92
+    u32 err1_ts_s;       // PSC Offset 96
+    u32 err1_ts_ns;      // PSC Offset 100
+    u32 err2_lataddr;    // PSC Offset 104
+    u32 err2_active;     // PSC Offset 108
+    u32 err2_ts_s;       // PSC Offset 112
+    u32 err2_ts_ns;      // PSC Offset 116
+    u32 err3_lataddr;    // PSC Offset 120
+    u32 err3_active;     // PSC Offset 124
+    u32 err3_ts_s;       // PSC Offset 128
+    u32 err3_ts_ns;      // PSC Offset 132
+    u32 err4_lataddr;    // PSC Offset 136
+    u32 err4_active;     // PSC Offset 140
+    u32 err4_ts_s;       // PSC Offset 144
+    u32 err4_ts_ns;      // PSC Offset 148
+    u32 evr_lataddr;     // PSC Offset 152
+    u32 evr_active;      // PSC Offset 156
+    u32 evr_ts_s;        // PSC Offset 160
+    u32 evr_ts_ns;       // PSC Offset 164
+
+
+
+} SnapStatsMsg;
+
+
 
 
 
@@ -97,13 +159,41 @@ typedef struct SysHealthMsg {
 
 // Control Message Offsets
 #define SOFT_TRIG_MSG 0
-#define FP_LED_MSG 4
-#define DAC_OPMODE 8
-#define DAC_SETPT 12
-#define DAC_RUNRAMP 16
-#define DAC_RAMPLEN 20
+#define TEST_TRIG_MSG 4
+#define FP_LED_MSG 8
 
-#define TEST_TRIG_MSG 100
+
+#define DAC_CH1_OPMODE 100
+#define DAC_CH1_SETPT 104
+#define DAC_CH1_RUNRAMP 108
+#define DAC_CH1_RAMPLEN 112
+#define DAC_CH1_GAIN 116
+#define DAC_CH1_OFFSET 120
+
+#define DAC_CH2_OPMODE 140
+#define DAC_CH2_SETPT 144
+#define DAC_CH2_RUNRAMP 148
+#define DAC_CH2_RAMPLEN 152
+#define DAC_CH2_GAIN 156
+#define DAC_CH2_OFFSET 160
+
+#define DAC_CH3_OPMODE 180
+#define DAC_CH3_SETPT 184
+#define DAC_CH3_RUNRAMP 188
+#define DAC_CH3_RAMPLEN 192
+#define DAC_CH3_GAIN 196
+#define DAC_CH3_OFFSET 200
+
+#define DAC_CH4_OPMODE 220
+#define DAC_CH4_SETPT 224
+#define DAC_CH4_RUNRAMP 228
+#define DAC_CH4_RAMPLEN 232
+#define DAC_CH4_GAIN 236
+#define DAC_CH4_OFFSET 240
+
+
+
+
 
 
 

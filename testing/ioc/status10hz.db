@@ -4,11 +4,12 @@
 ############# 10Hz Status PV's (MSG ID 30) #########################
 
 
-record(longin, "$(P){$(NO)}CNT-I") {
-    field(DESC, "10Hz Counter")
+record(longin, "$(P){$(NO)}LiveTime-I") {
+    field(DESC, "LiveTime Counter (in sec)")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 0")
     field(SCAN,"I/O Intr")
+    field(EGU, "sec")
 }
 
 record(longin, "$(P){$(NO)}TS-NS-I") {
@@ -24,6 +25,8 @@ record(longin, "$(P){$(NO)}TS-S-I") {
     field(INP , "@Rx$(NO) 31 8")
     field(SCAN,"I/O Intr")
 }
+
+
 
 
 

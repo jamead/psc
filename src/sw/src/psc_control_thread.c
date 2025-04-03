@@ -142,30 +142,133 @@ reconnect:
             	break;
 
 
-            case DAC_OPMODE:
-            	xil_printf("Setting DAC Operating Mode:   Value=%d\r\n",MsgData);
+
+            case DAC_CH1_OPMODE:
+            	xil_printf("Setting DAC CH1 Operating Mode:   Value=%d\r\n",MsgData);
             	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_JUMPMODE, MsgData);
             	break;
 
-            case DAC_SETPT:
-            	xil_printf("Setting DAC SetPoint:   Value=%d\r\n",MsgData);
+            case DAC_CH1_SETPT:
+            	xil_printf("Setting DAC CH1 SetPoint:   Value=%d\r\n",MsgData);
             	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_SETPT, MsgData);
             	break;
 
-
-            case DAC_RAMPLEN:
-             	xil_printf("Setting RampTable Length:   Value=%d\r\n",MsgData);
+            case DAC_CH1_RAMPLEN:
+             	xil_printf("Setting DAC CH1 RampTable Length:   Value=%d\r\n",MsgData);
              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPLEN, MsgData);
              	break;
 
-            case DAC_RUNRAMP:
-            	xil_printf("Running Ramptable:   Value=%d\r\n",MsgData);
+            case DAC_CH1_RUNRAMP:
+            	xil_printf("Running DAC CH1 Ramptable:   Value=%d\r\n",MsgData);
             	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RUNRAMP, MsgData);
+            	break;
+
+            case DAC_CH1_GAIN:
+            	xil_printf("Setting DAC CH1 Gain:   Value=%d\r\n",MsgData);
+            	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_GAIN, MsgData);
+            	break;
+
+            case DAC_CH1_OFFSET:
+            	xil_printf("Setting DAC CH1 Offset:   Value=%d\r\n",MsgData);
+            	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_OFFSET, MsgData);
             	break;
 
 
 
+            case DAC_CH2_OPMODE:
+             	xil_printf("Setting DAC CH2 Operating Mode:   Value=%d\r\n",MsgData);
+             	Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DAC_JUMPMODE, MsgData);
+             	break;
 
+             case DAC_CH2_SETPT:
+             	xil_printf("Setting DAC CH2 SetPoint:   Value=%d\r\n",MsgData);
+             	Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DAC_SETPT, MsgData);
+             	break;
+
+             case DAC_CH2_RAMPLEN:
+              	xil_printf("Setting DAC CH2 RampTable Length:   Value=%d\r\n",MsgData);
+              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DAC_RAMPLEN, MsgData);
+              	break;
+
+             case DAC_CH2_RUNRAMP:
+             	xil_printf("Running DAC CH2 Ramptable:   Value=%d\r\n",MsgData);
+             	Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DAC_RUNRAMP, MsgData);
+             	break;
+
+             case DAC_CH2_GAIN:
+              	xil_printf("Setting DAC CH2 Gain:   Value=%d\r\n",MsgData);
+              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DAC_GAIN, MsgData);
+              	break;
+
+              case DAC_CH2_OFFSET:
+              	xil_printf("Setting DAC CH2 Offset:   Value=%d\r\n",MsgData);
+              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DAC_OFFSET, MsgData);
+              	break;
+
+
+
+
+             case DAC_CH3_OPMODE:
+               	xil_printf("Setting DAC CH3 Operating Mode:   Value=%d\r\n",MsgData);
+               	Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DAC_JUMPMODE, MsgData);
+               	break;
+
+             case DAC_CH3_SETPT:
+               	xil_printf("Setting DAC CH3 SetPoint:   Value=%d\r\n",MsgData);
+               	Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DAC_SETPT, MsgData);
+               	break;
+
+             case DAC_CH3_RAMPLEN:
+               	xil_printf("Setting DAC CH3 RampTable Length:   Value=%d\r\n",MsgData);
+               	Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DAC_RAMPLEN, MsgData);
+               	break;
+
+             case DAC_CH3_RUNRAMP:
+               	xil_printf("Running DAC CH3 Ramptable:   Value=%d\r\n",MsgData);
+               	Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DAC_RUNRAMP, MsgData);
+               	break;
+
+             case DAC_CH3_GAIN:
+              	xil_printf("Setting DAC CH3 Gain:   Value=%d\r\n",MsgData);
+              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DAC_GAIN, MsgData);
+              	break;
+
+              case DAC_CH3_OFFSET:
+              	xil_printf("Setting DAC CH3 Offset:   Value=%d\r\n",MsgData);
+              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DAC_OFFSET, MsgData);
+              	break;
+
+
+
+             case DAC_CH4_OPMODE:
+               	xil_printf("Setting DAC CH4 Operating Mode:   Value=%d\r\n",MsgData);
+               	Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DAC_JUMPMODE, MsgData);
+               	break;
+
+             case DAC_CH4_SETPT:
+               	xil_printf("Setting DAC CH4 SetPoint:   Value=%d\r\n",MsgData);
+               	Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DAC_SETPT, MsgData);
+               	break;
+
+             case DAC_CH4_RAMPLEN:
+               	xil_printf("Setting DAC CH4 RampTable Length:   Value=%d\r\n",MsgData);
+               	Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DAC_RAMPLEN, MsgData);
+               	break;
+
+             case DAC_CH4_RUNRAMP:
+               	xil_printf("Running DAC CH4 Ramptable:   Value=%d\r\n",MsgData);
+               	Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DAC_RUNRAMP, MsgData);
+               	break;
+
+             case DAC_CH4_GAIN:
+              	xil_printf("Setting DAC CH4 Gain:   Value=%d\r\n",MsgData);
+              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DAC_GAIN, MsgData);
+              	break;
+
+              case DAC_CH4_OFFSET:
+              	xil_printf("Setting DAC CH4 Offset:   Value=%d\r\n",MsgData);
+              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DAC_OFFSET, MsgData);
+              	break;
 
 
 

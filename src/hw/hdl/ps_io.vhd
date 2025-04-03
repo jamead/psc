@@ -125,6 +125,7 @@ reg_i.ps4_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.ps_error),
 
 
 -- DAC control and Ramp Tables and status
+--CH 1
 dac_cntrl.ps1.offset <= reg_o.ps1_dac_offset.val.data; 
 dac_cntrl.ps1.gain <= reg_o.ps1_dac_gain.val.data; 
 dac_cntrl.ps1.setpoint <= reg_o.ps1_dac_setpt.val.data;
@@ -139,6 +140,57 @@ dac_cntrl.ps1.ramprun <= reg_o.ps1_dac_runramp.val.data(0);
 
 reg_i.ps1_dac_rampactive.val.data(0) <= dac_stat.ps1.active;
 reg_i.ps1_dac_currampaddr.val.data <= dac_stat.ps1.cur_addr;
+
+--CH 2
+dac_cntrl.ps2.offset <= reg_o.ps2_dac_offset.val.data; 
+dac_cntrl.ps2.gain <= reg_o.ps2_dac_gain.val.data; 
+dac_cntrl.ps2.setpoint <= reg_o.ps2_dac_setpt.val.data;
+dac_cntrl.ps2.mode <= reg_o.ps2_dac_jumpmode.val.data;
+dac_cntrl.ps2.cntrl <= reg_o.ps2_dac_cntrl.val.data;
+dac_cntrl.ps2.reset <= reg_o.ps2_dac_reset.val.data(0);
+dac_cntrl.ps2.ramplen <= reg_o.ps2_dac_ramplen.val.data;
+dac_cntrl.ps2.dpram_addr <= reg_o.ps2_dac_rampaddr.val.data;
+dac_cntrl.ps2.dpram_data <= reg_o.ps2_dac_rampdata.val.data;
+dac_cntrl.ps2.dpram_we <= reg_o.ps2_dac_rampdata.val.swacc;
+dac_cntrl.ps2.ramprun <= reg_o.ps2_dac_runramp.val.data(0);
+
+reg_i.ps2_dac_rampactive.val.data(0) <= dac_stat.ps2.active;
+reg_i.ps2_dac_currampaddr.val.data <= dac_stat.ps2.cur_addr;
+
+
+-- CH 3
+dac_cntrl.ps3.offset <= reg_o.ps3_dac_offset.val.data; 
+dac_cntrl.ps3.gain <= reg_o.ps3_dac_gain.val.data; 
+dac_cntrl.ps3.setpoint <= reg_o.ps3_dac_setpt.val.data;
+dac_cntrl.ps3.mode <= reg_o.ps3_dac_jumpmode.val.data;
+dac_cntrl.ps3.cntrl <= reg_o.ps3_dac_cntrl.val.data;
+dac_cntrl.ps3.reset <= reg_o.ps3_dac_reset.val.data(0);
+dac_cntrl.ps3.ramplen <= reg_o.ps3_dac_ramplen.val.data;
+dac_cntrl.ps3.dpram_addr <= reg_o.ps3_dac_rampaddr.val.data;
+dac_cntrl.ps3.dpram_data <= reg_o.ps3_dac_rampdata.val.data;
+dac_cntrl.ps3.dpram_we <= reg_o.ps3_dac_rampdata.val.swacc;
+dac_cntrl.ps3.ramprun <= reg_o.ps3_dac_runramp.val.data(0);
+
+reg_i.ps3_dac_rampactive.val.data(0) <= dac_stat.ps3.active;
+reg_i.ps3_dac_currampaddr.val.data <= dac_stat.ps3.cur_addr;
+
+
+--CH 4
+dac_cntrl.ps4.offset <= reg_o.ps4_dac_offset.val.data; 
+dac_cntrl.ps4.gain <= reg_o.ps4_dac_gain.val.data; 
+dac_cntrl.ps4.setpoint <= reg_o.ps4_dac_setpt.val.data;
+dac_cntrl.ps4.mode <= reg_o.ps4_dac_jumpmode.val.data;
+dac_cntrl.ps4.cntrl <= reg_o.ps4_dac_cntrl.val.data;
+dac_cntrl.ps4.reset <= reg_o.ps4_dac_reset.val.data(0);
+dac_cntrl.ps4.ramplen <= reg_o.ps4_dac_ramplen.val.data;
+dac_cntrl.ps4.dpram_addr <= reg_o.ps4_dac_rampaddr.val.data;
+dac_cntrl.ps4.dpram_data <= reg_o.ps4_dac_rampdata.val.data;
+dac_cntrl.ps4.dpram_we <= reg_o.ps4_dac_rampdata.val.swacc;
+dac_cntrl.ps4.ramprun <= reg_o.ps4_dac_runramp.val.data(0);
+
+reg_i.ps4_dac_rampactive.val.data(0) <= dac_stat.ps4.active;
+reg_i.ps4_dac_currampaddr.val.data <= dac_stat.ps4.cur_addr;
+
 
 
 
@@ -179,7 +231,7 @@ evr_trig    <= reg_o.testtrig.val.data(8);
 
 
 
--- latch the buffer address (and eventually timestamp) on trigger.
+-- latch the buffer address and timestamp on trigger.
 process (pl_clock)
 begin
   if (rising_edge(pl_clock)) then
@@ -201,33 +253,53 @@ begin
       evr_trig_prev <= evr_trig;
       if (soft_trig = '1' and soft_trig_prev = '0') then     
         reg_i.softtrig_bufptr.val.data <= ss_buf_stat.addr_ptr;
+        reg_i.softtrig_ts_s.val.data <= evr_timestamp(63 downto 32);
+        reg_i.softtrig_ts_ns.val.data <= evr_timestamp(31 downto 0);        
       end if;
       if (flt_trig(0) = '1' and flt_trig_prev(0) = '0') then
-        reg_i.flt1trig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+        reg_i.flt1trig_bufptr.val.data <= ss_buf_stat.addr_ptr;  
+        reg_i.flt1trig_ts_s.val.data <= evr_timestamp(63 downto 32);
+        reg_i.flt1trig_ts_ns.val.data <= evr_timestamp(31 downto 0);                 
       end if;
       if (flt_trig(1) = '1' and flt_trig_prev(1) = '0') then
-        reg_i.flt2trig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+        reg_i.flt2trig_bufptr.val.data <= ss_buf_stat.addr_ptr;  
+        reg_i.flt2trig_ts_s.val.data <= evr_timestamp(63 downto 32);
+        reg_i.flt2trig_ts_ns.val.data <= evr_timestamp(31 downto 0);                 
       end if;      
       if (flt_trig(2) = '1' and flt_trig_prev(2) = '0') then
-        reg_i.flt3trig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+        reg_i.flt3trig_bufptr.val.data <= ss_buf_stat.addr_ptr;  
+        reg_i.flt3trig_ts_s.val.data <= evr_timestamp(63 downto 32);
+        reg_i.flt3trig_ts_ns.val.data <= evr_timestamp(31 downto 0);                
       end if;
       if (flt_trig(3) = '1' and flt_trig_prev(3) = '0') then
-        reg_i.flt4trig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+        reg_i.flt4trig_bufptr.val.data <= ss_buf_stat.addr_ptr;  
+        reg_i.flt4trig_ts_s.val.data <= evr_timestamp(63 downto 32);
+        reg_i.flt4trig_ts_ns.val.data <= evr_timestamp(31 downto 0);                       
       end if;        
       if (err_trig(0) = '1' and err_trig_prev(0) = '0') then
-        reg_i.err1trig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+        reg_i.err1trig_bufptr.val.data <= ss_buf_stat.addr_ptr; 
+        reg_i.err1trig_ts_s.val.data <= evr_timestamp(63 downto 32);
+        reg_i.err1trig_ts_ns.val.data <= evr_timestamp(31 downto 0);                        
       end if;
       if (err_trig(1) = '1' and flt_trig_prev(1) = '0') then
-        reg_i.err2trig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+        reg_i.err2trig_bufptr.val.data <= ss_buf_stat.addr_ptr;  
+        reg_i.err2trig_ts_s.val.data <= evr_timestamp(63 downto 32);
+        reg_i.err2trig_ts_ns.val.data <= evr_timestamp(31 downto 0);                       
       end if;      
       if (err_trig(2) = '1' and flt_trig_prev(2) = '0') then
-        reg_i.err3trig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+        reg_i.err3trig_bufptr.val.data <= ss_buf_stat.addr_ptr;  
+        reg_i.err3trig_ts_s.val.data <= evr_timestamp(63 downto 32);
+        reg_i.err3trig_ts_ns.val.data <= evr_timestamp(31 downto 0);                 
       end if;
       if (err_trig(3) = '1' and flt_trig_prev(3) = '0') then
-        reg_i.err4trig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+        reg_i.err4trig_bufptr.val.data <= ss_buf_stat.addr_ptr;   
+        reg_i.err4trig_ts_s.val.data <= evr_timestamp(63 downto 32);
+        reg_i.err4trig_ts_ns.val.data <= evr_timestamp(31 downto 0);                
       end if;  
       if (evr_trig = '1' and evr_trig_prev = '0') then
-        reg_i.evrtrig_bufptr.val.data <= ss_buf_stat.addr_ptr;          
+        reg_i.evrtrig_bufptr.val.data <= ss_buf_stat.addr_ptr;  
+        reg_i.evrtrig_ts_s.val.data <= evr_timestamp(63 downto 32);
+        reg_i.evrtrig_ts_ns.val.data <= evr_timestamp(31 downto 0);                 
       end if;      
     end if;
   end if;

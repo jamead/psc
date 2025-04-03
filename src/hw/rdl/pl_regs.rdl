@@ -407,6 +407,294 @@ reg {
   } ps1_dac_currampaddr @0x12C;
 
 
+/* PS2 DAC */
+
+reg {
+    desc="PS2 DAC Offset";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_dac_offset @0x140;
+
+reg {
+    desc="PS2 DAC Gain";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_dac_gain @0x144;
+
+reg {
+    desc="PS2 DAC SetPoint - when in jumpmode";
+    default sw = rw;
+    default hw = r;
+    field {} val[20];
+  } ps2_dac_setpt @0x148;
+  
+reg {
+    desc="PS2 DAC Mode 0=smooth ramp, 1=ramp table, 2=FOFB, 3=Jump Mode";
+    default sw = rw;
+    default hw = r;
+    default swacc=true;
+    default swmod=true;    
+    field {} val[2];
+  } ps2_dac_jumpmode @0x14C;  
+  
+
+reg {
+    desc="PS2 DAC Control bit0=op_gnd, bit1=sdo_dis, bit2=dac_tri, bit3=rbuf, bit4=bin2sc";
+    default sw = rw;
+    default hw = r;   
+    field {} val[8];
+  } ps2_dac_cntrl @0x150;
+
+reg {
+    desc="PS2 DAC Reset";
+    default sw = rw;
+    default hw = r;    
+    field {} val[1];
+  } ps2_dac_reset @0x154;
+
+
+reg {
+    desc="PS2 DAC Ramp Table Length";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_dac_ramplen @0x158; 
+
+
+reg {
+    desc="PS2 DAC Ramp Table Address";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_dac_rampaddr @0x15C; 
+
+reg {
+    desc="PS2 DAC Ramp Table Data";
+    default sw = rw;
+    default hw = r;
+    default swacc=true;
+    default swmod=true;   
+    field {} val[20];
+  } ps2_dac_rampdata @0x160; 
+
+reg {
+    desc="PS2 DAC Run RampTable";
+    default sw = rw;
+    default hw = r;
+    default swacc=true;
+    default swmod=true;    
+    field {} val[1];
+  } ps2_dac_runramp @0x164;
+  
+  reg {
+    desc="PS2 DAC Ramptable Run Active";
+    default sw = rw;
+    default hw = w;
+    field {} val[1];
+  } ps2_dac_rampactive @0x168;
+
+  reg {
+    desc="PS2 DAC Ramptable Run Current Address";
+    default sw = rw;
+    default hw = w;
+    field {} val[16];
+  } ps2_dac_currampaddr @0x16C;
+
+
+
+/* PS3 DAC */
+
+reg {
+    desc="PS3 DAC Offset";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_dac_offset @0x180;
+
+reg {
+    desc="PS3 DAC Gain";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_dac_gain @0x184;
+
+reg {
+    desc="PS3 DAC SetPoint - when in jumpmode";
+    default sw = rw;
+    default hw = r;
+    field {} val[20];
+  } ps3_dac_setpt @0x188;
+  
+reg {
+    desc="PS3 DAC Mode 0=smooth ramp, 1=ramp table, 2=FOFB, 3=Jump Mode";
+    default sw = rw;
+    default hw = r;
+    default swacc=true;
+    default swmod=true;    
+    field {} val[2];
+  } ps3_dac_jumpmode @0x18C;  
+  
+
+reg {
+    desc="PS3 DAC Control bit0=op_gnd, bit1=sdo_dis, bit2=dac_tri, bit3=rbuf, bit4=bin2sc";
+    default sw = rw;
+    default hw = r;   
+    field {} val[8];
+  } ps3_dac_cntrl @0x190;
+
+reg {
+    desc="PS3 DAC Reset";
+    default sw = rw;
+    default hw = r;    
+    field {} val[1];
+  } ps3_dac_reset @0x194;
+
+
+reg {
+    desc="PS3 DAC Ramp Table Length";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_dac_ramplen @0x198; 
+
+
+reg {
+    desc="PS3 DAC Ramp Table Address";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_dac_rampaddr @0x19C; 
+
+reg {
+    desc="PS3 DAC Ramp Table Data";
+    default sw = rw;
+    default hw = r;
+    default swacc=true;
+    default swmod=true;   
+    field {} val[20];
+  } ps3_dac_rampdata @0x1A0; 
+
+reg {
+    desc="PS3 DAC Run RampTable";
+    default sw = rw;
+    default hw = r;
+    default swacc=true;
+    default swmod=true;    
+    field {} val[1];
+  } ps3_dac_runramp @0x1A4;
+  
+  reg {
+    desc="PS3 DAC Ramptable Run Active";
+    default sw = rw;
+    default hw = w;
+    field {} val[1];
+  } ps3_dac_rampactive @0x1A8;
+
+  reg {
+    desc="PS3 DAC Ramptable Run Current Address";
+    default sw = rw;
+    default hw = w;
+    field {} val[16];
+  } ps3_dac_currampaddr @0x1AC;
+
+
+
+/* PS4 DAC */
+
+reg {
+    desc="PS4 DAC Offset";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_dac_offset @0x1C0;
+
+reg {
+    desc="PS4 DAC Gain";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_dac_gain @0x1C4;
+
+reg {
+    desc="PS4 DAC SetPoint - when in jumpmode";
+    default sw = rw;
+    default hw = r;
+    field {} val[20];
+  } ps4_dac_setpt @0x1C8;
+  
+reg {
+    desc="PS4 DAC Mode 0=smooth ramp, 1=ramp table, 2=FOFB, 3=Jump Mode";
+    default sw = rw;
+    default hw = r;
+    default swacc=true;
+    default swmod=true;    
+    field {} val[2];
+  } ps4_dac_jumpmode @0x1CC;  
+  
+
+reg {
+    desc="PS4 DAC Control bit0=op_gnd, bit1=sdo_dis, bit2=dac_tri, bit3=rbuf, bit4=bin2sc";
+    default sw = rw;
+    default hw = r;   
+    field {} val[8];
+  } ps4_dac_cntrl @0x1D0;
+
+reg {
+    desc="PS4 DAC Reset";
+    default sw = rw;
+    default hw = r;    
+    field {} val[1];
+  } ps4_dac_reset @0x1D4;
+
+
+reg {
+    desc="PS4 DAC Ramp Table Length";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_dac_ramplen @0x1D8; 
+
+
+reg {
+    desc="PS4 DAC Ramp Table Address";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_dac_rampaddr @0x1DC; 
+
+reg {
+    desc="PS4 DAC Ramp Table Data";
+    default sw = rw;
+    default hw = r;
+    default swacc=true;
+    default swmod=true;   
+    field {} val[20];
+  } ps4_dac_rampdata @0x1E0; 
+
+reg {
+    desc="PS4 DAC Run RampTable";
+    default sw = rw;
+    default hw = r;
+    default swacc=true;
+    default swmod=true;    
+    field {} val[1];
+  } ps4_dac_runramp @0x1E4;
+  
+  reg {
+    desc="PS4 DAC Ramptable Run Active";
+    default sw = rw;
+    default hw = w;
+    field {} val[1];
+  } ps4_dac_rampactive @0x1E8;
+
+  reg {
+    desc="PS4 DAC Ramptable Run Current Address";
+    default sw = rw;
+    default hw = w;
+    field {} val[16];
+  } ps4_dac_currampaddr @0x1EC;
 
 
 
@@ -519,21 +807,66 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } softtrig_bufptr @0x310; 
+  } softtrig_bufptr @0x320; 
+
+reg {
+    desc="Soft Trig Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } softtrig_ts_s @0x324; 
+
+reg {
+    desc="Soft Trig Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } softtrig_ts_ns @0x328; 
+
 
 reg {
     desc="Fault1 Buffer Ptr.  Buffer Point latched value gets put here on Fault1 trigger";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt1trig_bufptr @0x314; 
+  } flt1trig_bufptr @0x330; 
+
+reg {
+    desc="Fault1 Trig Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } flt1trig_ts_s @0x334; 
+
+reg {
+    desc="Fault1 Trig Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } flt1trig_ts_ns @0x338; 
+
+
 
 reg {
     desc="Fault2 Buffer Ptr.  Buffer Point latched value gets put here on Fault2 trigger";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt2trig_bufptr @0x318; 
+  } flt2trig_bufptr @0x340; 
+
+reg {
+    desc="Fault2 Trig Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } flt2trig_ts_s @0x344; 
+
+reg {
+    desc="Fault2 Trig Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } flt2trig_ts_ns @0x348; 
 
 
 reg {
@@ -541,28 +874,87 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt3trig_bufptr @0x31C; 
+  } flt3trig_bufptr @0x350; 
+
+reg {
+    desc="Fault3 Trig Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } flt3trig_ts_s @0x354; 
+
+reg {
+    desc="Fault3 Trig Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } flt3trig_ts_ns @0x358; 
+
 
 reg {
     desc="Fault4 Buffer Ptr.  Buffer Point latched value gets put here on Fault4 trigger";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt4trig_bufptr @0x320; 
+  } flt4trig_bufptr @0x360; 
+
+reg {
+    desc="Fault4 Trig Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } flt4trig_ts_s @0x364; 
+
+reg {
+    desc="Fault4 Trig Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } flt4trig_ts_ns @0x368; 
+
 
 reg {
     desc="Err1 Buffer Ptr.  Buffer Point latched value gets put here on Err1 trigger";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err1trig_bufptr @0x324; 
+  } err1trig_bufptr @0x370; 
+
+reg {
+    desc="Err1 Trig Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } err1trig_ts_s @0x374; 
+
+reg {
+    desc="Err1 Trig Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } err1trig_ts_ns @0x378; 
+
 
 reg {
     desc="Err2 Buffer Ptr.  Buffer Point latched value gets put here on Err2 trigger";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err2trig_bufptr @0x328; 
+  } err2trig_bufptr @0x380; 
+
+reg {
+    desc="Err2 Trig Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } err2trig_ts_s @0x384; 
+
+reg {
+    desc="Err2 Trig Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } err2trig_ts_ns @0x388; 
 
 
 reg {
@@ -570,21 +962,66 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err3trig_bufptr @0x32C; 
+  } err3trig_bufptr @0x390; 
+
+reg {
+    desc="Err3 Trig Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } err3trig_ts_s @0x394; 
+
+reg {
+    desc="Err3 Trig Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } err3trig_ts_ns @0x398; 
+
 
 reg {
     desc="Err4 Buffer Ptr.  Buffer Point latched value gets put here on Err4 trigger";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err4trig_bufptr @0x330; 
+  } err4trig_bufptr @0x3A0; 
 
 reg {
-    desc="EVR Buffer Ptr.  Buffer Point latched value gets put here on Err4 trigger";
+    desc="Err4 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } evrtrig_bufptr @0x334; 
+  } err4trig_ts_s @0x3A4; 
+
+reg {
+    desc="Err4 Trig Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } err4trig_ts_ns @0x3A8; 
+
+
+
+reg {
+    desc="EVR Buffer Ptr.  Buffer Point latched value gets put here on EVR trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } evrtrig_bufptr @0x3B0; 
+
+reg {
+    desc="EVR Trig Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } evrtrig_ts_s @0x3B4; 
+
+reg {
+    desc="EVR Trig Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } evrtrig_ts_ns @0x3B8; 
 
 
 
