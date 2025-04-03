@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-04-03 08:58:49 by mead-->
+<!--Saved on 2025-04-03 09:54:39 by mead-->
 <display version="2.0.0">
   <name>$(PriSys):$(PSC)</name>
   <width>700</width>
@@ -1101,7 +1101,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_80</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt1_ts_s-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatSoft_ts_s-I</pv_name>
     <x>378</x>
     <y>318</y>
     <width>90</width>
@@ -1125,7 +1125,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_81</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt1_ts_ns-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}SS:LatSoft_ts_ns-I</pv_name>
     <x>474</x>
     <y>318</y>
     <width>90</width>

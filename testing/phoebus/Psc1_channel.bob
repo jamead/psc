@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-04-01 15:14:21 by mead-->
+<!--Saved on 2025-04-03 10:02:20 by mead-->
 <display version="2.0.0">
   <name>$(CHAN):$(PriSys)</name>
-  <width>1000</width>
+  <width>975</width>
   <height>1000</height>
   <background_color>
     <color red="200" green="215" blue="255">
@@ -12,94 +12,6 @@
   </actions>
   <grid_step_x>6</grid_step_x>
   <grid_step_y>6</grid_step_y>
-  <widget type="textentry" version="3.0.0">
-    <name>Text Update_47</name>
-    <pv_name>$(PriSys){$(PSC)}SS:Currbufaddr-I</pv_name>
-    <x>1366</x>
-    <y>104</y>
-    <width>90</width>
-    <font>
-      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
-      </font>
-    </font>
-    <background_color>
-      <color red="255" green="255" blue="255">
-      </color>
-    </background_color>
-    <format>4</format>
-    <precision>6</precision>
-    <show_units>false</show_units>
-    <horizontal_alignment>1</horizontal_alignment>
-    <actions>
-    </actions>
-    <border_color>
-      <color red="0" green="128" blue="255">
-      </color>
-    </border_color>
-  </widget>
-  <widget type="label" version="2.0.0">
-    <name>Label_36</name>
-    <text>Current Addr</text>
-    <x>1244</x>
-    <y>104</y>
-    <width>132</width>
-    <font>
-      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
-      </font>
-    </font>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <actions>
-    </actions>
-    <border_color>
-      <color red="0" green="128" blue="255">
-      </color>
-    </border_color>
-  </widget>
-  <widget type="textentry" version="3.0.0">
-    <name>Text Update_52</name>
-    <pv_name>$(PriSys){$(PSC)}SS:TotalTrigs-I</pv_name>
-    <x>1366</x>
-    <y>84</y>
-    <width>90</width>
-    <font>
-      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
-      </font>
-    </font>
-    <background_color>
-      <color red="255" green="255" blue="255">
-      </color>
-    </background_color>
-    <format>1</format>
-    <precision>0</precision>
-    <show_units>false</show_units>
-    <horizontal_alignment>1</horizontal_alignment>
-    <actions>
-    </actions>
-    <border_color>
-      <color red="0" green="128" blue="255">
-      </color>
-    </border_color>
-  </widget>
-  <widget type="label" version="2.0.0">
-    <name>Label_43</name>
-    <text>10KHz Count</text>
-    <x>1242</x>
-    <y>84</y>
-    <width>132</width>
-    <font>
-      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
-      </font>
-    </font>
-    <horizontal_alignment>1</horizontal_alignment>
-    <vertical_alignment>1</vertical_alignment>
-    <actions>
-    </actions>
-    <border_color>
-      <color red="0" green="128" blue="255">
-      </color>
-    </border_color>
-  </widget>
   <widget type="tabs" version="2.0.0">
     <name>Tabs</name>
     <tabs>
@@ -113,10 +25,10 @@
         <children>
           <widget type="stripchart" version="2.1.0">
             <name>Strip Chart</name>
-            <x>112</x>
-            <y>47</y>
-            <width>469</width>
-            <height>156</height>
+            <x>10</x>
+            <y>50</y>
+            <width>425</width>
+            <height>200</height>
             <show_grid>true</show_grid>
             <title>DCCT1</title>
             <show_toolbar>false</show_toolbar>
@@ -154,10 +66,10 @@
           </widget>
           <widget type="stripchart" version="2.1.0">
             <name>Strip Chart_2</name>
-            <x>112</x>
-            <y>212</y>
-            <width>469</width>
-            <height>156</height>
+            <x>10</x>
+            <y>250</y>
+            <width>425</width>
+            <height>200</height>
             <show_grid>true</show_grid>
             <title>DAC</title>
             <show_toolbar>false</show_toolbar>
@@ -195,10 +107,10 @@
           </widget>
           <widget type="stripchart" version="2.1.0">
             <name>Strip Chart_4</name>
-            <x>112</x>
-            <y>379</y>
-            <width>469</width>
-            <height>156</height>
+            <x>10</x>
+            <y>450</y>
+            <width>425</width>
+            <height>200</height>
             <show_grid>true</show_grid>
             <title>Gnd</title>
             <show_toolbar>false</show_toolbar>
@@ -236,10 +148,10 @@
           </widget>
           <widget type="stripchart" version="2.1.0">
             <name>Strip Chart_7</name>
-            <x>112</x>
-            <y>545</y>
-            <width>469</width>
-            <height>156</height>
+            <x>10</x>
+            <y>650</y>
+            <width>425</width>
+            <height>200</height>
             <show_grid>true</show_grid>
             <title>Reg</title>
             <show_toolbar>false</show_toolbar>
@@ -277,10 +189,10 @@
           </widget>
           <widget type="stripchart" version="2.1.0">
             <name>Strip Chart_8</name>
-            <x>598</x>
-            <y>47</y>
-            <width>469</width>
-            <height>156</height>
+            <x>450</x>
+            <y>50</y>
+            <width>425</width>
+            <height>200</height>
             <show_grid>true</show_grid>
             <title>DCCT2</title>
             <show_toolbar>false</show_toolbar>
@@ -318,10 +230,10 @@
           </widget>
           <widget type="stripchart" version="2.1.0">
             <name>Strip Chart_9</name>
-            <x>598</x>
-            <y>212</y>
-            <width>469</width>
-            <height>156</height>
+            <x>450</x>
+            <y>250</y>
+            <width>425</width>
+            <height>200</height>
             <show_grid>true</show_grid>
             <title>Volt</title>
             <show_toolbar>false</show_toolbar>
@@ -359,10 +271,10 @@
           </widget>
           <widget type="stripchart" version="2.1.0">
             <name>Strip Chart_10</name>
-            <x>598</x>
-            <y>379</y>
-            <width>469</width>
-            <height>156</height>
+            <x>450</x>
+            <y>450</y>
+            <width>425</width>
+            <height>200</height>
             <show_grid>true</show_grid>
             <title>Spare</title>
             <show_toolbar>false</show_toolbar>
@@ -400,10 +312,10 @@
           </widget>
           <widget type="stripchart" version="2.1.0">
             <name>Strip Chart_11</name>
-            <x>598</x>
-            <y>545</y>
-            <width>469</width>
-            <height>156</height>
+            <x>450</x>
+            <y>650</y>
+            <width>425</width>
+            <height>200</height>
             <show_grid>true</show_grid>
             <title>Error</title>
             <show_toolbar>false</show_toolbar>
@@ -442,13 +354,20 @@
         </children>
       </tab>
       <tab>
-        <name>RampTable</name>
+        <name>DAC Control</name>
         <children>
+          <widget type="group" version="3.0.0">
+            <name>Ramp Control</name>
+            <x>196</x>
+            <y>348</y>
+            <width>522</width>
+            <height>264</height>
+          </widget>
           <widget type="textentry" version="3.0.0">
             <name>Text Update_49</name>
-            <pv_name>$(PriSys){$(PSC)}DAC_SetPt-SP</pv_name>
-            <x>212</x>
-            <y>203</y>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):DAC_SetPt-SP</pv_name>
+            <x>391</x>
+            <y>96</y>
             <width>90</width>
             <font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -471,9 +390,9 @@
           </widget>
           <widget type="label" version="2.0.0">
             <name>Label_39</name>
-            <text>DAC Set Point</text>
-            <x>191</x>
-            <y>185</y>
+            <text>Set Point</text>
+            <x>370</x>
+            <y>78</y>
             <width>132</width>
             <font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -490,15 +409,15 @@
           </widget>
           <widget type="bool_button" version="2.0.0">
             <name>Boolean Button_1</name>
-            <pv_name>$(PriSys){$(PSC)}DAC_RampRun-SP</pv_name>
-            <x>207</x>
-            <y>137</y>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):DAC_RampRun-SP</pv_name>
+            <x>544</x>
+            <y>462</y>
           </widget>
           <widget type="label" version="2.0.0">
             <name>Label_40</name>
-            <text>Ramp Run</text>
-            <x>172</x>
-            <y>113</y>
+            <text>Run Ramp</text>
+            <x>514</x>
+            <y>432</y>
             <width>170</width>
             <font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -516,8 +435,8 @@
           <widget type="label" version="2.0.0">
             <name>Label_41</name>
             <text>DAC Op Mode</text>
-            <x>191</x>
-            <y>252</y>
+            <x>184</x>
+            <y>72</y>
             <width>132</width>
             <font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -534,14 +453,16 @@
           </widget>
           <widget type="choice" version="2.0.0">
             <name>Choice Button_1</name>
-            <pv_name>$(PriSys){$(PSC)}DAC_OpMode-SP</pv_name>
-            <x>207</x>
-            <y>272</y>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):DAC_OpMode-SP</pv_name>
+            <x>200</x>
+            <y>92</y>
             <height>85</height>
             <horizontal>false</horizontal>
             <items>
               <item>Item 1</item>
               <item>Item 2</item>
+              <item>Item 3</item>
+              <item>Item 4</item>
             </items>
           </widget>
           <widget type="action_button" version="3.0.0">
@@ -552,8 +473,8 @@
                 <description>Load RampTable</description>
               </action>
             </actions>
-            <x>204</x>
-            <y>483</y>
+            <x>294</x>
+            <y>477</y>
             <width>106</width>
             <height>52</height>
             <tooltip>$(actions)</tooltip>
@@ -562,15 +483,15 @@
             <name>File Selector</name>
             <pv_name>$(PriSys){$(PSC)}RampTableFile</pv_name>
             <component>2</component>
-            <x>206</x>
-            <y>555</y>
+            <x>296</x>
+            <y>549</y>
             <width>102</width>
           </widget>
           <widget type="textentry" version="3.0.0">
             <name>Text Update_51</name>
-            <pv_name>$(PriSys){$(PSC)}DAC_RampLen-SP</pv_name>
-            <x>212</x>
-            <y>423</y>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):DAC_RampLen-SP</pv_name>
+            <x>302</x>
+            <y>417</y>
             <width>90</width>
             <font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -594,14 +515,102 @@
           <widget type="label" version="2.0.0">
             <name>Label_42</name>
             <text>DAC Ramp Length</text>
-            <x>191</x>
-            <y>405</y>
+            <x>281</x>
+            <y>399</y>
             <width>132</width>
             <font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
               </font>
             </font>
             <horizontal_alignment>1</horizontal_alignment>
+            <vertical_alignment>1</vertical_alignment>
+            <actions>
+            </actions>
+            <border_color>
+              <color red="0" green="128" blue="255">
+              </color>
+            </border_color>
+          </widget>
+          <widget type="textentry" version="3.0.0">
+            <name>Text Update_50</name>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):DAC_Gain-SP</pv_name>
+            <x>664</x>
+            <y>84</y>
+            <width>90</width>
+            <font>
+              <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+              </font>
+            </font>
+            <background_color>
+              <color red="255" green="255" blue="255">
+              </color>
+            </background_color>
+            <format>1</format>
+            <precision>0</precision>
+            <show_units>false</show_units>
+            <horizontal_alignment>1</horizontal_alignment>
+            <actions>
+            </actions>
+            <border_color>
+              <color red="0" green="128" blue="255">
+              </color>
+            </border_color>
+          </widget>
+          <widget type="label" version="2.0.0">
+            <name>Label_43</name>
+            <text>Gain</text>
+            <x>566</x>
+            <y>86</y>
+            <width>84</width>
+            <font>
+              <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+              </font>
+            </font>
+            <horizontal_alignment>2</horizontal_alignment>
+            <vertical_alignment>1</vertical_alignment>
+            <actions>
+            </actions>
+            <border_color>
+              <color red="0" green="128" blue="255">
+              </color>
+            </border_color>
+          </widget>
+          <widget type="textentry" version="3.0.0">
+            <name>Text Update_52</name>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):DAC_Offset-SP</pv_name>
+            <x>664</x>
+            <y>108</y>
+            <width>90</width>
+            <font>
+              <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+              </font>
+            </font>
+            <background_color>
+              <color red="255" green="255" blue="255">
+              </color>
+            </background_color>
+            <format>1</format>
+            <precision>0</precision>
+            <show_units>false</show_units>
+            <horizontal_alignment>1</horizontal_alignment>
+            <actions>
+            </actions>
+            <border_color>
+              <color red="0" green="128" blue="255">
+              </color>
+            </border_color>
+          </widget>
+          <widget type="label" version="2.0.0">
+            <name>Label_44</name>
+            <text>Offset</text>
+            <x>568</x>
+            <y>108</y>
+            <width>84</width>
+            <font>
+              <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+              </font>
+            </font>
+            <horizontal_alignment>2</horizontal_alignment>
             <vertical_alignment>1</vertical_alignment>
             <actions>
             </actions>
@@ -617,10 +626,10 @@
         <children>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_5</name>
-            <x>550</x>
-            <y>57</y>
-            <width>469</width>
-            <height>145</height>
+            <x>450</x>
+            <y>50</y>
+            <width>425</width>
+            <height>150</height>
             <title>DCCT2</title>
             <title_font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -630,7 +639,7 @@
             <actions>
             </actions>
             <x_axis>
-              <title>Sample</title>
+              <title></title>
               <autoscale>true</autoscale>
               <log_scale>false</log_scale>
               <minimum>0.0</minimum>
@@ -692,9 +701,9 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_3</name>
-            <x>46</x>
-            <y>51</y>
-            <width>469</width>
+            <x>10</x>
+            <y>50</y>
+            <width>425</width>
             <height>144</height>
             <title>DCCT1</title>
             <title_font>
@@ -705,7 +714,7 @@
             <actions>
             </actions>
             <x_axis>
-              <title>Sample</title>
+              <title></title>
               <autoscale>true</autoscale>
               <log_scale>false</log_scale>
               <minimum>0.0</minimum>
@@ -767,9 +776,9 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_1</name>
-            <x>46</x>
-            <y>201</y>
-            <width>469</width>
+            <x>10</x>
+            <y>200</y>
+            <width>425</width>
             <height>139</height>
             <title>DAC Readback</title>
             <title_font>
@@ -780,7 +789,7 @@
             <actions>
             </actions>
             <x_axis>
-              <title>Sample</title>
+              <title></title>
               <autoscale>true</autoscale>
               <log_scale>false</log_scale>
               <minimum>0.0</minimum>
@@ -842,10 +851,10 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_6</name>
-            <x>550</x>
-            <y>201</y>
-            <width>469</width>
-            <height>140</height>
+            <x>450</x>
+            <y>200</y>
+            <width>425</width>
+            <height>150</height>
             <title>Volt</title>
             <title_font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -855,7 +864,7 @@
             <actions>
             </actions>
             <x_axis>
-              <title>Sample</title>
+              <title></title>
               <autoscale>true</autoscale>
               <log_scale>false</log_scale>
               <minimum>0.0</minimum>
@@ -917,10 +926,10 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_7</name>
-            <x>550</x>
+            <x>450</x>
             <y>350</y>
-            <width>469</width>
-            <height>141</height>
+            <width>425</width>
+            <height>150</height>
             <title>Spare</title>
             <title_font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -992,9 +1001,9 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_4</name>
-            <x>46</x>
+            <x>10</x>
             <y>350</y>
-            <width>469</width>
+            <width>425</width>
             <height>140</height>
             <title>Ground</title>
             <title_font>
@@ -1067,9 +1076,9 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_8</name>
-            <x>46</x>
-            <y>503</y>
-            <width>469</width>
+            <x>10</x>
+            <y>500</y>
+            <width>425</width>
             <height>140</height>
             <title>Reg</title>
             <title_font>
@@ -1080,7 +1089,7 @@
             <actions>
             </actions>
             <x_axis>
-              <title>Sample</title>
+              <title></title>
               <autoscale>true</autoscale>
               <log_scale>false</log_scale>
               <minimum>0.0</minimum>
@@ -1142,10 +1151,10 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_9</name>
-            <x>550</x>
-            <y>503</y>
-            <width>469</width>
-            <height>141</height>
+            <x>450</x>
+            <y>500</y>
+            <width>425</width>
+            <height>150</height>
             <title>Error</title>
             <title_font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -1155,7 +1164,7 @@
             <actions>
             </actions>
             <x_axis>
-              <title>Sample</title>
+              <title></title>
               <autoscale>true</autoscale>
               <log_scale>false</log_scale>
               <minimum>0.0</minimum>
@@ -1217,10 +1226,10 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph</name>
-            <x>46</x>
-            <y>642</y>
-            <width>469</width>
-            <height>149</height>
+            <x>10</x>
+            <y>650</y>
+            <width>425</width>
+            <height>150</height>
             <title>Count</title>
             <title_font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -1230,7 +1239,7 @@
             <actions>
             </actions>
             <x_axis>
-              <title>Sample</title>
+              <title></title>
               <autoscale>true</autoscale>
               <log_scale>false</log_scale>
               <minimum>0.0</minimum>
@@ -1292,10 +1301,10 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_2</name>
-            <x>550</x>
-            <y>641</y>
-            <width>464</width>
-            <height>151</height>
+            <x>450</x>
+            <y>650</y>
+            <width>425</width>
+            <height>150</height>
             <title>Wrd35 - DAC Setpoint</title>
             <title_font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -1305,7 +1314,7 @@
             <actions>
             </actions>
             <x_axis>
-              <title>Sample</title>
+              <title></title>
               <autoscale>true</autoscale>
               <log_scale>false</log_scale>
               <minimum>0.0</minimum>
@@ -1372,10 +1381,10 @@
         <children>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_30</name>
-            <x>52</x>
-            <y>33</y>
-            <width>469</width>
-            <height>144</height>
+            <x>10</x>
+            <y>50</y>
+            <width>425</width>
+            <height>150</height>
             <title>DCCT1</title>
             <title_font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -1385,7 +1394,7 @@
             <actions>
             </actions>
             <x_axis>
-              <title>Sample</title>
+              <title></title>
               <autoscale>true</autoscale>
               <log_scale>false</log_scale>
               <minimum>0.0</minimum>
@@ -1447,10 +1456,10 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_31</name>
-            <x>52</x>
-            <y>183</y>
-            <width>469</width>
-            <height>139</height>
+            <x>10</x>
+            <y>200</y>
+            <width>425</width>
+            <height>150</height>
             <title>DAC Readback</title>
             <title_font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -1460,7 +1469,7 @@
             <actions>
             </actions>
             <x_axis>
-              <title>Sample</title>
+              <title></title>
               <autoscale>true</autoscale>
               <log_scale>false</log_scale>
               <minimum>0.0</minimum>
@@ -1522,10 +1531,10 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_32</name>
-            <x>52</x>
-            <y>332</y>
-            <width>469</width>
-            <height>140</height>
+            <x>10</x>
+            <y>350</y>
+            <width>425</width>
+            <height>150</height>
             <title>Ground</title>
             <title_font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -1535,7 +1544,7 @@
             <actions>
             </actions>
             <x_axis>
-              <title>Sample</title>
+              <title></title>
               <autoscale>true</autoscale>
               <log_scale>false</log_scale>
               <minimum>0.0</minimum>
@@ -1597,10 +1606,10 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_33</name>
-            <x>52</x>
-            <y>485</y>
-            <width>469</width>
-            <height>140</height>
+            <x>10</x>
+            <y>500</y>
+            <width>425</width>
+            <height>150</height>
             <title>Reg</title>
             <title_font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -1672,10 +1681,10 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_34</name>
-            <x>52</x>
-            <y>624</y>
-            <width>469</width>
-            <height>149</height>
+            <x>10</x>
+            <y>650</y>
+            <width>425</width>
+            <height>150</height>
             <title>Count</title>
             <title_font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -1685,7 +1694,7 @@
             <actions>
             </actions>
             <x_axis>
-              <title>Sample</title>
+              <title></title>
               <autoscale>true</autoscale>
               <log_scale>false</log_scale>
               <minimum>0.0</minimum>
@@ -1747,10 +1756,10 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_35</name>
-            <x>545</x>
-            <y>33</y>
-            <width>469</width>
-            <height>145</height>
+            <x>450</x>
+            <y>50</y>
+            <width>425</width>
+            <height>150</height>
             <title>DCCT2</title>
             <title_font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -1760,7 +1769,7 @@
             <actions>
             </actions>
             <x_axis>
-              <title>Sample</title>
+              <title></title>
               <autoscale>true</autoscale>
               <log_scale>false</log_scale>
               <minimum>0.0</minimum>
@@ -1822,10 +1831,10 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_36</name>
-            <x>545</x>
-            <y>177</y>
-            <width>469</width>
-            <height>140</height>
+            <x>450</x>
+            <y>200</y>
+            <width>425</width>
+            <height>150</height>
             <title>Volt</title>
             <title_font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -1835,7 +1844,7 @@
             <actions>
             </actions>
             <x_axis>
-              <title>Sample</title>
+              <title></title>
               <autoscale>true</autoscale>
               <log_scale>false</log_scale>
               <minimum>0.0</minimum>
@@ -1897,10 +1906,10 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_37</name>
-            <x>545</x>
-            <y>326</y>
-            <width>469</width>
-            <height>141</height>
+            <x>450</x>
+            <y>350</y>
+            <width>425</width>
+            <height>150</height>
             <title>Spare</title>
             <title_font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -1910,7 +1919,7 @@
             <actions>
             </actions>
             <x_axis>
-              <title>Sample</title>
+              <title></title>
               <autoscale>true</autoscale>
               <log_scale>false</log_scale>
               <minimum>0.0</minimum>
@@ -1972,10 +1981,10 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_38</name>
-            <x>545</x>
-            <y>479</y>
-            <width>469</width>
-            <height>141</height>
+            <x>450</x>
+            <y>500</y>
+            <width>425</width>
+            <height>150</height>
             <title>Error</title>
             <title_font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -1985,7 +1994,7 @@
             <actions>
             </actions>
             <x_axis>
-              <title>Sample</title>
+              <title></title>
               <autoscale>true</autoscale>
               <log_scale>false</log_scale>
               <minimum>0.0</minimum>
@@ -2047,10 +2056,10 @@
           </widget>
           <widget type="xyplot" version="3.0.0">
             <name>XY Graph_39</name>
-            <x>545</x>
-            <y>617</y>
-            <width>464</width>
-            <height>151</height>
+            <x>450</x>
+            <y>650</y>
+            <width>425</width>
+            <height>150</height>
             <title>Wrd35 - DAC Setpoint</title>
             <title_font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -2060,7 +2069,7 @@
             <actions>
             </actions>
             <x_axis>
-              <title>Sample</title>
+              <title></title>
               <autoscale>true</autoscale>
               <log_scale>false</log_scale>
               <minimum>0.0</minimum>
@@ -2125,6 +2134,756 @@
       <tab>
         <name>Error</name>
         <children>
+          <widget type="xyplot" version="3.0.0">
+            <name>XY Graph_40</name>
+            <x>10</x>
+            <y>47</y>
+            <width>425</width>
+            <height>150</height>
+            <title>DCCT1</title>
+            <title_font>
+              <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+              </font>
+            </title_font>
+            <show_legend>false</show_legend>
+            <actions>
+            </actions>
+            <x_axis>
+              <title></title>
+              <autoscale>true</autoscale>
+              <log_scale>false</log_scale>
+              <minimum>0.0</minimum>
+              <maximum>100000.0</maximum>
+              <show_grid>true</show_grid>
+              <title_font>
+                <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                </font>
+              </title_font>
+              <scale_font>
+                <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                </font>
+              </scale_font>
+              <visible>true</visible>
+            </x_axis>
+            <y_axes>
+              <y_axis>
+                <title></title>
+                <autoscale>true</autoscale>
+                <log_scale>false</log_scale>
+                <minimum>0.0</minimum>
+                <maximum>100.0</maximum>
+                <show_grid>true</show_grid>
+                <title_font>
+                  <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                  </font>
+                </title_font>
+                <scale_font>
+                  <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                  </font>
+                </scale_font>
+                <on_right>false</on_right>
+                <visible>true</visible>
+                <color>
+                  <color name="Text" red="0" green="0" blue="0">
+                  </color>
+                </color>
+              </y_axis>
+            </y_axes>
+            <traces>
+              <trace>
+                <name></name>
+                <x_pv></x_pv>
+                <y_pv>$(PriSys){$(PSC)}$(CHAN):ERR:DCCT1-Wfm</y_pv>
+                <err_pv></err_pv>
+                <axis>0</axis>
+                <trace_type>1</trace_type>
+                <color>
+                  <color red="21" green="21" blue="196">
+                  </color>
+                </color>
+                <line_width>1</line_width>
+                <line_style>0</line_style>
+                <point_type>0</point_type>
+                <point_size>4</point_size>
+                <visible>true</visible>
+              </trace>
+            </traces>
+          </widget>
+          <widget type="xyplot" version="3.0.0">
+            <name>XY Graph_41</name>
+            <x>10</x>
+            <y>197</y>
+            <width>425</width>
+            <height>150</height>
+            <title>DAC Readback</title>
+            <title_font>
+              <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+              </font>
+            </title_font>
+            <show_legend>false</show_legend>
+            <actions>
+            </actions>
+            <x_axis>
+              <title></title>
+              <autoscale>true</autoscale>
+              <log_scale>false</log_scale>
+              <minimum>0.0</minimum>
+              <maximum>100000.0</maximum>
+              <show_grid>true</show_grid>
+              <title_font>
+                <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                </font>
+              </title_font>
+              <scale_font>
+                <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                </font>
+              </scale_font>
+              <visible>true</visible>
+            </x_axis>
+            <y_axes>
+              <y_axis>
+                <title></title>
+                <autoscale>true</autoscale>
+                <log_scale>false</log_scale>
+                <minimum>0.0</minimum>
+                <maximum>100.0</maximum>
+                <show_grid>true</show_grid>
+                <title_font>
+                  <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                  </font>
+                </title_font>
+                <scale_font>
+                  <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                  </font>
+                </scale_font>
+                <on_right>false</on_right>
+                <visible>true</visible>
+                <color>
+                  <color name="Text" red="0" green="0" blue="0">
+                  </color>
+                </color>
+              </y_axis>
+            </y_axes>
+            <traces>
+              <trace>
+                <name></name>
+                <x_pv></x_pv>
+                <y_pv>$(PriSys){$(PSC)}$(CHAN):ERR:DAC-Wfm</y_pv>
+                <err_pv></err_pv>
+                <axis>0</axis>
+                <trace_type>1</trace_type>
+                <color>
+                  <color red="21" green="21" blue="196">
+                  </color>
+                </color>
+                <line_width>1</line_width>
+                <line_style>0</line_style>
+                <point_type>0</point_type>
+                <point_size>4</point_size>
+                <visible>true</visible>
+              </trace>
+            </traces>
+          </widget>
+          <widget type="xyplot" version="3.0.0">
+            <name>XY Graph_42</name>
+            <x>10</x>
+            <y>347</y>
+            <width>425</width>
+            <height>150</height>
+            <title>Ground</title>
+            <title_font>
+              <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+              </font>
+            </title_font>
+            <show_legend>false</show_legend>
+            <actions>
+            </actions>
+            <x_axis>
+              <title></title>
+              <autoscale>true</autoscale>
+              <log_scale>false</log_scale>
+              <minimum>0.0</minimum>
+              <maximum>100000.0</maximum>
+              <show_grid>true</show_grid>
+              <title_font>
+                <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                </font>
+              </title_font>
+              <scale_font>
+                <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                </font>
+              </scale_font>
+              <visible>true</visible>
+            </x_axis>
+            <y_axes>
+              <y_axis>
+                <title></title>
+                <autoscale>true</autoscale>
+                <log_scale>false</log_scale>
+                <minimum>0.0</minimum>
+                <maximum>100.0</maximum>
+                <show_grid>true</show_grid>
+                <title_font>
+                  <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                  </font>
+                </title_font>
+                <scale_font>
+                  <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                  </font>
+                </scale_font>
+                <on_right>false</on_right>
+                <visible>true</visible>
+                <color>
+                  <color name="Text" red="0" green="0" blue="0">
+                  </color>
+                </color>
+              </y_axis>
+            </y_axes>
+            <traces>
+              <trace>
+                <name></name>
+                <x_pv></x_pv>
+                <y_pv>$(PriSys){$(PSC)}$(CHAN):ERR:Gnd-Wfm</y_pv>
+                <err_pv></err_pv>
+                <axis>0</axis>
+                <trace_type>1</trace_type>
+                <color>
+                  <color red="21" green="21" blue="196">
+                  </color>
+                </color>
+                <line_width>1</line_width>
+                <line_style>0</line_style>
+                <point_type>0</point_type>
+                <point_size>4</point_size>
+                <visible>true</visible>
+              </trace>
+            </traces>
+          </widget>
+          <widget type="xyplot" version="3.0.0">
+            <name>XY Graph_43</name>
+            <x>10</x>
+            <y>497</y>
+            <width>425</width>
+            <height>150</height>
+            <title>Reg</title>
+            <title_font>
+              <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+              </font>
+            </title_font>
+            <show_legend>false</show_legend>
+            <actions>
+            </actions>
+            <x_axis>
+              <title>Sample</title>
+              <autoscale>true</autoscale>
+              <log_scale>false</log_scale>
+              <minimum>0.0</minimum>
+              <maximum>100000.0</maximum>
+              <show_grid>true</show_grid>
+              <title_font>
+                <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                </font>
+              </title_font>
+              <scale_font>
+                <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                </font>
+              </scale_font>
+              <visible>true</visible>
+            </x_axis>
+            <y_axes>
+              <y_axis>
+                <title></title>
+                <autoscale>true</autoscale>
+                <log_scale>false</log_scale>
+                <minimum>0.0</minimum>
+                <maximum>100.0</maximum>
+                <show_grid>true</show_grid>
+                <title_font>
+                  <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                  </font>
+                </title_font>
+                <scale_font>
+                  <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                  </font>
+                </scale_font>
+                <on_right>false</on_right>
+                <visible>true</visible>
+                <color>
+                  <color name="Text" red="0" green="0" blue="0">
+                  </color>
+                </color>
+              </y_axis>
+            </y_axes>
+            <traces>
+              <trace>
+                <name></name>
+                <x_pv></x_pv>
+                <y_pv>$(PriSys){$(PSC)}$(CHAN):ERR:Reg-Wfm</y_pv>
+                <err_pv></err_pv>
+                <axis>0</axis>
+                <trace_type>1</trace_type>
+                <color>
+                  <color red="21" green="21" blue="196">
+                  </color>
+                </color>
+                <line_width>1</line_width>
+                <line_style>0</line_style>
+                <point_type>0</point_type>
+                <point_size>4</point_size>
+                <visible>true</visible>
+              </trace>
+            </traces>
+          </widget>
+          <widget type="xyplot" version="3.0.0">
+            <name>XY Graph_44</name>
+            <x>10</x>
+            <y>647</y>
+            <width>425</width>
+            <height>150</height>
+            <title>Count</title>
+            <title_font>
+              <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+              </font>
+            </title_font>
+            <show_legend>false</show_legend>
+            <actions>
+            </actions>
+            <x_axis>
+              <title></title>
+              <autoscale>true</autoscale>
+              <log_scale>false</log_scale>
+              <minimum>0.0</minimum>
+              <maximum>100000.0</maximum>
+              <show_grid>true</show_grid>
+              <title_font>
+                <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                </font>
+              </title_font>
+              <scale_font>
+                <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                </font>
+              </scale_font>
+              <visible>true</visible>
+            </x_axis>
+            <y_axes>
+              <y_axis>
+                <title></title>
+                <autoscale>true</autoscale>
+                <log_scale>false</log_scale>
+                <minimum>0.0</minimum>
+                <maximum>100.0</maximum>
+                <show_grid>true</show_grid>
+                <title_font>
+                  <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                  </font>
+                </title_font>
+                <scale_font>
+                  <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                  </font>
+                </scale_font>
+                <on_right>false</on_right>
+                <visible>true</visible>
+                <color>
+                  <color name="Text" red="0" green="0" blue="0">
+                  </color>
+                </color>
+              </y_axis>
+            </y_axes>
+            <traces>
+              <trace>
+                <name></name>
+                <x_pv></x_pv>
+                <y_pv>$(PriSys){$(PSC)}$(CHAN):ERR:Cnt-Wfm</y_pv>
+                <err_pv></err_pv>
+                <axis>0</axis>
+                <trace_type>1</trace_type>
+                <color>
+                  <color red="21" green="21" blue="196">
+                  </color>
+                </color>
+                <line_width>1</line_width>
+                <line_style>0</line_style>
+                <point_type>0</point_type>
+                <point_size>4</point_size>
+                <visible>true</visible>
+              </trace>
+            </traces>
+          </widget>
+          <widget type="xyplot" version="3.0.0">
+            <name>XY Graph_45</name>
+            <x>448</x>
+            <y>47</y>
+            <width>425</width>
+            <height>150</height>
+            <title>DCCT2</title>
+            <title_font>
+              <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+              </font>
+            </title_font>
+            <show_legend>false</show_legend>
+            <actions>
+            </actions>
+            <x_axis>
+              <title></title>
+              <autoscale>true</autoscale>
+              <log_scale>false</log_scale>
+              <minimum>0.0</minimum>
+              <maximum>100000.0</maximum>
+              <show_grid>true</show_grid>
+              <title_font>
+                <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                </font>
+              </title_font>
+              <scale_font>
+                <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                </font>
+              </scale_font>
+              <visible>true</visible>
+            </x_axis>
+            <y_axes>
+              <y_axis>
+                <title></title>
+                <autoscale>true</autoscale>
+                <log_scale>false</log_scale>
+                <minimum>0.0</minimum>
+                <maximum>100.0</maximum>
+                <show_grid>true</show_grid>
+                <title_font>
+                  <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                  </font>
+                </title_font>
+                <scale_font>
+                  <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                  </font>
+                </scale_font>
+                <on_right>false</on_right>
+                <visible>true</visible>
+                <color>
+                  <color name="Text" red="0" green="0" blue="0">
+                  </color>
+                </color>
+              </y_axis>
+            </y_axes>
+            <traces>
+              <trace>
+                <name></name>
+                <x_pv></x_pv>
+                <y_pv>$(PriSys){$(PSC)}$(CHAN):ERR:DCCT2-Wfm</y_pv>
+                <err_pv></err_pv>
+                <axis>0</axis>
+                <trace_type>1</trace_type>
+                <color>
+                  <color red="21" green="21" blue="196">
+                  </color>
+                </color>
+                <line_width>1</line_width>
+                <line_style>0</line_style>
+                <point_type>0</point_type>
+                <point_size>4</point_size>
+                <visible>true</visible>
+              </trace>
+            </traces>
+          </widget>
+          <widget type="xyplot" version="3.0.0">
+            <name>XY Graph_46</name>
+            <x>450</x>
+            <y>197</y>
+            <width>425</width>
+            <height>150</height>
+            <title>Volt</title>
+            <title_font>
+              <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+              </font>
+            </title_font>
+            <show_legend>false</show_legend>
+            <actions>
+            </actions>
+            <x_axis>
+              <title></title>
+              <autoscale>true</autoscale>
+              <log_scale>false</log_scale>
+              <minimum>0.0</minimum>
+              <maximum>100000.0</maximum>
+              <show_grid>true</show_grid>
+              <title_font>
+                <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                </font>
+              </title_font>
+              <scale_font>
+                <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                </font>
+              </scale_font>
+              <visible>true</visible>
+            </x_axis>
+            <y_axes>
+              <y_axis>
+                <title></title>
+                <autoscale>true</autoscale>
+                <log_scale>false</log_scale>
+                <minimum>0.0</minimum>
+                <maximum>100.0</maximum>
+                <show_grid>true</show_grid>
+                <title_font>
+                  <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                  </font>
+                </title_font>
+                <scale_font>
+                  <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                  </font>
+                </scale_font>
+                <on_right>false</on_right>
+                <visible>true</visible>
+                <color>
+                  <color name="Text" red="0" green="0" blue="0">
+                  </color>
+                </color>
+              </y_axis>
+            </y_axes>
+            <traces>
+              <trace>
+                <name></name>
+                <x_pv></x_pv>
+                <y_pv>$(PriSys){$(PSC)}$(CHAN):ERR:Volt-Wfm</y_pv>
+                <err_pv></err_pv>
+                <axis>0</axis>
+                <trace_type>1</trace_type>
+                <color>
+                  <color red="21" green="21" blue="196">
+                  </color>
+                </color>
+                <line_width>1</line_width>
+                <line_style>0</line_style>
+                <point_type>0</point_type>
+                <point_size>4</point_size>
+                <visible>true</visible>
+              </trace>
+            </traces>
+          </widget>
+          <widget type="xyplot" version="3.0.0">
+            <name>XY Graph_47</name>
+            <x>450</x>
+            <y>347</y>
+            <width>425</width>
+            <height>150</height>
+            <title>Spare</title>
+            <title_font>
+              <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+              </font>
+            </title_font>
+            <show_legend>false</show_legend>
+            <actions>
+            </actions>
+            <x_axis>
+              <title></title>
+              <autoscale>true</autoscale>
+              <log_scale>false</log_scale>
+              <minimum>0.0</minimum>
+              <maximum>100000.0</maximum>
+              <show_grid>true</show_grid>
+              <title_font>
+                <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                </font>
+              </title_font>
+              <scale_font>
+                <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                </font>
+              </scale_font>
+              <visible>true</visible>
+            </x_axis>
+            <y_axes>
+              <y_axis>
+                <title></title>
+                <autoscale>true</autoscale>
+                <log_scale>false</log_scale>
+                <minimum>0.0</minimum>
+                <maximum>100.0</maximum>
+                <show_grid>true</show_grid>
+                <title_font>
+                  <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                  </font>
+                </title_font>
+                <scale_font>
+                  <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                  </font>
+                </scale_font>
+                <on_right>false</on_right>
+                <visible>true</visible>
+                <color>
+                  <color name="Text" red="0" green="0" blue="0">
+                  </color>
+                </color>
+              </y_axis>
+            </y_axes>
+            <traces>
+              <trace>
+                <name></name>
+                <x_pv></x_pv>
+                <y_pv>$(PriSys){$(PSC)}$(CHAN):ERR:Spare-Wfm</y_pv>
+                <err_pv></err_pv>
+                <axis>0</axis>
+                <trace_type>1</trace_type>
+                <color>
+                  <color red="21" green="21" blue="196">
+                  </color>
+                </color>
+                <line_width>1</line_width>
+                <line_style>0</line_style>
+                <point_type>0</point_type>
+                <point_size>4</point_size>
+                <visible>true</visible>
+              </trace>
+            </traces>
+          </widget>
+          <widget type="xyplot" version="3.0.0">
+            <name>XY Graph_48</name>
+            <x>450</x>
+            <y>497</y>
+            <width>425</width>
+            <height>150</height>
+            <title>Error</title>
+            <title_font>
+              <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+              </font>
+            </title_font>
+            <show_legend>false</show_legend>
+            <actions>
+            </actions>
+            <x_axis>
+              <title></title>
+              <autoscale>true</autoscale>
+              <log_scale>false</log_scale>
+              <minimum>0.0</minimum>
+              <maximum>100000.0</maximum>
+              <show_grid>true</show_grid>
+              <title_font>
+                <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                </font>
+              </title_font>
+              <scale_font>
+                <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                </font>
+              </scale_font>
+              <visible>true</visible>
+            </x_axis>
+            <y_axes>
+              <y_axis>
+                <title></title>
+                <autoscale>true</autoscale>
+                <log_scale>false</log_scale>
+                <minimum>0.0</minimum>
+                <maximum>100.0</maximum>
+                <show_grid>true</show_grid>
+                <title_font>
+                  <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                  </font>
+                </title_font>
+                <scale_font>
+                  <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                  </font>
+                </scale_font>
+                <on_right>false</on_right>
+                <visible>true</visible>
+                <color>
+                  <color name="Text" red="0" green="0" blue="0">
+                  </color>
+                </color>
+              </y_axis>
+            </y_axes>
+            <traces>
+              <trace>
+                <name></name>
+                <x_pv></x_pv>
+                <y_pv>$(PriSys){$(PSC)}$(CHAN):ERR:Error-Wfm</y_pv>
+                <err_pv></err_pv>
+                <axis>0</axis>
+                <trace_type>1</trace_type>
+                <color>
+                  <color red="21" green="21" blue="196">
+                  </color>
+                </color>
+                <line_width>1</line_width>
+                <line_style>0</line_style>
+                <point_type>0</point_type>
+                <point_size>4</point_size>
+                <visible>true</visible>
+              </trace>
+            </traces>
+          </widget>
+          <widget type="xyplot" version="3.0.0">
+            <name>XY Graph_49</name>
+            <x>450</x>
+            <y>647</y>
+            <width>425</width>
+            <height>150</height>
+            <title>Wrd35 - DAC Setpoint</title>
+            <title_font>
+              <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+              </font>
+            </title_font>
+            <show_legend>false</show_legend>
+            <actions>
+            </actions>
+            <x_axis>
+              <title></title>
+              <autoscale>true</autoscale>
+              <log_scale>false</log_scale>
+              <minimum>0.0</minimum>
+              <maximum>100000.0</maximum>
+              <show_grid>true</show_grid>
+              <title_font>
+                <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                </font>
+              </title_font>
+              <scale_font>
+                <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                </font>
+              </scale_font>
+              <visible>true</visible>
+            </x_axis>
+            <y_axes>
+              <y_axis>
+                <title></title>
+                <autoscale>true</autoscale>
+                <log_scale>false</log_scale>
+                <minimum>0.0</minimum>
+                <maximum>100.0</maximum>
+                <show_grid>true</show_grid>
+                <title_font>
+                  <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                  </font>
+                </title_font>
+                <scale_font>
+                  <font name="Default" family="Liberation Sans" style="REGULAR" size="14.0">
+                  </font>
+                </scale_font>
+                <on_right>false</on_right>
+                <visible>true</visible>
+                <color>
+                  <color name="Text" red="0" green="0" blue="0">
+                  </color>
+                </color>
+              </y_axis>
+            </y_axes>
+            <traces>
+              <trace>
+                <name></name>
+                <x_pv></x_pv>
+                <y_pv>$(PriSys){$(PSC)}$(CHAN):ERR:Wrd35-Wfm</y_pv>
+                <err_pv></err_pv>
+                <axis>0</axis>
+                <trace_type>1</trace_type>
+                <color>
+                  <color red="21" green="21" blue="196">
+                  </color>
+                </color>
+                <line_width>1</line_width>
+                <line_style>0</line_style>
+                <point_type>0</point_type>
+                <point_size>4</point_size>
+                <visible>true</visible>
+              </trace>
+            </traces>
+          </widget>
         </children>
       </tab>
       <tab>
@@ -2135,9 +2894,9 @@
     </tabs>
     <x>30</x>
     <y>54</y>
-    <width>1200</width>
-    <height>834</height>
-    <active_tab>2</active_tab>
+    <width>900</width>
+    <height>894</height>
+    <active_tab>3</active_tab>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Text Input_1</name>
