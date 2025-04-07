@@ -159,7 +159,7 @@ begin
 
 
 
-setpt_dac1:  entity work.dac_ad5781_intf 
+setpt_dac:  entity work.dac_ad5781_intf 
   generic map
     (SPI_CLK_DIV => 5) --10MHz sclk
   port map(
@@ -179,60 +179,5 @@ setpt_dac1:  entity work.dac_ad5781_intf
 
 
 
---setpt_dac2:  entity work.dac_ad5781_intf 
---  generic map
---    (SPI_CLK_DIV => 5) --10MHz sclk
---  port map(
---	--Control inputs
---    clk => clk,
---    reset => dac_cntrl.ps1.reset, 
---	start => tenkhz_trig,   
---    --DAC Inputs         
---    dac_data => dac_setpt(17 downto 0),
---    dac_ctrl_bits => dac_cntrl.ps1.cntrl(4 downto 0),
---	--DAC Outputs        
---    n_sync => open, 
---    sclk => open, 
---    sdo => sdo(1), 
---    done => open
---);
-
-
---setpt_dac3:  entity work.dac_ad5781_intf 
---  generic map
---    (SPI_CLK_DIV => 5) --10MHz sclk
---  port map(
---	--Control inputs
---    clk => clk,
---    reset => dac_cntrl.ps1.reset, 
---	start => tenkhz_trig, 
---    --DAC Inputs         
---    dac_data => dac_setpt(17 downto 0),
---    dac_ctrl_bits => dac_cntrl.ps1.cntrl(4 downto 0),
---	--DAC Outputs        
---    n_sync => open,
---    sclk => open,
---    sdo => sdo(2), 
---    done => open
---);
-		
-
---setpt_dac4:  entity work.dac_ad5781_intf 
---  generic map
---    (SPI_CLK_DIV => 5) --10MHz sclk
---  port map(
---	--Control inputs
---    clk => clk,
---    reset => dac_cntrl.ps1.reset,
---	start => tenkhz_trig,  
---    --DAC Inputs         
---    dac_data => dac_setpt(17 downto 0),
---    dac_ctrl_bits => dac_cntrl.ps1.cntrl(4 downto 0),
---	--DAC Outputs        
---    n_sync => open,
---    sclk => open,
---    sdo => sdo(3), 
---    done => open
---);
 
 end arch;

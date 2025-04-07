@@ -58,7 +58,6 @@ void Calc_WriteSmooth(u32 chan, s32 new_setpt) {
 	   	        dpram_addr = PS1_DAC_RAMPADDR;
 	    	    dpram_data = PS1_DAC_RAMPDATA;
 	    	    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPLEN, smooth_len);
-	    	    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_SETPT, new_setpt);
 	    	    break;
 
 	  case 2:   cur_setpt = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_DAC_CURRSETPT);
@@ -98,7 +97,7 @@ void Calc_WriteSmooth(u32 chan, s32 new_setpt) {
 
 	//run the smooth ramp
 	switch (chan) {
-	  case 1:   cur_setpt = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_SETPT);
+	  case 1:   //cur_setpt = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_SETPT);
                 Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPLEN, smooth_len);
 		        Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RUNRAMP, 1);
 	    	    break;
@@ -113,6 +112,8 @@ void Calc_WriteSmooth(u32 chan, s32 new_setpt) {
 	    	    break;
 
 	}
+
+
 
 	//for (i=0;i<100;i++) {
     //  xil_printf("SetPt: %d  ", Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_CURRSETPT));
@@ -144,6 +145,7 @@ void Set_dacOpmode(u32 chan, s32 new_opmode) {
 
 	//if changing from smooth/ramp to jump mode first ramp to 0
 	if (((dac_mode == SMOOTH) || (dac_mode == RAMP)) && new_opmode == JUMP) {
+		xil_printf("Switching from Smooth/Ramp to Jump Mode\r\n");
 		//Set the DAC to 0
 		Calc_WriteSmooth(chan, 0);
 		//Set the Jump set point to 0 too
@@ -154,6 +156,7 @@ void Set_dacOpmode(u32 chan, s32 new_opmode) {
 
 	//if changing from jump mode to smooth/ramp mode
 	if ((dac_mode == JUMP) && ((new_opmode == SMOOTH) || (new_opmode == RAMP))) {
+		xil_printf("Switching from Jump to Smooth/Ramp Mode\r\n");
 		// Smooth the DAC to 0
 		Calc_WriteSmooth(chan, 0);
 		//Set the Jump set point to 0 too
