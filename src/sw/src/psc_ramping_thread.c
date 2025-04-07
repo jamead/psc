@@ -70,6 +70,10 @@ void write_ramptable(u32 chan_num, u32 ramp_len, u32 ramp_table[])
     Xil_Out32(XPAR_M_AXI_BASEADDR + dpram_data, ntohl(ramp_table[i]));
   }
 
+	//update dac setpt with last value from ramp, so whenever we switch
+	// back to FOFB or JumpMode there is no change
+	//Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DAC_RAMPLEN, (s32)val);
+
 }
 
 

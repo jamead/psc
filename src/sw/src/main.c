@@ -280,6 +280,16 @@ int main()
 	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET, 0);
     usleep(1000);
 
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DCCT0_OFFSET, 100);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DCCT0_GAIN, 0x80000);
+
+    /*
+    for (i=0;i<100;i++) {
+    	Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DCCT0_GAIN, i*100);
+    	xil_printf("i=%d\r\n",i);
+        sleep(1);
+    }
+    */
     //read Timestamp
     /*
     for (i=0;i<5;i++) {

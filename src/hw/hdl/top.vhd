@@ -140,6 +140,8 @@ architecture behv of top is
    
    signal dcct_adcs             : t_dcct_adcs;
    signal dcct_adcs_ave         : t_dcct_adcs_ave;
+   signal dcct_params           : t_dcct_adcs_params;
+   signal mon_params            : t_mon_adcs_params;
   
    signal mon_adcs              : t_mon_adcs;
    signal mon_adcs_ave          : t_mon_adcs_ave;
@@ -232,7 +234,8 @@ read_dcct_adcs: entity work.DCCT_ADC_module
     clk => pl_clk0, 
     reset => pl_reset, 
     start => tenkhz_trig,  
-    DCCT_out => dcct_adcs,  
+    dcct_params => dcct_params,
+    dcct_out => dcct_adcs, 
     sdi => dcct_adc_sdo, 
     cnv => dcct_adc_cnv, 
     sclk => dcct_adc_sck, 
@@ -272,22 +275,22 @@ write_dacs: entity work.dac_ctrlr
 
 
 --accumulator 
-accum: entity work.adc_accumulator_top
-  generic map (
-    N_DCCT => 18,  
-	N_8CH  => 16 
-  )
-  port map(
-    clk => pl_clk0,
-    reset => pl_reset,
-    start => adc_done,  
-    mode => accum_mode,
-    dcct_adcs => dcct_adcs,
-    mon_adcs => mon_adcs,
-    dcct_adcs_ave => dcct_adcs_ave,
-    mon_adcs_ave => mon_adcs_ave,
-    done => accum_done
-);
+--accum: entity work.adc_accumulator_top
+--  generic map (
+--    N_DCCT => 18,  
+--	N_8CH  => 16 
+--  )
+--  port map(
+--    clk => pl_clk0,
+--    reset => pl_reset,
+--    start => adc_done,  
+--    mode => accum_mode,
+--    dcct_adcs => dcct_adcs,
+--    mon_adcs => mon_adcs,
+--    dcct_adcs_ave => dcct_adcs_ave,
+--    mon_adcs_ave => mon_adcs_ave,
+--    done => accum_done
+--);
     
     
 --select the source for ADC converts
@@ -341,6 +344,7 @@ ps_regs: entity work.ps_io
     m_axi4_m2s => m_axi4_m2s, 
     m_axi4_s2m => m_axi4_s2m,
     leds => leds,
+    dcct_params => dcct_params,
     dcct_adcs => dcct_adcs,
     mon_adcs => mon_adcs,
     dac_cntrl => dac_cntrl,

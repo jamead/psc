@@ -1,4 +1,4 @@
-`timescale 1ns/1ps
+`timescale 1us/1ps
 `define zynq top_tb.dut.sys.processing_system7_0.inst
 
 
@@ -173,24 +173,54 @@ module top_tb;
     //`ZYNQ_VIP.fpga_soft_reset(32'h0); 
     //#2000 ; 
 
-    #2000;
+    #2;
     //Write the FP LEDs
     `zynq.write_data(32'h43C00004,4, 32'h1, resp);      
     `zynq.write_data(32'h43C00004,4, 32'h2, resp);    
     `zynq.write_data(32'h43C00004,4, 32'h3, resp);  
     
-    `zynq.write_data(32'h43C0030C,4, 32'h1, resp);  
-    #100;
-    `zynq.write_data(32'h43C0030C,4, 32'h0, resp);    
-    #1000;           
+    // Set Test trigger
+    //`zynq.write_data(32'h43C0030C,4, 32'h1, resp);  
+    //#100;
+    //`zynq.write_data(32'h43C0030C,4, 32'h0, resp);    
+    //#1000;           
 
-    `zynq.write_data(32'h43C00118,4, 32'd100, resp);  //set ramplen
-    for (int i = 0; i <= 100; i++) begin
+    //write the dcct gain and offset
+    `zynq.write_data(32'h43C00400,4, 32'h20, resp);   //ps1 dcct0 offset 
+    `zynq.write_data(32'h43C00404,4, 32'h7FFF, resp); //ps1 dcct0 gain   
+    `zynq.write_data(32'h43C004C0,4, 32'h20, resp);   //ps4 dcct0 offset 
+    `zynq.write_data(32'h43C004C4,4, 32'h1234, resp); //ps4 dcct0 gain  
+    
+    
+    //Set DAC opmode to jump
+    `zynq.write_data(32'h43C0010C,4, 32'h3, resp);
+    
+    //write DAC setpoint
+    `zynq.write_data(32'h43C00108,4, 32'h1234, resp);
+    `zynq.write_data(32'h43C00108,4, 32'h1000, resp); 
+    #200;     
+       
+    //write DAC opmode to smooth
+    `zynq.write_data(32'h43C0010C,4, 32'h0, resp);     
+
+
+    `zynq.write_data(32'h43C00118,4, 32'd10, resp);  //set ramplen
+    for (int i = 0; i <= 20; i++) begin
       `zynq.write_data(32'h43C0011C, 4, i, resp);  // set rampaddr
-      `zynq.write_data(32'h43C00120, 4, i, resp);        // set rampdata
+      `zynq.write_data(32'h43C00120, 4, i+10, resp);        // set rampdata
     end
+
     `zynq.write_data(32'h43C00124,4, 32'h1, resp);  //run the ramptable  
-    `zynq.write_data(32'h43C00124,4, 32'h0, resp);  //run the ramptable  
+     #2000;
+ 
+     //Set DAC opmode to jump
+    `zynq.write_data(32'h43C0010C,4, 32'h3, resp);
+    #300;
+
+     //Set DAC opmode to smooth
+    `zynq.write_data(32'h43C0010C,4, 32'h0, resp);
+    #300;
+    `zynq.write_data(32'h43C00124,4, 32'h1, resp);  //run the ramptable  
 
     #1000000;
     

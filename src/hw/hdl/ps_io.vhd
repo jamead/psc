@@ -29,7 +29,9 @@ entity ps_io is
     leds             : out std_logic_vector(7 downto 0);
     
     dcct_adcs        : in t_dcct_adcs;
+    dcct_params      : out t_dcct_adcs_params;
     mon_adcs         : in t_mon_adcs;
+    mon_params       : out t_mon_adcs_params;
     dac_cntrl        : out t_dac_cntrl;
 	dac_stat         : in t_dac_stat;
 	ss_buf_stat      : in t_snapshot_stat;
@@ -62,17 +64,17 @@ architecture behv of ps_io is
   signal evr_trig_prev   : std_logic;
 
   
-  attribute mark_debug     : string;
-  attribute mark_debug of soft_trig: signal is "true";
-  attribute mark_debug of soft_trig_prev: signal is "true";  
-  attribute mark_debug of reg_i: signal is "true";
-  attribute mark_debug of ss_buf_stat: signal is "true";
-  attribute mark_debug of flt_trig: signal is "true";
-  attribute mark_debug of flt_trig_prev: signal is "true";  
-  attribute mark_debug of err_trig: signal is "true";
-  attribute mark_debug of err_trig_prev: signal is "true"; 
-  attribute mark_debug of evr_trig: signal is "true";
-  attribute mark_debug of evr_trig_prev: signal is "true"; 
+--  attribute mark_debug     : string;
+--  attribute mark_debug of soft_trig: signal is "true";
+--  attribute mark_debug of soft_trig_prev: signal is "true";  
+--  attribute mark_debug of reg_i: signal is "true";
+--  attribute mark_debug of ss_buf_stat: signal is "true";
+--  attribute mark_debug of flt_trig: signal is "true";
+--  attribute mark_debug of flt_trig_prev: signal is "true";  
+--  attribute mark_debug of err_trig: signal is "true";
+--  attribute mark_debug of err_trig_prev: signal is "true"; 
+--  attribute mark_debug of evr_trig: signal is "true";
+--  attribute mark_debug of evr_trig_prev: signal is "true"; 
 
 begin
 
@@ -86,7 +88,8 @@ evr_reset <= reg_o.evr_reset.val.data;
 
 leds <= reg_o.leds.val.data;
 
--- DCCT and Monitor ADC slow readbacks
+-- PS1
+-- DCCT and Monitor ADC slow readbacks and gains & offsets
 reg_i.ps1_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps1.dcct0), 32));
 reg_i.ps1_dcct1.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps1.dcct1), 32));
 reg_i.ps1_dacsp.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.dac_sp), 32));
@@ -96,6 +99,25 @@ reg_i.ps1_spare.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.spare_mo
 reg_i.ps1_reg.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.ps_reg), 32));
 reg_i.ps1_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.ps_error), 32));
 
+dcct_params.ps1.dcct0_offset <= signed(reg_o.ps1_dcct0_offset.val.data(19 downto 0)); 
+dcct_params.ps1.dcct0_gain <= signed(reg_o.ps1_dcct0_gain.val.data(19 downto 0)); 
+dcct_params.ps1.dcct1_offset <= signed(reg_o.ps1_dcct1_offset.val.data(19 downto 0)); 
+dcct_params.ps1.dcct1_gain <= signed(reg_o.ps1_dcct1_gain.val.data(19 downto 0)); 
+mon_params.ps1.dac_sp_offset <= signed(reg_o.ps1_dacsp_offset.val.data); 
+mon_params.ps1.dac_sp_gain <= signed(reg_o.ps1_dacsp_gain.val.data); 
+mon_params.ps1.volt_mon_offset <= signed(reg_o.ps1_volt_offset.val.data); 
+mon_params.ps1.volt_mon_gain <= signed(reg_o.ps1_volt_gain.val.data);
+mon_params.ps1.gnd_mon_offset <= signed(reg_o.ps1_gnd_offset.val.data); 
+mon_params.ps1.gnd_mon_gain <= signed(reg_o.ps1_gnd_gain.val.data);
+mon_params.ps1.spare_mon_offset <= signed(reg_o.ps1_spare_offset.val.data); 
+mon_params.ps1.spare_mon_gain <= signed(reg_o.ps1_spare_gain.val.data);
+mon_params.ps1.ps_reg_offset <= signed(reg_o.ps1_reg_offset.val.data); 
+mon_params.ps1.ps_reg_gain <= signed(reg_o.ps1_reg_gain.val.data);
+mon_params.ps1.ps_error_offset <= signed(reg_o.ps1_err_offset.val.data); 
+mon_params.ps1.ps_error_gain <= signed(reg_o.ps1_err_gain.val.data);
+
+-- PS2
+-- DCCT and Monitor ADC slow readbacks and gains & offsets
 reg_i.ps2_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps2.dcct0), 32));
 reg_i.ps2_dcct1.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps2.dcct1), 32));
 reg_i.ps2_dacsp.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.dac_sp), 32));
@@ -105,6 +127,25 @@ reg_i.ps2_spare.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.spare_mo
 reg_i.ps2_reg.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.ps_reg), 32));
 reg_i.ps2_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.ps_error), 32));
 
+dcct_params.ps2.dcct0_offset <= signed(reg_o.ps2_dcct0_offset.val.data(19 downto 0)); 
+dcct_params.ps2.dcct0_gain <= signed(reg_o.ps2_dcct0_gain.val.data(19 downto 0)); 
+dcct_params.ps2.dcct1_offset <= signed(reg_o.ps2_dcct1_offset.val.data(19 downto 0)); 
+dcct_params.ps2.dcct1_gain <= signed(reg_o.ps2_dcct1_gain.val.data(19 downto 0)); 
+mon_params.ps2.dac_sp_offset <= signed(reg_o.ps2_dacsp_offset.val.data); 
+mon_params.ps2.dac_sp_gain <= signed(reg_o.ps2_dacsp_gain.val.data); 
+mon_params.ps2.volt_mon_offset <= signed(reg_o.ps2_volt_offset.val.data); 
+mon_params.ps2.volt_mon_gain <= signed(reg_o.ps2_volt_gain.val.data);
+mon_params.ps2.gnd_mon_offset <= signed(reg_o.ps2_gnd_offset.val.data); 
+mon_params.ps2.gnd_mon_gain <= signed(reg_o.ps2_gnd_gain.val.data);
+mon_params.ps2.spare_mon_offset <= signed(reg_o.ps2_spare_offset.val.data); 
+mon_params.ps2.spare_mon_gain <= signed(reg_o.ps2_spare_gain.val.data);
+mon_params.ps2.ps_reg_offset <= signed(reg_o.ps2_reg_offset.val.data); 
+mon_params.ps2.ps_reg_gain <= signed(reg_o.ps2_reg_gain.val.data);
+mon_params.ps2.ps_error_offset <= signed(reg_o.ps2_err_offset.val.data); 
+mon_params.ps2.ps_error_gain <= signed(reg_o.ps2_err_gain.val.data);
+
+-- PS3
+-- DCCT and Monitor ADC slow readbacks and gains & offsets
 reg_i.ps3_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps3.dcct0), 32));
 reg_i.ps3_dcct1.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps3.dcct1), 32));
 reg_i.ps3_dacsp.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.dac_sp), 32));
@@ -114,6 +155,25 @@ reg_i.ps3_spare.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.spare_mo
 reg_i.ps3_reg.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.ps_reg), 32));
 reg_i.ps3_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.ps_error), 32));
 
+dcct_params.ps3.dcct0_offset <= signed(reg_o.ps3_dcct0_offset.val.data(19 downto 0)); 
+dcct_params.ps3.dcct0_gain <= signed(reg_o.ps3_dcct0_gain.val.data(19 downto 0)); 
+dcct_params.ps3.dcct1_offset <= signed(reg_o.ps3_dcct1_offset.val.data(19 downto 0)); 
+dcct_params.ps3.dcct1_gain <= signed(reg_o.ps3_dcct1_gain.val.data(19 downto 0)); 
+mon_params.ps3.dac_sp_offset <= signed(reg_o.ps3_dacsp_offset.val.data); 
+mon_params.ps3.dac_sp_gain <= signed(reg_o.ps3_dacsp_gain.val.data); 
+mon_params.ps3.volt_mon_offset <= signed(reg_o.ps3_volt_offset.val.data); 
+mon_params.ps3.volt_mon_gain <= signed(reg_o.ps3_volt_gain.val.data);
+mon_params.ps3.gnd_mon_offset <= signed(reg_o.ps3_gnd_offset.val.data); 
+mon_params.ps3.gnd_mon_gain <= signed(reg_o.ps3_gnd_gain.val.data);
+mon_params.ps3.spare_mon_offset <= signed(reg_o.ps3_spare_offset.val.data); 
+mon_params.ps3.spare_mon_gain <= signed(reg_o.ps3_spare_gain.val.data);
+mon_params.ps3.ps_reg_offset <= signed(reg_o.ps3_reg_offset.val.data); 
+mon_params.ps3.ps_reg_gain <= signed(reg_o.ps3_reg_gain.val.data);
+mon_params.ps3.ps_error_offset <= signed(reg_o.ps3_err_offset.val.data); 
+mon_params.ps3.ps_error_gain <= signed(reg_o.ps3_err_gain.val.data);
+
+-- PS4
+-- DCCT and Monitor ADC slow readbacks and gains & offsets
 reg_i.ps4_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps4.dcct0), 32));
 reg_i.ps4_dcct1.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps4.dcct1), 32));
 reg_i.ps4_dacsp.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.dac_sp), 32));
@@ -123,73 +183,93 @@ reg_i.ps4_spare.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.spare_mo
 reg_i.ps4_reg.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.ps_reg), 32));
 reg_i.ps4_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.ps_error), 32));
 
+dcct_params.ps4.dcct0_offset <= signed(reg_o.ps4_dcct0_offset.val.data(19 downto 0)); 
+dcct_params.ps4.dcct0_gain <= signed(reg_o.ps4_dcct0_gain.val.data(19 downto 0)); 
+dcct_params.ps4.dcct1_offset <= signed(reg_o.ps4_dcct1_offset.val.data(19 downto 0)); 
+dcct_params.ps4.dcct1_gain <= signed(reg_o.ps4_dcct1_gain.val.data(19 downto 0)); 
+mon_params.ps4.dac_sp_offset <= signed(reg_o.ps4_dacsp_offset.val.data); 
+mon_params.ps4.dac_sp_gain <= signed(reg_o.ps4_dacsp_gain.val.data); 
+mon_params.ps4.volt_mon_offset <= signed(reg_o.ps4_volt_offset.val.data); 
+mon_params.ps4.volt_mon_gain <= signed(reg_o.ps4_volt_gain.val.data);
+mon_params.ps4.gnd_mon_offset <= signed(reg_o.ps4_gnd_offset.val.data); 
+mon_params.ps4.gnd_mon_gain <= signed(reg_o.ps4_gnd_gain.val.data);
+mon_params.ps4.spare_mon_offset <= signed(reg_o.ps4_spare_offset.val.data); 
+mon_params.ps4.spare_mon_gain <= signed(reg_o.ps4_spare_gain.val.data);
+mon_params.ps4.ps_reg_offset <= signed(reg_o.ps4_reg_offset.val.data); 
+mon_params.ps4.ps_reg_gain <= signed(reg_o.ps4_reg_gain.val.data);
+mon_params.ps4.ps_error_offset <= signed(reg_o.ps4_err_offset.val.data); 
+mon_params.ps4.ps_error_gain <= signed(reg_o.ps4_err_gain.val.data);
+
+
+
+
 
 -- DAC control and Ramp Tables and status
 --CH 1
 dac_cntrl.ps1.offset <= reg_o.ps1_dac_offset.val.data; 
 dac_cntrl.ps1.gain <= reg_o.ps1_dac_gain.val.data; 
 dac_cntrl.ps1.setpoint <= reg_o.ps1_dac_setpt.val.data;
-dac_cntrl.ps1.mode <= reg_o.ps1_dac_jumpmode.val.data;
+dac_cntrl.ps1.mode <= reg_o.ps1_dac_opmode.val.data;
 dac_cntrl.ps1.cntrl <= reg_o.ps1_dac_cntrl.val.data;
 dac_cntrl.ps1.reset <= reg_o.ps1_dac_reset.val.data(0);
 dac_cntrl.ps1.ramplen <= reg_o.ps1_dac_ramplen.val.data;
 dac_cntrl.ps1.dpram_addr <= reg_o.ps1_dac_rampaddr.val.data;
 dac_cntrl.ps1.dpram_data <= reg_o.ps1_dac_rampdata.val.data;
 dac_cntrl.ps1.dpram_we <= reg_o.ps1_dac_rampdata.val.swacc;
-dac_cntrl.ps1.ramprun <= reg_o.ps1_dac_runramp.val.data(0);
+dac_cntrl.ps1.ramprun <= reg_o.ps1_dac_runramp.val.swacc; --data(0);
 
 reg_i.ps1_dac_rampactive.val.data(0) <= dac_stat.ps1.active;
-reg_i.ps1_dac_currampaddr.val.data <= dac_stat.ps1.cur_addr;
+reg_i.ps1_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps1.dac_setpt),32));
 
 --CH 2
 dac_cntrl.ps2.offset <= reg_o.ps2_dac_offset.val.data; 
 dac_cntrl.ps2.gain <= reg_o.ps2_dac_gain.val.data; 
 dac_cntrl.ps2.setpoint <= reg_o.ps2_dac_setpt.val.data;
-dac_cntrl.ps2.mode <= reg_o.ps2_dac_jumpmode.val.data;
+dac_cntrl.ps2.mode <= reg_o.ps2_dac_opmode.val.data;
 dac_cntrl.ps2.cntrl <= reg_o.ps2_dac_cntrl.val.data;
 dac_cntrl.ps2.reset <= reg_o.ps2_dac_reset.val.data(0);
 dac_cntrl.ps2.ramplen <= reg_o.ps2_dac_ramplen.val.data;
 dac_cntrl.ps2.dpram_addr <= reg_o.ps2_dac_rampaddr.val.data;
 dac_cntrl.ps2.dpram_data <= reg_o.ps2_dac_rampdata.val.data;
 dac_cntrl.ps2.dpram_we <= reg_o.ps2_dac_rampdata.val.swacc;
-dac_cntrl.ps2.ramprun <= reg_o.ps2_dac_runramp.val.data(0);
+dac_cntrl.ps2.ramprun <= reg_o.ps2_dac_runramp.val.swacc; --data(0);
 
 reg_i.ps2_dac_rampactive.val.data(0) <= dac_stat.ps2.active;
-reg_i.ps2_dac_currampaddr.val.data <= dac_stat.ps2.cur_addr;
+reg_i.ps2_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps2.dac_setpt),32));
 
 
 -- CH 3
 dac_cntrl.ps3.offset <= reg_o.ps3_dac_offset.val.data; 
 dac_cntrl.ps3.gain <= reg_o.ps3_dac_gain.val.data; 
 dac_cntrl.ps3.setpoint <= reg_o.ps3_dac_setpt.val.data;
-dac_cntrl.ps3.mode <= reg_o.ps3_dac_jumpmode.val.data;
+dac_cntrl.ps3.mode <= reg_o.ps3_dac_opmode.val.data;
 dac_cntrl.ps3.cntrl <= reg_o.ps3_dac_cntrl.val.data;
 dac_cntrl.ps3.reset <= reg_o.ps3_dac_reset.val.data(0);
 dac_cntrl.ps3.ramplen <= reg_o.ps3_dac_ramplen.val.data;
 dac_cntrl.ps3.dpram_addr <= reg_o.ps3_dac_rampaddr.val.data;
 dac_cntrl.ps3.dpram_data <= reg_o.ps3_dac_rampdata.val.data;
 dac_cntrl.ps3.dpram_we <= reg_o.ps3_dac_rampdata.val.swacc;
-dac_cntrl.ps3.ramprun <= reg_o.ps3_dac_runramp.val.data(0);
+dac_cntrl.ps3.ramprun <= reg_o.ps3_dac_runramp.val.swacc; --data(0);
 
 reg_i.ps3_dac_rampactive.val.data(0) <= dac_stat.ps3.active;
-reg_i.ps3_dac_currampaddr.val.data <= dac_stat.ps3.cur_addr;
+reg_i.ps3_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps3.dac_setpt),32));
 
 
 --CH 4
 dac_cntrl.ps4.offset <= reg_o.ps4_dac_offset.val.data; 
 dac_cntrl.ps4.gain <= reg_o.ps4_dac_gain.val.data; 
 dac_cntrl.ps4.setpoint <= reg_o.ps4_dac_setpt.val.data;
-dac_cntrl.ps4.mode <= reg_o.ps4_dac_jumpmode.val.data;
+dac_cntrl.ps4.mode <= reg_o.ps4_dac_opmode.val.data;
 dac_cntrl.ps4.cntrl <= reg_o.ps4_dac_cntrl.val.data;
 dac_cntrl.ps4.reset <= reg_o.ps4_dac_reset.val.data(0);
 dac_cntrl.ps4.ramplen <= reg_o.ps4_dac_ramplen.val.data;
 dac_cntrl.ps4.dpram_addr <= reg_o.ps4_dac_rampaddr.val.data;
 dac_cntrl.ps4.dpram_data <= reg_o.ps4_dac_rampdata.val.data;
 dac_cntrl.ps4.dpram_we <= reg_o.ps4_dac_rampdata.val.swacc;
-dac_cntrl.ps4.ramprun <= reg_o.ps4_dac_runramp.val.data(0);
+dac_cntrl.ps4.ramprun <= reg_o.ps4_dac_runramp.val.swacc; --data(0);
 
 reg_i.ps4_dac_rampactive.val.data(0) <= dac_stat.ps4.active;
-reg_i.ps4_dac_currampaddr.val.data <= dac_stat.ps4.cur_addr;
+reg_i.ps4_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps4.dac_setpt),32));
 
 
 

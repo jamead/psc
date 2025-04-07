@@ -39,8 +39,7 @@ architecture arch of dac_ctrlr is
 
 
    --debug signals (connect to ila)
-   attribute mark_debug                 : string;
-   attribute mark_debug of tenkhz_trig: signal is "true";
+   attribute mark_debug                 : string;   attribute mark_debug of tenkhz_trig: signal is "true";
 
 
 

@@ -181,6 +181,15 @@ void ReadSAData(char *msg) {
     sadata.ps4_mon[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_REG);
     sadata.ps4_mon[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_ERR);
 
+    sadata.ps1_dacsetpt   = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_CURRSETPT);
+    sadata.ps1_rampactive = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPACTIVE);
+    sadata.ps2_dacsetpt   = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_DAC_CURRSETPT);
+    sadata.ps2_rampactive = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_DAC_RAMPACTIVE);
+    sadata.ps3_dacsetpt   = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_DAC_CURRSETPT);
+    sadata.ps3_rampactive = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_DAC_RAMPACTIVE);
+    sadata.ps4_dacsetpt   = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_DAC_CURRSETPT);
+    sadata.ps4_rampactive = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_DAC_RAMPACTIVE);
+
 
 
     /*

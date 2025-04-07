@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-04-03 10:02:20 by mead-->
+<!--Saved on 2025-04-06 14:28:30 by mead-->
 <display version="2.0.0">
   <name>$(CHAN):$(PriSys)</name>
   <width>975</width>
@@ -362,6 +362,56 @@
             <y>348</y>
             <width>522</width>
             <height>264</height>
+            <widget type="led" version="2.0.0">
+              <name>LED</name>
+              <pv_name>$(PriSys){$(PSC)}$(CHAN):DACRampActive-I</pv_name>
+              <x>407</x>
+              <y>31</y>
+            </widget>
+            <widget type="label" version="2.0.0">
+              <name>Label_46</name>
+              <text>Ramp Active</text>
+              <x>282</x>
+              <y>29</y>
+              <width>132</width>
+              <font>
+                <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                </font>
+              </font>
+              <horizontal_alignment>1</horizontal_alignment>
+              <vertical_alignment>1</vertical_alignment>
+              <actions>
+              </actions>
+              <border_color>
+                <color red="0" green="128" blue="255">
+                </color>
+              </border_color>
+            </widget>
+            <widget type="bool_button" version="2.0.0">
+              <name>Boolean Button_1</name>
+              <pv_name>$(PriSys){$(PSC)}$(CHAN):DAC_RampRun-SP</pv_name>
+              <x>318</x>
+              <y>143</y>
+            </widget>
+            <widget type="label" version="2.0.0">
+              <name>Label_40</name>
+              <text>Run Ramp</text>
+              <x>288</x>
+              <y>113</y>
+              <width>170</width>
+              <font>
+                <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                </font>
+              </font>
+              <horizontal_alignment>1</horizontal_alignment>
+              <vertical_alignment>1</vertical_alignment>
+              <actions>
+              </actions>
+              <border_color>
+                <color red="0" green="128" blue="255">
+                </color>
+              </border_color>
+            </widget>
           </widget>
           <widget type="textentry" version="3.0.0">
             <name>Text Update_49</name>
@@ -394,31 +444,6 @@
             <x>370</x>
             <y>78</y>
             <width>132</width>
-            <font>
-              <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
-              </font>
-            </font>
-            <horizontal_alignment>1</horizontal_alignment>
-            <vertical_alignment>1</vertical_alignment>
-            <actions>
-            </actions>
-            <border_color>
-              <color red="0" green="128" blue="255">
-              </color>
-            </border_color>
-          </widget>
-          <widget type="bool_button" version="2.0.0">
-            <name>Boolean Button_1</name>
-            <pv_name>$(PriSys){$(PSC)}$(CHAN):DAC_RampRun-SP</pv_name>
-            <x>544</x>
-            <y>462</y>
-          </widget>
-          <widget type="label" version="2.0.0">
-            <name>Label_40</name>
-            <text>Run Ramp</text>
-            <x>514</x>
-            <y>432</y>
-            <width>170</width>
             <font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
               </font>
@@ -611,6 +636,50 @@
               </font>
             </font>
             <horizontal_alignment>2</horizontal_alignment>
+            <vertical_alignment>1</vertical_alignment>
+            <actions>
+            </actions>
+            <border_color>
+              <color red="0" green="128" blue="255">
+              </color>
+            </border_color>
+          </widget>
+          <widget type="textentry" version="3.0.0">
+            <name>Text Update_53</name>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):DACSetPt-I</pv_name>
+            <x>394</x>
+            <y>155</y>
+            <width>90</width>
+            <font>
+              <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+              </font>
+            </font>
+            <background_color>
+              <color red="255" green="255" blue="255">
+              </color>
+            </background_color>
+            <format>1</format>
+            <precision>0</precision>
+            <show_units>false</show_units>
+            <horizontal_alignment>1</horizontal_alignment>
+            <actions>
+            </actions>
+            <border_color>
+              <color red="0" green="128" blue="255">
+              </color>
+            </border_color>
+          </widget>
+          <widget type="label" version="2.0.0">
+            <name>Label_45</name>
+            <text>ReadBack</text>
+            <x>373</x>
+            <y>134</y>
+            <width>132</width>
+            <font>
+              <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+              </font>
+            </font>
+            <horizontal_alignment>1</horizontal_alignment>
             <vertical_alignment>1</vertical_alignment>
             <actions>
             </actions>
@@ -2896,7 +2965,7 @@
     <y>54</y>
     <width>900</width>
     <height>894</height>
-    <active_tab>3</active_tab>
+    <active_tab>2</active_tab>
   </widget>
   <widget type="label" version="2.0.0">
     <name>Text Input_1</name>

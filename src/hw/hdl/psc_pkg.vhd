@@ -9,8 +9,13 @@ package psc_pkg is
 
 -- DCCT ADC record types
 type t_dcct_adcs_onech is record
-  dcct0         : std_logic_vector(17 downto 0);
-  dcct1         : std_logic_vector(17 downto 0);
+  dcct0_raw     : signed(19 downto 0);
+  dcct1_raw     : signed(19 downto 0);
+  dcct0_oc      : signed(19 downto 0);
+  dcct1_oc      : signed(19 downto 0);  
+  dcct0         : signed(19 downto 0);
+  dcct1         : signed(19 downto 0);  
+  
 end record;
 
 type t_dcct_adcs is record
@@ -19,8 +24,22 @@ type t_dcct_adcs is record
   ps3           : t_dcct_adcs_onech;
   ps4           : t_dcct_adcs_onech;
 end record;
- 
-  
+
+type t_dcct_adcs_params_onech is record 
+  dcct0_gain      : signed(19 downto 0);
+  dcct0_offset    : signed(19 downto 0);
+  dcct1_gain      : signed(19 downto 0);
+  dcct1_offset    : signed(19 downto 0);  
+end record;
+
+type t_dcct_adcs_params is record
+  ps1           : t_dcct_adcs_params_onech;
+  ps2           : t_dcct_adcs_params_onech;
+  ps3           : t_dcct_adcs_params_onech;
+  ps4           : t_dcct_adcs_params_onech;
+end record;
+
+
 type t_dcct_adcs_ave_onech is record
   dcct0         : std_logic_vector(31 downto 0);
   dcct1         : std_logic_vector(31 downto 0);
@@ -51,6 +70,33 @@ type t_mon_adcs is record
   ps3           : t_mon_adcs_onech;
   ps4           : t_mon_adcs_onech;
 end record;
+
+
+type t_mon_adcs_params_onech is record 
+  dac_sp_offset    : signed(31 downto 0);
+  dac_sp_gain      : signed(31 downto 0);    
+  volt_mon_offset  : signed(31 downto 0);
+  volt_mon_gain    : signed(31 downto 0); 
+  gnd_mon_offset   : signed(31 downto 0);
+  gnd_mon_gain     : signed(31 downto 0);   
+  spare_mon_offset : signed(31 downto 0);
+  spare_mon_gain   : signed(31 downto 0);  
+  ps_reg_offset    : signed(31 downto 0);
+  ps_reg_gain      : signed(31 downto 0);   
+  ps_error_offset  : signed(31 downto 0);
+  ps_error_gain    : signed(31 downto 0);  
+end record;
+
+
+type t_mon_adcs_params is record
+  ps1           : t_mon_adcs_params_onech;
+  ps2           : t_mon_adcs_params_onech;
+  ps3           : t_mon_adcs_params_onech;
+  ps4           : t_mon_adcs_params_onech;
+end record;
+
+
+
 
 
 type t_mon_adcs_ave_onech is record

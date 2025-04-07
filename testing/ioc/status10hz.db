@@ -303,4 +303,92 @@ record(longin, "$(P){$(NO)}Chan4:Error-I") {
 
 
 
+## PS1 DAC
+
+record(longin, "$(P){$(NO)}Chan1:DACSetPt-I") {
+    field(DESC, "DAC SetPoint Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 140")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan1:DACRampActive-I") {
+    field(DESC, "DAC SetPoint Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 144")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+## PS2 DAC
+
+record(longin, "$(P){$(NO)}Chan2:DACSetPt-I") {
+    field(DESC, "DAC SetPoint Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 148")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan2:DACRampActive-I") {
+    field(DESC, "DAC SetPoint Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 152")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+## PS3 DAC
+
+record(longin, "$(P){$(NO)}Chan3:DACSetPt-I") {
+    field(DESC, "DAC SetPoint Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 156")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan3:DACRampActive-I") {
+    field(DESC, "DAC SetPoint Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 160")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+## PS4 DAC
+
+record(longin, "$(P){$(NO)}Chan4:DACSetPt-I") {
+    field(DESC, "DAC SetPoint Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 164")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan4:DACRampActive-I") {
+    field(DESC, "DAC SetPoint Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 168")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

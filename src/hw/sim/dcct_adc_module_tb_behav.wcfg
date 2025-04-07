@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="dcct_adc_module_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="dcct_adc_module_tb" />
+            <top_module name="glbl" />
+            <top_module name="psc_pkg" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="107,806.004 ns"></ZoomStartTime>
+      <ZoomEndTime time="108,026.152 ns"></ZoomEndTime>
+      <Cursor1Time time="1,001,000.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="228"></NameColumnWidth>
+      <ValueColumnWidth column_width="106"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="8" />
+   <wvobject type="logic" fp_name="/dcct_adc_module_tb/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/dcct_adc_module_tb/reset">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/dcct_adc_module_tb/start">
+      <obj_property name="ElementShortName">start</obj_property>
+      <obj_property name="ObjectShortName">start</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/dcct_adc_module_tb/sdi">
+      <obj_property name="ElementShortName">sdi[3:0]</obj_property>
+      <obj_property name="ObjectShortName">sdi[3:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/dcct_adc_module_tb/dcct_params.ps1">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">.ps1</obj_property>
+      <obj_property name="ObjectShortName">.ps1</obj_property>
+      <obj_property name="label">ps1_dcct_gainoffset</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/dcct_adc_module_tb/dcct_params.ps1.dcct0_gain">
+         <obj_property name="ElementShortName">.dcct0_gain[19:0]</obj_property>
+         <obj_property name="ObjectShortName">.dcct0_gain[19:0]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">19</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/dcct_adc_module_tb/dcct_params.ps1.dcct0_offset">
+         <obj_property name="ElementShortName">.dcct0_offset[19:0]</obj_property>
+         <obj_property name="ObjectShortName">.dcct0_offset[19:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/dcct_adc_module_tb/dcct_params.ps1.dcct1_gain">
+         <obj_property name="ElementShortName">.dcct1_gain[19:0]</obj_property>
+         <obj_property name="ObjectShortName">.dcct1_gain[19:0]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">19</obj_property>
+         <obj_property name="radix_otherWidth">0</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/dcct_adc_module_tb/dcct_params.ps1.dcct1_offset">
+         <obj_property name="ElementShortName">.dcct1_offset[19:0]</obj_property>
+         <obj_property name="ObjectShortName">.dcct1_offset[19:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="array" fp_name="/dcct_adc_module_tb/DCCT_out">
+      <obj_property name="ElementShortName">DCCT_out</obj_property>
+      <obj_property name="ObjectShortName">DCCT_out</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/dcct_adc_module_tb/DCCT_out.ps1">
+         <obj_property name="ElementShortName">.ps1</obj_property>
+         <obj_property name="ObjectShortName">.ps1</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject type="array" fp_name="/dcct_adc_module_tb/DCCT_out.ps1.dcct0_raw">
+            <obj_property name="ElementShortName">.dcct0_raw[19:0]</obj_property>
+            <obj_property name="ObjectShortName">.dcct0_raw[19:0]</obj_property>
+            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/dcct_adc_module_tb/DCCT_out.ps1.dcct1_raw">
+            <obj_property name="ElementShortName">.dcct1_raw[19:0]</obj_property>
+            <obj_property name="ObjectShortName">.dcct1_raw[19:0]</obj_property>
+            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/dcct_adc_module_tb/DCCT_out.ps1.dcct0_oc">
+            <obj_property name="ElementShortName">.dcct0_oc[19:0]</obj_property>
+            <obj_property name="ObjectShortName">.dcct0_oc[19:0]</obj_property>
+            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/dcct_adc_module_tb/DCCT_out.ps1.dcct1_oc">
+            <obj_property name="ElementShortName">.dcct1_oc[19:0]</obj_property>
+            <obj_property name="ObjectShortName">.dcct1_oc[19:0]</obj_property>
+            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/dcct_adc_module_tb/DCCT_out.ps1.dcct0">
+            <obj_property name="ElementShortName">.dcct0[19:0]</obj_property>
+            <obj_property name="ObjectShortName">.dcct0[19:0]</obj_property>
+            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         </wvobject>
+         <wvobject type="array" fp_name="/dcct_adc_module_tb/DCCT_out.ps1.dcct1">
+            <obj_property name="ElementShortName">.dcct1[19:0]</obj_property>
+            <obj_property name="ObjectShortName">.dcct1[19:0]</obj_property>
+            <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+         </wvobject>
+      </wvobject>
+      <wvobject type="array" fp_name="/dcct_adc_module_tb/DCCT_out.ps2">
+         <obj_property name="ElementShortName">.ps2</obj_property>
+         <obj_property name="ObjectShortName">.ps2</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/dcct_adc_module_tb/DCCT_out.ps3">
+         <obj_property name="ElementShortName">.ps3</obj_property>
+         <obj_property name="ObjectShortName">.ps3</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/dcct_adc_module_tb/DCCT_out.ps4">
+         <obj_property name="ElementShortName">.ps4</obj_property>
+         <obj_property name="ObjectShortName">.ps4</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="other" fp_name="/dcct_adc_module_tb/uut/state">
+      <obj_property name="ElementShortName">state</obj_property>
+      <obj_property name="ObjectShortName">state</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/dcct_adc_module_tb/uut/done">
+      <obj_property name="ElementShortName">done</obj_property>
+      <obj_property name="ObjectShortName">done</obj_property>
+   </wvobject>
+</wave_config>

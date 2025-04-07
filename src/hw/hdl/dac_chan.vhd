@@ -37,7 +37,7 @@ end entity;
 architecture arch of dac_chan is
 
 
-type state_type is (IDLE,RUN_RAMP,UPDATE_DAC); 
+type state_type is (IDLE, RUN_RAMP, UPDATE_DAC); 
 
 
  
@@ -64,23 +64,31 @@ type state_type is (IDLE,RUN_RAMP,UPDATE_DAC);
    attribute mark_debug of ramp_active: signal is "true";     
    attribute mark_debug of dac_cntrl: signal is "true";    
    attribute mark_debug of state: signal is "true"; 
-
+   attribute mark_debug of dac_cntrl: signal is "true";
+   attribute mark_debug of dac_stat: signal is "true";
 
 begin
 
 
 dac_stat.dac_setpt <= dac_setpt;
+dac_stat.active <= ramp_active;
 
 --Source of DAC data depenods on Mode
 --Because DAC sync's are tied together, must always update every DAC
 --  0=smooth ramp, 1=ramp table, 2=FOFB, 3=Jump Mode
 process(clk) 
 begin 
-    if rising_edge(clk) then    
-      if (dac_cntrl.mode = "01" and ramp_active = '1') then
-        dac_setpt <= ramp_dac_setpt;
+    if rising_edge(clk) then 
+      if (reset = '1') then
+        dac_setpt <= (others => '0');
       else
-        dac_setpt <= dac_cntrl.setpoint;    
+        if (tenkhz_trig = '1') then   
+          if (dac_cntrl.mode = "00" or dac_cntrl.mode = "01" ) then
+            dac_setpt <= ramp_dac_setpt;
+          else
+            dac_setpt <= dac_cntrl.setpoint;    
+          end if;
+        end if;
       end if;
     end if; 
 end process; 
@@ -116,23 +124,25 @@ begin
     else 
       case(state) is 
         when IDLE => 
+          ramp_active <= '0';
           if dac_cntrl.ramprun = '1' then 
             state <= run_ramp;
             dac_rdaddr <= 16d"0";
-            dac_rden <= '0';
-            ramp_active <= '0';
+            dac_rden <= '1';
+            ramp_active <= '0';         
           end if;                 
 
         when RUN_RAMP => 
-            ramp_active <= '1';
             if (tenkhz_trig = '1') then
+               ramp_active <= '1';
                dac_rden <= '1';
                state <= update_dac;
             end if;
             
         when UPDATE_DAC =>
-            dac_rden <= '0';
-            if (dac_rdaddr > dac_cntrl.ramplen) then
+            dac_rden <= '1';
+            if (unsigned(dac_rdaddr) + 1 > unsigned(dac_cntrl.ramplen)) then
+               dac_rden <= '0';
                state <= idle;
             else
               dac_rdaddr <= std_logic_vector(unsigned(dac_rdaddr) + 1);
