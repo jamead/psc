@@ -31,11 +31,12 @@ proc customizeFsblBsp {} {
 }
 
 proc customizeAppBsp {} {
-  #variable Config
-  #::fwfwk::printInfo "Customizing application BSP"
+  variable Config
+  ::fwfwk::printInfo "Customizing application BSP"
 
-  #domain active {app_domain}
+  domain active {app_domain}
   # add customizations here
+  app config -name ${::fwfwk::AppName} libraries "m"
   #bsp config total_heap_size "1048576"
   #bsp config minimal_stack_size "1024"
   #bsp config max_task_name_len "32"
@@ -75,7 +76,7 @@ proc doOnCreate {} {
   #  set Config(ConsoleUart) "RS232"
   #}
   #customizeFsblBsp
-  #customizeAppBsp
+  customizeAppBsp
 }
 
 proc doOnBuild {} {}

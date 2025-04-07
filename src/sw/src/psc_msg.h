@@ -68,18 +68,22 @@ extern char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];
 
 // PSC Message ID 31
 typedef struct SAdataMsg {
-	u32 count;          // PSC Offset 0
-	u32 evr_ts_ns;      // PSC Offset 4
-	u32 evr_ts_s;       // PSC Offset 8
-	u32 ps1_dcct[2];    // PSC Offset 12
-	u32 ps1_mon[6];     // PSC Offset 20
-    u32 ps2_dcct[2];    // PSC Offset 44
-	u32 ps2_mon[6];     // PSC Offset 52
-	u32 ps3_dcct[2];    // PSC Offset 76
-    u32 ps3_mon[6];     // PSC Offset 84
-	u32 ps4_dcct[2];    // PSC Offset 92
-	u32 ps4_mon[6];     // PSC Offset 100
-	u32 ps1_dacsetpt;   // PSC Offset 140
+	u32 count;              // PSC Offset 0
+	u32 evr_ts_ns;          // PSC Offset 4
+	u32 evr_ts_s;           // PSC Offset 8
+	u32 ps1_dcct[2];        // PSC Offset 12
+	u32 ps1_mon[6];         // PSC Offset 20
+    u32 ps2_dcct[2];        // PSC Offset 44
+	u32 ps2_mon[6];         // PSC Offset 52
+	u32 ps3_dcct[2];        // PSC Offset 76
+    u32 ps3_mon[6];         // PSC Offset 84
+	u32 ps4_dcct[2];        // PSC Offset 92
+	u32 ps4_mon[6];         // PSC Offset 100
+    float ps1_dcct_offset[2]; // PSC Offset 140
+	float ps1_dcct_gain[2];	// PSC Offset 148
+	float ps1_mon_offset[6];  // PSC Offset 156
+	float ps1_mon_gain[6];    // PSC Offset 180
+	u32 ps1_dacsetpt;   // PSC Offset 204
 	u32 ps1_rampactive; // PSC Offset 144
 	u32 ps2_dacsetpt;   // PSC Offset 140
 	u32 ps2_rampactive; // PSC Offset 144

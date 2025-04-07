@@ -181,6 +181,24 @@ void ReadSAData(char *msg) {
     sadata.ps4_mon[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_REG);
     sadata.ps4_mon[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_ERR);
 
+    sadata.ps1_dcct_offset[0] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT0_OFFSET);
+    sadata.ps1_dcct_offset[1] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT1_OFFSET);
+    sadata.ps1_mon_offset[0]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DACSP_OFFSET);
+    sadata.ps1_mon_offset[1]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_VOLT_OFFSET);
+    sadata.ps1_mon_offset[2]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_GND_OFFSET);
+    sadata.ps1_mon_offset[3]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_SPARE_OFFSET);
+    sadata.ps1_mon_offset[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_REG_OFFSET);
+    sadata.ps1_mon_offset[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_ERR_OFFSET);
+    sadata.ps1_dcct_gain[0] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT0_GAIN);
+    sadata.ps1_dcct_gain[1] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT1_GAIN);
+    sadata.ps1_mon_gain[0]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DACSP_GAIN);
+    sadata.ps1_mon_gain[1]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_VOLT_GAIN);
+    sadata.ps1_mon_gain[2]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_GND_GAIN);
+    sadata.ps1_mon_gain[3]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_SPARE_GAIN);
+    sadata.ps1_mon_gain[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_REG_GAIN);
+    sadata.ps1_mon_gain[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_ERR_GAIN);
+
+
     sadata.ps1_dacsetpt   = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_CURRSETPT);
     sadata.ps1_rampactive = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPACTIVE);
     sadata.ps2_dacsetpt   = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_DAC_CURRSETPT);
