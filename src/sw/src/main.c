@@ -261,23 +261,23 @@ void InitGainsOffsets() {
 	s32 offset_spare, offset_reg, offset_err;
 
 
-	offset_dcct0 = 1;
-	offset_dcct1 = 2;
-    offset_dacsp = 3;
-    offset_volt = 4;
-    offset_gnd = -1;
-    offset_spare = -2;
-    offset_reg = -3;
-    offset_err = -4;
+	offset_dcct0 = 0;
+	offset_dcct1 = 0;
+    offset_dacsp = 0;
+    offset_volt = 0;
+    offset_gnd = 0;
+    offset_spare = 0;
+    offset_reg = 0;
+    offset_err = 0;
 
-	gain_dcct0 = 1.08;
-	gain_dcct1 = .054345;
-    gain_dacsp = 0.999;
-    gain_volt = 0.998;
-    gain_gnd = 0.997;
-    gain_spare = 0.996;
-    gain_reg = 0.9995;
-    gain_err = 0.999994;
+	gain_dcct0 = 1.0;
+	gain_dcct1 = 1.0;
+    gain_dacsp = 1.0;
+    gain_volt = 1.0;
+    gain_gnd = 1.0;
+    gain_spare = 1.0;
+    gain_reg = 1.0;
+    gain_err = 1.0;
 
 
 

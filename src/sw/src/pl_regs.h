@@ -130,6 +130,7 @@
 #define EVRTRIG_BUFPTR        0X3B0     // EVR Buffer Ptr.  Buffer Point latched value gets put here on EVR trigger
 #define EVRTRIG_TS_S          0X3B4     // EVR Trig Timestamp (s)
 #define EVRTRIG_TS_NS         0X3B8     // EVR Trig Timestamp (ns)
+
 #define PS1_DCCT0_OFFSET      0X400     // PS1 DCCT 0 Offset
 #define PS1_DCCT0_GAIN        0X404     // PS1 DCCT 0 Gain
 #define PS1_DCCT1_OFFSET      0X408     // PS1 DCCT 1 Offset

@@ -177,13 +177,15 @@ typedef struct SysHealthMsg {
 #define FP_LED_MSG 8
 
 
-#define DAC_CH1_OPMODE 100
-#define DAC_CH1_SETPT 104
-#define DAC_CH1_RUNRAMP 108
-#define DAC_CH1_RAMPLEN 112
-#define DAC_CH1_GAIN 116
-#define DAC_CH1_OFFSET 120
+#define DAC_OPMODE 100
+#define DAC_SETPT 104
+#define DAC_RUNRAMP 108
+#define DAC_RAMPLEN 112
+#define DAC_GAIN 116
+#define DAC_OFFSET 120
 
+
+/*
 #define DAC_CH2_OPMODE 140
 #define DAC_CH2_SETPT 144
 #define DAC_CH2_RUNRAMP 148
@@ -204,7 +206,7 @@ typedef struct SysHealthMsg {
 #define DAC_CH4_RAMPLEN 232
 #define DAC_CH4_GAIN 236
 #define DAC_CH4_OFFSET 240
-
+*/
 
 
 

@@ -180,9 +180,9 @@ void Set_dac(u32 chan, s32 new_setpt) {
 	//first get the DAC opmode
 	switch (chan) {
 	  case 1:   dac_mode = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_OPMODE); break;
-	  case 2:   dac_mode = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_OPMODE); break;
-	  case 3:   dac_mode = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_OPMODE); break;
-	  case 4:   dac_mode = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_OPMODE); break;
+	  case 2:   dac_mode = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_DAC_OPMODE); break;
+	  case 3:   dac_mode = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_DAC_OPMODE); break;
+	  case 4:   dac_mode = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_DAC_OPMODE); break;
 	}
 
 	if (dac_mode == SMOOTH) {
@@ -204,6 +204,93 @@ void Set_dac(u32 chan, s32 new_setpt) {
 }
 
 
+void GlobSetting(u32 addr, s32 data) {
+
+    xil_printf("In Global Settings...\r\n");
+    switch(addr) {
+		case SOFT_TRIG_MSG:
+			xil_printf("Soft Trigger Message:   Value=%d\r\n",data);
+			soft_trig(data);
+            break;
+
+		case TEST_TRIG_MSG:
+			xil_printf("Test Trigger Message:   Value=%d\r\n",data);
+			Xil_Out32(XPAR_M_AXI_BASEADDR + TESTTRIG, data);
+			Xil_Out32(XPAR_M_AXI_BASEADDR + TESTTRIG, 0);
+            break;
+
+
+        case FP_LED_MSG:
+         	xil_printf("Setting FP LED:   Value=%d\r\n",data);
+         	set_fpleds(data);
+         	break;
+    }
+
+}
+
+
+void ChanSettings(u32 chan, u32 addr, u32 data) {
+
+
+    xil_printf("Hello Channel %d\r\n",chan);
+
+    switch(addr) {
+
+        case DAC_CH1_OPMODE:
+	        xil_printf("Setting DAC CH1 Operating Mode:   Value=%d\r\n",data);
+	        Set_dacOpmode(1,data);
+	        break;
+
+        case DAC_CH1_SETPT:
+	        xil_printf("Setting DAC CH1 SetPoint:   Value=%d\r\n",data);
+	        Set_dac(1, data);
+	        break;
+
+        case DAC_CH1_RAMPLEN:
+ 	        xil_printf("Setting DAC CH1 RampTable Length:   Value=%d\r\n",data);
+ 	        Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPLEN, data);
+ 	        break;
+
+        case DAC_CH1_RUNRAMP:
+	        xil_printf("Running DAC CH1 Ramptable:   Value=%d\r\n",data);
+	        Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RUNRAMP, data);
+	        break;
+
+        case DAC_CH1_GAIN:
+	        xil_printf("Setting DAC CH1 Gain:   Value=%d\r\n",data);
+	        Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_GAIN, data);
+	        break;
+
+        case DAC_CH1_OFFSET:
+	        xil_printf("Setting DAC CH1 Offset:   Value=%d\r\n",data);
+	        Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_OFFSET, data);
+	        break;
+
+        case DCCT1_CH1_GAIN:
+ 	        xil_printf("Setting DAC CH1 Gain:   Value=%d\r\n",data);
+ 	        Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_GAIN, data);
+ 	        break;
+
+        case DCCT1_CH1_OFFSET:
+ 	        xil_printf("Setting DAC CH1 Offset:   Value=%d\r\n",data);
+ 	        Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_OFFSET, data);
+ 	        break;
+
+        case DCCT2_CH1_GAIN:
+  	        xil_printf("Setting DAC CH1 Gain:   Value=%d\r\n",data);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_GAIN, data);
+  	        break;
+
+        case DCCT2_CH1_OFFSET:
+  	        xil_printf("Setting DAC CH1 Offset:   Value=%d\r\n",data);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_OFFSET, data);
+  	        break;
+
+    }
+
+
+
+}
 
 
 
@@ -215,7 +302,7 @@ void psc_control_thread()
 	int RECV_BUF_SIZE = 1024;
 	char buffer[RECV_BUF_SIZE];
 	int n, *bufptr, numpackets=0;
-    u32 MsgAddr, MsgData;
+    u32 MsgId, MsgAddr, MsgData;
 
 
 
@@ -267,7 +354,8 @@ reconnect:
         bufptr = (int *) buffer;
         xil_printf("\nPacket %d Received : NumBytes = %d\r\n",++numpackets,n);
         xil_printf("Header: %c%c \t",buffer[0],buffer[1]);
-        xil_printf("Message ID : %d\t",(ntohl(*bufptr++)&0xFFFF));
+        MsgId = (ntohl(*bufptr++)&0xFFFF);
+        xil_printf("Message ID : %d\t",MsgId);
         xil_printf("Body Length : %d\t",ntohl(*bufptr++));
         MsgAddr = ntohl(*bufptr++);
         xil_printf("Msg Addr : %d\t",MsgAddr);
@@ -277,7 +365,33 @@ reconnect:
         set_fpleds(1);
         set_fpleds(0);
 
+        switch(MsgId) {
+            case 0:
+            	GlobSetting(MsgAddr,MsgData);
+            	break;
 
+            case 1:
+            	ChanSettings(1,MsgAddr,MsgData);
+            	break;
+
+            case 2:
+             	ChanSettings(2,MsgAddr,MsgData);
+                break;
+
+            case 3:
+             	ChanSettings(3,MsgAddr,MsgData);
+                break;
+
+            case 4:
+             	ChanSettings(3,MsgAddr,MsgData);
+                break;
+
+        }
+
+
+
+
+/*
         switch(MsgAddr) {
 			case SOFT_TRIG_MSG:
 				xil_printf("Soft Trigger Message:   Value=%d\r\n",MsgData);
@@ -296,8 +410,9 @@ reconnect:
             	set_fpleds(MsgData);
             	break;
 
+*/
 
-
+ /*
             case DAC_CH1_OPMODE:
             	xil_printf("Setting DAC CH1 Operating Mode:   Value=%d\r\n",MsgData);
             	Set_dacOpmode(1,MsgData);
@@ -307,8 +422,6 @@ reconnect:
             case DAC_CH1_SETPT:
             	xil_printf("Setting DAC CH1 SetPoint:   Value=%d\r\n",MsgData);
             	Set_dac(1, MsgData);
-            	//Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_SETPT, MsgData);
-
             	break;
 
             case DAC_CH1_RAMPLEN:
@@ -331,17 +444,37 @@ reconnect:
             	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_OFFSET, MsgData);
             	break;
 
+            case DCCT1_CH1_GAIN:
+             	xil_printf("Setting DAC CH1 Gain:   Value=%d\r\n",MsgData);
+             	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_GAIN, MsgData);
+             	break;
+
+            case DCCT1_CH1_OFFSET:
+             	xil_printf("Setting DAC CH1 Offset:   Value=%d\r\n",MsgData);
+             	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_OFFSET, MsgData);
+             	break;
+
+            case DCCT2_CH1_GAIN:
+              	xil_printf("Setting DAC CH1 Gain:   Value=%d\r\n",MsgData);
+              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_GAIN, MsgData);
+              	break;
+
+            case DCCT2_CH1_OFFSET:
+              	xil_printf("Setting DAC CH1 Offset:   Value=%d\r\n",MsgData);
+              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_OFFSET, MsgData);
+              	break;
+
+
 
 
             case DAC_CH2_OPMODE:
              	xil_printf("Setting DAC CH2 Operating Mode:   Value=%d\r\n",MsgData);
-             	Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DAC_OPMODE, MsgData);
+             	Set_dacOpmode(2,MsgData);
              	break;
 
              case DAC_CH2_SETPT:
              	xil_printf("Setting DAC CH2 SetPoint:   Value=%d\r\n",MsgData);
             	Set_dac(2, MsgData);
-             	//Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DAC_SETPT, MsgData);
              	break;
 
              case DAC_CH2_RAMPLEN:
@@ -369,13 +502,12 @@ reconnect:
 
              case DAC_CH3_OPMODE:
                	xil_printf("Setting DAC CH3 Operating Mode:   Value=%d\r\n",MsgData);
-               	Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DAC_OPMODE, MsgData);
-               	//Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DAC_MODE, MsgData);
+               	Set_dacOpmode(3,MsgData);
                	break;
 
              case DAC_CH3_SETPT:
                	xil_printf("Setting DAC CH3 SetPoint:   Value=%d\r\n",MsgData);
-               	Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DAC_SETPT, MsgData);
+            	Set_dac(3, MsgData);
                	break;
 
              case DAC_CH3_RAMPLEN:
@@ -402,12 +534,12 @@ reconnect:
 
              case DAC_CH4_OPMODE:
                	xil_printf("Setting DAC CH4 Operating Mode:   Value=%d\r\n",MsgData);
-               	Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DAC_OPMODE, MsgData);
+               	Set_dacOpmode(4,MsgData);
                	break;
 
              case DAC_CH4_SETPT:
                	xil_printf("Setting DAC CH4 SetPoint:   Value=%d\r\n",MsgData);
-               	Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DAC_SETPT, MsgData);
+            	Set_dac(4, MsgData);
                	break;
 
              case DAC_CH4_RAMPLEN:
@@ -437,6 +569,8 @@ reconnect:
             	xil_printf("Msg not supported yet...\r\n");
             	break;
         }
+
+*/
 
 	}
 

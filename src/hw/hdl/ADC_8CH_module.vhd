@@ -26,7 +26,7 @@
 
 -- ADC1.CH0 = PS2 Ground Current Shunt Voltage Monitor
 -- ADC1.CH1 = PS3 Voltage Monitor
--- ADC1.CH2 = PS2 Voltage Monitor
+-- ADC1.CH2 = PS2 Spare Voltage Monitor
 -- ADC1.CH3 = PS3 Ground Current Shunt Voltage Monitor
 -- ADC1.CH4 = PS3 Spare Voltage Monitor
 -- ADC1.CH5 = PS4 Gound Current Shunt Voltage Monitor
@@ -75,7 +75,21 @@ signal conv_done        : std_logic;
 signal done_pipe        : std_logic;
 signal mon_adcs_in      : t_mon_adcs;
 
+
+   --debug signals (connect to ila)
+   attribute mark_debug                 : string;
+   attribute mark_debug of ADC8C_CONV123: signal is "true";
+   attribute mark_debug of ADC8C_FS123: signal is "true";
+   attribute mark_debug of ADC8C_SCK123: signal is "true";
+   attribute mark_debug of ADC8C_SDO: signal is "true";
+   attribute mark_debug of ADC_8CH_ADC1: signal is "true";
+   attribute mark_debug of ADC_8CH_ADC2: signal is "true";
+   attribute mark_debug of ADC_8CH_ADC3: signal is "true";       
+   attribute mark_debug of mon_adcs_in: signal is "true";
+
+
 begin
+
 
 
 
@@ -131,6 +145,8 @@ adc3_8ch: entity work.ADC_ADS8568_intf
 );
 
 
+
+
 -- mapping from phyical to logical adc channels
 mon_adcs_in.ps1.dac_sp_raw <= signed(ADC_8CH_ADC1(127 downto 112));
 mon_adcs_in.ps3.dac_sp_raw <= signed(ADC_8CH_ADC1(111 downto 96));
@@ -141,23 +157,23 @@ mon_adcs_in.ps1.spare_mon_raw <= signed(ADC_8CH_ADC1(47 downto 32));
 mon_adcs_in.ps1.gnd_mon_raw <= signed(ADC_8CH_ADC1(31 downto 16));
 mon_adcs_in.ps2.volt_mon_raw <= signed(ADC_8CH_ADC1(15 downto 0));   
 
-mon_adcs_in.ps2.gnd_mon <= signed(ADC_8CH_ADC2(127 downto 112));
-mon_adcs_in.ps3.volt_mon <= signed(ADC_8CH_ADC2(111 downto 96));
-mon_adcs_in.ps3.volt_mon <= signed(ADC_8CH_ADC2(95 downto 80));
-mon_adcs_in.ps3.gnd_mon <= signed(ADC_8CH_ADC2(79 downto 64));
-mon_adcs_in.ps3.spare_mon <= signed(ADC_8CH_ADC2(63 downto 48));
-mon_adcs_in.ps4.gnd_mon <= signed(ADC_8CH_ADC2(47 downto 32));
-mon_adcs_in.ps4.volt_mon <= signed(ADC_8CH_ADC2(31 downto 16));
-mon_adcs_in.ps4.spare_mon <= signed(ADC_8CH_ADC2(15 downto 0)); 
+mon_adcs_in.ps2.gnd_mon_raw <= signed(ADC_8CH_ADC2(127 downto 112));
+mon_adcs_in.ps3.volt_mon_raw <= signed(ADC_8CH_ADC2(111 downto 96));
+mon_adcs_in.ps2.spare_mon_raw <= signed(ADC_8CH_ADC2(95 downto 80));
+mon_adcs_in.ps3.gnd_mon_raw <= signed(ADC_8CH_ADC2(79 downto 64));
+mon_adcs_in.ps3.spare_mon_raw <= signed(ADC_8CH_ADC2(63 downto 48));
+mon_adcs_in.ps4.gnd_mon_raw <= signed(ADC_8CH_ADC2(47 downto 32));
+mon_adcs_in.ps4.volt_mon_raw <= signed(ADC_8CH_ADC2(31 downto 16));
+mon_adcs_in.ps4.spare_mon_raw <= signed(ADC_8CH_ADC2(15 downto 0)); 
 
-mon_adcs_in.ps1.ps_reg <= signed(ADC_8CH_ADC3(127 downto 112));
-mon_adcs_in.ps2.ps_reg <= signed(ADC_8CH_ADC3(111 downto 96));
-mon_adcs_in.ps1.ps_error <= signed(ADC_8CH_ADC3(95 downto 80));
-mon_adcs_in.ps2.ps_error <= signed(ADC_8CH_ADC3(79 downto 64));
-mon_adcs_in.ps3.ps_reg <= signed(ADC_8CH_ADC3(63 downto 48));
-mon_adcs_in.ps4.ps_reg <= signed(ADC_8CH_ADC3(47 downto 32));
-mon_adcs_in.ps4.ps_error <= signed(ADC_8CH_ADC3(31 downto 16));
-mon_adcs_in.ps4.ps_error <= signed(ADC_8CH_ADC3(15 downto 0));         
+mon_adcs_in.ps1.ps_reg_raw <= signed(ADC_8CH_ADC3(127 downto 112));
+mon_adcs_in.ps2.ps_reg_raw <= signed(ADC_8CH_ADC3(111 downto 96));
+mon_adcs_in.ps1.ps_error_raw <= signed(ADC_8CH_ADC3(95 downto 80));
+mon_adcs_in.ps2.ps_error_raw <= signed(ADC_8CH_ADC3(79 downto 64));
+mon_adcs_in.ps3.ps_reg_raw <= signed(ADC_8CH_ADC3(63 downto 48));
+mon_adcs_in.ps4.ps_reg_raw <= signed(ADC_8CH_ADC3(47 downto 32));
+mon_adcs_in.ps3.ps_error_raw <= signed(ADC_8CH_ADC3(31 downto 16));
+mon_adcs_in.ps4.ps_error_raw <= signed(ADC_8CH_ADC3(15 downto 0));         
 
 -- apply gains and offsets
 gainoff_ps1: entity work.mon_gainoffset

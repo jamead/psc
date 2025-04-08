@@ -29,10 +29,12 @@ record(stringin, "$(P){$(NO)}RampTableFile") {
 
 
 
+### Global Settings
+
 record(bo, "$(P){$(NO)}Trig:Strig-SP") {
     field(DESC, "Soft Trigger by user")
     field(DTYP, "PSC Single U32")
-    field(OUT , "@Tx$(NO) 1 0")
+    field(OUT , "@Tx$(NO) 0 0")
     field(ZNAM,"Rdy")
     field(ONAM,"Trig")
     field(FLNK, "$(P){$(NO)}GoRegSingleWrite")
@@ -43,7 +45,7 @@ record(bo, "$(P){$(NO)}Trig:Strig-SP") {
 record(mbbo, "$(P){$(NO)}Trig:Fault-SP") {
     field(DESC, "Simulate a fault trigger")
     field(DTYP, "PSC Single U32")
-    field(OUT , "@Tx$(NO) 1 4")
+    field(OUT , "@Tx$(NO) 0 4")
     #field( PINI, "YES")
     field( ZRST, "Flt Chan1")
     field( ONST, "Flt Chan2")
@@ -71,7 +73,7 @@ record(mbbo, "$(P){$(NO)}Trig:Fault-SP") {
 record(bo, "$(P){$(NO)}LEDs-SP") {
     field(DESC, "Control the LEDs on the PSC")
     field(DTYP, "PSC Single U32")
-    field(OUT , "@Tx$(NO) 1 8")
+    field(OUT , "@Tx$(NO) 0 8")
     field(FLNK, "$(P){$(NO)}GoRegSingleWrite")
 }
 
@@ -80,7 +82,7 @@ record(bo, "$(P){$(NO)}LEDs-SP") {
 
 
 
-# DAC Chan1
+### Chan1 Settings MSGID=1
 
 record(mbbo, "$(P){$(NO)}Chan1:DAC_OpMode-SP") {
     field(DESC, "Sets the DAC operating Mode")
@@ -152,7 +154,7 @@ record(longout, "$(P){$(NO)}Chan1:DAC_Offset-SP") {
 record(mbbo, "$(P){$(NO)}Chan2:DAC_OpMode-SP") {
     field(DESC, "Sets the DAC operating Mode")
     field(DTYP, "PSC Single U32")
-    field(OUT , "@Tx$(NO) 1 140")
+    field(OUT , "@Tx$(NO) 2 140")
     #field( PINI, "YES")
     field( ZRST, "SmoothRamp")
     field( ONST, "RampTable")
@@ -171,7 +173,7 @@ record(mbbo, "$(P){$(NO)}Chan2:DAC_OpMode-SP") {
 record(longout, "$(P){$(NO)}Chan2:DAC_SetPt-SP") {
     field(DESC, "DAC Setpoint")
     field(DTYP, "PSC Single I32")
-    field(OUT , "@Tx$(NO) 1 144")
+    field(OUT , "@Tx$(NO) 2 144")
     info(autosaveFields, "VAL")
     field(FLNK, "$(P){$(NO)}GoRegSingleWrite")
 }
@@ -180,7 +182,7 @@ record(longout, "$(P){$(NO)}Chan2:DAC_SetPt-SP") {
 record(bo, "$(P){$(NO)}Chan2:DAC_RampRun-SP") {
     field(DESC, "DAC Run the Ramp Table")
     field(DTYP, "PSC Single U32")
-    field(OUT , "@Tx$(NO) 1 148")
+    field(OUT , "@Tx$(NO) 2 148")
 #    field(ZNAM,"Rdy")
 #    field(ONAM,"Trig")
     field(FLNK, "$(P){$(NO)}GoRegSingleWrite")
@@ -190,7 +192,7 @@ record(bo, "$(P){$(NO)}Chan2:DAC_RampRun-SP") {
 record(longout, "$(P){$(NO)}Chan2:DAC_RampLen-SP") {
     field(DESC, "DAC RampLength ")
     field(DTYP, "PSC Single I32")
-    field(OUT , "@Tx$(NO) 1 152")
+    field(OUT , "@Tx$(NO) 2 152")
     info(autosaveFields, "VAL")
     field(FLNK, "$(P){$(NO)}GoRegSingleWrite")
 }
@@ -198,7 +200,7 @@ record(longout, "$(P){$(NO)}Chan2:DAC_RampLen-SP") {
 record(longout, "$(P){$(NO)}Chan2:DAC_Gain-SP") {
     field(DESC, "DAC RampLength ")
     field(DTYP, "PSC Single I32")
-    field(OUT , "@Tx$(NO) 1 156")
+    field(OUT , "@Tx$(NO) 2 156")
     info(autosaveFields, "VAL")
     field(FLNK, "$(P){$(NO)}GoRegSingleWrite")
 }
@@ -206,7 +208,7 @@ record(longout, "$(P){$(NO)}Chan2:DAC_Gain-SP") {
 record(longout, "$(P){$(NO)}Chan2:DAC_Offset-SP") {
     field(DESC, "DAC RampLength ")
     field(DTYP, "PSC Single I32")
-    field(OUT , "@Tx$(NO) 1 160")
+    field(OUT , "@Tx$(NO) 2 160")
     info(autosaveFields, "VAL")
     field(FLNK, "$(P){$(NO)}GoRegSingleWrite")
 }

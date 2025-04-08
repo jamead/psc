@@ -78,7 +78,7 @@ process(clk)
            --dcct adc format is Q0.19 format (1sign, 0 integer, 19 fractional bits) range -1 to 0.99999
            --gain is Q3.20 format (1sign, 3 integer, 20 fractional bits) range -8 to 7.99999
            dcct_out.dcct0 <= fixed_mul(dcct_out.dcct0_oc, dcct_params.dcct0_gain, 4);
-           dcct_out.dcct0 <= fixed_mul(dcct_out.dcct0_oc, dcct_params.dcct0_gain, 4);
+           dcct_out.dcct1 <= fixed_mul(dcct_out.dcct1_oc, dcct_params.dcct1_gain, 4);
            state <= mult_dly;
            multdlycnt <= 4d"0";
            

@@ -72,6 +72,10 @@ reg {
 
 
 
+/* Channel 1  */
+
+
+
 
 /* PS1 10Hz Data */
 reg {
