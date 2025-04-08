@@ -23,14 +23,17 @@ proc setSources {} {
   lappend Sources {"../hdl/ps_io.vhd" "VHDL 2008"} 
 
   lappend Sources {"../hdl/DCCT_ADC_module.vhd" "VHDL 2008"} 
-  lappend Sources {"../hdl/ADC_LTC2376_20_intf.vhd" "VHDL 2008"}  
+  lappend Sources {"../hdl/ADC_LTC2376_20_intf.vhd" "VHDL 2008"} 
+  lappend Sources {"../hdl/dcct_gainoffset.vhd" "VHDL 2008"}   
+   
   lappend Sources {"../hdl/ADC_8CH_module.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/ADC_ADS8568_intf.vhd" "VHDL 2008"} 
+  lappend Sources {"../hdl/mon_gainoffset.vhd" "VHDL 2008"}  
   
   lappend Sources {"../hdl/DAC_ctrlr.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/dac_chan.vhd" "VHDL 2008"} 
-  lappend Sources {"../hdl/DAC_AD5781_intf.vhd" "VHDL 2008"}     
-
+  lappend Sources {"../hdl/DAC_AD5781_intf.vhd" "VHDL 2008"}  
+     
   lappend Sources {"../hdl/adc_accumulator_top.vhd" "VHDL 2008"}   
   lappend Sources {"../hdl/adc_accumulator.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/average.vhd" "VHDL 2008"} 
@@ -42,8 +45,6 @@ proc setSources {} {
   lappend Sources {"../hdl/evr_top.vhd" "VHDL 2008"}  
   lappend Sources {"../hdl/event_rcv_chan.vhd" "VHDL 2008"}   
   lappend Sources {"../hdl/event_rcv_ts.vhd" "VHDL 2008"}   
-  #lappend Sources {"../hdl/EventReceiverChannel.v" "Verilog"}  
-  #lappend Sources {"../hdl/timeofDayReceiver.v" "Verilog"} 
   
   lappend Sources {"../hdl/stretch.vhd" "VHDL 2008"}  
 

@@ -189,14 +189,17 @@ void ReadSAData(char *msg) {
     sadata.ps1_mon_offset[3]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_SPARE_OFFSET);
     sadata.ps1_mon_offset[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_REG_OFFSET);
     sadata.ps1_mon_offset[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_ERR_OFFSET);
-    sadata.ps1_dcct_gain[0] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT0_GAIN);
-    sadata.ps1_dcct_gain[1] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT1_GAIN);
-    sadata.ps1_mon_gain[0]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DACSP_GAIN);
-    sadata.ps1_mon_gain[1]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_VOLT_GAIN);
-    sadata.ps1_mon_gain[2]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_GND_GAIN);
-    sadata.ps1_mon_gain[3]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_SPARE_GAIN);
-    sadata.ps1_mon_gain[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_REG_GAIN);
-    sadata.ps1_mon_gain[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_ERR_GAIN);
+    sadata.ps1_dcct_gain[0] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT0_GAIN) / GAIN20BITFRACT;
+    sadata.ps1_dcct_gain[1] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT1_GAIN) / GAIN20BITFRACT;
+    sadata.ps1_mon_gain[0]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DACSP_GAIN) / GAIN20BITFRACT;;
+    sadata.ps1_mon_gain[1]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_VOLT_GAIN) / GAIN20BITFRACT;;
+    sadata.ps1_mon_gain[2]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_GND_GAIN) / GAIN20BITFRACT;;
+    sadata.ps1_mon_gain[3]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_SPARE_GAIN) / GAIN20BITFRACT;;
+    sadata.ps1_mon_gain[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_REG_GAIN) / GAIN20BITFRACT;;
+    sadata.ps1_mon_gain[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_ERR_GAIN) / GAIN20BITFRACT;;
+
+
+
 
 
     sadata.ps1_dacsetpt   = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_CURRSETPT);
@@ -209,7 +212,7 @@ void ReadSAData(char *msg) {
     sadata.ps4_rampactive = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_DAC_RAMPACTIVE);
 
 
-
+    //printf("%f   %f\r\n", sadata.ps1_dcct_gain[0], sadata.ps1_dcct_gain[1]);
     /*
     for (i=0;i<=1;i++) {
     	xil_printf("%8d ",sadata.ps1_dcct[i]);

@@ -100,21 +100,21 @@ reg_i.ps1_reg.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.ps_reg), 3
 reg_i.ps1_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.ps_error), 32));
 
 dcct_params.ps1.dcct0_offset <= signed(reg_o.ps1_dcct0_offset.val.data(19 downto 0)); 
-dcct_params.ps1.dcct0_gain <= signed(reg_o.ps1_dcct0_gain.val.data(19 downto 0)); 
+dcct_params.ps1.dcct0_gain <= signed(reg_o.ps1_dcct0_gain.val.data(23 downto 0)); 
 dcct_params.ps1.dcct1_offset <= signed(reg_o.ps1_dcct1_offset.val.data(19 downto 0)); 
-dcct_params.ps1.dcct1_gain <= signed(reg_o.ps1_dcct1_gain.val.data(19 downto 0)); 
-mon_params.ps1.dac_sp_offset <= signed(reg_o.ps1_dacsp_offset.val.data); 
-mon_params.ps1.dac_sp_gain <= signed(reg_o.ps1_dacsp_gain.val.data); 
-mon_params.ps1.volt_mon_offset <= signed(reg_o.ps1_volt_offset.val.data); 
-mon_params.ps1.volt_mon_gain <= signed(reg_o.ps1_volt_gain.val.data);
-mon_params.ps1.gnd_mon_offset <= signed(reg_o.ps1_gnd_offset.val.data); 
-mon_params.ps1.gnd_mon_gain <= signed(reg_o.ps1_gnd_gain.val.data);
-mon_params.ps1.spare_mon_offset <= signed(reg_o.ps1_spare_offset.val.data); 
-mon_params.ps1.spare_mon_gain <= signed(reg_o.ps1_spare_gain.val.data);
-mon_params.ps1.ps_reg_offset <= signed(reg_o.ps1_reg_offset.val.data); 
-mon_params.ps1.ps_reg_gain <= signed(reg_o.ps1_reg_gain.val.data);
-mon_params.ps1.ps_error_offset <= signed(reg_o.ps1_err_offset.val.data); 
-mon_params.ps1.ps_error_gain <= signed(reg_o.ps1_err_gain.val.data);
+dcct_params.ps1.dcct1_gain <= signed(reg_o.ps1_dcct1_gain.val.data(23 downto 0)); 
+mon_params.ps1.dac_sp_offset <= signed(reg_o.ps1_dacsp_offset.val.data(15 downto 0)); 
+mon_params.ps1.dac_sp_gain <= signed(reg_o.ps1_dacsp_gain.val.data(23 downto 0)); 
+mon_params.ps1.volt_mon_offset <= signed(reg_o.ps1_volt_offset.val.data(15 downto 0)); 
+mon_params.ps1.volt_mon_gain <= signed(reg_o.ps1_volt_gain.val.data(23 downto 0));
+mon_params.ps1.gnd_mon_offset <= signed(reg_o.ps1_gnd_offset.val.data(15 downto 0)); 
+mon_params.ps1.gnd_mon_gain <= signed(reg_o.ps1_gnd_gain.val.data(23 downto 0));
+mon_params.ps1.spare_mon_offset <= signed(reg_o.ps1_spare_offset.val.data(15 downto 0)); 
+mon_params.ps1.spare_mon_gain <= signed(reg_o.ps1_spare_gain.val.data(23 downto 0));
+mon_params.ps1.ps_reg_offset <= signed(reg_o.ps1_reg_offset.val.data(15 downto 0)); 
+mon_params.ps1.ps_reg_gain <= signed(reg_o.ps1_reg_gain.val.data(23 downto 0));
+mon_params.ps1.ps_error_offset <= signed(reg_o.ps1_err_offset.val.data(15 downto 0)); 
+mon_params.ps1.ps_error_gain <= signed(reg_o.ps1_err_gain.val.data(23 downto 0));
 
 -- PS2
 -- DCCT and Monitor ADC slow readbacks and gains & offsets
@@ -128,21 +128,21 @@ reg_i.ps2_reg.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.ps_reg), 3
 reg_i.ps2_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.ps_error), 32));
 
 dcct_params.ps2.dcct0_offset <= signed(reg_o.ps2_dcct0_offset.val.data(19 downto 0)); 
-dcct_params.ps2.dcct0_gain <= signed(reg_o.ps2_dcct0_gain.val.data(19 downto 0)); 
+dcct_params.ps2.dcct0_gain <= signed(reg_o.ps2_dcct0_gain.val.data(23 downto 0)); 
 dcct_params.ps2.dcct1_offset <= signed(reg_o.ps2_dcct1_offset.val.data(19 downto 0)); 
-dcct_params.ps2.dcct1_gain <= signed(reg_o.ps2_dcct1_gain.val.data(19 downto 0)); 
-mon_params.ps2.dac_sp_offset <= signed(reg_o.ps2_dacsp_offset.val.data); 
-mon_params.ps2.dac_sp_gain <= signed(reg_o.ps2_dacsp_gain.val.data); 
-mon_params.ps2.volt_mon_offset <= signed(reg_o.ps2_volt_offset.val.data); 
-mon_params.ps2.volt_mon_gain <= signed(reg_o.ps2_volt_gain.val.data);
-mon_params.ps2.gnd_mon_offset <= signed(reg_o.ps2_gnd_offset.val.data); 
-mon_params.ps2.gnd_mon_gain <= signed(reg_o.ps2_gnd_gain.val.data);
-mon_params.ps2.spare_mon_offset <= signed(reg_o.ps2_spare_offset.val.data); 
-mon_params.ps2.spare_mon_gain <= signed(reg_o.ps2_spare_gain.val.data);
-mon_params.ps2.ps_reg_offset <= signed(reg_o.ps2_reg_offset.val.data); 
-mon_params.ps2.ps_reg_gain <= signed(reg_o.ps2_reg_gain.val.data);
-mon_params.ps2.ps_error_offset <= signed(reg_o.ps2_err_offset.val.data); 
-mon_params.ps2.ps_error_gain <= signed(reg_o.ps2_err_gain.val.data);
+dcct_params.ps2.dcct1_gain <= signed(reg_o.ps2_dcct1_gain.val.data(23 downto 0)); 
+mon_params.ps2.dac_sp_offset <= signed(reg_o.ps2_dacsp_offset.val.data(15 downto 0)); 
+mon_params.ps2.dac_sp_gain <= signed(reg_o.ps2_dacsp_gain.val.data(23 downto 0)); 
+mon_params.ps2.volt_mon_offset <= signed(reg_o.ps2_volt_offset.val.data(15 downto 0)); 
+mon_params.ps2.volt_mon_gain <= signed(reg_o.ps2_volt_gain.val.data(23 downto 0));
+mon_params.ps2.gnd_mon_offset <= signed(reg_o.ps2_gnd_offset.val.data(15 downto 0)); 
+mon_params.ps2.gnd_mon_gain <= signed(reg_o.ps2_gnd_gain.val.data(23 downto 0));
+mon_params.ps2.spare_mon_offset <= signed(reg_o.ps2_spare_offset.val.data(15 downto 0)); 
+mon_params.ps2.spare_mon_gain <= signed(reg_o.ps2_spare_gain.val.data(23 downto 0));
+mon_params.ps2.ps_reg_offset <= signed(reg_o.ps2_reg_offset.val.data(15 downto 0)); 
+mon_params.ps2.ps_reg_gain <= signed(reg_o.ps2_reg_gain.val.data(23 downto 0));
+mon_params.ps2.ps_error_offset <= signed(reg_o.ps2_err_offset.val.data(15 downto 0)); 
+mon_params.ps2.ps_error_gain <= signed(reg_o.ps2_err_gain.val.data(23 downto 0));
 
 -- PS3
 -- DCCT and Monitor ADC slow readbacks and gains & offsets
@@ -156,21 +156,21 @@ reg_i.ps3_reg.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.ps_reg), 3
 reg_i.ps3_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.ps_error), 32));
 
 dcct_params.ps3.dcct0_offset <= signed(reg_o.ps3_dcct0_offset.val.data(19 downto 0)); 
-dcct_params.ps3.dcct0_gain <= signed(reg_o.ps3_dcct0_gain.val.data(19 downto 0)); 
+dcct_params.ps3.dcct0_gain <= signed(reg_o.ps3_dcct0_gain.val.data(23 downto 0)); 
 dcct_params.ps3.dcct1_offset <= signed(reg_o.ps3_dcct1_offset.val.data(19 downto 0)); 
-dcct_params.ps3.dcct1_gain <= signed(reg_o.ps3_dcct1_gain.val.data(19 downto 0)); 
-mon_params.ps3.dac_sp_offset <= signed(reg_o.ps3_dacsp_offset.val.data); 
-mon_params.ps3.dac_sp_gain <= signed(reg_o.ps3_dacsp_gain.val.data); 
-mon_params.ps3.volt_mon_offset <= signed(reg_o.ps3_volt_offset.val.data); 
-mon_params.ps3.volt_mon_gain <= signed(reg_o.ps3_volt_gain.val.data);
-mon_params.ps3.gnd_mon_offset <= signed(reg_o.ps3_gnd_offset.val.data); 
-mon_params.ps3.gnd_mon_gain <= signed(reg_o.ps3_gnd_gain.val.data);
-mon_params.ps3.spare_mon_offset <= signed(reg_o.ps3_spare_offset.val.data); 
-mon_params.ps3.spare_mon_gain <= signed(reg_o.ps3_spare_gain.val.data);
-mon_params.ps3.ps_reg_offset <= signed(reg_o.ps3_reg_offset.val.data); 
-mon_params.ps3.ps_reg_gain <= signed(reg_o.ps3_reg_gain.val.data);
-mon_params.ps3.ps_error_offset <= signed(reg_o.ps3_err_offset.val.data); 
-mon_params.ps3.ps_error_gain <= signed(reg_o.ps3_err_gain.val.data);
+dcct_params.ps3.dcct1_gain <= signed(reg_o.ps3_dcct1_gain.val.data(23 downto 0)); 
+mon_params.ps3.dac_sp_offset <= signed(reg_o.ps3_dacsp_offset.val.data(15 downto 0)); 
+mon_params.ps3.dac_sp_gain <= signed(reg_o.ps3_dacsp_gain.val.data(23 downto 0)); 
+mon_params.ps3.volt_mon_offset <= signed(reg_o.ps3_volt_offset.val.data(15 downto 0)); 
+mon_params.ps3.volt_mon_gain <= signed(reg_o.ps3_volt_gain.val.data(23 downto 0));
+mon_params.ps3.gnd_mon_offset <= signed(reg_o.ps3_gnd_offset.val.data(15 downto 0)); 
+mon_params.ps3.gnd_mon_gain <= signed(reg_o.ps3_gnd_gain.val.data(23 downto 0));
+mon_params.ps3.spare_mon_offset <= signed(reg_o.ps3_spare_offset.val.data(15 downto 0)); 
+mon_params.ps3.spare_mon_gain <= signed(reg_o.ps3_spare_gain.val.data(23 downto 0));
+mon_params.ps3.ps_reg_offset <= signed(reg_o.ps3_reg_offset.val.data(15 downto 0)); 
+mon_params.ps3.ps_reg_gain <= signed(reg_o.ps3_reg_gain.val.data(23 downto 0));
+mon_params.ps3.ps_error_offset <= signed(reg_o.ps3_err_offset.val.data(15 downto 0)); 
+mon_params.ps3.ps_error_gain <= signed(reg_o.ps3_err_gain.val.data(23 downto 0));
 
 -- PS4
 -- DCCT and Monitor ADC slow readbacks and gains & offsets
@@ -184,21 +184,21 @@ reg_i.ps4_reg.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.ps_reg), 3
 reg_i.ps4_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.ps_error), 32));
 
 dcct_params.ps4.dcct0_offset <= signed(reg_o.ps4_dcct0_offset.val.data(19 downto 0)); 
-dcct_params.ps4.dcct0_gain <= signed(reg_o.ps4_dcct0_gain.val.data(19 downto 0)); 
+dcct_params.ps4.dcct0_gain <= signed(reg_o.ps4_dcct0_gain.val.data(23 downto 0)); 
 dcct_params.ps4.dcct1_offset <= signed(reg_o.ps4_dcct1_offset.val.data(19 downto 0)); 
-dcct_params.ps4.dcct1_gain <= signed(reg_o.ps4_dcct1_gain.val.data(19 downto 0)); 
-mon_params.ps4.dac_sp_offset <= signed(reg_o.ps4_dacsp_offset.val.data); 
-mon_params.ps4.dac_sp_gain <= signed(reg_o.ps4_dacsp_gain.val.data); 
-mon_params.ps4.volt_mon_offset <= signed(reg_o.ps4_volt_offset.val.data); 
-mon_params.ps4.volt_mon_gain <= signed(reg_o.ps4_volt_gain.val.data);
-mon_params.ps4.gnd_mon_offset <= signed(reg_o.ps4_gnd_offset.val.data); 
-mon_params.ps4.gnd_mon_gain <= signed(reg_o.ps4_gnd_gain.val.data);
-mon_params.ps4.spare_mon_offset <= signed(reg_o.ps4_spare_offset.val.data); 
-mon_params.ps4.spare_mon_gain <= signed(reg_o.ps4_spare_gain.val.data);
-mon_params.ps4.ps_reg_offset <= signed(reg_o.ps4_reg_offset.val.data); 
-mon_params.ps4.ps_reg_gain <= signed(reg_o.ps4_reg_gain.val.data);
-mon_params.ps4.ps_error_offset <= signed(reg_o.ps4_err_offset.val.data); 
-mon_params.ps4.ps_error_gain <= signed(reg_o.ps4_err_gain.val.data);
+dcct_params.ps4.dcct1_gain <= signed(reg_o.ps4_dcct1_gain.val.data(23 downto 0)); 
+mon_params.ps4.dac_sp_offset <= signed(reg_o.ps4_dacsp_offset.val.data(15 downto 0)); 
+mon_params.ps4.dac_sp_gain <= signed(reg_o.ps4_dacsp_gain.val.data(23 downto 0)); 
+mon_params.ps4.volt_mon_offset <= signed(reg_o.ps4_volt_offset.val.data(15 downto 0)); 
+mon_params.ps4.volt_mon_gain <= signed(reg_o.ps4_volt_gain.val.data(23 downto 0));
+mon_params.ps4.gnd_mon_offset <= signed(reg_o.ps4_gnd_offset.val.data(15 downto 0)); 
+mon_params.ps4.gnd_mon_gain <= signed(reg_o.ps4_gnd_gain.val.data(23 downto 0));
+mon_params.ps4.spare_mon_offset <= signed(reg_o.ps4_spare_offset.val.data(15 downto 0)); 
+mon_params.ps4.spare_mon_gain <= signed(reg_o.ps4_spare_gain.val.data(23 downto 0));
+mon_params.ps4.ps_reg_offset <= signed(reg_o.ps4_reg_offset.val.data(15 downto 0)); 
+mon_params.ps4.ps_reg_gain <= signed(reg_o.ps4_reg_gain.val.data(23 downto 0));
+mon_params.ps4.ps_error_offset <= signed(reg_o.ps4_err_offset.val.data(15 downto 0)); 
+mon_params.ps4.ps_error_gain <= signed(reg_o.ps4_err_gain.val.data(23 downto 0));
 
 
 

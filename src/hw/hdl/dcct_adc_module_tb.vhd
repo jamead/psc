@@ -57,10 +57,13 @@ begin
     wait for 20 ns;
     reset <= '0';
     sdi <= "1010";  
-    dcct_params.ps1.dcct0_offset <= to_signed(-100, 20);
-    dcct_params.ps1.dcct0_gain <= to_signed(16#7FFFF#, 20);
-    dcct_params.ps1.dcct1_offset <= to_signed(100, 20);
-    dcct_params.ps1.dcct1_gain <= to_signed(16#80000#, 20);
+    dcct_params.ps1.dcct0_offset <= to_signed(100, 20);
+    dcct_params.ps1.dcct0_gain <= to_signed(16#0FFFFF#, 24);
+    dcct_params.ps1.dcct1_offset <= to_signed(-100, 20);
+    dcct_params.ps1.dcct1_gain <= to_signed(16#1FFFFF#, 24);
+    
+    dcct_params.ps4.dcct0_gain <= to_signed(-1000, 24);
+    dcct_params.ps4.dcct1_gain <= to_signed(-1000, 24);
 
     -- Start the ADC read process
     wait for 1000 ns;

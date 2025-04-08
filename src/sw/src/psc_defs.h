@@ -1,7 +1,5 @@
 
-
-#define STRAIGHT 0
-#define RING 1
+#define GAIN20BITFRACT 1048575.0
 
 //DAC modes
 #define SMOOTH  0

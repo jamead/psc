@@ -6,6 +6,7 @@
 #define MSGID30 30
 #define MSGID30LEN 1024 //748   //in bytes
 
+
 //Status Thread: This message is for 10Hz data
 //#define MSGID31 31
 //#define MSGID31LEN 1024  //316   //in bytes
@@ -79,9 +80,9 @@ typedef struct SAdataMsg {
     u32 ps3_mon[6];         // PSC Offset 84
 	u32 ps4_dcct[2];        // PSC Offset 92
 	u32 ps4_mon[6];         // PSC Offset 100
-    float ps1_dcct_offset[2]; // PSC Offset 140
+    s32 ps1_dcct_offset[2]; // PSC Offset 140
 	float ps1_dcct_gain[2];	// PSC Offset 148
-	float ps1_mon_offset[6];  // PSC Offset 156
+	s32 ps1_mon_offset[6];  // PSC Offset 156
 	float ps1_mon_gain[6];    // PSC Offset 180
 	u32 ps1_dacsetpt;   // PSC Offset 204
 	u32 ps1_rampactive; // PSC Offset 144

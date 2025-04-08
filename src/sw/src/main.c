@@ -254,7 +254,106 @@ void main_thread(void *p)
 }
 
 
+void InitGainsOffsets() {
 
+	float gain_dcct0, gain_dcct1, gain_dacsp, gain_volt, gain_gnd, gain_spare, gain_reg, gain_err;
+	s32 offset_dcct0, offset_dcct1, offset_dacsp, offset_volt, offset_gnd;
+	s32 offset_spare, offset_reg, offset_err;
+
+
+	offset_dcct0 = 1;
+	offset_dcct1 = 2;
+    offset_dacsp = 3;
+    offset_volt = 4;
+    offset_gnd = -1;
+    offset_spare = -2;
+    offset_reg = -3;
+    offset_err = -4;
+
+	gain_dcct0 = 1.08;
+	gain_dcct1 = .054345;
+    gain_dacsp = 0.999;
+    gain_volt = 0.998;
+    gain_gnd = 0.997;
+    gain_spare = 0.996;
+    gain_reg = 0.9995;
+    gain_err = 0.999994;
+
+
+
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DCCT0_OFFSET, offset_dcct0);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DCCT1_OFFSET, offset_dcct1);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DACSP_OFFSET, offset_dacsp);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_VOLT_OFFSET, offset_volt);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_GND_OFFSET, offset_gnd);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_SPARE_OFFSET, offset_spare);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_REG_OFFSET, offset_reg);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_ERR_OFFSET, offset_err);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DCCT0_GAIN, gain_dcct0 * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DCCT1_GAIN, gain_dcct1 * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DACSP_GAIN, gain_dacsp * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_VOLT_GAIN, gain_volt * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_GND_GAIN, gain_gnd * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_SPARE_GAIN, gain_spare * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_REG_GAIN, gain_reg * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_ERR_GAIN, gain_err * GAIN20BITFRACT);
+
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DCCT0_OFFSET, offset_dcct0);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DCCT1_OFFSET, offset_dcct1);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DACSP_OFFSET, offset_dacsp);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_VOLT_OFFSET, offset_volt);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_GND_OFFSET, offset_gnd);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_SPARE_OFFSET, offset_spare);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_REG_OFFSET, offset_reg);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_ERR_OFFSET, offset_err);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DCCT0_GAIN, gain_dcct0 * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DCCT1_GAIN, gain_dcct1 * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DACSP_GAIN, gain_dacsp * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_VOLT_GAIN, gain_volt * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_GND_GAIN, gain_gnd * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_SPARE_GAIN, gain_spare * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_REG_GAIN, gain_reg * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_ERR_GAIN, gain_err * GAIN20BITFRACT);
+
+
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DCCT0_OFFSET, offset_dcct0);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DCCT1_OFFSET, offset_dcct1);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DACSP_OFFSET, offset_dacsp);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_VOLT_OFFSET, offset_volt);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_GND_OFFSET, offset_gnd);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_SPARE_OFFSET, offset_spare);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_REG_OFFSET, offset_reg);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_ERR_OFFSET, offset_err);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DCCT0_GAIN, gain_dcct0 * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DCCT1_GAIN, gain_dcct1 * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DACSP_GAIN, gain_dacsp * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_VOLT_GAIN, gain_volt * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_GND_GAIN, gain_gnd * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_SPARE_GAIN, gain_spare * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_REG_GAIN, gain_reg * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_ERR_GAIN, gain_err * GAIN20BITFRACT);
+
+
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DCCT0_OFFSET, offset_dcct0);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DCCT1_OFFSET, offset_dcct1);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DACSP_OFFSET, offset_dacsp);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_VOLT_OFFSET, offset_volt);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_GND_OFFSET, offset_gnd);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_SPARE_OFFSET, offset_spare);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_REG_OFFSET, offset_reg);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_ERR_OFFSET, offset_err);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DCCT0_GAIN, gain_dcct0 * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DCCT1_GAIN, gain_dcct1 * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DACSP_GAIN, gain_dacsp * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_VOLT_GAIN, gain_volt * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_GND_GAIN, gain_gnd * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_SPARE_GAIN, gain_spare * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_REG_GAIN, gain_reg * GAIN20BITFRACT);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_ERR_GAIN, gain_err * GAIN20BITFRACT);
+
+
+
+}
 
 
 
@@ -283,6 +382,8 @@ int main()
     Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DCCT0_OFFSET, 100);
     Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DCCT0_GAIN, 0x80000);
 
+
+    InitGainsOffsets();
     /*
     for (i=0;i<100;i++) {
     	Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DCCT0_GAIN, i*100);

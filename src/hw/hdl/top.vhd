@@ -250,7 +250,8 @@ read_mon_adcs: entity work.adc_8ch_module
   port map(
     clk => pl_clk0, 
     reset => pl_reset, 
-    start => tenkhz_trig,   
+    start => tenkhz_trig, 
+    mon_params => mon_params,  
     mon_adcs => mon_adcs,
     adc8c_sdo => mon_adc_sdo,
     adc8c_conv123 => mon_adc_cnv, 
@@ -347,6 +348,7 @@ ps_regs: entity work.ps_io
     dcct_params => dcct_params,
     dcct_adcs => dcct_adcs,
     mon_adcs => mon_adcs,
+    mon_params => mon_params,
     dac_cntrl => dac_cntrl,
     dac_stat => dac_stat,
     ss_buf_stat => ss_buf_stat,

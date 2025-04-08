@@ -9,12 +9,12 @@ package psc_pkg is
 
 -- DCCT ADC record types
 type t_dcct_adcs_onech is record
-  dcct0_raw     : signed(19 downto 0);
-  dcct1_raw     : signed(19 downto 0);
-  dcct0_oc      : signed(19 downto 0);
-  dcct1_oc      : signed(19 downto 0);  
-  dcct0         : signed(19 downto 0);
-  dcct1         : signed(19 downto 0);  
+  dcct0_raw      : signed(19 downto 0);
+  dcct1_raw      : signed(19 downto 0);
+  dcct0_oc       : signed(19 downto 0);
+  dcct1_oc       : signed(19 downto 0);  
+  dcct0          : signed(19 downto 0);
+  dcct1          : signed(19 downto 0);  
   
 end record;
 
@@ -26,9 +26,9 @@ type t_dcct_adcs is record
 end record;
 
 type t_dcct_adcs_params_onech is record 
-  dcct0_gain      : signed(19 downto 0);
+  dcct0_gain      : signed(23 downto 0); --Q3.20 format
   dcct0_offset    : signed(19 downto 0);
-  dcct1_gain      : signed(19 downto 0);
+  dcct1_gain      : signed(23 downto 0); --Q3.20 format
   dcct1_offset    : signed(19 downto 0);  
 end record;
 
@@ -56,12 +56,24 @@ end record;
 
 -- Monitor ADC record types
 type t_mon_adcs_onech is record
-  dac_sp        : std_logic_vector(15 downto 0);
-  volt_mon      : std_logic_vector(15 downto 0);
-  gnd_mon       : std_logic_vector(15 downto 0);
-  spare_mon     : std_logic_vector(15 downto 0);
-  ps_reg        : std_logic_vector(15 downto 0);
-  ps_error      : std_logic_vector(15 downto 0);
+  dac_sp_raw    : signed(15 downto 0);
+  dac_sp_oc     : signed(15 downto 0);
+  dac_sp        : signed(15 downto 0);
+  volt_mon_raw  : signed(15 downto 0);  
+  volt_mon_oc   : signed(15 downto 0);  
+  volt_mon      : signed(15 downto 0);
+  gnd_mon_raw   : signed(15 downto 0);  
+  gnd_mon_oc    : signed(15 downto 0);
+  gnd_mon       : signed(15 downto 0);
+  spare_mon_raw : signed(15 downto 0);  
+  spare_mon_oc  : signed(15 downto 0);  
+  spare_mon     : signed(15 downto 0);
+  ps_reg_raw    : signed(15 downto 0); 
+  ps_reg_oc     : signed(15 downto 0);  
+  ps_reg        : signed(15 downto 0); 
+  ps_error_raw  : signed(15 downto 0); 
+  ps_error_oc   : signed(15 downto 0);  
+  ps_error      : signed(15 downto 0);
 end record;
 
 type t_mon_adcs is record
@@ -73,18 +85,18 @@ end record;
 
 
 type t_mon_adcs_params_onech is record 
-  dac_sp_offset    : signed(31 downto 0);
-  dac_sp_gain      : signed(31 downto 0);    
-  volt_mon_offset  : signed(31 downto 0);
-  volt_mon_gain    : signed(31 downto 0); 
-  gnd_mon_offset   : signed(31 downto 0);
-  gnd_mon_gain     : signed(31 downto 0);   
-  spare_mon_offset : signed(31 downto 0);
-  spare_mon_gain   : signed(31 downto 0);  
-  ps_reg_offset    : signed(31 downto 0);
-  ps_reg_gain      : signed(31 downto 0);   
-  ps_error_offset  : signed(31 downto 0);
-  ps_error_gain    : signed(31 downto 0);  
+  dac_sp_offset    : signed(15 downto 0);
+  dac_sp_gain      : signed(23 downto 0);    
+  volt_mon_offset  : signed(15 downto 0);
+  volt_mon_gain    : signed(23 downto 0); 
+  gnd_mon_offset   : signed(15 downto 0);
+  gnd_mon_gain     : signed(23 downto 0);   
+  spare_mon_offset : signed(15 downto 0);
+  spare_mon_gain   : signed(23 downto 0);  
+  ps_reg_offset    : signed(15 downto 0);
+  ps_reg_gain      : signed(23 downto 0);   
+  ps_error_offset  : signed(15 downto 0);
+  ps_error_gain    : signed(23 downto 0);  
 end record;
 
 

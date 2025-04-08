@@ -53,18 +53,16 @@ use work.psc_pkg.all;
 
 entity ADC_8CH_module is
 	port(
-	     --Clocks and Resets
-		 clk          : in std_logic;
-		 reset        : in std_logic;
-		 start        : in std_logic;
-		 --Data Registers
-		 mon_adcs     : out t_mon_adcs;
-		 --SPI Signals
+		 clk           : in std_logic;
+		 reset         : in std_logic;
+		 start         : in std_logic;
+		 mon_adcs      : out t_mon_adcs;
+		 mon_params    : in t_mon_adcs_params;
 		 ADC8C_SDO     : in std_logic_vector(2 downto 0);
 		 ADC8C_CONV123 : out std_logic;
 		 ADC8C_FS123   : out std_logic;
 		 ADC8C_SCK123  : out std_logic;
-		 done         : out std_logic
+		 done          : out std_logic
 	);
 end entity;
 
@@ -73,139 +71,143 @@ architecture arch of ADC_8CH_module is
 signal ADC_8CH_ADC1     : std_logic_vector(127 downto 0);
 signal ADC_8CH_ADC2     : std_logic_vector(127 downto 0);
 signal ADC_8CH_ADC3     : std_logic_vector(127 downto 0);
-signal convert_done     : std_logic;
+signal conv_done        : std_logic;
 signal done_pipe        : std_logic;
+signal mon_adcs_in      : t_mon_adcs;
 
 begin
 
---###############################################################################################################
---                                           Channel 1 ADC Interface
---###############################################################################################################
-
-	ADC1_8CH_inst: entity work.ADC_ADS8568_intf
-		generic map(DATA_BITS   => 128,
-				SPI_CLK_DIV => 5)
-		port map(
-				--Control inputs
-				clk       => clk,
-				reset     => reset,
-				start     => start,
-				--ADC Inputs
-				busy      => '0',
-				sdi       => ADC8C_SDO(0), --ADC8C_MISO1,
-				--ADC Outputs
-				cnv       => ADC8C_CONV123,
-				n_fs      => ADC8C_FS123,
-				sclk      => ADC8C_SCK123,
-				sdo       => open,
-				data_out  => ADC_8CH_ADC1,
-				data_rdy  => convert_done
-			);
-
-process(clk)
-begin
-    if rising_edge(clk) then
-        if convert_done = '1' then
-              mon_adcs.ps1.dac_sp <= ADC_8CH_ADC1(127 downto 112);
-              mon_adcs.ps3.dac_sp <= ADC_8CH_ADC1(111 downto 96);
-              mon_adcs.ps2.dac_sp <= ADC_8CH_ADC1(95 downto 80);
-              mon_adcs.ps4.dac_sp <= ADC_8CH_ADC1(79 downto 64);
-              mon_adcs.ps1.volt_mon <= ADC_8CH_ADC1(63 downto 48);
-              mon_adcs.ps1.spare_mon <= ADC_8CH_ADC1(47 downto 32);
-              mon_adcs.ps1.gnd_mon <= ADC_8CH_ADC1(31 downto 16);
-              mon_adcs.ps2.volt_mon <= ADC_8CH_ADC1(15 downto 0);        
-        end if;
-    end if;
-end process;
 
 
 
-	--###############################################################################################################
-	--                                           Channel 2 ADC Interface
-	--###############################################################################################################
-		ADC2_8CH_inst: entity work.ADC_ADS8568_intf
-		generic map(DATA_BITS   => 128,
-				SPI_CLK_DIV => 5)
-		port map(
-				--Control inputs
-				clk       => clk,
-				reset     => reset,
-				start     => start,
-				--ADC Inputs
-				busy      => '0',
-				sdi       => ADC8C_SDO(1), --ADC8C_MISO2,
-				--ADC Outputs
-				cnv       => open,
-				n_fs      => open,
-				sclk      => open,
-				sdo       => open,
-				data_out  => ADC_8CH_ADC2,
-				data_rdy  => open
-			);
-
-process(clk)
-begin
-    if rising_edge(clk) then
-        if convert_done = '1' then
-              mon_adcs.ps2.gnd_mon <= ADC_8CH_ADC2(127 downto 112);
-              mon_adcs.ps3.volt_mon <= ADC_8CH_ADC2(111 downto 96);
-              mon_adcs.ps3.volt_mon <= ADC_8CH_ADC2(95 downto 80);
-              mon_adcs.ps3.gnd_mon <= ADC_8CH_ADC2(79 downto 64);
-              mon_adcs.ps3.spare_mon <= ADC_8CH_ADC2(63 downto 48);
-              mon_adcs.ps4.gnd_mon <= ADC_8CH_ADC2(47 downto 32);
-              mon_adcs.ps4.volt_mon <= ADC_8CH_ADC2(31 downto 16);
-              mon_adcs.ps4.spare_mon <= ADC_8CH_ADC2(15 downto 0);                  
-
-        end if;
-    end if;
-end process;
+adc1_8ch: entity work.ADC_ADS8568_intf
+  generic map(DATA_BITS   => 128,	SPI_CLK_DIV => 5)
+  port map(
+	clk => clk,
+	reset => reset,
+	start => start,
+	busy => '0',
+	sdi => ADC8C_SDO(0), --ADC8C_MISO1,
+	cnv => ADC8C_CONV123,
+	n_fs => ADC8C_FS123,
+	sclk => ADC8C_SCK123,
+	sdo => open,
+	data_out => ADC_8CH_ADC1,
+	data_rdy => conv_done
+);
 
 
-	--###############################################################################################################
-	--                                           Channel 3 ADC Interface
-	--###############################################################################################################
-		ADC3_8CH_inst: entity work.ADC_ADS8568_intf
-		generic map(DATA_BITS   => 128,
-				SPI_CLK_DIV => 5)
-		port map(
-				--Control inputs
-				clk       => clk,
-				reset     => reset,
-				start     => start,
-				--ADC Inputs
-				busy      => '0',
-				sdi       => ADC8C_SDO(2), --ADC8C_MISO3,
-				--ADC Outputs
-				cnv       => open,
-				n_fs      => open,
-				sclk      => open,
-				sdo       => open,
-				data_out  => ADC_8CH_ADC3,
-				data_rdy  => open
-			);
+adc2_8ch: entity work.ADC_ADS8568_intf
+  generic map(DATA_BITS   => 128, SPI_CLK_DIV => 5)
+    port map(
+      clk => clk,
+      reset => reset,
+      start => start,
+      busy => '0',
+      sdi => ADC8C_SDO(1), --ADC8C_MISO2,
+      cnv => open,
+      n_fs => open,
+      sclk => open,
+      sdo => open,
+      data_out => ADC_8CH_ADC2,
+      data_rdy => open
+);
 
-process(clk)
-begin
-    if rising_edge(clk) then
-        if convert_done = '1' then
-              mon_adcs.ps1.ps_reg <= ADC_8CH_ADC3(127 downto 112);
-              mon_adcs.ps2.ps_reg <= ADC_8CH_ADC3(111 downto 96);
-              mon_adcs.ps1.ps_error <= ADC_8CH_ADC3(95 downto 80);
-              mon_adcs.ps2.ps_error <= ADC_8CH_ADC3(79 downto 64);
-              mon_adcs.ps3.ps_reg <= ADC_8CH_ADC3(63 downto 48);
-              mon_adcs.ps4.ps_reg <= ADC_8CH_ADC3(47 downto 32);
-              mon_adcs.ps4.ps_error <= ADC_8CH_ADC3(31 downto 16);
-              mon_adcs.ps4.ps_error <= ADC_8CH_ADC3(15 downto 0);         
-        end if;
-    end if;
-end process;
 
-process(clk)
-begin
-    if rising_edge(clk) then
-        done_pipe <= convert_done;
-        done <= done_pipe;
-    end if;
-end process;
+adc3_8ch: entity work.ADC_ADS8568_intf
+  generic map(DATA_BITS   => 128, SPI_CLK_DIV => 5)
+  port map(
+    clk       => clk,
+    reset     => reset,
+    start     => start,
+    busy      => '0',
+    sdi       => ADC8C_SDO(2), --ADC8C_MISO3,
+    cnv       => open,
+    n_fs      => open,
+    sclk      => open,
+    sdo       => open,
+    data_out  => ADC_8CH_ADC3,
+    data_rdy  => open
+);
+
+
+-- mapping from phyical to logical adc channels
+mon_adcs_in.ps1.dac_sp_raw <= signed(ADC_8CH_ADC1(127 downto 112));
+mon_adcs_in.ps3.dac_sp_raw <= signed(ADC_8CH_ADC1(111 downto 96));
+mon_adcs_in.ps2.dac_sp_raw <= signed(ADC_8CH_ADC1(95 downto 80));
+mon_adcs_in.ps4.dac_sp_raw <= signed(ADC_8CH_ADC1(79 downto 64));
+mon_adcs_in.ps1.volt_mon_raw <= signed(ADC_8CH_ADC1(63 downto 48));
+mon_adcs_in.ps1.spare_mon_raw <= signed(ADC_8CH_ADC1(47 downto 32));
+mon_adcs_in.ps1.gnd_mon_raw <= signed(ADC_8CH_ADC1(31 downto 16));
+mon_adcs_in.ps2.volt_mon_raw <= signed(ADC_8CH_ADC1(15 downto 0));   
+
+mon_adcs_in.ps2.gnd_mon <= signed(ADC_8CH_ADC2(127 downto 112));
+mon_adcs_in.ps3.volt_mon <= signed(ADC_8CH_ADC2(111 downto 96));
+mon_adcs_in.ps3.volt_mon <= signed(ADC_8CH_ADC2(95 downto 80));
+mon_adcs_in.ps3.gnd_mon <= signed(ADC_8CH_ADC2(79 downto 64));
+mon_adcs_in.ps3.spare_mon <= signed(ADC_8CH_ADC2(63 downto 48));
+mon_adcs_in.ps4.gnd_mon <= signed(ADC_8CH_ADC2(47 downto 32));
+mon_adcs_in.ps4.volt_mon <= signed(ADC_8CH_ADC2(31 downto 16));
+mon_adcs_in.ps4.spare_mon <= signed(ADC_8CH_ADC2(15 downto 0)); 
+
+mon_adcs_in.ps1.ps_reg <= signed(ADC_8CH_ADC3(127 downto 112));
+mon_adcs_in.ps2.ps_reg <= signed(ADC_8CH_ADC3(111 downto 96));
+mon_adcs_in.ps1.ps_error <= signed(ADC_8CH_ADC3(95 downto 80));
+mon_adcs_in.ps2.ps_error <= signed(ADC_8CH_ADC3(79 downto 64));
+mon_adcs_in.ps3.ps_reg <= signed(ADC_8CH_ADC3(63 downto 48));
+mon_adcs_in.ps4.ps_reg <= signed(ADC_8CH_ADC3(47 downto 32));
+mon_adcs_in.ps4.ps_error <= signed(ADC_8CH_ADC3(31 downto 16));
+mon_adcs_in.ps4.ps_error <= signed(ADC_8CH_ADC3(15 downto 0));         
+
+-- apply gains and offsets
+gainoff_ps1: entity work.mon_gainoffset
+  port map(
+    clk => clk,
+    reset => reset,
+    conv_done => conv_done,
+    mon_adc => mon_adcs_in.ps1,
+    mon_params => mon_params.ps1,
+    mon_out => mon_adcs.ps1,
+    done => done
+);
+
+-- apply gains and offsets
+gainoff_ps2: entity work.mon_gainoffset
+  port map(
+    clk => clk,
+    reset => reset,
+    conv_done => conv_done,
+    mon_adc => mon_adcs_in.ps2,
+    mon_params => mon_params.ps2,
+    mon_out => mon_adcs.ps2,
+    done => done
+);
+
+-- apply gains and offsets
+gainoff_ps3: entity work.mon_gainoffset
+  port map(
+    clk => clk,
+    reset => reset,
+    conv_done => conv_done,
+    mon_adc => mon_adcs_in.ps3,
+    mon_params => mon_params.ps3,
+    mon_out => mon_adcs.ps3,
+    done => done
+);
+
+-- apply gains and offsets
+gainoff_ps4: entity work.mon_gainoffset
+  port map(
+    clk => clk,
+    reset => reset,
+    conv_done => conv_done,
+    mon_adc => mon_adcs_in.ps4,
+    mon_params => mon_params.ps4,
+    mon_out => mon_adcs.ps4,
+    done => done
+);
+
+
+
 
 end architecture;
