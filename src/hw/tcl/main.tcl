@@ -83,12 +83,8 @@ proc doOnCreate {} {
    
   source ${TclPath}/system.tcl
   source ${TclPath}/dac_dpram.tcl
-  #source ${TclPath}/div_gen_mag.tcl
-  #source ${TclPath}/dds_simadc.tcl 
-  #source ${TclPath}/fa_fifo.tcl 
-  #source ${TclPath}/fa_rcvd_fifo.tcl
   source ${TclPath}/evr_gtx.tcl
-  #source ${TclPath}/fofb_gtx.tcl
+
 
   addSources "Sources" 
   

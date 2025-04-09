@@ -236,54 +236,54 @@ void ChanSettings(u32 chan, u32 addr, u32 data) {
 
     switch(addr) {
 
-        case DAC_CH1_OPMODE:
-	        xil_printf("Setting DAC CH1 Operating Mode:   Value=%d\r\n",data);
-	        Set_dacOpmode(1,data);
+        case DAC_OPMODE_MSG:
+	        xil_printf("Setting DAC CH%d Operating Mode:   Value=%d\r\n",chan,data);
+	        Set_dacOpmode(chan,data);
 	        break;
 
-        case DAC_CH1_SETPT:
-	        xil_printf("Setting DAC CH1 SetPoint:   Value=%d\r\n",data);
-	        Set_dac(1, data);
+        case DAC_SETPT_MSG:
+	        xil_printf("Setting DAC CH%d SetPoint:   Value=%d\r\n",chan,data);
+	        Set_dac(chan, data);
 	        break;
 
-        case DAC_CH1_RAMPLEN:
- 	        xil_printf("Setting DAC CH1 RampTable Length:   Value=%d\r\n",data);
- 	        Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPLEN, data);
+        case DAC_RAMPLEN_MSG:
+ 	        xil_printf("Setting DAC CH%d RampTable Length:   Value=%d\r\n",chan,data);
+ 	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RAMPLEN_REG + chan*CHBASEADDR, data);
  	        break;
 
-        case DAC_CH1_RUNRAMP:
-	        xil_printf("Running DAC CH1 Ramptable:   Value=%d\r\n",data);
-	        Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RUNRAMP, data);
+        case DAC_RUNRAMP_MSG:
+	        xil_printf("Running DAC CH%d Ramptable:   Value=%d\r\n",chan,data);
+	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RUNRAMP_REG + chan*CHBASEADDR, data);
 	        break;
 
-        case DAC_CH1_GAIN:
-	        xil_printf("Setting DAC CH1 Gain:   Value=%d\r\n",data);
-	        Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_GAIN, data);
+        case DAC_GAIN_MSG:
+	        xil_printf("Setting DAC CH%d Gain:   Value=%d\r\n",chan,data);
+	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_GAIN_REG + chan*CHBASEADDR, data);
 	        break;
 
-        case DAC_CH1_OFFSET:
-	        xil_printf("Setting DAC CH1 Offset:   Value=%d\r\n",data);
-	        Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_OFFSET, data);
+        case DAC_OFFSET_MSG:
+	        xil_printf("Setting DAC CH%d Offset:   Value=%d\r\n",chan,data);
+	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_OFFSET_REG + chan*CHBASEADDR, data);
 	        break;
 
-        case DCCT1_CH1_GAIN:
- 	        xil_printf("Setting DAC CH1 Gain:   Value=%d\r\n",data);
- 	        Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_GAIN, data);
+        case DCCT1_GAIN_MSG:
+ 	        xil_printf("Setting DAC CH%d Gain:   Value=%d\r\n",chan,data);
+ 	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_GAIN_REG + chan*CHBASEADDR, data);
  	        break;
 
-        case DCCT1_CH1_OFFSET:
- 	        xil_printf("Setting DAC CH1 Offset:   Value=%d\r\n",data);
- 	        Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_OFFSET, data);
+        case DCCT1_OFFSET_MSG:
+ 	        xil_printf("Setting DAC CH%d Offset:   Value=%d\r\n",chan,data);
+ 	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_OFFSET_REG + chan*CHBASEADDR, data);
  	        break;
 
-        case DCCT2_CH1_GAIN:
-  	        xil_printf("Setting DAC CH1 Gain:   Value=%d\r\n",data);
-  	        Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_GAIN, data);
+        case DCCT2_GAIN_MSG:
+  	        xil_printf("Setting DAC CH%d Gain:   Value=%d\r\n",chan,data);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_GAIN_REG + chan*CHBASEADDR, data);
   	        break;
 
-        case DCCT2_CH1_OFFSET:
-  	        xil_printf("Setting DAC CH1 Offset:   Value=%d\r\n",data);
-  	        Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_OFFSET, data);
+        case DCCT2_OFFSET_MSG:
+  	        xil_printf("Setting DAC CH%d Offset:   Value=%d\r\n",chan,data);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_OFFSET_REG + chan*CHBASEADDR, data);
   	        break;
 
     }
@@ -371,19 +371,10 @@ reconnect:
             	break;
 
             case 1:
-            	ChanSettings(1,MsgAddr,MsgData);
-            	break;
-
             case 2:
-             	ChanSettings(2,MsgAddr,MsgData);
-                break;
-
             case 3:
-             	ChanSettings(3,MsgAddr,MsgData);
-                break;
-
             case 4:
-             	ChanSettings(3,MsgAddr,MsgData);
+             	ChanSettings(MsgId,MsgAddr,MsgData);
                 break;
 
         }
