@@ -23,7 +23,7 @@
 
 // Writes Ramptable to Fabric, currently using DPRAM for storage
 // Will switch to DDR in future to support longer tables
-void write_ramptable(u32 chan_num, u32 ramp_len, u32 ramp_table[])
+void write_ramptable(u32 chan, u32 ramp_len, u32 ramp_table[])
 {
   u32 i,dpram_addr, dpram_data;
 
@@ -35,33 +35,11 @@ void write_ramptable(u32 chan_num, u32 ramp_len, u32 ramp_table[])
 	  return;
   }
 
-  switch (chan_num) {
-     case 1:
-    	 dpram_addr = PS1_DAC_RAMPADDR;
-    	 dpram_data = PS1_DAC_RAMPDATA;
-    	 Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPLEN, ramp_len);
-    	 break;
 
-     case 2:
-    	 dpram_addr = PS2_DAC_RAMPADDR;
-    	 dpram_data = PS2_DAC_RAMPDATA;
-    	 Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DAC_RAMPLEN, ramp_len);
-    	 break;
-     case 3:
-    	 dpram_addr = PS3_DAC_RAMPADDR;
-    	 dpram_data = PS3_DAC_RAMPDATA;
-    	 Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DAC_RAMPLEN, ramp_len);
-    	 break;
-     case 4:
-    	 dpram_addr = PS4_DAC_RAMPADDR;
-    	 dpram_data = PS4_DAC_RAMPDATA;
-    	 Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DAC_RAMPLEN, ramp_len);
-    	 break;
+  dpram_addr = DAC_RAMPADDR_REG + chan*CHBASEADDR;
+  dpram_data = DAC_RAMPDATA_REG + chan*CHBASEADDR;
+  Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RAMPLEN_REG + chan*CHBASEADDR, ramp_len);
 
-     default :
-    	 xil_printf("Invalid PS Number\r\n");
-    	 return;
-  }
 
   for (i=0;i<ramp_len;i++) {
 	if (i < 10)
@@ -72,7 +50,7 @@ void write_ramptable(u32 chan_num, u32 ramp_len, u32 ramp_table[])
 
 	//update dac setpt with last value from ramp, so whenever we switch
 	// back to FOFB or JumpMode there is no change
-	//Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DAC_RAMPLEN, (s32)val);
+	//Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RAMPLEN + chan*CHBASEADDR, (s32)val);
 
 }
 
@@ -86,7 +64,7 @@ void psc_ramping_thread()
 
 	u32  *bufptr, numpackets=0;
     //u32 MsgAddr, MsgData;
-    u32 ps_num, ramp_len;
+    u32 MsgId, ramp_len;
 
     ssize_t total_bytes = 0;
     ssize_t n;
@@ -151,14 +129,14 @@ reconnect:
 		total_bytes = 0;
         bufptr = (u32 *) ramp_buf;
         xil_printf("Header: %c%c \t",ramp_buf[0],ramp_buf[1]);
-        ps_num = ntohl(*bufptr++) & 0xFFFF;
-        xil_printf("Message ID : %d\t",ps_num);
+        MsgId = ntohl(*bufptr++) & 0xFFFF;
+        xil_printf("Message ID : %d\t",MsgId);
         ramp_len = ntohl(*bufptr++);
         xil_printf("Body Length : %d\r\n",ramp_len);
 		total_bytes = 0;  //clear total_bytes for enabling reception of next table
 
-		xil_printf("Writing Ramp Table for PS%d with length %d\r\n",ps_num,ramp_len);
-        write_ramptable(ps_num,ramp_len,bufptr);
+		xil_printf("Writing Ramp Table for PS%d with length %d\r\n",MsgId,ramp_len);
+        write_ramptable(MsgId,ramp_len,bufptr);
         xil_printf("Finished Writing Ramp Table\r\n");
 
 

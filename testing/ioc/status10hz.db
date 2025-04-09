@@ -31,292 +31,20 @@ record(longin, "$(P){$(NO)}TS-S-I") {
 
 
 
-### PS1 ADC's
+### PS1 #####
 
 record(longin, "$(P){$(NO)}Chan1:DCCT1-I") {
     field(DESC, "DCCT 1 Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 12")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan1:DCCT2-I") {
-    field(DESC, "DCCT 2 Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 16")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan1:DAC-I") {
-    field(DESC, "DAC Setpoint Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 20")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan1:Volt-I") {
-    field(DESC, "Voltage Monitor Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 24")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan1:Gnd-I") {
-    field(DESC, "Ground Monitor Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 28")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan1:Spare-I") {
-    field(DESC, "Spare Monitor Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 32")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan1:Reg-I") {
-    field(DESC, "Regulator Output Voltage Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 36")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan1:Error-I") {
-    field(DESC, "Error Voltage Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 40")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-
-### PS2 ADC's
-
-
-record(longin, "$(P){$(NO)}Chan2:DCCT1-I") {
-    field(DESC, "DCCT 1 Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 44")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan2:DCCT2-I") {
-    field(DESC, "DCCT 2 Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 48")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan2:DAC-I") {
-    field(DESC, "DAC Setpoint Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 52")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan2:Volt-I") {
-    field(DESC, "Voltage Monitor Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 56")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan2:Gnd-I") {
-    field(DESC, "Ground Monitor Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 60")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan2:Spare-I") {
-    field(DESC, "Spare Monitor Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 64")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan2:Reg-I") {
-    field(DESC, "Regulator Output Voltage Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 68")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan2:Error-I") {
-    field(DESC, "Error Voltage Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 72")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-
-### PS3 ADC's
-
-
-record(longin, "$(P){$(NO)}Chan3:DCCT1-I") {
-    field(DESC, "DCCT 1 Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 76")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan3:DCCT2-I") {
-    field(DESC, "DCCT 2 Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 80")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan3:DAC-I") {
-    field(DESC, "DAC Setpoint Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 84")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan3:Volt-I") {
-    field(DESC, "Voltage Monitor Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 88")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan3:Gnd-I") {
-    field(DESC, "Ground Monitor Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 92")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan3:Spare-I") {
-    field(DESC, "Spare Monitor Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 96")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan3:Reg-I") {
-    field(DESC, "Regulator Output Voltage Readback")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 100")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}Chan3:Error-I") {
-    field(DESC, "Error Voltage Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 104")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-
-### PS4 ADC's
-
-
-record(longin, "$(P){$(NO)}Chan4:DCCT1-I") {
-    field(DESC, "DCCT 1 Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 108")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan4:DCCT2-I") {
-    field(DESC, "DCCT 2 Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 112")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan4:DAC-I") {
-    field(DESC, "DAC Setpoint Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 116")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan4:Volt-I") {
-    field(DESC, "Voltage Monitor Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 120")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan4:Gnd-I") {
-    field(DESC, "Ground Monitor Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 124")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan4:Spare-I") {
-    field(DESC, "Spare Monitor Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 128")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan4:Reg-I") {
-    field(DESC, "Regulator Output Voltage Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 132")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan4:Error-I") {
-    field(DESC, "Error Voltage Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 136")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-
-
-### PS1 Offset & Gains
-
 record(longin, "$(P){$(NO)}Chan1:DCCT1-Offset-I") {
     field(DESC, "DCCT 1 Offset Readback")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 140")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan1:DCCT2-Offset-I") {
-    field(DESC, "DCCT 2 Offset Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 144")
+    field(INP , "@Rx$(NO) 31 104")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -324,7 +52,23 @@ record(longin, "$(P){$(NO)}Chan1:DCCT2-Offset-I") {
 record(ai, "$(P){$(NO)}Chan1:DCCT1-Gain-I") {
     field(DESC, "DCCT 1 Gain Readback")
     field(DTYP, "PSC Reg F32")
-    field(INP , "@Rx$(NO) 31 148")
+    field(INP , "@Rx$(NO) 31 108")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan1:DCCT2-I") {
+    field(DESC, "DCCT 2 Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 112")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan1:DCCT2-Offset-I") {
+    field(DESC, "DCCT 2 Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 116")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -332,7 +76,15 @@ record(ai, "$(P){$(NO)}Chan1:DCCT1-Gain-I") {
 record(ai, "$(P){$(NO)}Chan1:DCCT2-Gain-I") {
     field(DESC, "DCCT 2 Gain Readback")
     field(DTYP, "PSC Reg F32")
-    field(INP , "@Rx$(NO) 31 152")
+    field(INP , "@Rx$(NO) 31 120")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan1:DAC-I") {
+    field(DESC, "DAC Setpoint Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 124")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -340,7 +92,24 @@ record(ai, "$(P){$(NO)}Chan1:DCCT2-Gain-I") {
 record(longin, "$(P){$(NO)}Chan1:DAC-Offset-I") {
     field(DESC, "DAC Setpoint Offset Readback")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 156")
+    field(INP , "@Rx$(NO) 31 128")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan1:DAC-Gain-I") {
+    field(DESC, "DAC Setpoint Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 132")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+record(longin, "$(P){$(NO)}Chan1:Volt-I") {
+    field(DESC, "Voltage Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 136")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -348,50 +117,7 @@ record(longin, "$(P){$(NO)}Chan1:DAC-Offset-I") {
 record(longin, "$(P){$(NO)}Chan1:Volt-Offset-I") {
     field(DESC, "Voltage Monitor Offset Readback")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 160")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan1:Gnd-Offset-I") {
-    field(DESC, "Ground Monitor Offset Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 164")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-
-record(longin, "$(P){$(NO)}Chan1:Spare-Offset-I") {
-    field(DESC, "Spare Monitor Offset Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 168")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan1:Reg-Offset-I") {
-    field(DESC, "Regulator Output Voltage Offset Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 172")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-record(longin, "$(P){$(NO)}Chan1:Error-Offset-I") {
-    field(DESC, "Error Voltage Offset Readback")
-    field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 176")
-    field(SCAN,"I/O Intr")
-    field(EGU,  "")
-}
-
-
-
-record(ai, "$(P){$(NO)}Chan1:DAC-Gain-I") {
-    field(DESC, "DAC Setpoint Gain Readback")
-    field(DTYP, "PSC Reg F32")
-    field(INP , "@Rx$(NO) 31 180")
+    field(INP , "@Rx$(NO) 31 140")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -399,7 +125,24 @@ record(ai, "$(P){$(NO)}Chan1:DAC-Gain-I") {
 record(ai, "$(P){$(NO)}Chan1:Volt-Gain-I") {
     field(DESC, "Voltage Monitor Gain Readback")
     field(DTYP, "PSC Reg F32")
-    field(INP , "@Rx$(NO) 31 184")
+    field(INP , "@Rx$(NO) 31 144")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+record(longin, "$(P){$(NO)}Chan1:Gnd-I") {
+    field(DESC, "Ground Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 148")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan1:Gnd-Offset-I") {
+    field(DESC, "Ground Monitor Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 152")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -407,7 +150,23 @@ record(ai, "$(P){$(NO)}Chan1:Volt-Gain-I") {
 record(ai, "$(P){$(NO)}Chan1:Gnd-Gain-I") {
     field(DESC, "Ground Monitor Gain Readback")
     field(DTYP, "PSC Reg F32")
-    field(INP , "@Rx$(NO) 31 188")
+    field(INP , "@Rx$(NO) 31 156")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan1:Spare-I") {
+    field(DESC, "Spare Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 160")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan1:Spare-Offset-I") {
+    field(DESC, "Spare Monitor Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 164")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -415,7 +174,24 @@ record(ai, "$(P){$(NO)}Chan1:Gnd-Gain-I") {
 record(ai, "$(P){$(NO)}Chan1:Spare-Gain-I") {
     field(DESC, "Spare Monitor Gain Readback")
     field(DTYP, "PSC Reg F32")
-    field(INP , "@Rx$(NO) 31 192")
+    field(INP , "@Rx$(NO) 31 168")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+record(longin, "$(P){$(NO)}Chan1:Reg-I") {
+    field(DESC, "Regulator Output Voltage Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 172")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan1:Reg-Offset-I") {
+    field(DESC, "Regulator Output Voltage Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 176")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -423,35 +199,39 @@ record(ai, "$(P){$(NO)}Chan1:Spare-Gain-I") {
 record(ai, "$(P){$(NO)}Chan1:Reg-Gain-I") {
     field(DESC, "Regulator Output Voltage Gain Readback")
     field(DTYP, "PSC Reg F32")
-    field(INP , "@Rx$(NO) 31 196")
+    field(INP , "@Rx$(NO) 31 180")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
 
+record(longin, "$(P){$(NO)}Chan1:Error-I") {
+    field(DESC, "Error Voltage Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 184")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan1:Error-Offset-I") {
+    field(DESC, "Error Voltage Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 188")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
 
 record(ai, "$(P){$(NO)}Chan1:Error-Gain-I") {
     field(DESC, "Error Voltage Gain Readback")
     field(DTYP, "PSC Reg F32")
-    field(INP , "@Rx$(NO) 31 200")
+    field(INP , "@Rx$(NO) 31 192")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
 
-
-
-
-
-
-
-
-
-
-## PS1 DAC
-
 record(longin, "$(P){$(NO)}Chan1:DACSetPt-I") {
     field(DESC, "DAC SetPoint Readback")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 204")
+    field(INP , "@Rx$(NO) 31 196")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -459,18 +239,213 @@ record(longin, "$(P){$(NO)}Chan1:DACSetPt-I") {
 record(longin, "$(P){$(NO)}Chan1:DACRampActive-I") {
     field(DESC, "DAC SetPoint Readback")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 208")
+    field(INP , "@Rx$(NO) 31 200")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
 
 
-## PS2 DAC
+### PS2 #####
+
+record(longin, "$(P){$(NO)}Chan2:DCCT1-I") {
+    field(DESC, "DCCT 1 Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 300")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan2:DCCT1-Offset-I") {
+    field(DESC, "DCCT 1 Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 304")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan2:DCCT1-Gain-I") {
+    field(DESC, "DCCT 1 Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 308")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan2:DCCT2-I") {
+    field(DESC, "DCCT 2 Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 312")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan2:DCCT2-Offset-I") {
+    field(DESC, "DCCT 2 Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 316")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan2:DCCT2-Gain-I") {
+    field(DESC, "DCCT 2 Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 320")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan2:DAC-I") {
+    field(DESC, "DAC Setpoint Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 324")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan2:DAC-Offset-I") {
+    field(DESC, "DAC Setpoint Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 328")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan2:DAC-Gain-I") {
+    field(DESC, "DAC Setpoint Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 332")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+record(longin, "$(P){$(NO)}Chan2:Volt-I") {
+    field(DESC, "Voltage Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 336")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan2:Volt-Offset-I") {
+    field(DESC, "Voltage Monitor Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 340")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan2:Volt-Gain-I") {
+    field(DESC, "Voltage Monitor Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 344")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+record(longin, "$(P){$(NO)}Chan2:Gnd-I") {
+    field(DESC, "Ground Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 348")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan2:Gnd-Offset-I") {
+    field(DESC, "Ground Monitor Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 352")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan2:Gnd-Gain-I") {
+    field(DESC, "Ground Monitor Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 356")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan2:Spare-I") {
+    field(DESC, "Spare Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 360")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan2:Spare-Offset-I") {
+    field(DESC, "Spare Monitor Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 364")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan2:Spare-Gain-I") {
+    field(DESC, "Spare Monitor Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 368")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+record(longin, "$(P){$(NO)}Chan2:Reg-I") {
+    field(DESC, "Regulator Output Voltage Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 372")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan2:Reg-Offset-I") {
+    field(DESC, "Regulator Output Voltage Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 376")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan2:Reg-Gain-I") {
+    field(DESC, "Regulator Output Voltage Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 380")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan2:Error-I") {
+    field(DESC, "Error Voltage Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 384")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan2:Error-Offset-I") {
+    field(DESC, "Error Voltage Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 388")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan2:Error-Gain-I") {
+    field(DESC, "Error Voltage Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 392")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
 
 record(longin, "$(P){$(NO)}Chan2:DACSetPt-I") {
     field(DESC, "DAC SetPoint Readback")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 212")
+    field(INP , "@Rx$(NO) 31 396")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -478,18 +453,215 @@ record(longin, "$(P){$(NO)}Chan2:DACSetPt-I") {
 record(longin, "$(P){$(NO)}Chan2:DACRampActive-I") {
     field(DESC, "DAC SetPoint Readback")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 216")
+    field(INP , "@Rx$(NO) 31 400")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
 
 
-## PS3 DAC
+
+
+### PS3 #####
+
+record(longin, "$(P){$(NO)}Chan3:DCCT1-I") {
+    field(DESC, "DCCT 1 Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 500")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan3:DCCT1-Offset-I") {
+    field(DESC, "DCCT 1 Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 504")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan3:DCCT1-Gain-I") {
+    field(DESC, "DCCT 1 Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 508")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan3:DCCT2-I") {
+    field(DESC, "DCCT 2 Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 512")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan3:DCCT2-Offset-I") {
+    field(DESC, "DCCT 2 Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 516")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan3:DCCT2-Gain-I") {
+    field(DESC, "DCCT 2 Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 520")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan3:DAC-I") {
+    field(DESC, "DAC Setpoint Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 524")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan3:DAC-Offset-I") {
+    field(DESC, "DAC Setpoint Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 528")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan3:DAC-Gain-I") {
+    field(DESC, "DAC Setpoint Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 532")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+record(longin, "$(P){$(NO)}Chan3:Volt-I") {
+    field(DESC, "Voltage Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 536")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan3:Volt-Offset-I") {
+    field(DESC, "Voltage Monitor Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 540")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan3:Volt-Gain-I") {
+    field(DESC, "Voltage Monitor Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 544")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+record(longin, "$(P){$(NO)}Chan3:Gnd-I") {
+    field(DESC, "Ground Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 548")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan3:Gnd-Offset-I") {
+    field(DESC, "Ground Monitor Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 552")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan3:Gnd-Gain-I") {
+    field(DESC, "Ground Monitor Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 556")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan3:Spare-I") {
+    field(DESC, "Spare Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 560")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan3:Spare-Offset-I") {
+    field(DESC, "Spare Monitor Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 564")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan3:Spare-Gain-I") {
+    field(DESC, "Spare Monitor Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 568")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+record(longin, "$(P){$(NO)}Chan3:Reg-I") {
+    field(DESC, "Regulator Output Voltage Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 572")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan3:Reg-Offset-I") {
+    field(DESC, "Regulator Output Voltage Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 576")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan3:Reg-Gain-I") {
+    field(DESC, "Regulator Output Voltage Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 580")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan3:Error-I") {
+    field(DESC, "Error Voltage Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 584")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan3:Error-Offset-I") {
+    field(DESC, "Error Voltage Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 588")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan3:Error-Gain-I") {
+    field(DESC, "Error Voltage Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 592")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
 
 record(longin, "$(P){$(NO)}Chan3:DACSetPt-I") {
     field(DESC, "DAC SetPoint Readback")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 220")
+    field(INP , "@Rx$(NO) 31 596")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -497,18 +669,215 @@ record(longin, "$(P){$(NO)}Chan3:DACSetPt-I") {
 record(longin, "$(P){$(NO)}Chan3:DACRampActive-I") {
     field(DESC, "DAC SetPoint Readback")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 224")
+    field(INP , "@Rx$(NO) 31 600")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
 
 
-## PS4 DAC
+
+
+### PS4 #####
+
+record(longin, "$(P){$(NO)}Chan4:DCCT1-I") {
+    field(DESC, "DCCT 1 Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 700")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan4:DCCT1-Offset-I") {
+    field(DESC, "DCCT 1 Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 704")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan4:DCCT1-Gain-I") {
+    field(DESC, "DCCT 1 Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 708")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan4:DCCT2-I") {
+    field(DESC, "DCCT 2 Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 712")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan4:DCCT2-Offset-I") {
+    field(DESC, "DCCT 2 Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 716")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan4:DCCT2-Gain-I") {
+    field(DESC, "DCCT 2 Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 720")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan4:DAC-I") {
+    field(DESC, "DAC Setpoint Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 724")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan4:DAC-Offset-I") {
+    field(DESC, "DAC Setpoint Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 728")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan4:DAC-Gain-I") {
+    field(DESC, "DAC Setpoint Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 732")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+record(longin, "$(P){$(NO)}Chan4:Volt-I") {
+    field(DESC, "Voltage Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 736")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan4:Volt-Offset-I") {
+    field(DESC, "Voltage Monitor Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 740")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan4:Volt-Gain-I") {
+    field(DESC, "Voltage Monitor Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 744")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+record(longin, "$(P){$(NO)}Chan4:Gnd-I") {
+    field(DESC, "Ground Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 748")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan4:Gnd-Offset-I") {
+    field(DESC, "Ground Monitor Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 752")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan4:Gnd-Gain-I") {
+    field(DESC, "Ground Monitor Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 756")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan4:Spare-I") {
+    field(DESC, "Spare Monitor Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 760")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan4:Spare-Offset-I") {
+    field(DESC, "Spare Monitor Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 764")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan4:Spare-Gain-I") {
+    field(DESC, "Spare Monitor Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 768")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+record(longin, "$(P){$(NO)}Chan4:Reg-I") {
+    field(DESC, "Regulator Output Voltage Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 772")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan4:Reg-Offset-I") {
+    field(DESC, "Regulator Output Voltage Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 776")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan4:Reg-Gain-I") {
+    field(DESC, "Regulator Output Voltage Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 780")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan4:Error-I") {
+    field(DESC, "Error Voltage Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 784")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(longin, "$(P){$(NO)}Chan4:Error-Offset-I") {
+    field(DESC, "Error Voltage Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 788")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan4:Error-Gain-I") {
+    field(DESC, "Error Voltage Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 792")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
 
 record(longin, "$(P){$(NO)}Chan4:DACSetPt-I") {
     field(DESC, "DAC SetPoint Readback")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 228")
+    field(INP , "@Rx$(NO) 31 796")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -516,19 +885,10 @@ record(longin, "$(P){$(NO)}Chan4:DACSetPt-I") {
 record(longin, "$(P){$(NO)}Chan4:DACRampActive-I") {
     field(DESC, "DAC SetPoint Readback")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 232")
+    field(INP , "@Rx$(NO) 31 800")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
-
-
-
-
-
-
-
-
-
 
 
 

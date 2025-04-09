@@ -35,6 +35,7 @@
 extern XIicPs IicPsInstance;
 
 extern u32 UptimeCounter;
+extern struct SAdataMsg sadata;
 
 
 
@@ -131,7 +132,9 @@ void Host2NetworkConvStatus(char *inbuf, int len) {
 void ReadSAData(char *msg) {
 
     u32 *msg_u32ptr;
-    struct SAdataMsg sadata;
+    //struct SAdataMsg sadata;
+    u32 chan;
+    u32 base;
 
 
 
@@ -144,84 +147,42 @@ void ReadSAData(char *msg) {
     *++msg_u32ptr = htonl(MSGSTAT10HzLEN); //body length
 
     sadata.count = UptimeCounter;
+
     sadata.evr_ts_s =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S);
     sadata.evr_ts_ns =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS);
     //xil_printf("%d  %d\r\n",sadata.evr_ts_s, sadata.evr_ts_ns);
 
-    sadata.ps1_dcct[0] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT0);
-    sadata.ps1_dcct[1] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT1);
-    sadata.ps1_mon[0]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DACSP);
-    sadata.ps1_mon[1]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_VOLT);
-    sadata.ps1_mon[2]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_GND);
-    sadata.ps1_mon[3]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_SPARE);
-    sadata.ps1_mon[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_REG);
-    sadata.ps1_mon[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_ERR);
-    sadata.ps2_dcct[0] = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_DCCT0);
-    sadata.ps2_dcct[1] = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_DCCT1);
-    sadata.ps2_mon[0]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_DACSP);
-    sadata.ps2_mon[1]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_VOLT);
-    sadata.ps2_mon[2]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_GND);
-    sadata.ps2_mon[3]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_SPARE);
-    sadata.ps2_mon[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_REG);
-    sadata.ps2_mon[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_ERR);
-    sadata.ps3_dcct[0] = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_DCCT0);
-    sadata.ps3_dcct[1] = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_DCCT1);
-    sadata.ps3_mon[0]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_DACSP);
-    sadata.ps3_mon[1]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_VOLT);
-    sadata.ps3_mon[2]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_GND);
-    sadata.ps3_mon[3]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_SPARE);
-    sadata.ps3_mon[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_REG);
-    sadata.ps3_mon[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_ERR);
-    sadata.ps4_dcct[0] = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_DCCT0);
-    sadata.ps4_dcct[1] = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_DCCT1);
-    sadata.ps4_mon[0]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_DACSP);
-    sadata.ps4_mon[1]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_VOLT);
-    sadata.ps4_mon[2]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_GND);
-    sadata.ps4_mon[3]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_SPARE);
-    sadata.ps4_mon[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_REG);
-    sadata.ps4_mon[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_ERR);
 
-    sadata.ps1_dcct_offset[0] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT0_OFFSET);
-    sadata.ps1_dcct_offset[1] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT1_OFFSET);
-    sadata.ps1_mon_offset[0]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DACSP_OFFSET);
-    sadata.ps1_mon_offset[1]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_VOLT_OFFSET);
-    sadata.ps1_mon_offset[2]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_GND_OFFSET);
-    sadata.ps1_mon_offset[3]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_SPARE_OFFSET);
-    sadata.ps1_mon_offset[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_REG_OFFSET);
-    sadata.ps1_mon_offset[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_ERR_OFFSET);
-    sadata.ps1_dcct_gain[0] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT0_GAIN) / GAIN20BITFRACT;
-    sadata.ps1_dcct_gain[1] = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DCCT1_GAIN) / GAIN20BITFRACT;
-    sadata.ps1_mon_gain[0]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DACSP_GAIN) / GAIN20BITFRACT;;
-    sadata.ps1_mon_gain[1]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_VOLT_GAIN) / GAIN20BITFRACT;;
-    sadata.ps1_mon_gain[2]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_GND_GAIN) / GAIN20BITFRACT;;
-    sadata.ps1_mon_gain[3]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_SPARE_GAIN) / GAIN20BITFRACT;;
-    sadata.ps1_mon_gain[4]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_REG_GAIN) / GAIN20BITFRACT;;
-    sadata.ps1_mon_gain[5]  = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_ERR_GAIN) / GAIN20BITFRACT;;
+    for (chan=0; chan<4; chan++) {
+       base = XPAR_M_AXI_BASEADDR + (chan + 1) * CHBASEADDR;
+       sadata.ps[chan].dcct1 = Xil_In32(base + DCCT0_REG);
+       sadata.ps[chan].dcct1_offset = Xil_In32(base + DCCT0_OFFSET_REG);
+       sadata.ps[chan].dcct1_gain = Xil_In32(base + DCCT0_GAIN_REG) / GAIN20BITFRACT;
+       sadata.ps[chan].dcct2 = Xil_In32(base + DCCT1_REG);
+       sadata.ps[chan].dcct2_offset = Xil_In32(base + DCCT1_OFFSET_REG);
+       sadata.ps[chan].dcct2_gain = Xil_In32(base + DCCT1_GAIN_REG) / GAIN20BITFRACT;
+       sadata.ps[chan].dacsp = Xil_In32(base + DACSP_REG);
+       sadata.ps[chan].dacsp_offset = Xil_In32(base + DACSP_OFFSET_REG);
+       sadata.ps[chan].dacsp_gain = Xil_In32(base + DACSP_GAIN_REG) / GAIN20BITFRACT;
+       sadata.ps[chan].volt = Xil_In32(base + VOLT_REG);
+       sadata.ps[chan].volt_offset = Xil_In32(base + VOLT_OFFSET_REG);
+       sadata.ps[chan].volt_gain = Xil_In32(base + VOLT_GAIN_REG) / GAIN20BITFRACT;
+       sadata.ps[chan].gnd = Xil_In32(base + GND_REG);
+       sadata.ps[chan].gnd_offset = Xil_In32(base + GND_OFFSET_REG);
+       sadata.ps[chan].gnd_gain = Xil_In32(base + GND_GAIN_REG) / GAIN20BITFRACT;
+       sadata.ps[chan].spare = Xil_In32(base + SPARE_REG);
+       sadata.ps[chan].spare_offset = Xil_In32(base + SPARE_OFFSET_REG);
+       sadata.ps[chan].spare_gain = Xil_In32(base + SPARE_GAIN_REG) / GAIN20BITFRACT;
+       sadata.ps[chan].reg = Xil_In32(base + REG_REG);
+       sadata.ps[chan].reg_offset = Xil_In32(base + REG_OFFSET_REG);
+       sadata.ps[chan].reg_gain = Xil_In32(base + REG_GAIN_REG) / GAIN20BITFRACT;
+       sadata.ps[chan].error = Xil_In32(base + ERR_REG);
+       sadata.ps[chan].error_offset = Xil_In32(base + ERR_OFFSET_REG);
+       sadata.ps[chan].error_gain = Xil_In32(base + ERR_GAIN_REG) / GAIN20BITFRACT;
+       sadata.ps[chan].dac_rdbk = Xil_In32(base + DAC_CURRSETPT_REG);
+       sadata.ps[chan].dac_rampactive = Xil_In32(base + DAC_RAMPACTIVE_REG);
 
-
-
-
-
-    sadata.ps1_dacsetpt   = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_CURRSETPT);
-    sadata.ps1_rampactive = Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPACTIVE);
-    sadata.ps2_dacsetpt   = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_DAC_CURRSETPT);
-    sadata.ps2_rampactive = Xil_In32(XPAR_M_AXI_BASEADDR + PS2_DAC_RAMPACTIVE);
-    sadata.ps3_dacsetpt   = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_DAC_CURRSETPT);
-    sadata.ps3_rampactive = Xil_In32(XPAR_M_AXI_BASEADDR + PS3_DAC_RAMPACTIVE);
-    sadata.ps4_dacsetpt   = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_DAC_CURRSETPT);
-    sadata.ps4_rampactive = Xil_In32(XPAR_M_AXI_BASEADDR + PS4_DAC_RAMPACTIVE);
-
-
-    //printf("%f   %f\r\n", sadata.ps1_dcct_gain[0], sadata.ps1_dcct_gain[1]);
-    /*
-    for (i=0;i<=1;i++) {
-    	xil_printf("%8d ",sadata.ps1_dcct[i]);
     }
-    for (i=0;i<=5;i++) {
-    	xil_printf("%8d ",sadata.ps1_mon[i]);
-    }
-    xil_printf("\r\n");
-    */
 
 
 

@@ -50,6 +50,8 @@ static sys_thread_t main_thread_handle;
 struct netif server_netif;
 
 //global buffers
+struct SAdataMsg sadata;
+
 
 //Ramping Buffer, 10s
 char ramp_buf[400000];
