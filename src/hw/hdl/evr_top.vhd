@@ -25,21 +25,10 @@ entity evr_top is
     gtx_refclk     : in std_logic;
     rx_p           : in std_logic;
     rx_n           : in std_logic;
-
-    trignum        : in std_logic_vector(7 downto 0);
-    trigdly        : in std_logic_vector(31 downto 0);
     
-    tbt_trig       : out std_logic;
-    fa_trig        : out std_logic;
-    sa_trig        : out std_logic;
-    usr_trig       : out std_logic;
-    gps_trig       : out std_logic;
-    timestamp      : out std_logic_vector(63 downto 0);
-    
-    evr_rcvd_clk   : out std_logic;
-    
-    dbg            : out std_logic_vector(19 downto 0)
-    
+    evr_params     : in t_evr_params;
+    evr_trigs      : out t_evr_trigs
+   
 );
 end evr_top;
  
@@ -54,6 +43,7 @@ architecture behv of evr_top is
    signal datastream        : std_logic_vector(7 downto 0);
    signal eventstream       : std_logic_vector(7 downto 0);
    
+   signal timestamp         : std_logic_vector(63 downto 0);
    signal rxdata            : std_logic_vector(15 downto 0);
    signal rxcharisk         : std_logic_vector(1 downto 0);
    signal rxout_clk         : std_logic;   
@@ -104,9 +94,9 @@ architecture behv of evr_top is
 
 begin
 
-evr_rcvd_clk <= rxusr_clk;
+evr_trigs.rcvd_clk <= rxusr_clk;
 
-tbt_trig <= tbt_trig_stretch;
+evr_trigs.tbt_trig <= tbt_trig_stretch;
 
 
 rxoutclk_bufg0_i : BUFG
@@ -169,6 +159,8 @@ datastream <= rxdata(15 downto 8);
 eventstream <= rxdata(7 downto 0);
 
 
+evr_trigs.ts_s <= timestamp(63 downto 32);
+evr_trigs.ts_ns <= timestamp(31 downto 0);
 
 -- timestamp decoder
 ts : entity work.event_rcv_ts
@@ -195,7 +187,7 @@ event_gps : entity work.event_rcv_chan
        mydelay => (x"00000001"),
        mywidth => (x"00000175"),   -- //creates a pulse about 3us long
        mypolarity => ('0'),
-       trigger => gps_trig
+       trigger => evr_trigs.gps_trig
 );
 
 
@@ -210,7 +202,7 @@ event_10Hz : entity work.event_rcv_chan
        mydelay => (x"00000001"),
        mywidth => (x"00000175"),   -- //creates a pulse about 3us long
        mypolarity => ('0'),
-       trigger => sa_trig
+       trigger => evr_trigs.sa_trig
 );
 
 
@@ -226,7 +218,7 @@ event_10KHz : entity work.event_rcv_chan
        mydelay => (x"00000001"),
        mywidth => (x"00000175"),   -- //creates a pulse about 3us long
        mypolarity => ('0'),
-       trigger => fa_trig
+       trigger => evr_trigs.fa_trig
 );
 		
 		
@@ -236,11 +228,11 @@ event_usr : entity work.event_rcv_chan
        clock => rxusr_clk,
        reset => sys_rst,
        eventstream => eventstream,
-       myevent => trignum,
-       mydelay => trigdly, 
+       myevent => evr_params.usr_trig_code,
+       mydelay => 32d"1",  --evr_params.trigdly, 
        mywidth => (x"00000175"),   -- //creates a pulse about 3us long
        mypolarity => ('0'),
-       trigger => usr_trig
+       trigger => evr_trigs.usr_trig
 );
 
 

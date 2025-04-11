@@ -68,9 +68,9 @@ process(clk)
 
          when APPLY_OFFSETS =>
            mon_out.dac_sp_oc <= mon_adc.dac_sp_raw - mon_params.dac_sp_offset;
-           mon_out.volt_mon_oc <= mon_adc.volt_mon_raw - mon_params.volt_mon_offset;
-           mon_out.gnd_mon_oc <= mon_adc.gnd_mon_raw - mon_params.gnd_mon_offset;
-           mon_out.spare_mon_oc <= mon_adc.spare_mon_raw - mon_params.spare_mon_offset;
+           mon_out.voltage_oc <= mon_adc.voltage_raw - mon_params.voltage_offset;
+           mon_out.ignd_oc <= mon_adc.ignd_raw - mon_params.ignd_offset;
+           mon_out.spare_oc <= mon_adc.spare_raw - mon_params.spare_offset;
            mon_out.ps_reg_oc <= mon_adc.ps_reg_raw - mon_params.ps_reg_offset;          
            mon_out.ps_error_oc <= mon_adc.ps_error_raw - mon_params.ps_error_offset;              
            state <= apply_gains;
@@ -80,9 +80,9 @@ process(clk)
            --mon adc format is Q0.15 format (1sign, 0 integer, 15 fractional bits) range -1 to 0.99999
            --gain is Q3.20 format (1sign, 3 integer, 20 fractional bits) range -8 to 7.99999
            mon_out.dac_sp <= fixed_mul(mon_out.dac_sp_oc, mon_params.dac_sp_gain, 4);
-           mon_out.volt_mon <= fixed_mul(mon_out.volt_mon_oc, mon_params.volt_mon_gain, 4);
-           mon_out.gnd_mon <= fixed_mul(mon_out.gnd_mon_oc, mon_params.gnd_mon_gain, 4);            
-           mon_out.spare_mon <= fixed_mul(mon_out.spare_mon_oc, mon_params.spare_mon_gain, 4);                     
+           mon_out.voltage <= fixed_mul(mon_out.voltage_oc, mon_params.voltage_gain, 4);
+           mon_out.ignd <= fixed_mul(mon_out.ignd_oc, mon_params.ignd_gain, 4);            
+           mon_out.spare <= fixed_mul(mon_out.spare_oc, mon_params.spare_gain, 4);                     
            mon_out.ps_reg <= fixed_mul(mon_out.ps_reg_oc, mon_params.ps_reg_gain, 4);
            mon_out.ps_error <= fixed_mul(mon_out.ps_error_oc, mon_params.ps_error_gain, 4);
            state <= mult_dly;

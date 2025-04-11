@@ -129,7 +129,7 @@ reg {
   } ps1_reg @0x118; 
 
 reg {
-    desc="PS1 Error";
+    desc="PS1 Error Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
@@ -347,21 +347,191 @@ reg {
     field {} val[32];
   } ps1_err_gain @0x18C;
  
+reg {
+    desc="PS1 DCCT1 Over Current Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[20];
+  } ps1_ovc1_thresh @0x190;
+ 
+reg {
+    desc="PS1 DCCT2 Over Current Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[20];
+  } ps1_ovc2_thresh @0x194;
+ 
+reg {
+    desc="PS1 Over Voltage Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_ovv_thresh @0x198;
+ 
+reg {
+    desc="PS1 PID Error1 Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_err1_thresh @0x19C;
+
+reg {
+    desc="PS1 PID Error2 Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_err2_thresh @0x1A0;
+
+reg {
+    desc="PS1 Gnd Current Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_ignd_thresh @0x1A4;
+
+reg {
+    desc="PS1 DCCT1 Over Current Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_ovc1_cntlim @0x1A8;
+ 
+
+reg {
+    desc="PS1 DCCT2 Over Current Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_ovc2_cntlim @0x1AC;
+ 
+
+reg {
+    desc="PS1 Over Voltage Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_ovv_cntlim @0x1B0;
+ 
+reg {
+    desc="PS1 PID Error1 Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_err1_cntlim @0x1B4;
+
+reg {
+    desc="PS1 PID Error2 Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_err2_cntlim @0x1B8;
+
+reg {
+    desc="PS1 Gnd Current Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_ignd_cntlim @0x1BC;
+
+reg {
+    desc="PS1 Digital DCCT Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_dcct_cntlim @0x1C0;
+
+reg {
+    desc="PS1 Fault1 Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_flt1_cntlim @0x1C4;
+
+reg {
+    desc="PS1 Fault2 Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_flt2_cntlim @0x1C8;
+
+reg {
+    desc="PS1 Fault3 Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_flt3_cntlim @0x1CC;
+
+reg {
+    desc="PS1 On Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_on_cntlim @0x1D0;
+
+reg {
+    desc="PS1 Fault Clear";
+    default sw = rw;
+    default hw = r;
+    field {} val[1];
+  } ps1_fault_clear @0x1D4;
+
+reg {
+    desc="PS1 Fault Mask";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_fault_mask @0x1D8;
+
+reg {
+    desc="PS1 HeartBeat Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps1_heartbeat_cntlim @0x1DC;
 
 
 reg {
-    desc="PS1 Digital Outputs bit0=On1, bit1=On2, bit2=Reset, bit3=spare, bit4=Park";
+    desc="PS1 Digital Outputs bit0=On1";
     default sw = rw;
     default hw = r; 
-    field {} val[5];
-  } ps1_digout @0x190; 
+    field {} val[1];
+  } ps1_digout_on1 @0x1E0; 
   
 reg {
-    desc="PS1 Digital Inputs bit0=Acon, bit1=Flt1, bit2=Flt2, bit3=spare";
+    desc="PS1 Digital Outputs bit1=On2";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps1_digout_on2 @0x1E4; 
+  
+reg {
+    desc="PS1 Digital Outputs bit2=Reset";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps1_digout_reset @0x1E8; 
+      
+reg {
+    desc="PS1 Digital Outputs bit3=spare";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps1_digout_spare @0x1EC; 
+    
+ reg {
+    desc="PS1 Digital Outputs bit4=Park";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps1_digout_park @0x1F0; 
+   
+   
+reg {
+    desc="PS1 Digital Inputs bit0=Acon, bit1=Flt1, bit2=Flt2, bit3=spare, bit4=DCCTflt";
     default sw = rw;
     default hw = w; 
-    field {} val[4];
-  } ps1_digin @0x194; 
+    field {} val[5];
+  } ps1_digin @0x1F4; 
 
 
 
@@ -640,23 +810,191 @@ reg {
   } ps2_err_gain @0x28C;
  
 
+reg {
+    desc="PS2 DCCT1 Over Current Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[20];
+  } ps2_ovc1_thresh @0x290;
+ 
+reg {
+    desc="PS2 DCCT2 Over Current Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[20];
+  } ps2_ovc2_thresh @0x294;
+ 
+reg {
+    desc="PS2 Over Voltage Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_ovv_thresh @0x298;
+ 
+reg {
+    desc="PS2 PID Error1 Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_err1_thresh @0x29C;
 
 reg {
-    desc="PS2 Digital Outputs bit0=On1, bit1=On2, bit2=Reset, bit3=spare, bit4=Park";
+    desc="PS2 PID Error2 Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_err2_thresh @0x2A0;
+
+reg {
+    desc="PS2 Gnd Current Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_ignd_thresh @0x2A4;
+
+reg {
+    desc="PS2 DCCT1 Over Current Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_ovc1_cntlim @0x2A8;
+ 
+
+reg {
+    desc="PS2 DCCT2 Over Current Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_ovc2_cntlim @0x2AC;
+ 
+
+reg {
+    desc="PS2 Over Voltage Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_ovv_cntlim @0x2B0;
+ 
+reg {
+    desc="PS2 PID Error1 Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_err1_cntlim @0x2B4;
+
+reg {
+    desc="PS2 PID Error2 Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_err2_cntlim @0x2B8;
+
+reg {
+    desc="PS2 Gnd Current Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_ignd_cntlim @0x2BC;
+
+reg {
+    desc="PS2 Digital DCCT Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_dcct_cntlim @0x2C0;
+
+reg {
+    desc="PS2 Fault1 Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_flt1_cntlim @0x2C4;
+
+reg {
+    desc="PS2 Fault2 Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_flt2_cntlim @0x2C8;
+
+reg {
+    desc="PS2 Fault3 Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_flt3_cntlim @0x2CC;
+
+reg {
+    desc="PS2 On Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_on_cntlim @0x2D0;
+
+reg {
+    desc="PS2 Fault Clear";
+    default sw = rw;
+    default hw = r;
+    field {} val[1];
+  } ps2_fault_clear @0x2D4;
+
+reg {
+    desc="PS2 Fault Mask";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_fault_mask @0x2D8;
+
+reg {
+    desc="PS2 HeartBeat Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps2_heartbeat_cntlim @0x2DC;
+
+
+reg {
+    desc="PS2 Digital Outputs bit0=On1";
     default sw = rw;
     default hw = r; 
-    field {} val[5];
-  } ps2_digout @0x290; 
+    field {} val[1];
+  } ps2_digout_on1 @0x2E0; 
   
 reg {
-    desc="PS2 Digital Inputs bit0=Acon, bit1=Flt1, bit2=Flt2, bit3=spare";
+    desc="PS2 Digital Outputs bit1=On2";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps2_digout_on2 @0x2E4; 
+  
+reg {
+    desc="PS2 Digital Outputs bit2=Reset";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps2_digout_reset @0x2E8; 
+      
+reg {
+    desc="PS2 Digital Outputs bit3=spare";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps2_digout_spare @0x2EC; 
+    
+ reg {
+    desc="PS2 Digital Outputs bit4=Park";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps2_digout_park @0x2F0; 
+   
+   
+reg {
+    desc="PS2 Digital Inputs bit0=Acon, bit1=Flt1, bit2=Flt2, bit3=spare, bit4=DCCTflt";
     default sw = rw;
     default hw = w; 
-    field {} val[4];
-  } ps2_digin @0x294; 
-
-
-
+    field {} val[5];
+  } ps2_digin @0x2F4; 
 
 
 
@@ -936,19 +1274,190 @@ reg {
   } ps3_err_gain @0x38C;
  
 reg {
-    desc="PS3 Digital Outputs bit0=On1, bit1=On2, bit2=Reset, bit3=spare, bit4=Park";
+    desc="PS3 DCCT1 Over Current Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[20];
+  } ps3_ovc1_thresh @0x390;
+ 
+reg {
+    desc="PS3 DCCT2 Over Current Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[20];
+  } ps3_ovc2_thresh @0x394;
+ 
+reg {
+    desc="PS3 Over Voltage Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_ovv_thresh @0x398;
+ 
+reg {
+    desc="PS3 PID Error1 Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_err1_thresh @0x39C;
+
+reg {
+    desc="PS3 PID Error2 Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_err2_thresh @0x3A0;
+
+reg {
+    desc="PS3 Gnd Current Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_ignd_thresh @0x3A4;
+
+reg {
+    desc="PS3 DCCT1 Over Current Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_ovc1_cntlim @0x3A8;
+ 
+
+reg {
+    desc="PS3 DCCT2 Over Current Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_ovc2_cntlim @0x3AC;
+ 
+
+reg {
+    desc="PS3 Over Voltage Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_ovv_cntlim @0x3B0;
+ 
+reg {
+    desc="PS3 PID Error1 Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_err1_cntlim @0x3B4;
+
+reg {
+    desc="PS3 PID Error2 Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_err2_cntlim @0x3B8;
+
+reg {
+    desc="PS3 Gnd Current Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_ignd_cntlim @0x3BC;
+
+reg {
+    desc="PS3 Digital DCCT Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_dcct_cntlim @0x3C0;
+
+reg {
+    desc="PS3 Fault1 Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_flt1_cntlim @0x3C4;
+
+reg {
+    desc="PS3 Fault2 Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_flt2_cntlim @0x3C8;
+
+reg {
+    desc="PS3 Fault3 Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_flt3_cntlim @0x3CC;
+
+reg {
+    desc="PS3 On Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_on_cntlim @0x3D0;
+
+reg {
+    desc="PS3 Fault Clear";
+    default sw = rw;
+    default hw = r;
+    field {} val[1];
+  } ps3_fault_clear @0x3D4;
+
+reg {
+    desc="PS3 Fault Mask";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_fault_mask @0x3D8;
+
+reg {
+    desc="PS3 HeartBeat Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps3_heartbeat_cntlim @0x3DC;
+
+
+reg {
+    desc="PS3 Digital Outputs bit0=On1";
     default sw = rw;
     default hw = r; 
-    field {} val[5];
-  } ps3_digout @0x390; 
+    field {} val[1];
+  } ps3_digout_on1 @0x3E0; 
   
 reg {
-    desc="PS3 Digital Inputs bit0=Acon, bit1=Flt1, bit2=Flt2, bit3=spare";
+    desc="PS3 Digital Outputs bit1=On2";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps3_digout_on2 @0x3E4; 
+  
+reg {
+    desc="PS3 Digital Outputs bit2=Reset";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps3_digout_reset @0x3E8; 
+      
+reg {
+    desc="PS3 Digital Outputs bit3=spare";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps3_digout_spare @0x3EC; 
+    
+ reg {
+    desc="PS3 Digital Outputs bit4=Park";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps3_digout_park @0x3F0; 
+   
+   
+reg {
+    desc="PS3 Digital Inputs bit0=Acon, bit1=Flt1, bit2=Flt2, bit3=spare bit4=DCCTflt";
     default sw = rw;
     default hw = w; 
-    field {} val[4];
-  } ps3_digin @0x394;   
-  
+    field {} val[5];
+  } ps3_digin @0x3F4; 
 
 
 
@@ -956,7 +1465,8 @@ reg {
 
 
 
-/**** Channel 3 *****/
+
+/**** Channel 4 *****/
 
 /* 10Hz Data  */
 
@@ -1231,18 +1741,194 @@ reg {
  
 
 reg {
-    desc="PS4 Digital Outputs bit0=On1, bit1=On2, bit2=Reset, bit3=spare, bit4=Park";
+    desc="PS4 DCCT1 Over Current Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[20];
+  } ps4_ovc1_thresh @0x490;
+ 
+reg {
+    desc="PS4 DCCT2 Over Current Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[20];
+  } ps4_ovc2_thresh @0x494;
+ 
+reg {
+    desc="PS4 Over Voltage Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_ovv_thresh @0x498;
+ 
+reg {
+    desc="PS4 PID Error1 Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_err1_thresh @0x49C;
+
+reg {
+    desc="PS4 PID Error2 Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_err2_thresh @0x4A0;
+
+reg {
+    desc="PS4 Gnd Current Fault Threshold";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_ignd_thresh @0x4A4;
+
+reg {
+    desc="PS4 DCCT1 Over Current Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_ovc1_cntlim @0x4A8;
+ 
+
+reg {
+    desc="PS4 DCCT2 Over Current Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_ovc2_cntlim @0x4AC;
+ 
+
+reg {
+    desc="PS4 Over Voltage Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_ovv_cntlim @0x4B0;
+ 
+reg {
+    desc="PS4 PID Error1 Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_err1_cntlim @0x4B4;
+
+reg {
+    desc="PS4 PID Error2 Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_err2_cntlim @0x4B8;
+
+reg {
+    desc="PS4 Gnd Current Fault Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_ignd_cntlim @0x4BC;
+
+reg {
+    desc="PS4 Digital DCCT Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_dcct_cntlim @0x4C0;
+
+reg {
+    desc="PS4 Fault1 Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_flt1_cntlim @0x4C4;
+
+reg {
+    desc="PS4 Fault2 Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_flt2_cntlim @0x4C8;
+
+reg {
+    desc="PS4 Fault3 Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_flt3_cntlim @0x4CC;
+
+reg {
+    desc="PS4 On Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_on_cntlim @0x4D0;
+
+reg {
+    desc="PS4 Fault Clear";
+    default sw = rw;
+    default hw = r;
+    field {} val[1];
+  } ps4_fault_clear @0x4D4;
+
+reg {
+    desc="PS4 Fault Mask";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_fault_mask @0x4D8;
+
+reg {
+    desc="PS4 HeartBeat Counter Limit";
+    default sw = rw;
+    default hw = r;
+    field {} val[16];
+  } ps4_heartbeat_cntlim @0x4DC;
+
+
+reg {
+    desc="PS4 Digital Outputs bit0=On1";
     default sw = rw;
     default hw = r; 
-    field {} val[5];
-  } ps4_digout @0x490; 
+    field {} val[1];
+  } ps4_digout_on1 @0x4E0; 
   
 reg {
-    desc="PS4 Digital Inputs bit0=Acon, bit1=Flt1, bit2=Flt2, bit3=spare";
+    desc="PS4 Digital Outputs bit1=On2";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps4_digout_on2 @0x4E4; 
+  
+reg {
+    desc="PS4 Digital Outputs bit2=Reset";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps4_digout_reset @0x4E8; 
+      
+reg {
+    desc="PS4 Digital Outputs bit3=spare";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps4_digout_spare @0x4EC; 
+    
+ reg {
+    desc="PS4 Digital Outputs bit4=Park";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps4_digout_park @0x4F0; 
+   
+   
+reg {
+    desc="PS4 Digital Inputs bit0=Acon, bit1=Flt1, bit2=Flt2, bit3=spare, bit4=DCCTflt";
     default sw = rw;
     default hw = w; 
-    field {} val[4];
-  } ps4_digin @0x494;  
+    field {} val[5];
+  } ps4_digin @0x4F4; 
+
+
+
+
 
 
 

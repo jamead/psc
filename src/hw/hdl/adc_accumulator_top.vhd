@@ -39,16 +39,16 @@ port map(
 		mode              => mode(1 downto 0), --CH1_mode,  
 		
 		--DCCT raw inputs
-        DCCT1_in          => dcct_adcs.ps1.dcct0,  
-        DCCT2_in          => dcct_adcs.ps1.dcct1,   
+        DCCT1_in          => std_logic_vector(dcct_adcs.ps1.dcct0),  
+        DCCT2_in          => std_logic_vector(dcct_adcs.ps1.dcct1),   
 
 		--8 Channel raw ADC inputs
-		DAC_SP_in         => mon_adcs.ps1.dac_sp,  
-		VOLT_MON_in       => mon_adcs.ps1.volt_mon,  
-		GND_MON_in        => mon_adcs.ps1.gnd_mon,  
-		SPARE_MON_in      => mon_adcs.ps1.spare_mon, 
-		PS_REG_OUTPUT_in  => mon_adcs.ps1.ps_reg, 
-		PS_ERROR_in       => mon_adcs.ps1.ps_error, 
+		DAC_SP_in         => std_logic_vector(mon_adcs.ps1.dac_sp),  
+		VOLT_MON_in       => std_logic_vector(mon_adcs.ps1.voltage),  
+		GND_MON_in        => std_logic_vector(mon_adcs.ps1.ignd),  
+		SPARE_MON_in      => std_logic_vector(mon_adcs.ps1.spare), 
+		PS_REG_OUTPUT_in  => std_logic_vector(mon_adcs.ps1.ps_reg), 
+		PS_ERROR_in       => std_logic_vector(mon_adcs.ps1.ps_error), 
 		
 		--Outputs
         DCCT1_out         => dcct_adcs_ave.ps1.dcct0,     
@@ -75,16 +75,16 @@ port map(
 		mode              => mode(3 downto 2), --CH1_mode,  
 		
 		--DCCT raw inputs
-        DCCT1_in          => dcct_adcs.ps2.dcct0,  
-        DCCT2_in          => dcct_adcs.ps2.dcct1,   
+        DCCT1_in          => std_logic_vector(dcct_adcs.ps2.dcct0),  
+        DCCT2_in          => std_logic_vector(dcct_adcs.ps2.dcct1),   
 
 		--8 Channel raw ADC inputs
-		DAC_SP_in         => mon_adcs.ps2.dac_sp,  
-		VOLT_MON_in       => mon_adcs.ps2.volt_mon,  
-		GND_MON_in        => mon_adcs.ps2.gnd_mon,  
-		SPARE_MON_in      => mon_adcs.ps2.spare_mon, 
-		PS_REG_OUTPUT_in  => mon_adcs.ps2.ps_reg, 
-		PS_ERROR_in       => mon_adcs.ps2.ps_error, 
+		DAC_SP_in         => std_logic_vector(mon_adcs.ps2.dac_sp),  
+		VOLT_MON_in       => std_logic_vector(mon_adcs.ps2.voltage),  
+		GND_MON_in        => std_logic_vector(mon_adcs.ps2.ignd),  
+		SPARE_MON_in      => std_logic_vector(mon_adcs.ps2.spare), 
+		PS_REG_OUTPUT_in  => std_logic_vector(mon_adcs.ps2.ps_reg), 
+		PS_ERROR_in       => std_logic_vector(mon_adcs.ps2.ps_error), 
 		
 		--Outputs
         DCCT1_out         => dcct_adcs_ave.ps2.dcct0,     
@@ -111,16 +111,16 @@ port map(
 		mode              => mode(5 downto 4), --CH1_mode,  
 		
 		--DCCT raw inputs
-        DCCT1_in          => dcct_adcs.ps2.dcct0,  
-        DCCT2_in          => dcct_adcs.ps2.dcct1,   
+        DCCT1_in          => std_logic_vector(dcct_adcs.ps3.dcct0),  
+        DCCT2_in          => std_logic_vector(dcct_adcs.ps3.dcct1),   
 
 		--8 Channel raw ADC inputs
-		DAC_SP_in         => mon_adcs.ps2.dac_sp,  
-		VOLT_MON_in       => mon_adcs.ps2.volt_mon,  
-		GND_MON_in        => mon_adcs.ps2.gnd_mon,  
-		SPARE_MON_in      => mon_adcs.ps2.spare_mon, 
-		PS_REG_OUTPUT_in  => mon_adcs.ps2.ps_reg, 
-		PS_ERROR_in       => mon_adcs.ps2.ps_error, 
+		DAC_SP_in         => std_logic_vector(mon_adcs.ps3.dac_sp),  
+		VOLT_MON_in       => std_logic_vector(mon_adcs.ps3.voltage),  
+		GND_MON_in        => std_logic_vector(mon_adcs.ps3.ignd),  
+		SPARE_MON_in      => std_logic_vector(mon_adcs.ps3.spare), 
+		PS_REG_OUTPUT_in  => std_logic_vector(mon_adcs.ps3.ps_reg), 
+		PS_ERROR_in       => std_logic_vector(mon_adcs.ps3.ps_error), 
 		
 		--Outputs
         DCCT1_out         => dcct_adcs_ave.ps2.dcct0,     
@@ -148,16 +148,16 @@ port map(
 		mode              => mode(7 downto 6), --CH1_mode,  
 		
 		--DCCT raw inputs
-        DCCT1_in          => dcct_adcs.ps4.dcct0,  
-        DCCT2_in          => dcct_adcs.ps4.dcct1,   
+        DCCT1_in          => std_logic_vector(dcct_adcs.ps4.dcct0),  
+        DCCT2_in          => std_logic_vector(dcct_adcs.ps4.dcct1),   
 
 		--8 Channel raw ADC inputs
-		DAC_SP_in         => mon_adcs.ps4.dac_sp,  
-		VOLT_MON_in       => mon_adcs.ps4.volt_mon,  
-		GND_MON_in        => mon_adcs.ps4.gnd_mon,  
-		SPARE_MON_in      => mon_adcs.ps4.spare_mon, 
-		PS_REG_OUTPUT_in  => mon_adcs.ps4.ps_reg, 
-		PS_ERROR_in       => mon_adcs.ps4.ps_error, 
+		DAC_SP_in         => std_logic_vector(mon_adcs.ps4.dac_sp),  
+		VOLT_MON_in       => std_logic_vector(mon_adcs.ps4.voltage),  
+		GND_MON_in        => std_logic_vector(mon_adcs.ps4.ignd),  
+		SPARE_MON_in      => std_logic_vector(mon_adcs.ps4.spare), 
+		PS_REG_OUTPUT_in  => std_logic_vector(mon_adcs.ps4.ps_reg), 
+		PS_ERROR_in       => std_logic_vector(mon_adcs.ps4.ps_error), 
 		
 		--Outputs
         DCCT1_out         => dcct_adcs_ave.ps4.dcct0,     

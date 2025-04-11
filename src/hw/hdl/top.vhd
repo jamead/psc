@@ -124,7 +124,8 @@ architecture behv of top is
    signal gtx_gige_refclk       : std_logic;
    signal gtx_evr_refclk        : std_logic;
    
-   signal leds                  : std_logic_vector(7 downto 0);
+   signal tenkhz_trig           : std_logic;   
+   signal adc_done              : std_logic;   
  
    signal m_axi4_m2s            : t_pl_regs_m2s;
    signal m_axi4_s2m            : t_pl_regs_s2m;
@@ -133,51 +134,34 @@ architecture behv of top is
    signal s_axi4_s2m            : t_pl_snapshot_axi4_s2m;  
    signal ss_buf_stat           : t_snapshot_stat; 
    
-   
-   signal tenkhz_trig           : std_logic;
-   
-   signal adc_done              : std_logic;
-   
+   signal fault_params          : t_fault_params;
+   signal fault_stat            : t_fault_stat;
+       
    signal dcct_adcs             : t_dcct_adcs;
    signal dcct_adcs_ave         : t_dcct_adcs_ave;
    signal dcct_params           : t_dcct_adcs_params;
+
    signal mon_params            : t_mon_adcs_params;
-  
    signal mon_adcs              : t_mon_adcs;
    signal mon_adcs_ave          : t_mon_adcs_ave;
+   
+   signal evr_params            : t_evr_params;
+   signal evr_trigs             : t_evr_trigs;
    
    signal accum_mode            : std_logic_vector(7 downto 0);
    signal accum_done            : std_logic_vector(3 downto 0);
    
    signal dac_cntrl             : t_dac_cntrl;
    signal dac_stat              : t_dac_stat;   
- 
-   signal dma_adc_active        : std_logic;
-   signal dma_adc_tdata         : std_logic_vector(63 downto 0);
-   signal dma_adc_tkeep         : std_logic_vector(7 downto 0);
-   signal dma_adc_tlast         : std_logic;
-   signal dma_adc_tready        : std_logic;
-   signal dma_adc_tvalid        : std_logic;
 
 
-   signal evr_dbg               : std_logic_vector(19 downto 0);
-   signal evr_tbt_trig          : std_logic;
-   signal evr_fa_trig           : std_logic;
-   signal evr_sa_trig           : std_logic;
-   signal evr_usr_trig          : std_logic;
-   signal evr_dma_trig          : std_logic;
-   signal evr_gps_trig          : std_logic;
-   signal evr_timestamp         : std_logic_vector(63 downto 0);
-   signal evr_timestamplat      : std_logic_vector(63 downto 0);
-   signal evr_trignum           : std_logic_vector(7 downto 0);
-   signal evr_trigdly           : std_logic_vector(31 downto 0);
-   signal evr_rcvd_clk          : std_logic;
+
+
    signal sa_trig_stretch       : std_logic;
    
   
    --debug signals (connect to ila)
    attribute mark_debug                 : string;
-   attribute mark_debug of leds            : signal is "true";
    attribute mark_debug of pl_reset        : signal is "true";
    attribute mark_debug of pl_resetn       : signal is "true";
    attribute mark_debug of tenkhz_trig     : signal is "true";
@@ -192,7 +176,7 @@ begin
 fp_leds(0) <= gtx_evr_refclk;
 fp_leds(1) <= '0';
 fp_leds(2) <= '0';
-fp_leds(3) <= evr_rcvd_clk; --pl_clk0; 
+fp_leds(3) <= evr_trigs.rcvd_clk; 
 fp_leds(7 downto 4) <= "0000";
 --sfp_leds <= leds;
 
@@ -271,27 +255,44 @@ write_dacs: entity work.dac_ctrlr
     n_sync1234	=> stpt_dac_sync,  
     sclk1234 => stpt_dac_sck, 
     sdo => stpt_dac_sdo 	
-    );
+);
 
 
 
---accumulator 
---accum: entity work.adc_accumulator_top
---  generic map (
---    N_DCCT => 18,  
---	N_8CH  => 16 
---  )
---  port map(
---    clk => pl_clk0,
---    reset => pl_reset,
---    start => adc_done,  
---    mode => accum_mode,
---    dcct_adcs => dcct_adcs,
---    mon_adcs => mon_adcs,
---    dcct_adcs_ave => dcct_adcs_ave,
---    mon_adcs_ave => mon_adcs_ave,
---    done => accum_done
---);
+fault_gen: entity work.fault_module
+  port map(
+    clk => pl_clk0,
+    reset => pl_reset,
+    tenkhz_trig => tenkhz_trig,
+    fault_params => fault_params,
+    dcct_adcs => dcct_adcs,
+    mon_adcs => mon_adcs,
+    dac_stat => dac_stat,
+    rcom => rcom,
+    rsts => rsts,
+    fault_stat => fault_stat 
+);  
+    
+    
+    
+
+--accumulator (not yet integrated)
+accum: entity work.adc_accumulator_top
+  generic map (
+    N_DCCT => 20,  
+	N_8CH  => 16 
+  )
+  port map(
+    clk => pl_clk0,
+    reset => pl_reset,
+    start => adc_done,  
+    mode => accum_mode,
+    dcct_adcs => dcct_adcs,
+    mon_adcs => mon_adcs,
+    dcct_adcs_ave => dcct_adcs_ave,
+    mon_adcs_ave => mon_adcs_ave,
+    done => accum_done
+);
     
     
 --select the source for ADC converts
@@ -320,16 +321,8 @@ evr: entity work.evr_top
     gtx_refclk => gtx_evr_refclk, 
     rx_p => gtx_evr_rx_p,
     rx_n => gtx_evr_rx_n,
-    trignum => evr_trignum,  
-    trigdly => (x"00000001"),   
-    tbt_trig => evr_tbt_trig, 
-    fa_trig => evr_fa_trig, 
-    sa_trig => evr_sa_trig, 
-    usr_trig => evr_usr_trig, 
-    gps_trig => evr_gps_trig, 
-    timestamp => evr_timestamp,  
-    evr_rcvd_clk => evr_rcvd_clk,
-    dbg => evr_dbg  
+    evr_params => evr_params,
+    evr_trigs => evr_trigs
 );	
 
 
@@ -344,7 +337,6 @@ ps_regs: entity work.ps_io
     pl_reset => pl_reset, 
     m_axi4_m2s => m_axi4_m2s, 
     m_axi4_s2m => m_axi4_s2m,
-    leds => leds,
     dcct_params => dcct_params,
     dcct_adcs => dcct_adcs,
     mon_adcs => mon_adcs,
@@ -352,10 +344,11 @@ ps_regs: entity work.ps_io
     dac_cntrl => dac_cntrl,
     dac_stat => dac_stat,
     ss_buf_stat => ss_buf_stat,
-    evr_timestamp => evr_timestamp,
-    evr_reset => gtx_reset,
+    evr_params => evr_params,
+    evr_trigs => evr_trigs,
     rcom => rcom,
-    rsts => rsts               
+    rsts => rsts,
+    fault_stat => fault_stat               
   );
 
     
@@ -450,9 +443,9 @@ sa_led : entity work.stretch
   port map (
 	clk => pl_clk0,
 	reset => pl_reset, 
-	sig_in => evr_sa_trig, 
+	sig_in => evr_trigs.sa_trig, 
 	len => 3000000, -- ~25ms;
-	sig_out => sa_trig_stretch
+	sig_out => evr_trigs.sa_trig_stretch
 );	  	
 
 

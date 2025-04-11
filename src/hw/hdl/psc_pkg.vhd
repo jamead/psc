@@ -7,6 +7,78 @@ package psc_pkg is
 
 
 
+
+
+-- fault control parameters
+type t_fault_params_onech is record
+  clear           : std_logic;
+  enable          : std_logic_vector(15 downto 0);
+  ovc1_thresh     : std_logic_vector(19 downto 0); 
+  ovc2_thresh     : std_logic_vector(19 downto 0);  
+  ovv_thresh      : std_logic_vector(15 downto 0);  
+  err1_thresh     : std_logic_vector(15 downto 0);  
+  err2_thresh     : std_logic_vector(15 downto 0);  
+  ignd_thresh     : std_logic_vector(15 downto 0);  
+  ovc1_cntlim     : std_logic_vector(15 downto 0);  -- over current on DCCT1                    flt_reg(0)
+  ovc2_cntlim     : std_logic_vector(15 downto 0);  -- over current on DCCT2                    flt_reg(1)
+  ovv_cntlim      : std_logic_vector(15 downto 0);  -- over voltage on Voltage monitor          flt_reg(2)
+  err1_cntlim     : std_logic_vector(15 downto 0);  -- PI Loop Error signal too large           flt_reg(3)
+  err2_cntlim     : std_logic_vector(15 downto 0);  -- PI Loop Error glitch                     flt_reg(4)
+  ignd_cntlim     : std_logic_vector(15 downto 0);  -- GND current too large                    flt_reg(5)
+  dcct_cntlim     : std_logic_vector(15 downto 0);  -- Digital DCCT (Bipolar) fault Check       flt_reg(6)
+  flt1_cntlim     : std_logic_vector(15 downto 0);  -- Bipolar supply fault (David wants live)  flt_reg(7)    
+  flt2_cntlim     : std_logic_vector(15 downto 0);  -- flt2  ?                                  flt_reg(8) 
+  flt3_cntlim     : std_logic_vector(15 downto 0);  -- external interlock fault                 flt_reg(9) 
+  on_cntlim       : std_logic_vector(15 downto 0);  -- ac_on_out - ac_on_in fault               flt_reg(10)
+  heart_cntlim    : std_logic_vector(15 downto 0);  -- Bipolar Heartbeat fault                  flt_reg(11)
+end record;
+
+type t_fault_params is record
+  ps1           : t_fault_params_onech;
+  ps2           : t_fault_params_onech;
+  ps3           : t_fault_params_onech;
+  ps4           : t_fault_params_onech;
+end record;
+
+
+type t_fault_stat_onech is record
+  live       : std_logic_vector(15 downto 0);
+  lat        : std_logic_vector(15 downto 0);
+  flt_trig   : std_logic;
+  err_trig   : std_logic;
+end record;
+
+type t_fault_stat is record
+  ps1           : t_fault_stat_onech;
+  ps2           : t_fault_stat_onech;
+  ps3           : t_fault_stat_onech;
+  ps4           : t_fault_stat_onech;
+end record;
+
+
+
+
+type t_evr_params is record
+   reset         : std_logic_vector(7 downto 0);
+   usr_trig_code : std_logic_vector(7 downto 0);
+   pm_trig_code  : std_logic_vector(7 downto 0);
+end record;
+
+type t_evr_trigs is record
+   rcvd_clk        : std_logic;
+   tbt_trig        : std_logic; 
+   fa_trig         : std_logic;  
+   sa_trig         : std_logic; 
+   sa_trig_stretch : std_logic;
+   usr_trig        : std_logic;  
+   gps_trig        : std_logic;
+   ts_s            : std_logic_vector(31 downto 0);
+   ts_ns           : std_logic_vector(31 downto 0);
+end record;  
+
+
+
+
 -- DCCT ADC record types
 type t_dcct_adcs_onech is record
   dcct0_raw      : signed(19 downto 0);
@@ -59,15 +131,15 @@ type t_mon_adcs_onech is record
   dac_sp_raw    : signed(15 downto 0);
   dac_sp_oc     : signed(15 downto 0);
   dac_sp        : signed(15 downto 0);
-  volt_mon_raw  : signed(15 downto 0);  
-  volt_mon_oc   : signed(15 downto 0);  
-  volt_mon      : signed(15 downto 0);
-  gnd_mon_raw   : signed(15 downto 0);  
-  gnd_mon_oc    : signed(15 downto 0);
-  gnd_mon       : signed(15 downto 0);
-  spare_mon_raw : signed(15 downto 0);  
-  spare_mon_oc  : signed(15 downto 0);  
-  spare_mon     : signed(15 downto 0);
+  voltage_raw   : signed(15 downto 0);  
+  voltage_oc    : signed(15 downto 0);  
+  voltage       : signed(15 downto 0);
+  ignd_raw      : signed(15 downto 0);  
+  ignd_oc       : signed(15 downto 0);
+  ignd          : signed(15 downto 0);
+  spare_raw     : signed(15 downto 0);  
+  spare_oc      : signed(15 downto 0);  
+  spare         : signed(15 downto 0);
   ps_reg_raw    : signed(15 downto 0); 
   ps_reg_oc     : signed(15 downto 0);  
   ps_reg        : signed(15 downto 0); 
@@ -87,12 +159,12 @@ end record;
 type t_mon_adcs_params_onech is record 
   dac_sp_offset    : signed(15 downto 0);
   dac_sp_gain      : signed(23 downto 0);    
-  volt_mon_offset  : signed(15 downto 0);
-  volt_mon_gain    : signed(23 downto 0); 
-  gnd_mon_offset   : signed(15 downto 0);
-  gnd_mon_gain     : signed(23 downto 0);   
-  spare_mon_offset : signed(15 downto 0);
-  spare_mon_gain   : signed(23 downto 0);  
+  voltage_offset   : signed(15 downto 0);
+  voltage_gain     : signed(23 downto 0); 
+  ignd_offset      : signed(15 downto 0);
+  ignd_gain        : signed(23 downto 0);   
+  spare_offset     : signed(15 downto 0);
+  spare_gain       : signed(23 downto 0);  
   ps_reg_offset    : signed(15 downto 0);
   ps_reg_gain      : signed(23 downto 0);   
   ps_error_offset  : signed(15 downto 0);
