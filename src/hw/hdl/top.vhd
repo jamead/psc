@@ -165,8 +165,8 @@ architecture behv of top is
    attribute mark_debug of pl_reset        : signal is "true";
    attribute mark_debug of pl_resetn       : signal is "true";
    attribute mark_debug of tenkhz_trig     : signal is "true";
-   attribute mark_debug of m_axi4_m2s      : signal is "true";
-   attribute mark_debug of m_axi4_s2m      : signal is "true";
+   --attribute mark_debug of m_axi4_m2s      : signal is "true";
+   --attribute mark_debug of m_axi4_s2m      : signal is "true";
 
 
 
@@ -348,6 +348,7 @@ ps_regs: entity work.ps_io
     evr_trigs => evr_trigs,
     rcom => rcom,
     rsts => rsts,
+    fault_params => fault_params,
     fault_stat => fault_stat               
   );
 

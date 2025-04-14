@@ -8,6 +8,7 @@ epicsEnvSet("PSC_DBDIR","/home/mead/chiesa/psc/testing/ioc")
 #epicsEnvSet("HOSTNAME","diagioc-c$(CNO)")
 
 epicsEnvSet("IOCNAME", "lab")
+epicsEnvSet("IOCNUM","1");
 epicsEnvSet("CHAN1", "Chan1")
 epicsEnvSet("CHAN2", "Chan2")
 epicsEnvSet("CHAN3", "Chan3")
@@ -42,9 +43,16 @@ epicsEnvSet("BLEN",100000);        # Snapshot DMA Length
 ## Load record instances
 
 ### PVs for PSC:
-dbLoadRecords("$(PSC_DBDIR)/status10hz.db", "P=$(IOCNAME), NO=1")
+dbLoadRecords("$(PSC_DBDIR)/status10hz.db", "P=$(IOCNAME), NO=1, OFFSET=100")
 
-dbLoadRecords("$(PSC_DBDIR)/control.db", "P=$(IOCNAME), NO=1")
+dbLoadRecords("$(PSC_DBDIR)/control_glob.db", "P=$(IOCNAME), NO=1")
+dbLoadRecords("$(PSC_DBDIR)/control_chan.db", "P=$(IOCNAME), NO=1, CHAN=1")
+dbLoadRecords("$(PSC_DBDIR)/control_chan.db", "P=$(IOCNAME), NO=1, CHAN=2")
+dbLoadRecords("$(PSC_DBDIR)/control_chan.db", "P=$(IOCNAME), NO=1, CHAN=3")
+dbLoadRecords("$(PSC_DBDIR)/control_chan.db", "P=$(IOCNAME), NO=1, CHAN=4")
+
+
+
 
 dbLoadRecords("$(PSC_DBDIR)/snapshot.db", "P=$(IOCNAME), NO=1, BUF_LEN=$(BLEN)")
 dbLoadRecords("$(PSC_DBDIR)/fault_ch1.db", "P=$(IOCNAME), NO=1, BUF_LEN=$(BLEN)")
@@ -69,14 +77,8 @@ createPSC("Rx1", $(PSC1_IP), 600, 1)
 iocInit
 ###########
 
-#epicsThreadSleep 1
+epicsThreadSleep 1
 
-#dbpf $(IOCNAME){BPM:1}Gain:Adc0-SP, 32767
-#dbpf $(IOCNAME){BPM:1}Gain:Adc1-SP, 32767
-#dbpf $(IOCNAME){BPM:1}Gain:Adc2-SP, 32767
-#dbpf $(IOCNAME){BPM:1}Gain:Adc3-SP, 32767
-
-#dbpf $(IOCNAME){BPM:1}Gain:RfAtte-SP, 0 
 
 
 

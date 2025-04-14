@@ -534,6 +534,21 @@ reg {
   } ps1_digin @0x1F4; 
 
 
+reg {
+    desc="PS1 Active Faults (Live)";
+    default sw = rw;
+    default hw = w; 
+    field {} val[16];
+  } ps1_faults_live @0x1F8; 
+
+reg {
+    desc="PS1 Active Faults (Latched)";
+    default sw = rw;
+    default hw = w; 
+    field {} val[16];
+  } ps1_faults_lat @0x1FC; 
+
+
 
 
 
@@ -996,6 +1011,19 @@ reg {
     field {} val[5];
   } ps2_digin @0x2F4; 
 
+reg {
+    desc="PS2 Active Faults (Live)";
+    default sw = rw;
+    default hw = w; 
+    field {} val[16];
+  } ps2_faults_live @0x2F8; 
+
+reg {
+    desc="PS2 Active Faults (Latched)";
+    default sw = rw;
+    default hw = w; 
+    field {} val[16];
+  } ps2_faults_lat @0x2FC; 
 
 
 
@@ -1459,6 +1487,20 @@ reg {
     field {} val[5];
   } ps3_digin @0x3F4; 
 
+
+reg {
+    desc="PS3 Active Faults (Live)";
+    default sw = rw;
+    default hw = w; 
+    field {} val[16];
+  } ps3_faults_live @0x3F8; 
+
+reg {
+    desc="PS3 Active Faults (Latched)";
+    default sw = rw;
+    default hw = w; 
+    field {} val[16];
+  } ps3_faults_lat @0x3FC; 
 
 
 
@@ -1926,6 +1968,19 @@ reg {
     field {} val[5];
   } ps4_digin @0x4F4; 
 
+reg {
+    desc="PS4 Active Faults (Live)";
+    default sw = rw;
+    default hw = w; 
+    field {} val[16];
+  } ps4_faults_live @0x4F8; 
+
+reg {
+    desc="PS4 Active Faults (Latched)";
+    default sw = rw;
+    default hw = w; 
+    field {} val[16];
+  } ps4_faults_lat @0x4FC; 
 
 
 

@@ -77,15 +77,15 @@ signal mon_adcs_in      : t_mon_adcs;
 
 
    --debug signals (connect to ila)
-   attribute mark_debug                 : string;
-   attribute mark_debug of ADC8C_CONV123: signal is "true";
-   attribute mark_debug of ADC8C_FS123: signal is "true";
-   attribute mark_debug of ADC8C_SCK123: signal is "true";
-   attribute mark_debug of ADC8C_SDO: signal is "true";
-   attribute mark_debug of ADC_8CH_ADC1: signal is "true";
-   attribute mark_debug of ADC_8CH_ADC2: signal is "true";
-   attribute mark_debug of ADC_8CH_ADC3: signal is "true";       
-   attribute mark_debug of mon_adcs_in: signal is "true";
+--   attribute mark_debug                 : string;
+--   attribute mark_debug of ADC8C_CONV123: signal is "true";
+--   attribute mark_debug of ADC8C_FS123: signal is "true";
+--   attribute mark_debug of ADC8C_SCK123: signal is "true";
+--   attribute mark_debug of ADC8C_SDO: signal is "true";
+--   attribute mark_debug of ADC_8CH_ADC1: signal is "true";
+--   attribute mark_debug of ADC_8CH_ADC2: signal is "true";
+--   attribute mark_debug of ADC_8CH_ADC3: signal is "true";       
+--   attribute mark_debug of mon_adcs_in: signal is "true";
 
 
 begin

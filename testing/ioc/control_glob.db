@@ -1,0 +1,131 @@
+
+####  Reconnects and PSC write 
+
+
+
+# Flush reg to socket buffer, trigger send to send all socket buffer to PSC 
+record(bo, "$(P){$(NO)}send") { 
+    field(DTYP, "PSC Ctrl Send All") 
+    field(OUT , "@Tx$(NO)") 
+    field(ZNAM, "Send") 
+    field(ONAM, "Send") 
+} 
+ 
+ 
+ 
+ 
+# Write a single register
+record(longout, "$(P){$(NO)}GoRegSingleWrite0") {
+    field(DTYP, "PSC Ctrl Send")
+    field(OUT , "@Tx$(NO)")
+    field(VAL , "0") 
+    field(FLNK, "$(P){$(NO)}send")
+}
+ 
+# Write a single register
+record(longout, "$(P){$(NO)}GoRegSingleWrite1") {
+    field(DTYP, "PSC Ctrl Send")
+    field(OUT , "@Tx$(NO)")
+    field(VAL , "1") 
+    field(FLNK, "$(P){$(NO)}send")
+}
+
+# Write a single register
+record(longout, "$(P){$(NO)}GoRegSingleWrite2") {
+    field(DTYP, "PSC Ctrl Send")
+    field(OUT , "@Tx$(NO)")
+    field(VAL , "2") 
+    field(FLNK, "$(P){$(NO)}send")
+}
+
+# Write a single register
+record(longout, "$(P){$(NO)}GoRegSingleWrite3") {
+    field(DTYP, "PSC Ctrl Send")
+    field(OUT , "@Tx$(NO)")
+    field(VAL , "3") 
+    field(FLNK, "$(P){$(NO)}send")
+}
+
+
+# Write a single register
+record(longout, "$(P){$(NO)}GoRegSingleWrite4") {
+    field(DTYP, "PSC Ctrl Send")
+    field(OUT , "@Tx$(NO)")
+    field(VAL , "4") 
+    field(FLNK, "$(P){$(NO)}send")
+}
+
+
+
+
+
+############# Control PV's ##########################################
+
+record(stringin, "$(P){$(NO)}RampTableFile") {
+    field(DESC, "Selected File Path")
+    field(VAL, "/default/path/to/file.txt")
+}
+
+
+
+### Global Settings
+
+record(bo, "$(P){$(NO)}Trig:Strig-SP") {
+    field(DESC, "Soft Trigger by user")
+    field(DTYP, "PSC Single U32")
+    field(OUT , "@Tx$(NO) 0 0")
+    field(ZNAM,"Rdy")
+    field(ONAM,"Trig")
+    field(FLNK, "$(P){$(NO)}GoRegSingleWrite0")
+    field(HIGH,".5")    #500 ms after low
+}
+
+# Testing PV's, will be removed
+record(mbbo, "$(P){$(NO)}Trig:Fault-SP") {
+    field(DESC, "Simulate a fault trigger")
+    field(DTYP, "PSC Single U32")
+    field(OUT , "@Tx$(NO) 0 4")
+    #field( PINI, "YES")
+    field( ZRST, "Flt Chan1")
+    field( ONST, "Flt Chan2")
+    field( TWST, "Flt Chan3")
+    field( THST, "Flt Chan4")
+    field( FRST, "Err Chan1")
+    field( FVST, "Err Chan2")
+    field( SXST, "Err Chan3")
+    field( SVST, "Err Chan4")
+    field( EIST, "EVR")     
+    field( ZRVL, "1")
+    field( ONVL, "2")
+    field( TWVL, "4")
+    field( THVL, "8")
+    field( FRVL, "16")    # Bit 4
+    field( FVVL, "32")    # Bit 5
+    field( SXVL, "64")    # Bit 6
+    field( SVVL, "128")   # Bit 7
+    field( EIVL, "256")   # Bit 8  
+    field(FLNK, "$(P){$(NO)}GoRegSingleWrite0")
+ 
+}
+
+
+record(bo, "$(P){$(NO)}LEDs-SP") {
+    field(DESC, "Control the LEDs on the PSC")
+    field(DTYP, "PSC Single U32")
+    field(OUT , "@Tx$(NO) 0 8")
+    field(FLNK, "$(P){$(NO)}GoRegSingleWrite0")
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

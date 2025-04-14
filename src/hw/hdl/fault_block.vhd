@@ -36,37 +36,49 @@ end entity;
 	
 architecture arch of fault_block is 
 
-signal dff0, dff1, dff2, dff3  : std_logic; 
-signal heartbeat               : std_logic; 
-signal ten_khz_pulse           : std_logic; 
+  signal dff0, dff1, dff2, dff3  : std_logic; 
+  signal heartbeat               : std_logic; 
+  signal ten_khz_pulse           : std_logic; 
 
---analog fault counters
-signal ovc_fault_cnt1          : unsigned(15 downto 0); --6.55 seconds at 10 kHz
-signal ovc_fault_cnt2          : unsigned(15 downto 0);  
-signal ovv_fault_cnt           : unsigned(15 downto 0); 
-signal err_fault_cnt1          : unsigned(15 downto 0); 
-signal err_fault_cnt2          : unsigned(15 downto 0); 
-signal ignd_fault_cnt          : unsigned(15 downto 0); 
-signal on_fault_cnt            : unsigned(31 downto 0); 
-signal heart_cnt               : unsigned(31 downto 0); 
+  --analog fault counters
+  signal ovc_fault_cnt1          : unsigned(15 downto 0); --6.55 seconds at 10 kHz
+  signal ovc_fault_cnt2          : unsigned(15 downto 0);  
+  signal ovv_fault_cnt           : unsigned(15 downto 0); 
+  signal err_fault_cnt1          : unsigned(15 downto 0); 
+  signal err_fault_cnt2          : unsigned(15 downto 0); 
+  signal ignd_fault_cnt          : unsigned(15 downto 0); 
+  signal on_fault_cnt            : unsigned(31 downto 0); 
+  signal heart_cnt               : unsigned(31 downto 0); 
 
---digital fault counters
-signal dcct_fault_cnt          : unsigned(15 downto 0); 
-signal fault1_cnt              : unsigned(15 downto 0); 
-signal fault2_cnt              : unsigned(15 downto 0); 
-signal fault3_cnt              : unsigned(15 downto 0); 
-signal error_sub               : integer;  
-signal fault_reg               : std_logic_vector(15 downto 0) := (others => '0'); 
-signal dac_setpoint_reg_new    : std_logic_vector(19 downto 0); 
-signal dac_setpoint_reg_old    : std_logic_vector(19 downto 0); 
-signal dac_change_flag         : std_logic; 
-signal re, re_reg              : std_logic;
-signal clear_pulse             : std_logic;
-signal fault_reg_out           : std_logic_vector(15 downto 0);
-signal fault_reg_mask          : std_logic_vector(15 downto 0);
+  --digital fault counters
+  signal dcct_fault_cnt          : unsigned(15 downto 0); 
+  signal fault1_cnt              : unsigned(15 downto 0); 
+  signal fault2_cnt              : unsigned(15 downto 0); 
+  signal fault3_cnt              : unsigned(15 downto 0); 
+  signal error_sub               : integer;  
+  signal fault_reg               : std_logic_vector(15 downto 0) := (others => '0'); 
+  signal dac_setpoint_reg_new    : std_logic_vector(19 downto 0); 
+  signal dac_setpoint_reg_old    : std_logic_vector(19 downto 0); 
+  signal dac_change_flag         : std_logic; 
+  signal re, re_reg              : std_logic;
+  signal clear_pulse             : std_logic;
+  signal fault_reg_out           : std_logic_vector(15 downto 0);
+  signal fault_reg_mask          : std_logic_vector(15 downto 0);
+  signal error_reg_mask          : std_logic_vector(15 downto 0);
 
---signal err_abs                 : signed(15 downto 0); 
+  --signal err_abs                 : signed(15 downto 0); 
 
+
+  --debug signals (connect to ila)
+   attribute mark_debug                 : string;
+   attribute mark_debug of clear_pulse: signal is "true";
+   attribute mark_debug of fault_reg: signal is "true";
+   attribute mark_debug of fault_reg_out: signal is "true";
+   attribute mark_debug of fault_params: signal is "true";
+   attribute mark_debug of fault_stat: signal is "true";
+   attribute mark_debug of dac_change_flag: signal is "true";
+   attribute mark_debug of fault_reg_mask: signal is "true";
+   attribute mark_debug of error_reg_mask: signal is "true";
 
 
 begin 
@@ -74,14 +86,15 @@ begin
 fault_stat.live <= fault_reg;
 fault_stat.lat  <= fault_reg_out;
 fault_stat.flt_trig <= or fault_reg_mask;
-fault_stat.err_trig <= fault_reg(4);
+fault_stat.err_trig <= or error_reg_mask;
 
 
 --This allows the user to ignore faults by setting a bit to zero in the mask register
 process(clk) 
 begin 
     if rising_edge(clk) then      
-        fault_reg_mask <= x"1EEF" and fault_reg and fault_params.enable;      
+        fault_reg_mask <= x"1EEF" and fault_reg and fault_params.enable;
+        error_reg_mask <= x"0010" and fault_reg and fault_params.enable;      
     end if; 
 end process; 
 

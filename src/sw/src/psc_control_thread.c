@@ -18,10 +18,16 @@
 #include "psc_msg.h"
 
 
+typedef union {
+    u32 u;
+    float f;
+    s32 i;
+} MsgUnion;
 
 
 
 #define PORT  7
+#define CNTRL_PACKET_SIZE 16
 
 
 
@@ -153,87 +159,275 @@ void Set_dac(u32 chan, s32 new_setpt) {
 
 
 
-void GlobSetting(u32 addr, s32 data) {
+void GlobSetting(u32 addr, MsgUnion data) {
 
     xil_printf("In Global Settings...\r\n");
     switch(addr) {
 		case SOFT_TRIG_MSG:
-			xil_printf("Soft Trigger Message:   Value=%d\r\n",data);
-			soft_trig(data);
+			xil_printf("Soft Trigger Message:   Value=%d\r\n",data.u);
+			soft_trig(data.u);
             break;
 
 		case TEST_TRIG_MSG:
-			xil_printf("Test Trigger Message:   Value=%d\r\n",data);
-			Xil_Out32(XPAR_M_AXI_BASEADDR + TESTTRIG, data);
+			xil_printf("Test Trigger Message:   Value=%d\r\n",data.u);
+			Xil_Out32(XPAR_M_AXI_BASEADDR + TESTTRIG, data.u);
 			Xil_Out32(XPAR_M_AXI_BASEADDR + TESTTRIG, 0);
             break;
 
 
         case FP_LED_MSG:
-         	xil_printf("Setting FP LED:   Value=%d\r\n",data);
-         	set_fpleds(data);
+         	xil_printf("Setting FP LED:   Value=%d\r\n",data.u);
+         	set_fpleds(data.u);
          	break;
     }
 
 }
 
 
-void ChanSettings(u32 chan, u32 addr, u32 data) {
+void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 
 
-    xil_printf("Hello Channel %d\r\n",chan);
 
     switch(addr) {
 
         case DAC_OPMODE_MSG:
-	        xil_printf("Setting DAC CH%d Operating Mode:   Value=%d\r\n",chan,data);
-	        Set_dacOpmode(chan,data);
+	        xil_printf("Setting DAC CH%d Operating Mode:   Value=%d\r\n",chan,data.u);
+	        Set_dacOpmode(chan,data.u);
 	        break;
 
         case DAC_SETPT_MSG:
-	        xil_printf("Setting DAC CH%d SetPoint:   Value=%d\r\n",chan,data);
-	        Set_dac(chan, data);
+	        xil_printf("Setting DAC CH%d SetPoint:   Value=%d\r\n",chan,data.i);
+	        Set_dac(chan, data.i);
 	        break;
 
         case DAC_RAMPLEN_MSG:
- 	        xil_printf("Setting DAC CH%d RampTable Length:   Value=%d\r\n",chan,data);
- 	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RAMPLEN_REG + chan*CHBASEADDR, data);
+ 	        xil_printf("Setting DAC CH%d RampTable Length:   Value=%d\r\n",chan,data.u);
+ 	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RAMPLEN_REG + chan*CHBASEADDR, data.u);
  	        break;
 
         case DAC_RUNRAMP_MSG:
-	        xil_printf("Running DAC CH%d Ramptable:   Value=%d\r\n",chan,data);
-	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RUNRAMP_REG + chan*CHBASEADDR, data);
+	        xil_printf("Running DAC CH%d Ramptable:   Value=%d\r\n",chan,data.u);
+	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RUNRAMP_REG + chan*CHBASEADDR, data.u);
 	        break;
 
         case DAC_GAIN_MSG:
-	        xil_printf("Setting DAC CH%d Gain:   Value=%d\r\n",chan,data);
-	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_GAIN_REG + chan*CHBASEADDR, data);
+	        printf("Setting DAC CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
+	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_GAIN_REG + chan*CHBASEADDR, data.f);
 	        break;
 
         case DAC_OFFSET_MSG:
-	        xil_printf("Setting DAC CH%d Offset:   Value=%d\r\n",chan,data);
-	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_OFFSET_REG + chan*CHBASEADDR, data);
+	        xil_printf("Setting DAC CH%d Offset:   Value=%d\r\n",chan,data.i);
+	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_OFFSET_REG + chan*CHBASEADDR, data.i);
 	        break;
 
         case DCCT1_GAIN_MSG:
- 	        xil_printf("Setting DAC CH%d Gain:   Value=%d\r\n",chan,data);
- 	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_GAIN_REG + chan*CHBASEADDR, data);
+ 	        printf("Setting DAC CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
+ 	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT1_GAIN_REG + chan*CHBASEADDR, data.f*GAIN20BITFRACT);
  	        break;
 
         case DCCT1_OFFSET_MSG:
- 	        xil_printf("Setting DAC CH%d Offset:   Value=%d\r\n",chan,data);
- 	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_OFFSET_REG + chan*CHBASEADDR, data);
+ 	        xil_printf("Setting DCCT1 CH%d Offset:   Value=%d\r\n",chan,data.i);
+ 	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT1_OFFSET_REG + chan*CHBASEADDR, data.i);
  	        break;
 
         case DCCT2_GAIN_MSG:
-  	        xil_printf("Setting DAC CH%d Gain:   Value=%d\r\n",chan,data);
-  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_GAIN_REG + chan*CHBASEADDR, data);
+  	        printf("Setting DCCT1 CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT2_GAIN_REG + chan*CHBASEADDR, data.f*GAIN20BITFRACT);
   	        break;
 
         case DCCT2_OFFSET_MSG:
-  	        xil_printf("Setting DAC CH%d Offset:   Value=%d\r\n",chan,data);
-  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_OFFSET_REG + chan*CHBASEADDR, data);
+  	        xil_printf("Setting DCCT2 CH%d Offset:   Value=%d\r\n",chan,data.i);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT2_OFFSET_REG + chan*CHBASEADDR, data.i);
   	        break;
+
+        case DACSP_GAIN_MSG:
+  	        printf("Setting DACSP CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DACSP_GAIN_REG + chan*CHBASEADDR, data.f*GAIN20BITFRACT);
+  	        break;
+
+        case DACSP_OFFSET_MSG:
+  	        xil_printf("Setting DACSP CH%d Offset:   Value=%d\r\n",chan,data.i);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DACSP_OFFSET_REG + chan*CHBASEADDR, data.i);
+  	        break;
+
+        case VOLT_GAIN_MSG:
+  	        printf("Setting Voltage CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + VOLT_GAIN_REG + chan*CHBASEADDR, data.f*GAIN20BITFRACT);
+  	        break;
+
+        case VOLT_OFFSET_MSG:
+  	        xil_printf("Setting Voltage CH%d Offset:   Value=%d\r\n",chan,data.i);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + VOLT_OFFSET_REG + chan*CHBASEADDR, data.i);
+  	        break;
+
+        case GND_GAIN_MSG:
+  	        printf("Setting iGND CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + GND_GAIN_REG + chan*CHBASEADDR, data.f*GAIN20BITFRACT);
+  	        break;
+
+        case GND_OFFSET_MSG:
+  	        xil_printf("Setting iGND CH%d Offset:   Value=%d\r\n",chan,data.i);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + GND_OFFSET_REG + chan*CHBASEADDR, data.i);
+  	        break;
+
+        case SPARE_GAIN_MSG:
+   	        printf("Setting Spare CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + SPARE_GAIN_REG + chan*CHBASEADDR, data.f*GAIN20BITFRACT);
+   	        break;
+
+        case SPARE_OFFSET_MSG:
+   	        xil_printf("Setting Spare CH%d Offset:   Value=%d\r\n",chan,data.i);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + SPARE_OFFSET_REG + chan*CHBASEADDR, data.i);
+   	        break;
+
+        case REG_GAIN_MSG:
+   	        printf("Setting Regulator CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + REG_GAIN_REG + chan*CHBASEADDR, data.f*GAIN20BITFRACT);
+   	        break;
+
+        case REG_OFFSET_MSG:
+   	        xil_printf("Setting Regulator CH%d Offset:   Value=%d\r\n",chan,data.i);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + REG_OFFSET_REG + chan*CHBASEADDR, data.i);
+   	        break;
+
+        case ERR_GAIN_MSG:
+   	        printf("Setting Error CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + ERR_GAIN_REG + chan*CHBASEADDR, data.f*GAIN20BITFRACT);
+   	        break;
+
+        case ERR_OFFSET_MSG:
+   	        xil_printf("Setting Error CH%d Offset:   Value=%d\r\n",chan,data.i);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + ERR_OFFSET_REG + chan*CHBASEADDR, data.i);
+   	        break;
+
+
+        case OVC1_THRESH_MSG:
+   	        xil_printf("Setting OVC1 Threshold CH%d :   Value=%d\r\n",chan,data.i);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVC1_THRESH_REG + chan*CHBASEADDR, data.i);
+   	        break;
+
+        case OVC2_THRESH_MSG:
+   	        xil_printf("Setting OVC2 Threshold CH%d :   Value=%d\r\n",chan,data.i);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVC2_THRESH_REG + chan*CHBASEADDR, data.i);
+   	        break;
+
+        case OVV_THRESH_MSG:
+   	        xil_printf("Setting OVV Threshold CH%d :   Value=%d\r\n",chan,data.i);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVV_THRESH_REG + chan*CHBASEADDR, data.i);
+   	        break;
+
+        case ERR1_THRESH_MSG:
+   	        xil_printf("Setting Err1 Threshold CH%d :   Value=%d\r\n",chan,data.i);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + ERR1_THRESH_REG + chan*CHBASEADDR, data.i);
+   	        break;
+
+        case ERR2_THRESH_MSG:
+   	        xil_printf("Setting Err2 Threshold CH%d :   Value=%d\r\n",chan,data.i);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + ERR2_THRESH_REG + chan*CHBASEADDR, data.i);
+   	        break;
+
+        case IGND_THRESH_MSG:
+   	        xil_printf("Setting Ignd Threshold CH%d :   Value=%d\r\n",chan,data.i);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + IGND_THRESH_REG + chan*CHBASEADDR, data.i);
+   	        break;
+
+        case OVC1_CNTLIM_MSG:
+   	        xil_printf("Setting OVC1 Count Limit CH%d :   Value=%d\r\n",chan,data.u);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVC1_CNTLIM_REG + chan*CHBASEADDR, data.u);
+   	        break;
+
+        case OVC2_CNTLIM_MSG:
+   	        xil_printf("Setting OVC2 Count Limit CH%d :   Value=%d\r\n",chan,data.u);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVC2_CNTLIM_REG + chan*CHBASEADDR, data.u);
+   	        break;
+
+        case OVV_CNTLIM_MSG:
+   	        xil_printf("Setting OVV Count Limit CH%d :   Value=%d\r\n",chan,data.u);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVV_CNTLIM_REG + chan*CHBASEADDR, data.u);
+   	        break;
+
+        case ERR1_CNTLIM_MSG:
+   	        xil_printf("Setting Err1 Count Limit CH%d :   Value=%d\r\n",chan,data.u);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + ERR1_CNTLIM_REG + chan*CHBASEADDR, data.u);
+   	        break;
+
+        case ERR2_CNTLIM_MSG:
+   	        xil_printf("Setting Err2 Count Limit CH%d :   Value=%d\r\n",chan,data.u);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + ERR2_CNTLIM_REG + chan*CHBASEADDR, data.u);
+   	        break;
+
+        case IGND_CNTLIM_MSG:
+   	        xil_printf("Setting Ignd Count Limit CH%d :   Value=%d\r\n",chan,data.u);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + IGND_CNTLIM_REG + chan*CHBASEADDR, data.u);
+   	        break;
+
+        case DCCT_CNTLIM_MSG:
+   	        xil_printf("Setting DCCT Count Limit CH%d :   Value=%d\r\n",chan,data.u);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT_CNTLIM_REG + chan*CHBASEADDR, data.u);
+   	        break;
+
+        case FLT1_CNTLIM_MSG:
+    	    xil_printf("Setting Fault1 Count Limit CH%d :   Value=%d\r\n",chan,data.u);
+    	    Xil_Out32(XPAR_M_AXI_BASEADDR + FLT1_CNTLIM_REG + chan*CHBASEADDR, data.u);
+    	    break;
+
+        case FLT2_CNTLIM_MSG:
+    	    xil_printf("Setting Fault2 Count Limit CH%d :   Value=%d\r\n",chan,data.u);
+    	    Xil_Out32(XPAR_M_AXI_BASEADDR + FLT2_CNTLIM_REG + chan*CHBASEADDR, data.u);
+    	    break;
+
+        case FLT3_CNTLIM_MSG:
+    	    xil_printf("Setting Fault3 Count Limit CH%d :   Value=%d\r\n",chan,data.u);
+    	    Xil_Out32(XPAR_M_AXI_BASEADDR + FLT3_CNTLIM_REG + chan*CHBASEADDR, data.u);
+    	    break;
+
+        case ON_CNTLIM_MSG:
+    	    xil_printf("Setting On Count Limit CH%d :   Value=%d\r\n",chan,data.u);
+    	    Xil_Out32(XPAR_M_AXI_BASEADDR + ON_CNTLIM_REG + chan*CHBASEADDR, data.u);
+    	    break;
+
+        case HEART_CNTLIM_MSG:
+    	    xil_printf("Setting Heart Beat Limit CH%d :   Value=%d\r\n",chan,data.u);
+    	    Xil_Out32(XPAR_M_AXI_BASEADDR + HEARTBEAT_CNTLIM_REG + chan*CHBASEADDR, data.u);
+    	    break;
+
+        case FAULT_CLEAR_MSG:
+     	    xil_printf("Setting Fault Clear CH%d :   Value=%d\r\n",chan,data.u);
+     	    Xil_Out32(XPAR_M_AXI_BASEADDR + FAULT_CLEAR_REG + chan*CHBASEADDR, data.u);
+     	    break;
+
+        case FAULT_MASK_MSG:
+      	    xil_printf("Setting Fault Mask CH%d :   Value=%d\r\n",chan,data.u);
+      	    Xil_Out32(XPAR_M_AXI_BASEADDR + FAULT_MASK_REG + chan*CHBASEADDR, data.u);
+      	    break;
+
+        case DIGOUT_ON1_MSG:
+       	    xil_printf("Setting DigOut On1 CH%d :   Value=%d\r\n",chan,data.u);
+       	    Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON1_REG + chan*CHBASEADDR, data.u);
+       	    break;
+
+        case DIGOUT_ON2_MSG:
+       	    xil_printf("Setting DigOut On2 CH%d :   Value=%d\r\n",chan,data.u);
+       	    Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_REG + chan*CHBASEADDR, data.u);
+       	    break;
+
+        case DIGOUT_RESET_MSG:
+       	    xil_printf("Setting DigOut Reset CH%d :   Value=%d\r\n",chan,data.u);
+       	    Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_RESET_REG + chan*CHBASEADDR, data.u);
+       	    break;
+
+        case DIGOUT_SPARE_MSG:
+       	    xil_printf("Setting DigOut Spare CH%d :   Value=%d\r\n",chan,data.u);
+       	    Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_SPARE_REG + chan*CHBASEADDR, data.u);
+       	    break;
+
+        case DIGOUT_PARK_MSG:
+       	    xil_printf("Setting DigOut Park CH%d :   Value=%d\r\n",chan,data.u);
+       	    Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_PARK_REG + chan*CHBASEADDR, data.u);
+       	    break;
+
+        default:
+        	xil_printf("Unsupported Message\r\n");
 
     }
 
@@ -250,8 +444,10 @@ void psc_control_thread()
 	struct sockaddr_in serv_addr, cli_addr;
 	int RECV_BUF_SIZE = 1024;
 	char buffer[RECV_BUF_SIZE];
-	int n, *bufptr, numpackets=0;
-    u32 MsgId, MsgAddr, MsgData;
+	int n=0, *bufptr, numpackets=0;
+    u32 MsgId, MsgLen, MsgAddr;
+    //s32 MsgData;
+    MsgUnion MsgData;
 
 
 
@@ -292,27 +488,44 @@ reconnect:
 	xil_printf("PSC Control: Connected Accepted...\r\n");
 
 	while (1) {
-		/* read a max of RECV_BUF_SIZE bytes from socket */
-		n = read(newsockfd, buffer, RECV_BUF_SIZE);
-        if (n <= 0) {
-            xil_printf("PSC Control: ERROR reading from socket..  Reconnecting...\r\n");
-            close(newsockfd);
-	        goto reconnect;
-        }
+	    int received = 0;
+	    while (received < CNTRL_PACKET_SIZE) {
+	        int n = read(newsockfd, buffer + received, CNTRL_PACKET_SIZE - received);
+		    //n = read(newsockfd, buffer, RECV_BUF_SIZE);
+	        xil_printf("N=%d\r\n",n);
+			if (n < 0) {
+	           xil_printf("PSC Control: Read Error..  Reconnecting...\r\n");
+	           close(newsockfd);
+		       goto reconnect;
+	        }
+
+			if (n == 0) {
+		       xil_printf("PSC Control: Socket Closed by Peer..  Reconnecting...\r\n");
+		       close(newsockfd);
+			   goto reconnect;
+			}
+	        received += n;
+	    }
+
 
         bufptr = (int *) buffer;
-        xil_printf("\nPacket %d Received : NumBytes = %d\r\n",++numpackets,n);
+        xil_printf("Packet %d Received : NumBytes = %d\r\n",++numpackets,n);
         xil_printf("Header: %c%c \t",buffer[0],buffer[1]);
         MsgId = (ntohl(*bufptr++)&0xFFFF);
         xil_printf("Message ID : %d\t",MsgId);
-        xil_printf("Body Length : %d\t",ntohl(*bufptr++));
+        MsgLen = ntohl(*bufptr++);
+        xil_printf("Body Length : %d\t",MsgLen);
         MsgAddr = ntohl(*bufptr++);
-        xil_printf("Msg Addr : %d\t",MsgAddr);
-	    MsgData = ntohl(*bufptr);
-        xil_printf("Data : %d\r\n",MsgData);
+        xil_printf("Msg Addr : %d\r\n",MsgAddr);
+	    //MsgData = ntohl(*bufptr);
+        MsgData.u = ntohl(*(uint32_t*)bufptr);
+        xil_printf("Data (int)  : %d\r\n", MsgData.i);
+        printf("Data (float): %f\r\n", MsgData.f);
+
+        //xil_printf("Data : %d\r\n",MsgData);
         //blink fp_led on message received
-        set_fpleds(1);
-        set_fpleds(0);
+        //set_fpleds(1);
+        //set_fpleds(0);
 
         switch(MsgId) {
             case 0:
@@ -330,187 +543,6 @@ reconnect:
 
 
 
-
-/*
-        switch(MsgAddr) {
-			case SOFT_TRIG_MSG:
-				xil_printf("Soft Trigger Message:   Value=%d\r\n",MsgData);
-				soft_trig(MsgData);
-                break;
-
-			case TEST_TRIG_MSG:
-				xil_printf("Test Trigger Message:   Value=%d\r\n",MsgData);
-				Xil_Out32(XPAR_M_AXI_BASEADDR + TESTTRIG, MsgData);
-				Xil_Out32(XPAR_M_AXI_BASEADDR + TESTTRIG, 0);
-                break;
-
-
-            case FP_LED_MSG:
-            	xil_printf("Setting FP LED:   Value=%d\r\n",MsgData);
-            	set_fpleds(MsgData);
-            	break;
-
-*/
-
- /*
-            case DAC_CH1_OPMODE:
-            	xil_printf("Setting DAC CH1 Operating Mode:   Value=%d\r\n",MsgData);
-            	Set_dacOpmode(1,MsgData);
-            	//Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_OPMODE, MsgData);
-            	break;
-
-            case DAC_CH1_SETPT:
-            	xil_printf("Setting DAC CH1 SetPoint:   Value=%d\r\n",MsgData);
-            	Set_dac(1, MsgData);
-            	break;
-
-            case DAC_CH1_RAMPLEN:
-             	xil_printf("Setting DAC CH1 RampTable Length:   Value=%d\r\n",MsgData);
-             	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPLEN, MsgData);
-             	break;
-
-            case DAC_CH1_RUNRAMP:
-            	xil_printf("Running DAC CH1 Ramptable:   Value=%d\r\n",MsgData);
-            	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_RUNRAMP, MsgData);
-            	break;
-
-            case DAC_CH1_GAIN:
-            	xil_printf("Setting DAC CH1 Gain:   Value=%d\r\n",MsgData);
-            	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_GAIN, MsgData);
-            	break;
-
-            case DAC_CH1_OFFSET:
-            	xil_printf("Setting DAC CH1 Offset:   Value=%d\r\n",MsgData);
-            	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_OFFSET, MsgData);
-            	break;
-
-            case DCCT1_CH1_GAIN:
-             	xil_printf("Setting DAC CH1 Gain:   Value=%d\r\n",MsgData);
-             	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_GAIN, MsgData);
-             	break;
-
-            case DCCT1_CH1_OFFSET:
-             	xil_printf("Setting DAC CH1 Offset:   Value=%d\r\n",MsgData);
-             	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_OFFSET, MsgData);
-             	break;
-
-            case DCCT2_CH1_GAIN:
-              	xil_printf("Setting DAC CH1 Gain:   Value=%d\r\n",MsgData);
-              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_GAIN, MsgData);
-              	break;
-
-            case DCCT2_CH1_OFFSET:
-              	xil_printf("Setting DAC CH1 Offset:   Value=%d\r\n",MsgData);
-              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_OFFSET, MsgData);
-              	break;
-
-
-
-
-            case DAC_CH2_OPMODE:
-             	xil_printf("Setting DAC CH2 Operating Mode:   Value=%d\r\n",MsgData);
-             	Set_dacOpmode(2,MsgData);
-             	break;
-
-             case DAC_CH2_SETPT:
-             	xil_printf("Setting DAC CH2 SetPoint:   Value=%d\r\n",MsgData);
-            	Set_dac(2, MsgData);
-             	break;
-
-             case DAC_CH2_RAMPLEN:
-              	xil_printf("Setting DAC CH2 RampTable Length:   Value=%d\r\n",MsgData);
-              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DAC_RAMPLEN, MsgData);
-              	break;
-
-             case DAC_CH2_RUNRAMP:
-             	xil_printf("Running DAC CH2 Ramptable:   Value=%d\r\n",MsgData);
-             	Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DAC_RUNRAMP, MsgData);
-             	break;
-
-             case DAC_CH2_GAIN:
-              	xil_printf("Setting DAC CH2 Gain:   Value=%d\r\n",MsgData);
-              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DAC_GAIN, MsgData);
-              	break;
-
-              case DAC_CH2_OFFSET:
-              	xil_printf("Setting DAC CH2 Offset:   Value=%d\r\n",MsgData);
-              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS2_DAC_OFFSET, MsgData);
-              	break;
-
-
-
-
-             case DAC_CH3_OPMODE:
-               	xil_printf("Setting DAC CH3 Operating Mode:   Value=%d\r\n",MsgData);
-               	Set_dacOpmode(3,MsgData);
-               	break;
-
-             case DAC_CH3_SETPT:
-               	xil_printf("Setting DAC CH3 SetPoint:   Value=%d\r\n",MsgData);
-            	Set_dac(3, MsgData);
-               	break;
-
-             case DAC_CH3_RAMPLEN:
-               	xil_printf("Setting DAC CH3 RampTable Length:   Value=%d\r\n",MsgData);
-               	Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DAC_RAMPLEN, MsgData);
-               	break;
-
-             case DAC_CH3_RUNRAMP:
-               	xil_printf("Running DAC CH3 Ramptable:   Value=%d\r\n",MsgData);
-               	Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DAC_RUNRAMP, MsgData);
-               	break;
-
-             case DAC_CH3_GAIN:
-              	xil_printf("Setting DAC CH3 Gain:   Value=%d\r\n",MsgData);
-              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DAC_GAIN, MsgData);
-              	break;
-
-              case DAC_CH3_OFFSET:
-              	xil_printf("Setting DAC CH3 Offset:   Value=%d\r\n",MsgData);
-              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS3_DAC_OFFSET, MsgData);
-              	break;
-
-
-
-             case DAC_CH4_OPMODE:
-               	xil_printf("Setting DAC CH4 Operating Mode:   Value=%d\r\n",MsgData);
-               	Set_dacOpmode(4,MsgData);
-               	break;
-
-             case DAC_CH4_SETPT:
-               	xil_printf("Setting DAC CH4 SetPoint:   Value=%d\r\n",MsgData);
-            	Set_dac(4, MsgData);
-               	break;
-
-             case DAC_CH4_RAMPLEN:
-               	xil_printf("Setting DAC CH4 RampTable Length:   Value=%d\r\n",MsgData);
-               	Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DAC_RAMPLEN, MsgData);
-               	break;
-
-             case DAC_CH4_RUNRAMP:
-               	xil_printf("Running DAC CH4 Ramptable:   Value=%d\r\n",MsgData);
-               	Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DAC_RUNRAMP, MsgData);
-               	break;
-
-             case DAC_CH4_GAIN:
-              	xil_printf("Setting DAC CH4 Gain:   Value=%d\r\n",MsgData);
-              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DAC_GAIN, MsgData);
-              	break;
-
-              case DAC_CH4_OFFSET:
-              	xil_printf("Setting DAC CH4 Offset:   Value=%d\r\n",MsgData);
-              	Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DAC_OFFSET, MsgData);
-              	break;
-
-
-
-
-            default:
-            	xil_printf("Msg not supported yet...\r\n");
-            	break;
-        }
-
-*/
 
 	}
 

@@ -1,0 +1,169 @@
+caput lab{1}Chan1:OVC1_Flt_Threshold-SP 10000
+caput lab{1}Chan1:OVC2_Flt_Threshold-SP 10001
+caput lab{1}Chan1:OVV_Flt_Threshold-SP 10002
+caput lab{1}Chan1:ERR1_Flt_Threshold-SP 10003
+caput lab{1}Chan1:ERR2_Flt_Threshold-SP 10004
+caput lab{1}Chan1:IGND_Flt_Threshold-SP 10005
+
+caput lab{1}Chan1:OVC1_Flt_CntLim-SP 30000
+caput lab{1}Chan1:OVC2_Flt_CntLim-SP 30001
+caput lab{1}Chan1:OVV_Flt_CntLim-SP 30002
+caput lab{1}Chan1:ERR1_Flt_CntLim-SP 30003
+caput lab{1}Chan1:ERR2_Flt_CntLim-SP 30004
+caput lab{1}Chan1:IGND_Flt_CntLim-SP 30005
+caput lab{1}Chan1:DCCT_Flt_CntLim-SP 30006
+caput lab{1}Chan1:FLT1_Flt_CntLim-SP 30007
+caput lab{1}Chan1:FLT2_Flt_CntLim-SP 30008
+caput lab{1}Chan1:FLT3_Flt_CntLim-SP 30009
+caput lab{1}Chan1:ON_Flt_CntLim-SP 30010
+caput lab{1}Chan1:HeartBeat_Flt_CntLim-SP 30011
+
+caput lab{1}Chan1:DCCT1-Gain-SP 1.00008 
+caput lab{1}Chan1:DCCT2-Gain-SP .99998 
+caput lab{1}Chan1:DAC-Gain-SP 1.0007 
+caput lab{1}Chan1:Gnd-Gain-SP 1.00009 
+caput lab{1}Chan1:Volt-Gain-SP 1.00010 
+caput lab{1}Chan1:Spare-Gain-SP .999987 
+caput lab{1}Chan1:Reg-Gain-SP 1.00000
+caput lab{1}Chan1:Error-Gain-SP 1.00002 
+caput lab{1}Chan1:DCCT1-Offset-SP 1 
+caput lab{1}Chan1:DCCT2-Offset-SP 2  
+caput lab{1}Chan1:DAC-Offset-SP 3 
+caput lab{1}Chan1:Gnd-Offset-SP 4 
+caput lab{1}Chan1:Volt-Offset-SP -1 
+caput lab{1}Chan1:Spare-Offset-SP -2 
+caput lab{1}Chan1:Reg-Offset-SP -3
+caput lab{1}Chan1:Error-Offset-SP -4 
+
+caput lab{1}Chan1:DAC_Gain-SP 1.000
+caput lab{1}Chan1:DAC_Offset-SP 0 
+
+
+caput lab{1}Chan2:OVC1_Flt_Threshold-SP 10000
+caput lab{1}Chan2:OVC2_Flt_Threshold-SP 10001
+caput lab{1}Chan2:OVV_Flt_Threshold-SP 10002
+caput lab{1}Chan2:ERR1_Flt_Threshold-SP 10003
+caput lab{1}Chan2:ERR2_Flt_Threshold-SP 10004
+caput lab{1}Chan2:IGND_Flt_Threshold-SP 10005
+
+caput lab{1}Chan2:OVC1_Flt_CntLim-SP 30000
+caput lab{1}Chan2:OVC2_Flt_CntLim-SP 30001
+caput lab{1}Chan2:OVV_Flt_CntLim-SP 30002
+caput lab{1}Chan2:ERR1_Flt_CntLim-SP 30003
+caput lab{1}Chan2:ERR2_Flt_CntLim-SP 30004
+caput lab{1}Chan2:IGND_Flt_CntLim-SP 30005
+caput lab{1}Chan2:DCCT_Flt_CntLim-SP 30006
+caput lab{1}Chan2:FLT1_Flt_CntLim-SP 30007
+caput lab{1}Chan2:FLT2_Flt_CntLim-SP 30008
+caput lab{1}Chan2:FLT3_Flt_CntLim-SP 30009
+caput lab{1}Chan2:ON_Flt_CntLim-SP 30010
+caput lab{1}Chan2:HeartBeat_Flt_CntLim-SP 30011
+
+caput lab{1}Chan2:DCCT1-Gain-SP 1.00008 
+caput lab{1}Chan2:DCCT2-Gain-SP .99998 
+caput lab{1}Chan2:DAC-Gain-SP 1.0007 
+caput lab{1}Chan2:Gnd-Gain-SP 1.00009 
+caput lab{1}Chan2:Volt-Gain-SP 1.00010 
+caput lab{1}Chan2:Spare-Gain-SP .999987 
+caput lab{1}Chan2:Reg-Gain-SP 1.00000
+caput lab{1}Chan2:Error-Gain-SP 1.00002 
+caput lab{1}Chan2:DCCT1-Offset-SP 1 
+caput lab{1}Chan2:DCCT2-Offset-SP 2  
+caput lab{1}Chan2:DAC-Offset-SP 3 
+caput lab{1}Chan2:Gnd-Offset-SP 4 
+caput lab{1}Chan2:Volt-Offset-SP -1 
+caput lab{1}Chan2:Spare-Offset-SP -2 
+caput lab{1}Chan2:Reg-Offset-SP -3
+caput lab{1}Chan2:Error-Offset-SP -4 
+
+caput lab{1}Chan2:DAC_Gain-SP 1.000
+caput lab{1}Chan2:DAC_Offset-SP 0 
+
+
+
+caput lab{1}Chan3:OVC1_Flt_Threshold-SP 10000
+caput lab{1}Chan3:OVC2_Flt_Threshold-SP 10001
+caput lab{1}Chan3:OVV_Flt_Threshold-SP 10002
+caput lab{1}Chan3:ERR1_Flt_Threshold-SP 10003
+caput lab{1}Chan3:ERR2_Flt_Threshold-SP 10004
+caput lab{1}Chan3:IGND_Flt_Threshold-SP 10005
+
+caput lab{1}Chan3:OVC1_Flt_CntLim-SP 30000
+caput lab{1}Chan3:OVC2_Flt_CntLim-SP 30001
+caput lab{1}Chan3:OVV_Flt_CntLim-SP 30002
+caput lab{1}Chan3:ERR1_Flt_CntLim-SP 30003
+caput lab{1}Chan3:ERR2_Flt_CntLim-SP 30004
+caput lab{1}Chan3:IGND_Flt_CntLim-SP 30005
+caput lab{1}Chan3:DCCT_Flt_CntLim-SP 30006
+caput lab{1}Chan3:FLT1_Flt_CntLim-SP 30007
+caput lab{1}Chan3:FLT2_Flt_CntLim-SP 30008
+caput lab{1}Chan3:FLT3_Flt_CntLim-SP 30009
+caput lab{1}Chan3:ON_Flt_CntLim-SP 30010
+caput lab{1}Chan3:HeartBeat_Flt_CntLim-SP 30011
+
+caput lab{1}Chan3:DCCT1-Gain-SP 1.00008 
+caput lab{1}Chan3:DCCT2-Gain-SP .99998 
+caput lab{1}Chan3:DAC-Gain-SP 1.0007 
+caput lab{1}Chan3:Gnd-Gain-SP 1.00009 
+caput lab{1}Chan3:Volt-Gain-SP 1.00010 
+caput lab{1}Chan3:Spare-Gain-SP .999987 
+caput lab{1}Chan3:Reg-Gain-SP 1.00000
+caput lab{1}Chan3:Error-Gain-SP 1.00002 
+caput lab{1}Chan3:DCCT1-Offset-SP 1 
+caput lab{1}Chan3:DCCT2-Offset-SP 2  
+caput lab{1}Chan3:DAC-Offset-SP 3 
+caput lab{1}Chan3:Gnd-Offset-SP 4 
+caput lab{1}Chan3:Volt-Offset-SP -1 
+caput lab{1}Chan3:Spare-Offset-SP -2 
+caput lab{1}Chan3:Reg-Offset-SP -3
+caput lab{1}Chan3:Error-Offset-SP -4 
+
+caput lab{1}Chan3:DAC_Gain-SP 1.000
+caput lab{1}Chan3:DAC_Offset-SP 0 
+
+
+
+caput lab{1}Chan4:OVC1_Flt_Threshold-SP 10000
+caput lab{1}Chan4:OVC2_Flt_Threshold-SP 10001
+caput lab{1}Chan4:OVV_Flt_Threshold-SP 10002
+caput lab{1}Chan4:ERR1_Flt_Threshold-SP 10003
+caput lab{1}Chan4:ERR2_Flt_Threshold-SP 10004
+caput lab{1}Chan4:IGND_Flt_Threshold-SP 10005
+
+caput lab{1}Chan4:OVC1_Flt_CntLim-SP 30000
+caput lab{1}Chan4:OVC2_Flt_CntLim-SP 30001
+caput lab{1}Chan4:OVV_Flt_CntLim-SP 30002
+caput lab{1}Chan4:ERR1_Flt_CntLim-SP 30003
+caput lab{1}Chan4:ERR2_Flt_CntLim-SP 30004
+caput lab{1}Chan4:IGND_Flt_CntLim-SP 30005
+caput lab{1}Chan4:DCCT_Flt_CntLim-SP 30006
+caput lab{1}Chan4:FLT1_Flt_CntLim-SP 30007
+caput lab{1}Chan4:FLT2_Flt_CntLim-SP 30008
+caput lab{1}Chan4:FLT3_Flt_CntLim-SP 30009
+caput lab{1}Chan4:ON_Flt_CntLim-SP 30010
+caput lab{1}Chan4:HeartBeat_Flt_CntLim-SP 30011
+
+caput lab{1}Chan4:DCCT1-Gain-SP 1.00008 
+caput lab{1}Chan4:DCCT2-Gain-SP .99998 
+caput lab{1}Chan4:DAC-Gain-SP 1.0007 
+caput lab{1}Chan4:Gnd-Gain-SP 1.00009 
+caput lab{1}Chan4:Volt-Gain-SP 1.00010 
+caput lab{1}Chan4:Spare-Gain-SP .999987 
+caput lab{1}Chan4:Reg-Gain-SP 1.00000
+caput lab{1}Chan4:Error-Gain-SP 1.00002 
+caput lab{1}Chan4:DCCT1-Offset-SP 1 
+caput lab{1}Chan4:DCCT2-Offset-SP 2  
+caput lab{1}Chan4:DAC-Offset-SP 3 
+caput lab{1}Chan4:Gnd-Offset-SP 4 
+caput lab{1}Chan4:Volt-Offset-SP -1 
+caput lab{1}Chan4:Spare-Offset-SP -2 
+caput lab{1}Chan4:Reg-Offset-SP -3
+caput lab{1}Chan4:Error-Offset-SP -4 
+
+caput lab{1}Chan4:DAC_Gain-SP 1.000
+caput lab{1}Chan4:DAC_Offset-SP 0 
+
+
+
+
+

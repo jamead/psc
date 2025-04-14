@@ -166,6 +166,8 @@ fault_params.ps1.flt3_cntlim <= reg_o.ps1_flt3_cntlim.val.data;
 fault_params.ps1.on_cntlim <= reg_o.ps1_on_cntlim.val.data;
 fault_params.ps1.heart_cntlim <= reg_o.ps1_heartbeat_cntlim.val.data;
 
+reg_i.ps1_faults_live.val.data <= fault_stat.ps1.live;
+reg_i.ps1_faults_lat.val.data <= fault_stat.ps1.lat;
 
 
 
@@ -246,7 +248,8 @@ fault_params.ps2.flt3_cntlim <= reg_o.ps2_flt3_cntlim.val.data;
 fault_params.ps2.on_cntlim <= reg_o.ps2_on_cntlim.val.data;
 fault_params.ps2.heart_cntlim <= reg_o.ps2_heartbeat_cntlim.val.data;
 
-
+reg_i.ps2_faults_live.val.data <= fault_stat.ps2.live;
+reg_i.ps2_faults_lat.val.data <= fault_stat.ps2.lat;
 
 
 
@@ -330,8 +333,8 @@ fault_params.ps3.flt3_cntlim <= reg_o.ps3_flt3_cntlim.val.data;
 fault_params.ps3.on_cntlim <= reg_o.ps3_on_cntlim.val.data;
 fault_params.ps3.heart_cntlim <= reg_o.ps3_heartbeat_cntlim.val.data;
 
-
-
+reg_i.ps3_faults_live.val.data <= fault_stat.ps3.live;
+reg_i.ps3_faults_lat.val.data <= fault_stat.ps3.lat;
 
 
 
@@ -418,6 +421,8 @@ fault_params.ps4.flt3_cntlim <= reg_o.ps4_flt3_cntlim.val.data;
 fault_params.ps4.on_cntlim <= reg_o.ps4_on_cntlim.val.data;
 fault_params.ps4.heart_cntlim <= reg_o.ps4_heartbeat_cntlim.val.data;
 
+reg_i.ps4_faults_live.val.data <= fault_stat.ps4.live;
+reg_i.ps4_faults_lat.val.data <= fault_stat.ps4.lat;
 
 
 

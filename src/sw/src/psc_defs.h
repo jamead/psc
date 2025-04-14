@@ -1,6 +1,8 @@
 
 #define GAIN20BITFRACT 1048575.0
 
+
+
 //DAC modes
 #define SMOOTH  0
 #define RAMP    1

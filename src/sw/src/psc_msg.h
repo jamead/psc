@@ -11,7 +11,7 @@
 //#define MSGID31 31
 //#define MSGID31LEN 1024  //316   //in bytes
 #define MSGSTAT10Hz 31
-#define MSGSTAT10HzLEN 4096  //316   //in bytes
+#define MSGSTAT10HzLEN 5000  //316   //in bytes
 
 
 
@@ -95,7 +95,35 @@ typedef struct SAdataChan {
 	float error_gain;
     s32 dac_rdbk;
     s32 dac_rampactive;
-    u32 rsvd[24];
+    u32 ovc1_thresh;
+    u32 ovc2_thresh;
+    u32 ovv_thresh;
+    u32 err1_thresh;
+    u32 err2_thresh;
+    u32 ignd_thresh;
+    u32 ovc1_cntlim;
+    u32 ovc2_cntlim;
+    u32 ovv_cntlim;
+    u32 err1_cntlim;
+    u32 err2_cntlim;
+    u32 ignd_cntlim;
+    u32 dcct_cntlim;
+    u32 flt1_cntlim;
+    u32 flt2_cntlim;
+    u32 flt3_cntlim;
+    u32 on_cntlim;
+    u32 heartbeat_cntlim;
+    u32 fault_clear;
+    u32 fault_mask;
+    u32 digout_on1;
+    u32 digout_on2;
+    u32 digout_reset;
+    u32 digout_spare;
+    u32 digout_park;
+    u32 digin;
+    u32 faults_live;
+    u32 faults_latched;
+    u32 rsvd[21];
 } SAdataChan;
 
 
@@ -191,18 +219,59 @@ typedef struct SysHealthMsg {
 #define TEST_TRIG_MSG 4
 #define FP_LED_MSG 8
 
+#define DAC_OPMODE_MSG   100
+#define DAC_SETPT_MSG    104
+#define DAC_RUNRAMP_MSG  108
+#define DAC_RAMPLEN_MSG  112
+#define DAC_GAIN_MSG     116
+#define DAC_OFFSET_MSG   120
 
-#define DAC_OPMODE_MSG 100
-#define DAC_SETPT_MSG 104
-#define DAC_RUNRAMP_MSG 108
-#define DAC_RAMPLEN_MSG 112
-#define DAC_GAIN_MSG 116
-#define DAC_OFFSET_MSG 120
+#define DCCT1_OFFSET_MSG 124
+#define DCCT1_GAIN_MSG   128
+#define DCCT2_OFFSET_MSG 132
+#define DCCT2_GAIN_MSG   136
+#define DACSP_OFFSET_MSG 140
+#define DACSP_GAIN_MSG   144
+#define VOLT_OFFSET_MSG  148
+#define VOLT_GAIN_MSG    152
+#define GND_OFFSET_MSG   156
+#define GND_GAIN_MSG     160
+#define SPARE_OFFSET_MSG 164
+#define SPARE_GAIN_MSG   168
+#define REG_OFFSET_MSG   172
+#define REG_GAIN_MSG     176
+#define ERR_OFFSET_MSG   180
+#define ERR_GAIN_MSG     184
 
-#define DCCT1_GAIN_MSG 140
-#define DCCT1_OFFSET_MSG 144
-#define DCCT2_GAIN_MSG 148
-#define DCCT2_OFFSET_MSG 152
+#define OVC1_THRESH_MSG  188
+#define OVC2_THRESH_MSG  192
+#define OVV_THRESH_MSG   196
+#define ERR1_THRESH_MSG  200
+#define ERR2_THRESH_MSG  204
+#define IGND_THRESH_MSG  208
+#define OVC1_CNTLIM_MSG  212
+#define OVC2_CNTLIM_MSG  216
+#define OVV_CNTLIM_MSG   220
+#define ERR1_CNTLIM_MSG  224
+#define ERR2_CNTLIM_MSG  228
+#define IGND_CNTLIM_MSG  232
+#define DCCT_CNTLIM_MSG  236
+#define FLT1_CNTLIM_MSG  240
+#define FLT2_CNTLIM_MSG  244
+#define FLT3_CNTLIM_MSG  248
+#define ON_CNTLIM_MSG    252
+#define HEART_CNTLIM_MSG 256
+#define FAULT_CLEAR_MSG  260
+#define FAULT_MASK_MSG   264
+#define DIGOUT_ON1_MSG   268
+#define DIGOUT_ON2_MSG   272
+#define DIGOUT_RESET_MSG 276
+#define DIGOUT_SPARE_MSG 280
+#define DIGOUT_PARK_MSG  284
+
+
+
+
 
 
 /*
