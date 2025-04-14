@@ -358,13 +358,27 @@ record(longout, "$(P){$(NO)}Chan$(CHAN):HeartBeat_Flt_CntLim-SP") {
     field(FLNK, "$(P){$(NO)}GoRegSingleWrite$(CHAN)")
 }
 
-record(longout, "$(P){$(NO)}Chan$(CHAN):FaultClear-SP") {
+record(bo, "$(P){$(NO)}Chan$(CHAN):FaultClear-SP") {
     field(DESC, "Fault Clear")
-    field(DTYP, "PSC Single I32")   
+    field(DTYP, "PSC Single U32")   
     field(OUT , "@Tx$(NO) $(CHAN) 260")
-    info(autosaveFields, "VAL")
     field(FLNK, "$(P){$(NO)}GoRegSingleWrite$(CHAN)")
+    field(HIGH,".01")    #500 ms after low
 }
+
+#record(bo, "$(P){$(NO)}Chan$(CHAN):DAC_RampRun-SP") {
+#    field(DESC, "DAC Run the Ramp Table")
+#    field(DTYP, "PSC Single U32")
+#    field(OUT , "@Tx$(NO) $(CHAN) 108")
+
+#    field(FLNK, "$(P){$(NO)}GoRegSingleWrite$(CHAN)")
+#    field(HIGH,".01")    #500 ms after low
+#}
+
+
+
+
+
 
 record(longout, "$(P){$(NO)}Chan$(CHAN):FaultMask-SP") {
     field(DESC, "Fault 3 Fault Counter Limit")

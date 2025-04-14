@@ -35,9 +35,21 @@ caput lab{1}Chan1:Spare-Offset-SP -2
 caput lab{1}Chan1:Reg-Offset-SP -3
 caput lab{1}Chan1:Error-Offset-SP -4 
 
+
+caput lab{1}Chan1:DigOut_ON1-SP 0
+caput lab{1}Chan1:DigOut_ON2-SP 0
+caput lab{1}Chan1:DigOut_Reset-SP 0
+caput lab{1}Chan1:DigOut_Park-SP 0
+
+caput lab{1}Chan1:DAC_OpMode-SP 0
+caput lab{1}Chan1:DAC_SetPt-SP 0
 caput lab{1}Chan1:DAC_Gain-SP 1.000
 caput lab{1}Chan1:DAC_Offset-SP 0 
+caput lab{1}Chan1:DAC_RampLen-SP 45000
+caput lab{1}Chan1:DAC_RampRun-SP 0
 
+caput lab{1}Chan1:FaultClear-SP 0
+caput lab{1}Chan1:FaultMask-SP 0
 
 caput lab{1}Chan2:OVC1_Flt_Threshold-SP 10000
 caput lab{1}Chan2:OVC2_Flt_Threshold-SP 10001
@@ -76,8 +88,22 @@ caput lab{1}Chan2:Spare-Offset-SP -2
 caput lab{1}Chan2:Reg-Offset-SP -3
 caput lab{1}Chan2:Error-Offset-SP -4 
 
+caput lab{1}Chan2:DigOut_ON1-SP 0
+caput lab{1}Chan2:DigOut_ON2-SP 0
+caput lab{1}Chan2:DigOut_Reset-SP 0
+caput lab{1}Chan2:DigOut_Park-SP 0
+
+caput lab{1}Chan2:DAC_OpMode-SP 0
+caput lab{1}Chan2:DAC_SetPt-SP 0
 caput lab{1}Chan2:DAC_Gain-SP 1.000
 caput lab{1}Chan2:DAC_Offset-SP 0 
+caput lab{1}Chan2:DAC_RampLen-SP 45000
+caput lab{1}Chan2:DAC_RampRun-SP 0
+
+caput lab{1}Chan2:FaultClear-SP 0
+caput lab{1}Chan2:FaultMask-SP 0
+
+
 
 
 
@@ -118,9 +144,20 @@ caput lab{1}Chan3:Spare-Offset-SP -2
 caput lab{1}Chan3:Reg-Offset-SP -3
 caput lab{1}Chan3:Error-Offset-SP -4 
 
+caput lab{1}Chan3:DigOut_ON1-SP 0
+caput lab{1}Chan3:DigOut_ON2-SP 0
+caput lab{1}Chan3:DigOut_Reset-SP 0
+caput lab{1}Chan3:DigOut_Park-SP 0
+
+caput lab{1}Chan3:DAC_OpMode-SP 0
+caput lab{1}Chan3:DAC_SetPt-SP 0
 caput lab{1}Chan3:DAC_Gain-SP 1.000
 caput lab{1}Chan3:DAC_Offset-SP 0 
+caput lab{1}Chan3:DAC_RampLen-SP 45000
+caput lab{1}Chan3:DAC_RampRun-SP 0
 
+caput lab{1}Chan3:FaultClear-SP 0
+caput lab{1}Chan3:FaultMask-SP 0
 
 
 caput lab{1}Chan4:OVC1_Flt_Threshold-SP 10000
@@ -160,9 +197,20 @@ caput lab{1}Chan4:Spare-Offset-SP -2
 caput lab{1}Chan4:Reg-Offset-SP -3
 caput lab{1}Chan4:Error-Offset-SP -4 
 
+caput lab{1}Chan4:DigOut_ON1-SP 0
+caput lab{1}Chan4:DigOut_ON2-SP 0
+caput lab{1}Chan4:DigOut_Reset-SP 0
+caput lab{1}Chan4:DigOut_Park-SP 0
+
+caput lab{1}Chan4:DAC_OpMode-SP 0
+caput lab{1}Chan4:DAC_SetPt-SP 0
 caput lab{1}Chan4:DAC_Gain-SP 1.000
 caput lab{1}Chan4:DAC_Offset-SP 0 
+caput lab{1}Chan4:DAC_RampLen-SP 45000
+caput lab{1}Chan4:DAC_RampRun-SP 0
 
+caput lab{1}Chan4:FaultClear-SP 0
+caput lab{1}Chan4:FaultMask-SP 0
 
 
 
