@@ -43,7 +43,7 @@ port map(
         DCCT2_in          => std_logic_vector(dcct_adcs.ps1.dcct1),   
 
 		--8 Channel raw ADC inputs
-		DAC_SP_in         => std_logic_vector(mon_adcs.ps1.dac_sp),  
+		DAC_SP_in         => std_logic_vector(mon_adcs.ps1.dacmon),  
 		VOLT_MON_in       => std_logic_vector(mon_adcs.ps1.voltage),  
 		GND_MON_in        => std_logic_vector(mon_adcs.ps1.ignd),  
 		SPARE_MON_in      => std_logic_vector(mon_adcs.ps1.spare), 
@@ -79,7 +79,7 @@ port map(
         DCCT2_in          => std_logic_vector(dcct_adcs.ps2.dcct1),   
 
 		--8 Channel raw ADC inputs
-		DAC_SP_in         => std_logic_vector(mon_adcs.ps2.dac_sp),  
+		DAC_SP_in         => std_logic_vector(mon_adcs.ps2.dacmon),  
 		VOLT_MON_in       => std_logic_vector(mon_adcs.ps2.voltage),  
 		GND_MON_in        => std_logic_vector(mon_adcs.ps2.ignd),  
 		SPARE_MON_in      => std_logic_vector(mon_adcs.ps2.spare), 
@@ -115,7 +115,7 @@ port map(
         DCCT2_in          => std_logic_vector(dcct_adcs.ps3.dcct1),   
 
 		--8 Channel raw ADC inputs
-		DAC_SP_in         => std_logic_vector(mon_adcs.ps3.dac_sp),  
+		DAC_SP_in         => std_logic_vector(mon_adcs.ps3.dacmon),  
 		VOLT_MON_in       => std_logic_vector(mon_adcs.ps3.voltage),  
 		GND_MON_in        => std_logic_vector(mon_adcs.ps3.ignd),  
 		SPARE_MON_in      => std_logic_vector(mon_adcs.ps3.spare), 
@@ -152,7 +152,7 @@ port map(
         DCCT2_in          => std_logic_vector(dcct_adcs.ps4.dcct1),   
 
 		--8 Channel raw ADC inputs
-		DAC_SP_in         => std_logic_vector(mon_adcs.ps4.dac_sp),  
+		DAC_SP_in         => std_logic_vector(mon_adcs.ps4.dacmon),  
 		VOLT_MON_in       => std_logic_vector(mon_adcs.ps4.voltage),  
 		GND_MON_in        => std_logic_vector(mon_adcs.ps4.ignd),  
 		SPARE_MON_in      => std_logic_vector(mon_adcs.ps4.spare), 

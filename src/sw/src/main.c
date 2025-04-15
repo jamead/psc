@@ -286,7 +286,7 @@ void InitGainsOffsets() {
        base = XPAR_M_AXI_BASEADDR + (chan + 1) * CHBASEADDR;
        Xil_Out32(base + DCCT1_OFFSET_REG, offset_dcct0);
        Xil_Out32(base + DCCT2_OFFSET_REG, offset_dcct1);
-       Xil_Out32(base + DACSP_OFFSET_REG, offset_dacsp);
+       Xil_Out32(base + DACMON_OFFSET_REG, offset_dacsp);
        Xil_Out32(base + VOLT_OFFSET_REG, offset_volt);
        Xil_Out32(base + GND_OFFSET_REG, offset_gnd);
        Xil_Out32(base + SPARE_OFFSET_REG, offset_spare);
@@ -294,7 +294,7 @@ void InitGainsOffsets() {
        Xil_Out32(base + ERR_OFFSET_REG, offset_err);
        Xil_Out32(base + DCCT1_GAIN_REG, gain_dcct0 * GAIN20BITFRACT);
        Xil_Out32(base + DCCT2_GAIN_REG, gain_dcct1 * GAIN20BITFRACT);
-       Xil_Out32(base + DACSP_GAIN_REG, gain_dacsp * GAIN20BITFRACT);
+       Xil_Out32(base + DACMON_GAIN_REG, gain_dacsp * GAIN20BITFRACT);
        Xil_Out32(base + VOLT_GAIN_REG, gain_volt * GAIN20BITFRACT);
        Xil_Out32(base + GND_GAIN_REG, gain_gnd * GAIN20BITFRACT);
        Xil_Out32(base + SPARE_GAIN_REG, gain_spare * GAIN20BITFRACT);

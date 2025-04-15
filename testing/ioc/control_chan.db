@@ -68,16 +68,16 @@ record(longout, "$(P){$(NO)}Chan$(CHAN):DAC_RampLen-SP") {
     field(FLNK, "$(P){$(NO)}GoRegSingleWrite$(CHAN)")
 }
 
-record(longout, "$(P){$(NO)}Chan$(CHAN):DAC_Gain-SP") {
-    field(DESC, "DAC RampLength ")
-    field(DTYP, "PSC Single I32")
+record(ao, "$(P){$(NO)}Chan$(CHAN):DACSetPt-Gain-SP") {
+    field(DESC, "DAC SetPoint Gain ")
+    field(DTYP, "PSC Single F32")
     field(OUT , "@Tx$(NO) $(CHAN) 116")
     info(autosaveFields, "VAL")
     field(FLNK, "$(P){$(NO)}GoRegSingleWrite$(CHAN)")
 }
 
-record(longout, "$(P){$(NO)}Chan$(CHAN):DAC_Offset-SP") {
-    field(DESC, "DAC RampLength ")
+record(longout, "$(P){$(NO)}Chan$(CHAN):DACSetPt-Offset-SP") {
+    field(DESC, "DAC SetPoint Offset ")
     field(DTYP, "PSC Single I32")
     field(OUT , "@Tx$(NO) $(CHAN) 120")
     info(autosaveFields, "VAL")

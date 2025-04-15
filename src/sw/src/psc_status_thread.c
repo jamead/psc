@@ -155,15 +155,16 @@ void ReadSAData(char *msg) {
 
     for (chan=0; chan<4; chan++) {
        base = XPAR_M_AXI_BASEADDR + (chan + 1) * CHBASEADDR;
+       //ADC's
        sadata.ps[chan].dcct1 = Xil_In32(base + DCCT1_REG);
        sadata.ps[chan].dcct1_offset = Xil_In32(base + DCCT1_OFFSET_REG);
        sadata.ps[chan].dcct1_gain = Xil_In32(base + DCCT1_GAIN_REG) / GAIN20BITFRACT;
        sadata.ps[chan].dcct2 = Xil_In32(base + DCCT2_REG);
        sadata.ps[chan].dcct2_offset = Xil_In32(base + DCCT2_OFFSET_REG);
        sadata.ps[chan].dcct2_gain = Xil_In32(base + DCCT2_GAIN_REG) / GAIN20BITFRACT;
-       sadata.ps[chan].dacsp = Xil_In32(base + DACSP_REG);
-       sadata.ps[chan].dacsp_offset = Xil_In32(base + DACSP_OFFSET_REG);
-       sadata.ps[chan].dacsp_gain = Xil_In32(base + DACSP_GAIN_REG) / GAIN20BITFRACT;
+       sadata.ps[chan].dacmon = Xil_In32(base + DACMON_REG);
+       sadata.ps[chan].dacmon_offset = Xil_In32(base + DACMON_OFFSET_REG);
+       sadata.ps[chan].dacmon_gain = Xil_In32(base + DACMON_GAIN_REG) / GAIN20BITFRACT;
        sadata.ps[chan].volt = Xil_In32(base + VOLT_REG);
        sadata.ps[chan].volt_offset = Xil_In32(base + VOLT_OFFSET_REG);
        sadata.ps[chan].volt_gain = Xil_In32(base + VOLT_GAIN_REG) / GAIN20BITFRACT;
@@ -179,9 +180,16 @@ void ReadSAData(char *msg) {
        sadata.ps[chan].error = Xil_In32(base + ERR_REG);
        sadata.ps[chan].error_offset = Xil_In32(base + ERR_OFFSET_REG);
        sadata.ps[chan].error_gain = Xil_In32(base + ERR_GAIN_REG) / GAIN20BITFRACT;
-       sadata.ps[chan].dac_rdbk = Xil_In32(base + DAC_CURRSETPT_REG);
+
+       //DAC
+       sadata.ps[chan].dac_setpt = Xil_In32(base + DAC_CURRSETPT_REG);
+       sadata.ps[chan].dac_setpt_offset = Xil_In32(base + DAC_SETPT_OFFSET_REG);
+       sadata.ps[chan].dac_setpt_gain = Xil_In32(base + DAC_SETPT_GAIN_REG) / GAIN20BITFRACT;
+       printf("Chan: %d   DAC Gain: %f\r\n",chan,sadata.ps[chan].dac_setpt_gain);
        sadata.ps[chan].dac_rampactive = Xil_In32(base + DAC_RAMPACTIVE_REG);
 
+
+       //Faults
        sadata.ps[chan].ovc1_thresh = Xil_In32(base + OVC1_THRESH_REG);
        sadata.ps[chan].ovc2_thresh = Xil_In32(base + OVC2_THRESH_REG);
        sadata.ps[chan].ovv_thresh = Xil_In32(base + OVV_THRESH_REG);

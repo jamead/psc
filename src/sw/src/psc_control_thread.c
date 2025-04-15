@@ -210,14 +210,14 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RUNRAMP_REG + chan*CHBASEADDR, data.u);
 	        break;
 
-        case DAC_GAIN_MSG:
-	        printf("Setting DAC CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
-	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_GAIN_REG + chan*CHBASEADDR, data.f);
+        case DAC_SETPT_GAIN_MSG:
+	        printf("Setting DAC SetPt CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
+	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_SETPT_GAIN_REG + chan*CHBASEADDR, data.f);
 	        break;
 
-        case DAC_OFFSET_MSG:
-	        xil_printf("Setting DAC CH%d Offset:   Value=%d\r\n",chan,data.i);
-	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_OFFSET_REG + chan*CHBASEADDR, data.i);
+        case DAC_SETPT_OFFSET_MSG:
+	        xil_printf("Setting DAC SetPt CH%d Offset:   Value=%d\r\n",chan,data.i);
+	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_SETPT_OFFSET_REG + chan*CHBASEADDR, data.i);
 	        break;
 
         case DCCT1_GAIN_MSG:
@@ -240,14 +240,14 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
   	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT2_OFFSET_REG + chan*CHBASEADDR, data.i);
   	        break;
 
-        case DACSP_GAIN_MSG:
-  	        printf("Setting DACSP CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
-  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DACSP_GAIN_REG + chan*CHBASEADDR, data.f*GAIN20BITFRACT);
+        case DACMON_GAIN_MSG:
+  	        printf("Setting DAC Mon CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DACMON_GAIN_REG + chan*CHBASEADDR, data.f*GAIN20BITFRACT);
   	        break;
 
-        case DACSP_OFFSET_MSG:
-  	        xil_printf("Setting DACSP CH%d Offset:   Value=%d\r\n",chan,data.i);
-  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DACSP_OFFSET_REG + chan*CHBASEADDR, data.i);
+        case DACMON_OFFSET_MSG:
+  	        xil_printf("Setting DAC Mon CH%d Offset:   Value=%d\r\n",chan,data.i);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DACMON_OFFSET_REG + chan*CHBASEADDR, data.i);
   	        break;
 
         case VOLT_GAIN_MSG:

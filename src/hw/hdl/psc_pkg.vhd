@@ -128,9 +128,9 @@ end record;
 
 -- Monitor ADC record types
 type t_mon_adcs_onech is record
-  dac_sp_raw    : signed(15 downto 0);
-  dac_sp_oc     : signed(15 downto 0);
-  dac_sp        : signed(15 downto 0);
+  dacmon_raw    : signed(15 downto 0);
+  dacmon_oc     : signed(15 downto 0);
+  dacmon        : signed(15 downto 0);
   voltage_raw   : signed(15 downto 0);  
   voltage_oc    : signed(15 downto 0);  
   voltage       : signed(15 downto 0);
@@ -157,8 +157,8 @@ end record;
 
 
 type t_mon_adcs_params_onech is record 
-  dac_sp_offset    : signed(15 downto 0);
-  dac_sp_gain      : signed(23 downto 0);    
+  dacmon_offset    : signed(15 downto 0);
+  dacmon_gain      : signed(23 downto 0);    
   voltage_offset   : signed(15 downto 0);
   voltage_gain     : signed(23 downto 0); 
   ignd_offset      : signed(15 downto 0);

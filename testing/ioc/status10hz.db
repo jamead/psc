@@ -236,10 +236,27 @@ record(longin, "$(P){$(NO)}Chan1:DACSetPt-I") {
     field(EGU,  "")
 }
 
+record(longin, "$(P){$(NO)}Chan1:DACSetPt-Offset-I") {
+    field(DESC, "DAC SetPoint Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 200")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan1:DACSetPt-Gain-I") {
+    field(DESC, "DAC SetPoint Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 204")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
 record(longin, "$(P){$(NO)}Chan1:DACRampActive-I") {
     field(DESC, "DAC SetPoint Readback")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 200")
+    field(INP , "@Rx$(NO) 31 208")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -248,7 +265,7 @@ record(longin, "$(P){$(NO)}Chan1:DACRampActive-I") {
 record(longin, "$(P){$(NO)}Chan1:OVC1_Flt_Threshold-I") {
     field(DESC, "DCCT1 OVC Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 204")
+    field(INP , "@Rx$(NO) 31 212")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -256,7 +273,7 @@ record(longin, "$(P){$(NO)}Chan1:OVC1_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan1:OVC2_Flt_Threshold-I") {
     field(DESC, "DCCT2 OVC Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 208")
+    field(INP , "@Rx$(NO) 31 216")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -264,7 +281,7 @@ record(longin, "$(P){$(NO)}Chan1:OVC2_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan1:OVV_Flt_Threshold-I") {
     field(DESC, "OVV Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 212")
+    field(INP , "@Rx$(NO) 31 220")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -272,7 +289,7 @@ record(longin, "$(P){$(NO)}Chan1:OVV_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan1:ERR1_Flt_Threshold-I") {
     field(DESC, "ERR1 Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 216")
+    field(INP , "@Rx$(NO) 31 224")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -280,7 +297,7 @@ record(longin, "$(P){$(NO)}Chan1:ERR1_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan1:ERR2_Flt_Threshold-I") {
     field(DESC, "ERR2 Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 220")
+    field(INP , "@Rx$(NO) 31 228")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -288,7 +305,7 @@ record(longin, "$(P){$(NO)}Chan1:ERR2_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan1:IGND_Flt_Threshold-I") {
     field(DESC, "Ignd Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 224")
+    field(INP , "@Rx$(NO) 31 232")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -296,7 +313,7 @@ record(longin, "$(P){$(NO)}Chan1:IGND_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan1:OVC1_Flt_CntLim-I") {
     field(DESC, "DCCT1 OVC Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 228")
+    field(INP , "@Rx$(NO) 31 236")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -304,7 +321,7 @@ record(longin, "$(P){$(NO)}Chan1:OVC1_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan1:OVC2_Flt_CntLim-I") {
     field(DESC, "DCCT2 OVC Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 232")
+    field(INP , "@Rx$(NO) 31 240")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -312,7 +329,7 @@ record(longin, "$(P){$(NO)}Chan1:OVC2_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan1:OVV_Flt_CntLim-I") {
     field(DESC, "OVV Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 236")
+    field(INP , "@Rx$(NO) 31 244")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -320,7 +337,7 @@ record(longin, "$(P){$(NO)}Chan1:OVV_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan1:ERR1_Flt_CntLim-I") {
     field(DESC, "PID Error 1 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 240")
+    field(INP , "@Rx$(NO) 31 248")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -328,7 +345,7 @@ record(longin, "$(P){$(NO)}Chan1:ERR1_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan1:ERR2_Flt_CntLim-I") {
     field(DESC, "PID Error 2  Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 244")
+    field(INP , "@Rx$(NO) 31 252")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -336,7 +353,7 @@ record(longin, "$(P){$(NO)}Chan1:ERR2_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan1:IGND_Flt_CntLim-I") {
     field(DESC, "Ignd Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 248")
+    field(INP , "@Rx$(NO) 31 256")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -344,7 +361,7 @@ record(longin, "$(P){$(NO)}Chan1:IGND_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan1:DCCT_Flt_CntLim-I") {
     field(DESC, "DCCT Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 252")
+    field(INP , "@Rx$(NO) 31 260")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -352,7 +369,7 @@ record(longin, "$(P){$(NO)}Chan1:DCCT_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan1:FLT1_Flt_CntLim-I") {
     field(DESC, "Fault 1 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 256")
+    field(INP , "@Rx$(NO) 31 264")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -360,7 +377,7 @@ record(longin, "$(P){$(NO)}Chan1:FLT1_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan1:FLT2_Flt_CntLim-I") {
     field(DESC, "Fault 2 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 260")
+    field(INP , "@Rx$(NO) 31 268")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -368,7 +385,7 @@ record(longin, "$(P){$(NO)}Chan1:FLT2_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan1:FLT3_Flt_CntLim-I") {
     field(DESC, "Fault 3 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 264")
+    field(INP , "@Rx$(NO) 31 272")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -376,7 +393,7 @@ record(longin, "$(P){$(NO)}Chan1:FLT3_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan1:ON_Flt_CntLim-I") {
     field(DESC, "PowerSupply ON Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 268")
+    field(INP , "@Rx$(NO) 31 276")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -384,7 +401,7 @@ record(longin, "$(P){$(NO)}Chan1:ON_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan1:HeartBeat_Flt_CntLim-I") {
     field(DESC, "HeartBeat Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 272")
+    field(INP , "@Rx$(NO) 31 280")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -392,7 +409,7 @@ record(longin, "$(P){$(NO)}Chan1:HeartBeat_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan1:FaultClear-I") {
     field(DESC, "Fault Clear")
     field(DTYP, "PSC Reg")   
-    field(INP , "@Rx$(NO) 31 276")
+    field(INP , "@Rx$(NO) 31 284")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -400,7 +417,7 @@ record(longin, "$(P){$(NO)}Chan1:FaultClear-I") {
 record(longin, "$(P){$(NO)}Chan1:FaultMask-I") {
     field(DESC, "Fault 3 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 280")
+    field(INP , "@Rx$(NO) 31 288")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -408,7 +425,7 @@ record(longin, "$(P){$(NO)}Chan1:FaultMask-I") {
 record(longin, "$(P){$(NO)}Chan1:DigOut_ON1-I") {
     field(DESC, "Digital Output ON1")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 284")
+    field(INP , "@Rx$(NO) 31 292")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -416,7 +433,7 @@ record(longin, "$(P){$(NO)}Chan1:DigOut_ON1-I") {
 record(longin, "$(P){$(NO)}Chan1:DigOut_ON2-I") {
     field(DESC, "Digital Output ON2")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 288")
+    field(INP , "@Rx$(NO) 31 296")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -425,7 +442,7 @@ record(longin, "$(P){$(NO)}Chan1:DigOut_ON2-I") {
 record(longin, "$(P){$(NO)}Chan1:DigOut_Reset-I") {
     field(DESC, "Digital Output Reset")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 292")
+    field(INP , "@Rx$(NO) 31 300")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -433,7 +450,7 @@ record(longin, "$(P){$(NO)}Chan1:DigOut_Reset-I") {
 record(longin, "$(P){$(NO)}Chan1:DigOut_Spare-I") {
     field(DESC, "Digital Output Spare")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 296")
+    field(INP , "@Rx$(NO) 31 304")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -441,109 +458,32 @@ record(longin, "$(P){$(NO)}Chan1:DigOut_Spare-I") {
 record(longin, "$(P){$(NO)}Chan1:DigOut_Park-I") {
     field(DESC, "Digital Output Park")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 300")
+    field(INP , "@Rx$(NO) 31 308")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}Chan1:DigIn-I") {
+record(mbbiDirect, "$(P){$(NO)}Chan1:DigIn-I") {
     field(DESC, "Digital Input Bits")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 304")
+    field(INP , "@Rx$(NO) 31 312")
     field(SCAN,"I/O Intr")
-    field(EGU,  "")
-    field(FLNK, "$(P){$(NO)}Chan1:DigIn-Fanout")  
 }
 
-record(seq, "$(P){$(NO)}Chan1:DigIn-Fanout") {
-    field(DOL1, "1")
-    field(LNK1, "$(P){$(NO)}Chan1:DigIn-Bit0")
-    field(DOL2, "1")
-    field(LNK2, "$(P){$(NO)}Chan1:DigIn-Bit1")
-    field(DOL3, "1")
-    field(LNK3, "$(P){$(NO)}Chan1:DigIn-Bit2")
-    field(DOL4, "1")
-    field(LNK4, "$(P){$(NO)}Chan1:DigIn-Bit3")
-    field(DOL5, "1")
-    field(LNK5, "$(P){$(NO)}Chan1:DigIn-Bit4")
-    field(SCAN, "Passive")
-}
-
-record(calc, "$(P){$(NO)}Chan1:DigIn-Bit0") {
-    field(INPA, "$(P){$(NO)}Chan1:DigIn-I.VAL NPP NMS")
-    field(CALC, "A & 1")
-    field(SCAN, "Passive")
-}
-
-record(calc, "$(P){$(NO)}Chan1:DigIn-Bit1") {
-    field(INPA, "$(P){$(NO)}Chan1:DigIn-Raw.VAL NPP NMS")
-    field(CALC, "(A & 2) >> 1")
-    field(SCAN, "Passive")
-}
-
-record(calc, "$(P){$(NO)}Chan1:DigIn-Bit2") {
-    field(INPA, "$(P){$(NO)}Chan1:DigIn-Raw.VAL NPP NMS")
-    field(CALC, "(A & 4) >> 2")
-    field(SCAN, "Passive")
-}
-
-record(calc, "$(P){$(NO)}Chan1:DigIn-Bit3") {
-    field(INPA, "$(P){$(NO)}Chan1:DigIn-Raw.VAL NPP NMS")
-    field(CALC, "(A & 8) >> 3")
-    field(SCAN, "Passive")
-}
-
-record(calc, "$(P){$(NO)}Chan1:DigIn-Bit4") {
-    field(INPA, "$(P){$(NO)}Chan1:DigIn-Raw.VAL NPP NMS")
-    field(CALC, "(A & 16) >> 4")
-    field(SCAN, "Passive")
-}
-
-
-
-record(longin, "$(P){$(NO)}Chan1:FaultsLive-I") {
+record(mbbiDirect, "$(P){$(NO)}Chan1:FaultsLive-I") {
     field(DESC, "PS1 Live Faults")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 308")
+    field(INP , "@Rx$(NO) 31 316")
     field(SCAN, "I/O Intr")
 }
 
-record(calc, "$(P){$(NO)}Chan1:FaultsLive_B0")  { field(DESC, "Fault Bit 0")  field(INPA, "$(P){$(NO)}Chan1:FaultsLive-I") field(CALC, "(A>>0)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLive_B1")  { field(DESC, "Fault Bit 1")  field(INPA, "$(P){$(NO)}Chan1:FaultsLive-I") field(CALC, "(A>>1)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLive_B2")  { field(DESC, "Fault Bit 2")  field(INPA, "$(P){$(NO)}Chan1:FaultsLive-I") field(CALC, "(A>>2)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLive_B3")  { field(DESC, "Fault Bit 3")  field(INPA, "$(P){$(NO)}Chan1:FaultsLive-I") field(CALC, "(A>>3)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLive_B4")  { field(DESC, "Fault Bit 4")  field(INPA, "$(P){$(NO)}Chan1:FaultsLive-I") field(CALC, "(A>>4)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLive_B5")  { field(DESC, "Fault Bit 5")  field(INPA, "$(P){$(NO)}Chan1:FaultsLive-I") field(CALC, "(A>>5)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLive_B6")  { field(DESC, "Fault Bit 6")  field(INPA, "$(P){$(NO)}Chan1:FaultsLive-I") field(CALC, "(A>>6)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLive_B7")  { field(DESC, "Fault Bit 7")  field(INPA, "$(P){$(NO)}Chan1:FaultsLive-I") field(CALC, "(A>>7)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLive_B8")  { field(DESC, "Fault Bit 8")  field(INPA, "$(P){$(NO)}Chan1:FaultsLive-I") field(CALC, "(A>>8)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLive_B9")  { field(DESC, "Fault Bit 9")  field(INPA, "$(P){$(NO)}Chan1:FaultsLive-I") field(CALC, "(A>>9)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLive_B10") { field(DESC, "Fault Bit 10") field(INPA, "$(P){$(NO)}Chan1:FaultsLive-I") field(CALC, "(A>>10)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLive_B11") { field(DESC, "Fault Bit 11") field(INPA, "$(P){$(NO)}Chan1:FaultsLive-I") field(CALC, "(A>>11)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLive_B12") { field(DESC, "Fault Bit 12") field(INPA, "$(P){$(NO)}Chan1:FaultsLive-I") field(CALC, "(A>>12)&1") field(SCAN, ".1 second") }
-
-
-
-record(longin, "$(P){$(NO)}Chan1:FaultsLat-I") {
+record(mbbiDirect, "$(P){$(NO)}Chan1:FaultsLat-I") {
     field(DESC, "PS1 Latched Faults")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 312")
+    field(INP , "@Rx$(NO) 31 320")
     field(SCAN, "I/O Intr")
 }
 
-record(calc, "$(P){$(NO)}Chan1:FaultsLat_B0")  { field(DESC, "Fault Bit 0")  field(INPA, "$(P){$(NO)}Chan1:FaultsLat-I") field(CALC, "(A>>0)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLat_B1")  { field(DESC, "Fault Bit 1")  field(INPA, "$(P){$(NO)}Chan1:FaultsLat-I") field(CALC, "(A>>1)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLat_B2")  { field(DESC, "Fault Bit 2")  field(INPA, "$(P){$(NO)}Chan1:FaultsLat-I") field(CALC, "(A>>2)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLat_B3")  { field(DESC, "Fault Bit 3")  field(INPA, "$(P){$(NO)}Chan1:FaultsLat-I") field(CALC, "(A>>3)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLat_B4")  { field(DESC, "Fault Bit 4")  field(INPA, "$(P){$(NO)}Chan1:FaultsLat-I") field(CALC, "(A>>4)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLat_B5")  { field(DESC, "Fault Bit 5")  field(INPA, "$(P){$(NO)}Chan1:FaultsLat-I") field(CALC, "(A>>5)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLat_B6")  { field(DESC, "Fault Bit 6")  field(INPA, "$(P){$(NO)}Chan1:FaultsLat-I") field(CALC, "(A>>6)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLat_B7")  { field(DESC, "Fault Bit 7")  field(INPA, "$(P){$(NO)}Chan1:FaultsLat-I") field(CALC, "(A>>7)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLat_B8")  { field(DESC, "Fault Bit 8")  field(INPA, "$(P){$(NO)}Chan1:FaultsLat-I") field(CALC, "(A>>8)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLat_B9")  { field(DESC, "Fault Bit 9")  field(INPA, "$(P){$(NO)}Chan1:FaultsLat-I") field(CALC, "(A>>9)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLat_B10") { field(DESC, "Fault Bit 10") field(INPA, "$(P){$(NO)}Chan1:FaultsLat-I") field(CALC, "(A>>10)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLat_B11") { field(DESC, "Fault Bit 11") field(INPA, "$(P){$(NO)}Chan1:FaultsLat-I") field(CALC, "(A>>11)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan1:FaultsLat_B12") { field(DESC, "Fault Bit 12") field(INPA, "$(P){$(NO)}Chan1:FaultsLat-I") field(CALC, "(A>>12)&1") field(SCAN, ".1 second") }
 
 
 
@@ -962,104 +902,28 @@ record(longin, "$(P){$(NO)}Chan2:DigOut_Park-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}Chan2:DigIn-I") {
+record(mbbiDirect, "$(P){$(NO)}Chan2:DigIn-I") {
     field(DESC, "Digital Input Bits")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 604")
     field(SCAN, "I/O Intr")
-    field(EGU,  "")
-    field(FLNK, "$(P){$(NO)}Chan2:DigIn-Fanout")  
-}
-
-record(seq, "$(P){$(NO)}Chan2:DigIn-Fanout") {
-    field(DOL1, "1")
-    field(LNK1, "$(P){$(NO)}Chan2:DigIn-Bit0")
-    field(DOL2, "1")
-    field(LNK2, "$(P){$(NO)}Chan2:DigIn-Bit1")
-    field(DOL3, "1")
-    field(LNK3, "$(P){$(NO)}Chan2:DigIn-Bit2")
-    field(DOL4, "1")
-    field(LNK4, "$(P){$(NO)}Chan2:DigIn-Bit3")
-    field(DOL5, "1")
-    field(LNK5, "$(P){$(NO)}Chan2:DigIn-Bit4")
-    field(SCAN, "Passive")
-}
-
-record(calc, "$(P){$(NO)}Chan2:DigIn-Bit0") {
-    field(INPA, "$(P){$(NO)}Chan2:DigIn-I.VAL NPP NMS")
-    field(CALC, "A & 1")
-    field(SCAN, "Passive")
-}
-
-record(calc, "$(P){$(NO)}Chan2:DigIn-Bit1") {
-    field(INPA, "$(P){$(NO)}Chan2:DigIn-Raw.VAL NPP NMS")
-    field(CALC, "(A & 2) >> 1")
-    field(SCAN, "Passive")
-}
-
-record(calc, "$(P){$(NO)}Chan2:DigIn-Bit2") {
-    field(INPA, "$(P){$(NO)}Chan2:DigIn-Raw.VAL NPP NMS")
-    field(CALC, "(A & 4) >> 2")
-    field(SCAN, "Passive")
-}
-
-record(calc, "$(P){$(NO)}Chan2:DigIn-Bit3") {
-    field(INPA, "$(P){$(NO)}Chan2:DigIn-Raw.VAL NPP NMS")
-    field(CALC, "(A & 8) >> 3")
-    field(SCAN, "Passive")
-}
-
-record(calc, "$(P){$(NO)}Chan2:DigIn-Bit4") {
-    field(INPA, "$(P){$(NO)}Chan2:DigIn-Raw.VAL NPP NMS")
-    field(CALC, "(A & 16) >> 4")
-    field(SCAN, "Passive")
 }
 
 
-record(longin, "$(P){$(NO)}Chan2:FaultsLive-I") {
+record(mbbiDirect, "$(P){$(NO)}Chan2:FaultsLive-I") {
     field(DESC, "PS2 Live Faults")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 308")
+    field(INP , "@Rx$(NO) 31 608")
     field(SCAN, "I/O Intr")
 }
 
-record(calc, "$(P){$(NO)}Chan2:FaultsLive_B0")  { field(DESC, "Fault Bit 0")  field(INPA, "$(P){$(NO)}Chan2:FaultsLive-I") field(CALC, "(A>>0)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLive_B1")  { field(DESC, "Fault Bit 1")  field(INPA, "$(P){$(NO)}Chan2:FaultsLive-I") field(CALC, "(A>>1)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLive_B2")  { field(DESC, "Fault Bit 2")  field(INPA, "$(P){$(NO)}Chan2:FaultsLive-I") field(CALC, "(A>>2)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLive_B3")  { field(DESC, "Fault Bit 3")  field(INPA, "$(P){$(NO)}Chan2:FaultsLive-I") field(CALC, "(A>>3)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLive_B4")  { field(DESC, "Fault Bit 4")  field(INPA, "$(P){$(NO)}Chan2:FaultsLive-I") field(CALC, "(A>>4)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLive_B5")  { field(DESC, "Fault Bit 5")  field(INPA, "$(P){$(NO)}Chan2:FaultsLive-I") field(CALC, "(A>>5)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLive_B6")  { field(DESC, "Fault Bit 6")  field(INPA, "$(P){$(NO)}Chan2:FaultsLive-I") field(CALC, "(A>>6)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLive_B7")  { field(DESC, "Fault Bit 7")  field(INPA, "$(P){$(NO)}Chan2:FaultsLive-I") field(CALC, "(A>>7)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLive_B8")  { field(DESC, "Fault Bit 8")  field(INPA, "$(P){$(NO)}Chan2:FaultsLive-I") field(CALC, "(A>>8)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLive_B9")  { field(DESC, "Fault Bit 9")  field(INPA, "$(P){$(NO)}Chan2:FaultsLive-I") field(CALC, "(A>>9)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLive_B10") { field(DESC, "Fault Bit 10") field(INPA, "$(P){$(NO)}Chan2:FaultsLive-I") field(CALC, "(A>>10)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLive_B11") { field(DESC, "Fault Bit 11") field(INPA, "$(P){$(NO)}Chan2:FaultsLive-I") field(CALC, "(A>>11)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLive_B12") { field(DESC, "Fault Bit 12") field(INPA, "$(P){$(NO)}Chan2:FaultsLive-I") field(CALC, "(A>>12)&1") field(SCAN, ".1 second") }
 
-
-
-record(longin, "$(P){$(NO)}Chan2:FaultsLat-I") {
+record(mbbiDirect, "$(P){$(NO)}Chan2:FaultsLat-I") {
     field(DESC, "PS2 Latched Faults")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 312")
+    field(INP , "@Rx$(NO) 31 612")
     field(SCAN, "I/O Intr")
 }
-
-record(calc, "$(P){$(NO)}Chan2:FaultsLat_B0")  { field(DESC, "Fault Bit 0")  field(INPA, "$(P){$(NO)}Chan2:FaultsLat-I") field(CALC, "(A>>0)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLat_B1")  { field(DESC, "Fault Bit 1")  field(INPA, "$(P){$(NO)}Chan2:FaultsLat-I") field(CALC, "(A>>1)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLat_B2")  { field(DESC, "Fault Bit 2")  field(INPA, "$(P){$(NO)}Chan2:FaultsLat-I") field(CALC, "(A>>2)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLat_B3")  { field(DESC, "Fault Bit 3")  field(INPA, "$(P){$(NO)}Chan2:FaultsLat-I") field(CALC, "(A>>3)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLat_B4")  { field(DESC, "Fault Bit 4")  field(INPA, "$(P){$(NO)}Chan2:FaultsLat-I") field(CALC, "(A>>4)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLat_B5")  { field(DESC, "Fault Bit 5")  field(INPA, "$(P){$(NO)}Chan2:FaultsLat-I") field(CALC, "(A>>5)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLat_B6")  { field(DESC, "Fault Bit 6")  field(INPA, "$(P){$(NO)}Chan2:FaultsLat-I") field(CALC, "(A>>6)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLat_B7")  { field(DESC, "Fault Bit 7")  field(INPA, "$(P){$(NO)}Chan2:FaultsLat-I") field(CALC, "(A>>7)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLat_B8")  { field(DESC, "Fault Bit 8")  field(INPA, "$(P){$(NO)}Chan2:FaultsLat-I") field(CALC, "(A>>8)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLat_B9")  { field(DESC, "Fault Bit 9")  field(INPA, "$(P){$(NO)}Chan2:FaultsLat-I") field(CALC, "(A>>9)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLat_B10") { field(DESC, "Fault Bit 10") field(INPA, "$(P){$(NO)}Chan2:FaultsLat-I") field(CALC, "(A>>10)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLat_B11") { field(DESC, "Fault Bit 11") field(INPA, "$(P){$(NO)}Chan2:FaultsLat-I") field(CALC, "(A>>11)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan2:FaultsLat_B12") { field(DESC, "Fault Bit 12") field(INPA, "$(P){$(NO)}Chan2:FaultsLat-I") field(CALC, "(A>>12)&1") field(SCAN, ".1 second") }
-
 
 
 
@@ -1481,60 +1345,28 @@ record(longin, "$(P){$(NO)}Chan3:DigOut_Park-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}Chan3:DigIn-I") {
+record(mbbiDirect, "$(P){$(NO)}Chan3:DigIn-I") {
     field(DESC, "Digital Input Bits")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 904")
     field(SCAN,"I/O Intr")
-    field(EGU,  "")
 }
 
 
-record(longin, "$(P){$(NO)}Chan3:FaultsLive-I") {
+record(mbbiDirect, "$(P){$(NO)}Chan3:FaultsLive-I") {
     field(DESC, "PS3 Live Faults")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 308")
+    field(INP , "@Rx$(NO) 31 908")
     field(SCAN, "I/O Intr")
 }
 
-record(calc, "$(P){$(NO)}Chan3:FaultsLive_B0")  { field(DESC, "Fault Bit 0")  field(INPA, "$(P){$(NO)}Chan3:FaultsLive-I") field(CALC, "(A>>0)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLive_B1")  { field(DESC, "Fault Bit 1")  field(INPA, "$(P){$(NO)}Chan3:FaultsLive-I") field(CALC, "(A>>1)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLive_B2")  { field(DESC, "Fault Bit 2")  field(INPA, "$(P){$(NO)}Chan3:FaultsLive-I") field(CALC, "(A>>2)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLive_B3")  { field(DESC, "Fault Bit 3")  field(INPA, "$(P){$(NO)}Chan3:FaultsLive-I") field(CALC, "(A>>3)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLive_B4")  { field(DESC, "Fault Bit 4")  field(INPA, "$(P){$(NO)}Chan3:FaultsLive-I") field(CALC, "(A>>4)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLive_B5")  { field(DESC, "Fault Bit 5")  field(INPA, "$(P){$(NO)}Chan3:FaultsLive-I") field(CALC, "(A>>5)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLive_B6")  { field(DESC, "Fault Bit 6")  field(INPA, "$(P){$(NO)}Chan3:FaultsLive-I") field(CALC, "(A>>6)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLive_B7")  { field(DESC, "Fault Bit 7")  field(INPA, "$(P){$(NO)}Chan3:FaultsLive-I") field(CALC, "(A>>7)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLive_B8")  { field(DESC, "Fault Bit 8")  field(INPA, "$(P){$(NO)}Chan3:FaultsLive-I") field(CALC, "(A>>8)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLive_B9")  { field(DESC, "Fault Bit 9")  field(INPA, "$(P){$(NO)}Chan3:FaultsLive-I") field(CALC, "(A>>9)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLive_B10") { field(DESC, "Fault Bit 10") field(INPA, "$(P){$(NO)}Chan3:FaultsLive-I") field(CALC, "(A>>10)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLive_B11") { field(DESC, "Fault Bit 11") field(INPA, "$(P){$(NO)}Chan3:FaultsLive-I") field(CALC, "(A>>11)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLive_B12") { field(DESC, "Fault Bit 12") field(INPA, "$(P){$(NO)}Chan3:FaultsLive-I") field(CALC, "(A>>12)&1") field(SCAN, ".1 second") }
 
-
-
-record(longin, "$(P){$(NO)}Chan3:FaultsLat-I") {
+record(mbbiDirect, "$(P){$(NO)}Chan3:FaultsLat-I") {
     field(DESC, "PS1 Latched Faults")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 312")
+    field(INP , "@Rx$(NO) 31 912")
     field(SCAN, "I/O Intr")
 }
-
-record(calc, "$(P){$(NO)}Chan3:FaultsLat_B0")  { field(DESC, "Fault Bit 0")  field(INPA, "$(P){$(NO)}Chan3:FaultsLat-I") field(CALC, "(A>>0)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLat_B1")  { field(DESC, "Fault Bit 1")  field(INPA, "$(P){$(NO)}Chan3:FaultsLat-I") field(CALC, "(A>>1)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLat_B2")  { field(DESC, "Fault Bit 2")  field(INPA, "$(P){$(NO)}Chan3:FaultsLat-I") field(CALC, "(A>>2)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLat_B3")  { field(DESC, "Fault Bit 3")  field(INPA, "$(P){$(NO)}Chan3:FaultsLat-I") field(CALC, "(A>>3)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLat_B4")  { field(DESC, "Fault Bit 4")  field(INPA, "$(P){$(NO)}Chan3:FaultsLat-I") field(CALC, "(A>>4)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLat_B5")  { field(DESC, "Fault Bit 5")  field(INPA, "$(P){$(NO)}Chan3:FaultsLat-I") field(CALC, "(A>>5)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLat_B6")  { field(DESC, "Fault Bit 6")  field(INPA, "$(P){$(NO)}Chan3:FaultsLat-I") field(CALC, "(A>>6)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLat_B7")  { field(DESC, "Fault Bit 7")  field(INPA, "$(P){$(NO)}Chan3:FaultsLat-I") field(CALC, "(A>>7)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLat_B8")  { field(DESC, "Fault Bit 8")  field(INPA, "$(P){$(NO)}Chan3:FaultsLat-I") field(CALC, "(A>>8)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLat_B9")  { field(DESC, "Fault Bit 9")  field(INPA, "$(P){$(NO)}Chan3:FaultsLat-I") field(CALC, "(A>>9)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLat_B10") { field(DESC, "Fault Bit 10") field(INPA, "$(P){$(NO)}Chan3:FaultsLat-I") field(CALC, "(A>>10)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLat_B11") { field(DESC, "Fault Bit 11") field(INPA, "$(P){$(NO)}Chan3:FaultsLat-I") field(CALC, "(A>>11)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan3:FaultsLat_B12") { field(DESC, "Fault Bit 12") field(INPA, "$(P){$(NO)}Chan3:FaultsLat-I") field(CALC, "(A>>12)&1") field(SCAN, ".1 second") }
-
-
 
 
 
@@ -1956,59 +1788,28 @@ record(longin, "$(P){$(NO)}Chan4:DigOut_Park-I") {
     field(EGU,  "")
 }
 
-record(longin, "$(P){$(NO)}Chan4:DigIn-I") {
+record(mbbiDirect, "$(P){$(NO)}Chan4:DigIn-I") {
     field(DESC, "Digital Input Bits")
     field(DTYP, "PSC Reg")
     field(INP , "@Rx$(NO) 31 1204")
     field(SCAN,"I/O Intr")
-    field(EGU,  "")
 }
 
 
-record(longin, "$(P){$(NO)}Chan4:FaultsLive-I") {
+record(mbbiDirect, "$(P){$(NO)}Chan4:FaultsLive-I") {
     field(DESC, "PS4 Live Faults")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 308")
+    field(INP , "@Rx$(NO) 31 1208")
     field(SCAN, "I/O Intr")
 }
 
-record(calc, "$(P){$(NO)}Chan4:FaultsLive_B0")  { field(DESC, "Fault Bit 0")  field(INPA, "$(P){$(NO)}Chan4:FaultsLive-I") field(CALC, "(A>>0)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLive_B1")  { field(DESC, "Fault Bit 1")  field(INPA, "$(P){$(NO)}Chan4:FaultsLive-I") field(CALC, "(A>>1)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLive_B2")  { field(DESC, "Fault Bit 2")  field(INPA, "$(P){$(NO)}Chan4:FaultsLive-I") field(CALC, "(A>>2)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLive_B3")  { field(DESC, "Fault Bit 3")  field(INPA, "$(P){$(NO)}Chan4:FaultsLive-I") field(CALC, "(A>>3)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLive_B4")  { field(DESC, "Fault Bit 4")  field(INPA, "$(P){$(NO)}Chan4:FaultsLive-I") field(CALC, "(A>>4)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLive_B5")  { field(DESC, "Fault Bit 5")  field(INPA, "$(P){$(NO)}Chan4:FaultsLive-I") field(CALC, "(A>>5)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLive_B6")  { field(DESC, "Fault Bit 6")  field(INPA, "$(P){$(NO)}Chan4:FaultsLive-I") field(CALC, "(A>>6)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLive_B7")  { field(DESC, "Fault Bit 7")  field(INPA, "$(P){$(NO)}Chan4:FaultsLive-I") field(CALC, "(A>>7)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLive_B8")  { field(DESC, "Fault Bit 8")  field(INPA, "$(P){$(NO)}Chan4:FaultsLive-I") field(CALC, "(A>>8)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLive_B9")  { field(DESC, "Fault Bit 9")  field(INPA, "$(P){$(NO)}Chan4:FaultsLive-I") field(CALC, "(A>>9)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLive_B10") { field(DESC, "Fault Bit 10") field(INPA, "$(P){$(NO)}Chan4:FaultsLive-I") field(CALC, "(A>>10)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLive_B11") { field(DESC, "Fault Bit 11") field(INPA, "$(P){$(NO)}Chan4:FaultsLive-I") field(CALC, "(A>>11)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLive_B12") { field(DESC, "Fault Bit 12") field(INPA, "$(P){$(NO)}Chan4:FaultsLive-I") field(CALC, "(A>>12)&1") field(SCAN, ".1 second") }
 
-
-
-record(longin, "$(P){$(NO)}Chan4:FaultsLat-I") {
+record(mbbiDirect, "$(P){$(NO)}Chan4:FaultsLat-I") {
     field(DESC, "PS4 Latched Faults")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 312")
+    field(INP , "@Rx$(NO) 31 1212")
     field(SCAN, "I/O Intr")
 }
-
-record(calc, "$(P){$(NO)}Chan4:FaultsLat_B0")  { field(DESC, "Fault Bit 0")  field(INPA, "$(P){$(NO)}Chan4:FaultsLat-I") field(CALC, "(A>>0)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLat_B1")  { field(DESC, "Fault Bit 1")  field(INPA, "$(P){$(NO)}Chan4:FaultsLat-I") field(CALC, "(A>>1)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLat_B2")  { field(DESC, "Fault Bit 2")  field(INPA, "$(P){$(NO)}Chan4:FaultsLat-I") field(CALC, "(A>>2)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLat_B3")  { field(DESC, "Fault Bit 3")  field(INPA, "$(P){$(NO)}Chan4:FaultsLat-I") field(CALC, "(A>>3)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLat_B4")  { field(DESC, "Fault Bit 4")  field(INPA, "$(P){$(NO)}Chan4:FaultsLat-I") field(CALC, "(A>>4)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLat_B5")  { field(DESC, "Fault Bit 5")  field(INPA, "$(P){$(NO)}Chan4:FaultsLat-I") field(CALC, "(A>>5)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLat_B6")  { field(DESC, "Fault Bit 6")  field(INPA, "$(P){$(NO)}Chan4:FaultsLat-I") field(CALC, "(A>>6)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLat_B7")  { field(DESC, "Fault Bit 7")  field(INPA, "$(P){$(NO)}Chan4:FaultsLat-I") field(CALC, "(A>>7)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLat_B8")  { field(DESC, "Fault Bit 8")  field(INPA, "$(P){$(NO)}Chan4:FaultsLat-I") field(CALC, "(A>>8)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLat_B9")  { field(DESC, "Fault Bit 9")  field(INPA, "$(P){$(NO)}Chan4:FaultsLat-I") field(CALC, "(A>>9)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLat_B10") { field(DESC, "Fault Bit 10") field(INPA, "$(P){$(NO)}Chan4:FaultsLat-I") field(CALC, "(A>>10)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLat_B11") { field(DESC, "Fault Bit 11") field(INPA, "$(P){$(NO)}Chan4:FaultsLat-I") field(CALC, "(A>>11)&1") field(SCAN, ".1 second") }
-record(calc, "$(P){$(NO)}Chan4:FaultsLat_B12") { field(DESC, "Fault Bit 12") field(INPA, "$(P){$(NO)}Chan4:FaultsLat-I") field(CALC, "(A>>12)&1") field(SCAN, ".1 second") }
-
 
 
 

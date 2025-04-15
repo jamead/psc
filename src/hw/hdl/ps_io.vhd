@@ -93,7 +93,7 @@ evr_params.reset <= reg_o.evr_reset.val.data;
 -- DCCT and Monitor ADC slow readbacks and gains & offsets
 reg_i.ps1_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps1.dcct0), 32));
 reg_i.ps1_dcct1.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps1.dcct1), 32));
-reg_i.ps1_dacsp.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.dac_sp), 32));
+reg_i.ps1_dacmon.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.dacmon), 32));
 reg_i.ps1_volt.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.voltage), 32));
 reg_i.ps1_gnd.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.ignd), 32));
 reg_i.ps1_spare.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.spare), 32));
@@ -104,8 +104,8 @@ dcct_params.ps1.dcct0_offset <= signed(reg_o.ps1_dcct0_offset.val.data(19 downto
 dcct_params.ps1.dcct0_gain <= signed(reg_o.ps1_dcct0_gain.val.data(23 downto 0)); 
 dcct_params.ps1.dcct1_offset <= signed(reg_o.ps1_dcct1_offset.val.data(19 downto 0)); 
 dcct_params.ps1.dcct1_gain <= signed(reg_o.ps1_dcct1_gain.val.data(23 downto 0)); 
-mon_params.ps1.dac_sp_offset <= signed(reg_o.ps1_dacsp_offset.val.data(15 downto 0)); 
-mon_params.ps1.dac_sp_gain <= signed(reg_o.ps1_dacsp_gain.val.data(23 downto 0)); 
+mon_params.ps1.dacmon_offset <= signed(reg_o.ps1_dacmon_offset.val.data(15 downto 0)); 
+mon_params.ps1.dacmon_gain <= signed(reg_o.ps1_dacmon_gain.val.data(23 downto 0)); 
 mon_params.ps1.voltage_offset <= signed(reg_o.ps1_volt_offset.val.data(15 downto 0)); 
 mon_params.ps1.voltage_gain <= signed(reg_o.ps1_volt_gain.val.data(23 downto 0));
 mon_params.ps1.ignd_offset <= signed(reg_o.ps1_gnd_offset.val.data(15 downto 0)); 
@@ -118,8 +118,8 @@ mon_params.ps1.ps_error_offset <= signed(reg_o.ps1_err_offset.val.data(15 downto
 mon_params.ps1.ps_error_gain <= signed(reg_o.ps1_err_gain.val.data(23 downto 0));
 
 -- DAC control and Ramp Tables and status
-dac_cntrl.ps1.offset <= reg_o.ps1_dac_offset.val.data; 
-dac_cntrl.ps1.gain <= reg_o.ps1_dac_gain.val.data; 
+dac_cntrl.ps1.offset <= reg_o.ps1_dac_setpt_offset.val.data; 
+dac_cntrl.ps1.gain <= reg_o.ps1_dac_setpt_gain.val.data; 
 dac_cntrl.ps1.setpoint <= reg_o.ps1_dac_setpt.val.data;
 dac_cntrl.ps1.mode <= reg_o.ps1_dac_opmode.val.data;
 dac_cntrl.ps1.cntrl <= reg_o.ps1_dac_cntrl.val.data;
@@ -176,7 +176,7 @@ reg_i.ps1_faults_lat.val.data <= fault_stat.ps1.lat;
 -- DCCT and Monitor ADC slow readbacks and gains & offsets
 reg_i.ps2_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps2.dcct0), 32));
 reg_i.ps2_dcct1.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps2.dcct1), 32));
-reg_i.ps2_dacsp.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.dac_sp), 32));
+reg_i.ps2_dacmon.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.dacmon), 32));
 reg_i.ps2_volt.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.voltage), 32));
 reg_i.ps2_gnd.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.ignd), 32));
 reg_i.ps2_spare.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.spare), 32));
@@ -187,8 +187,8 @@ dcct_params.ps2.dcct0_offset <= signed(reg_o.ps2_dcct0_offset.val.data(19 downto
 dcct_params.ps2.dcct0_gain <= signed(reg_o.ps2_dcct0_gain.val.data(23 downto 0)); 
 dcct_params.ps2.dcct1_offset <= signed(reg_o.ps2_dcct1_offset.val.data(19 downto 0)); 
 dcct_params.ps2.dcct1_gain <= signed(reg_o.ps2_dcct1_gain.val.data(23 downto 0)); 
-mon_params.ps2.dac_sp_offset <= signed(reg_o.ps2_dacsp_offset.val.data(15 downto 0)); 
-mon_params.ps2.dac_sp_gain <= signed(reg_o.ps2_dacsp_gain.val.data(23 downto 0)); 
+mon_params.ps2.dacmon_offset <= signed(reg_o.ps2_dacmon_offset.val.data(15 downto 0)); 
+mon_params.ps2.dacmon_gain <= signed(reg_o.ps2_dacmon_gain.val.data(23 downto 0)); 
 mon_params.ps2.voltage_offset <= signed(reg_o.ps2_volt_offset.val.data(15 downto 0)); 
 mon_params.ps2.voltage_gain <= signed(reg_o.ps2_volt_gain.val.data(23 downto 0));
 mon_params.ps2.ignd_offset <= signed(reg_o.ps2_gnd_offset.val.data(15 downto 0)); 
@@ -201,8 +201,8 @@ mon_params.ps2.ps_error_offset <= signed(reg_o.ps2_err_offset.val.data(15 downto
 mon_params.ps2.ps_error_gain <= signed(reg_o.ps2_err_gain.val.data(23 downto 0));
 
 -- DAC control and Ramp Tables and status
-dac_cntrl.ps2.offset <= reg_o.ps2_dac_offset.val.data; 
-dac_cntrl.ps2.gain <= reg_o.ps2_dac_gain.val.data; 
+dac_cntrl.ps2.offset <= reg_o.ps2_dac_setpt_offset.val.data; 
+dac_cntrl.ps2.gain <= reg_o.ps2_dac_setpt_gain.val.data; 
 dac_cntrl.ps2.setpoint <= reg_o.ps2_dac_setpt.val.data;
 dac_cntrl.ps2.mode <= reg_o.ps2_dac_opmode.val.data;
 dac_cntrl.ps2.cntrl <= reg_o.ps2_dac_cntrl.val.data;
@@ -261,7 +261,7 @@ reg_i.ps2_faults_lat.val.data <= fault_stat.ps2.lat;
 -- DCCT and Monitor ADC slow readbacks and gains & offsets
 reg_i.ps3_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps3.dcct0), 32));
 reg_i.ps3_dcct1.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps3.dcct1), 32));
-reg_i.ps3_dacsp.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.dac_sp), 32));
+reg_i.ps3_dacmon.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.dacmon), 32));
 reg_i.ps3_volt.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.voltage), 32));
 reg_i.ps3_gnd.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.ignd), 32));
 reg_i.ps3_spare.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.spare), 32));
@@ -272,8 +272,8 @@ dcct_params.ps3.dcct0_offset <= signed(reg_o.ps3_dcct0_offset.val.data(19 downto
 dcct_params.ps3.dcct0_gain <= signed(reg_o.ps3_dcct0_gain.val.data(23 downto 0)); 
 dcct_params.ps3.dcct1_offset <= signed(reg_o.ps3_dcct1_offset.val.data(19 downto 0)); 
 dcct_params.ps3.dcct1_gain <= signed(reg_o.ps3_dcct1_gain.val.data(23 downto 0)); 
-mon_params.ps3.dac_sp_offset <= signed(reg_o.ps3_dacsp_offset.val.data(15 downto 0)); 
-mon_params.ps3.dac_sp_gain <= signed(reg_o.ps3_dacsp_gain.val.data(23 downto 0)); 
+mon_params.ps3.dacmon_offset <= signed(reg_o.ps3_dacmon_offset.val.data(15 downto 0)); 
+mon_params.ps3.dacmon_gain <= signed(reg_o.ps3_dacmon_gain.val.data(23 downto 0)); 
 mon_params.ps3.voltage_offset <= signed(reg_o.ps3_volt_offset.val.data(15 downto 0)); 
 mon_params.ps3.voltage_gain <= signed(reg_o.ps3_volt_gain.val.data(23 downto 0));
 mon_params.ps3.ignd_offset <= signed(reg_o.ps3_gnd_offset.val.data(15 downto 0)); 
@@ -286,8 +286,8 @@ mon_params.ps3.ps_error_offset <= signed(reg_o.ps3_err_offset.val.data(15 downto
 mon_params.ps3.ps_error_gain <= signed(reg_o.ps3_err_gain.val.data(23 downto 0));
 
 -- DAC control and Ramp Tables and status
-dac_cntrl.ps3.offset <= reg_o.ps3_dac_offset.val.data; 
-dac_cntrl.ps3.gain <= reg_o.ps3_dac_gain.val.data; 
+dac_cntrl.ps3.offset <= reg_o.ps3_dac_setpt_offset.val.data; 
+dac_cntrl.ps3.gain <= reg_o.ps3_dac_setpt_gain.val.data; 
 dac_cntrl.ps3.setpoint <= reg_o.ps3_dac_setpt.val.data;
 dac_cntrl.ps3.mode <= reg_o.ps3_dac_opmode.val.data;
 dac_cntrl.ps3.cntrl <= reg_o.ps3_dac_cntrl.val.data;
@@ -349,7 +349,7 @@ reg_i.ps3_faults_lat.val.data <= fault_stat.ps3.lat;
 -- DCCT and Monitor ADC slow readbacks and gains & offsets
 reg_i.ps4_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps4.dcct0), 32));
 reg_i.ps4_dcct1.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps4.dcct1), 32));
-reg_i.ps4_dacsp.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.dac_sp), 32));
+reg_i.ps4_dacmon.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.dacmon), 32));
 reg_i.ps4_volt.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.voltage), 32));
 reg_i.ps4_gnd.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.ignd), 32));
 reg_i.ps4_spare.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.spare), 32));
@@ -360,8 +360,8 @@ dcct_params.ps4.dcct0_offset <= signed(reg_o.ps4_dcct0_offset.val.data(19 downto
 dcct_params.ps4.dcct0_gain <= signed(reg_o.ps4_dcct0_gain.val.data(23 downto 0)); 
 dcct_params.ps4.dcct1_offset <= signed(reg_o.ps4_dcct1_offset.val.data(19 downto 0)); 
 dcct_params.ps4.dcct1_gain <= signed(reg_o.ps4_dcct1_gain.val.data(23 downto 0)); 
-mon_params.ps4.dac_sp_offset <= signed(reg_o.ps4_dacsp_offset.val.data(15 downto 0)); 
-mon_params.ps4.dac_sp_gain <= signed(reg_o.ps4_dacsp_gain.val.data(23 downto 0)); 
+mon_params.ps4.dacmon_offset <= signed(reg_o.ps4_dacmon_offset.val.data(15 downto 0)); 
+mon_params.ps4.dacmon_gain <= signed(reg_o.ps4_dacmon_gain.val.data(23 downto 0)); 
 mon_params.ps4.voltage_offset <= signed(reg_o.ps4_volt_offset.val.data(15 downto 0)); 
 mon_params.ps4.voltage_gain <= signed(reg_o.ps4_volt_gain.val.data(23 downto 0));
 mon_params.ps4.ignd_offset <= signed(reg_o.ps4_gnd_offset.val.data(15 downto 0)); 
@@ -374,8 +374,8 @@ mon_params.ps4.ps_error_offset <= signed(reg_o.ps4_err_offset.val.data(15 downto
 mon_params.ps4.ps_error_gain <= signed(reg_o.ps4_err_gain.val.data(23 downto 0));
 
 -- DAC control and Ramp Tables and status
-dac_cntrl.ps4.offset <= reg_o.ps4_dac_offset.val.data; 
-dac_cntrl.ps4.gain <= reg_o.ps4_dac_gain.val.data; 
+dac_cntrl.ps4.offset <= reg_o.ps4_dac_setpt_offset.val.data; 
+dac_cntrl.ps4.gain <= reg_o.ps4_dac_setpt_gain.val.data; 
 dac_cntrl.ps4.setpoint <= reg_o.ps4_dac_setpt.val.data;
 dac_cntrl.ps4.mode <= reg_o.ps4_dac_opmode.val.data;
 dac_cntrl.ps4.cntrl <= reg_o.ps4_dac_cntrl.val.data;

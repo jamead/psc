@@ -94,11 +94,11 @@ reg {
   } ps1_dcct1 @0x104;  
 
 reg {
-    desc="PS1 DAC Setpoint Monitor";
+    desc="PS1 DAC Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps1_dacsp @0x108;  
+  } ps1_dacmon @0x108;  
 
 reg {
     desc="PS1 Voltage Monitor";
@@ -144,14 +144,14 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_dac_offset @0x120;
+  } ps1_dac_setpt_offset @0x120;
 
 reg {
     desc="PS1 DAC Gain";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_dac_gain @0x124;
+  } ps1_dac_setpt_gain @0x124;
 
 reg {
     desc="PS1 DAC SetPoint - when in jumpmode";
@@ -264,18 +264,18 @@ reg {
 
 
 reg {
-    desc="PS1 DAC Setpoint Monitor Offset";
+    desc="PS1 DAC Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_dacsp_offset @0x160;
+  } ps1_dacmon_offset @0x160;
 
 reg {
-    desc="PS1 DAC Setpoint Monitor Gain";
+    desc="PS1 DAC Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_dacsp_gain @0x164;
+  } ps1_dacmon_gain @0x164;
 
 reg {
     desc="PS1 Voltage Monitor Offset";
@@ -572,11 +572,11 @@ reg {
   } ps2_dcct1 @0x204;  
 
 reg {
-    desc="PS2 DAC Setpoint Monitor";
+    desc="PS2 DAC Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps2_dacsp @0x208;  
+  } ps2_dacmon @0x208;  
 
 reg {
     desc="PS2 Voltage Monitor";
@@ -620,14 +620,14 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_dac_offset @0x220;
+  } ps2_dac_setpt_offset @0x220;
 
 reg {
     desc="PS2 DAC Gain";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_dac_gain @0x224;
+  } ps2_dac_setpt_gain @0x224;
 
 reg {
     desc="PS2 DAC SetPoint - when in jumpmode";
@@ -741,18 +741,18 @@ reg {
 
 
 reg {
-    desc="PS2 DAC Setpoint Monitor Offset";
+    desc="PS2 DAC Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_dacsp_offset @0x260;
+  } ps2_dacmon_offset @0x260;
 
 reg {
-    desc="PS2 DAC Setpoint Monitor Gain";
+    desc="PS2 DAC Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_dacsp_gain @0x264;
+  } ps2_dacmon_gain @0x264;
 
 reg {
     desc="PS2 Voltage Monitor Offset";
@@ -1050,11 +1050,11 @@ reg {
   } ps3_dcct1 @0x304;  
 
 reg {
-    desc="PS3 DAC Setpoint Monitor";
+    desc="PS3 DAC Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps3_dacsp @0x308;  
+  } ps3_dacmon @0x308;  
 
 reg {
     desc="PS3 Voltage Monitor";
@@ -1098,14 +1098,14 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_dac_offset @0x320;
+  } ps3_dac_setpt_offset @0x320;
 
 reg {
     desc="PS3 DAC Gain";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_dac_gain @0x324;
+  } ps3_dac_setpt_gain @0x324;
 
 reg {
     desc="PS3 DAC SetPoint - when in jumpmode";
@@ -1218,18 +1218,18 @@ reg {
 
 
 reg {
-    desc="PS3 DAC Setpoint Monitor Offset";
+    desc="PS3 DAC Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_dacsp_offset @0x360;
+  } ps3_dacmon_offset @0x360;
 
 reg {
-    desc="PS3 DAC Setpoint Monitor Gain";
+    desc="PS3 DAC Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_dacsp_gain @0x364;
+  } ps3_dacmon_gain @0x364;
 
 reg {
     desc="PS3 Voltage Monitor Offset";
@@ -1527,11 +1527,11 @@ reg {
   } ps4_dcct1 @0x404;  
 
 reg {
-    desc="PS4 DAC Setpoint Monitor";
+    desc="PS4 DAC Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps4_dacsp @0x408;  
+  } ps4_dacmon @0x408;  
 
 reg {
     desc="PS4 Voltage Monitor";
@@ -1576,14 +1576,14 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_dac_offset @0x420;
+  } ps4_dac_setpt_offset @0x420;
 
 reg {
     desc="PS4 DAC Gain";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_dac_gain @0x424;
+  } ps4_dac_setpt_gain @0x424;
 
 reg {
     desc="PS4 DAC SetPoint - when in jumpmode";
@@ -1698,18 +1698,18 @@ reg {
 
 
 reg {
-    desc="PS4 DAC Setpoint Monitor Offset";
+    desc="PS4 DAC Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_dacsp_offset @0x460;
+  } ps4_dacmon_offset @0x460;
 
 reg {
-    desc="PS4 DAC Setpoint Monitor Gain";
+    desc="PS4 DAC Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_dacsp_gain @0x464;
+  } ps4_dacmon_gain @0x464;
 
 reg {
     desc="PS4 Voltage Monitor Offset";

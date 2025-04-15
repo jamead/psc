@@ -16,14 +16,14 @@
 
 #define DCCT1_REG                0X00     // PS1 DCCT 0
 #define DCCT2_REG                0X04     // PS1 DCCT 1
-#define DACSP_REG                0X08     // PS1 DAC Setpoint Monitor
+#define DACMON_REG               0X08     // PS1 DAC Monitor
 #define VOLT_REG                 0X0C     // PS1 Voltage Monitor
 #define GND_REG                  0X10     // PS1 GND Monitor
 #define SPARE_REG                0X14     // PS1 Spare Monitor
 #define REG_REG                  0X18     // PS1 Regulator Output Monitor
 #define ERR_REG                  0X1C     // PS1 Error
-#define DAC_OFFSET_REG           0X20     // PS1 DAC Offset
-#define DAC_GAIN_REG             0X24     // PS1 DAC Gain
+#define DAC_SETPT_OFFSET_REG     0X20     // PS1 DAC Offset
+#define DAC_SETPT_GAIN_REG       0X24     // PS1 DAC Gain
 #define DAC_SETPT_REG            0X28     // PS1 DAC SetPoint - when in jumpmode
 #define DAC_OPMODE_REG           0X2C     // PS1 DAC Mode 0=smooth ramp, 1=ramp table, 2=FOFB, 3=Jump Mode
 #define DAC_CNTRL_REG            0X30     // PS1 DAC Control bit0=op_gnd, bit1=sdo_dis, bit2=dac_tri, bit3=rbuf, bit4=bin2sc
@@ -38,8 +38,8 @@
 #define DCCT1_GAIN_REG           0X54     // PS1 DCCT 0 Gain
 #define DCCT2_OFFSET_REG         0X58     // PS1 DCCT 1 Offset
 #define DCCT2_GAIN_REG           0X5C     // PS1 DCCT 1 Gain
-#define DACSP_OFFSET_REG         0X60     // PS1 DAC Setpoint Monitor Offset
-#define DACSP_GAIN_REG           0X64     // PS1 DAC Setpoint Monitor Gain
+#define DACMON_OFFSET_REG        0X60     // PS1 DAC Monitor Offset
+#define DACMON_GAIN_REG          0X64     // PS1 DAC Monitor Gain
 #define VOLT_OFFSET_REG          0X68     // PS1 Voltage Monitor Offset
 #define VOLT_GAIN_REG            0X6C     // PS1 Voltage Monitor Gain
 #define GND_OFFSET_REG           0X70     // PS1 GND Monitor Offset
