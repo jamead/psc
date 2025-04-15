@@ -143,14 +143,14 @@ reg {
     desc="PS1 DAC Offset";
     default sw = rw;
     default hw = r;
-    field {} val[16];
+    field {} val[32];
   } ps1_dac_setpt_offset @0x120;
 
 reg {
     desc="PS1 DAC Gain";
     default sw = rw;
     default hw = r;
-    field {} val[16];
+    field {} val[32];
   } ps1_dac_setpt_gain @0x124;
 
 reg {
@@ -619,14 +619,14 @@ reg {
     desc="PS2 DAC Offset";
     default sw = rw;
     default hw = r;
-    field {} val[16];
+    field {} val[32];
   } ps2_dac_setpt_offset @0x220;
 
 reg {
     desc="PS2 DAC Gain";
     default sw = rw;
     default hw = r;
-    field {} val[16];
+    field {} val[32];
   } ps2_dac_setpt_gain @0x224;
 
 reg {
@@ -1097,14 +1097,14 @@ reg {
     desc="PS3 DAC Offset";
     default sw = rw;
     default hw = r;
-    field {} val[16];
+    field {} val[32];
   } ps3_dac_setpt_offset @0x320;
 
 reg {
     desc="PS3 DAC Gain";
     default sw = rw;
     default hw = r;
-    field {} val[16];
+    field {} val[32];
   } ps3_dac_setpt_gain @0x324;
 
 reg {
@@ -1575,14 +1575,14 @@ reg {
     desc="PS4 DAC Offset";
     default sw = rw;
     default hw = r;
-    field {} val[16];
+    field {} val[32];
   } ps4_dac_setpt_offset @0x420;
 
 reg {
     desc="PS4 DAC Gain";
     default sw = rw;
     default hw = r;
-    field {} val[16];
+    field {} val[32];
   } ps4_dac_setpt_gain @0x424;
 
 reg {

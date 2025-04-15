@@ -212,7 +212,7 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 
         case DAC_SETPT_GAIN_MSG:
 	        printf("Setting DAC SetPt CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
-	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_SETPT_GAIN_REG + chan*CHBASEADDR, data.f);
+	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_SETPT_GAIN_REG + chan*CHBASEADDR, data.f*GAIN20BITFRACT);
 	        break;
 
         case DAC_SETPT_OFFSET_MSG:

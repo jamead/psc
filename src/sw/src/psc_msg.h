@@ -95,7 +95,7 @@ typedef struct SAdataChan {
 	float error_gain;
     s32 dac_setpt;
     s32 dac_setpt_offset;
-    s32 dac_setpt_gain;
+    float dac_setpt_gain;
     s32 dac_rampactive;
     u32 ovc1_thresh;
     u32 ovc2_thresh;
@@ -125,7 +125,7 @@ typedef struct SAdataChan {
     u32 digin;
     u32 faults_live;
     u32 faults_latched;
-    u32 rsvd[21];
+    u32 rsvd[19];
 } SAdataChan;
 
 

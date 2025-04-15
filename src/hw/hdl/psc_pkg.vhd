@@ -221,8 +221,8 @@ type t_dac_cntrl_onech is record
   setpoint            : std_logic_vector(19 downto 0); 
   ramprun             : std_logic; 
   ramplen             : std_logic_vector(15 downto 0);
-  gain                : std_logic_vector(15 downto 0);
-  offset              : std_logic_vector(15 downto 0);
+  gain                : std_logic_vector(23 downto 0);  --Q3.20 format
+  offset              : std_logic_vector(19 downto 0);
   --Control Register Bits 
   cntrl               : std_logic_vector(7 downto 0); 
   -- DPRAM for table

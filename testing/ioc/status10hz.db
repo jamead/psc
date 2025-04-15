@@ -693,10 +693,28 @@ record(longin, "$(P){$(NO)}Chan2:DACSetPt-I") {
     field(EGU,  "")
 }
 
+record(longin, "$(P){$(NO)}Chan2:DACSetPt-Offset-I") {
+    field(DESC, "DAC SetPoint Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 500")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan2:DACSetPt-Gain-I") {
+    field(DESC, "DAC SetPoint Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 504")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+
 record(longin, "$(P){$(NO)}Chan2:DACRampActive-I") {
     field(DESC, "DAC SetPoint Readback")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 500")
+    field(INP , "@Rx$(NO) 31 508")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -704,7 +722,7 @@ record(longin, "$(P){$(NO)}Chan2:DACRampActive-I") {
 record(longin, "$(P){$(NO)}Chan2:OVC1_Flt_Threshold-I") {
     field(DESC, "DCCT1 OVC Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 504")
+    field(INP , "@Rx$(NO) 31 512")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -712,7 +730,7 @@ record(longin, "$(P){$(NO)}Chan2:OVC1_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan2:OVC2_Flt_Threshold-I") {
     field(DESC, "DCCT2 OVC Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 508")
+    field(INP , "@Rx$(NO) 31 516")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -720,7 +738,7 @@ record(longin, "$(P){$(NO)}Chan2:OVC2_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan2:OVV_Flt_Threshold-I") {
     field(DESC, "OVV Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 512")
+    field(INP , "@Rx$(NO) 31 520")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -728,7 +746,7 @@ record(longin, "$(P){$(NO)}Chan2:OVV_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan2:ERR1_Flt_Threshold-I") {
     field(DESC, "ERR1 Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 516")
+    field(INP , "@Rx$(NO) 31 524")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -736,7 +754,7 @@ record(longin, "$(P){$(NO)}Chan2:ERR1_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan2:ERR2_Flt_Threshold-I") {
     field(DESC, "ERR2 Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 520")
+    field(INP , "@Rx$(NO) 31 528")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -744,7 +762,7 @@ record(longin, "$(P){$(NO)}Chan2:ERR2_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan2:IGND_Flt_Threshold-I") {
     field(DESC, "Ignd Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 524")
+    field(INP , "@Rx$(NO) 31 532")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -752,7 +770,7 @@ record(longin, "$(P){$(NO)}Chan2:IGND_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan2:OVC1_Flt_CntLim-I") {
     field(DESC, "DCCT1 OVC Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 528")
+    field(INP , "@Rx$(NO) 31 536")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -760,7 +778,7 @@ record(longin, "$(P){$(NO)}Chan2:OVC1_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan2:OVC2_Flt_CntLim-I") {
     field(DESC, "DCCT2 OVC Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 532")
+    field(INP , "@Rx$(NO) 31 540")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -768,7 +786,7 @@ record(longin, "$(P){$(NO)}Chan2:OVC2_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan2:OVV_Flt_CntLim-I") {
     field(DESC, "OVV Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 536")
+    field(INP , "@Rx$(NO) 31 544")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -776,7 +794,7 @@ record(longin, "$(P){$(NO)}Chan2:OVV_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan2:ERR1_Flt_CntLim-I") {
     field(DESC, "PID Error 1 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 540")
+    field(INP , "@Rx$(NO) 31 548")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -784,7 +802,7 @@ record(longin, "$(P){$(NO)}Chan2:ERR1_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan2:ERR2_Flt_CntLim-I") {
     field(DESC, "PID Error 2  Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 544")
+    field(INP , "@Rx$(NO) 31 552")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -792,7 +810,7 @@ record(longin, "$(P){$(NO)}Chan2:ERR2_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan2:IGND_Flt_CntLim-I") {
     field(DESC, "Ignd Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 548")
+    field(INP , "@Rx$(NO) 31 556")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -800,7 +818,7 @@ record(longin, "$(P){$(NO)}Chan2:IGND_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan2:DCCT_Flt_CntLim-I") {
     field(DESC, "DCCT Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 552")
+    field(INP , "@Rx$(NO) 31 560")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -808,7 +826,7 @@ record(longin, "$(P){$(NO)}Chan2:DCCT_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan2:FLT1_Flt_CntLim-I") {
     field(DESC, "Fault 1 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 556")
+    field(INP , "@Rx$(NO) 31 564")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -816,7 +834,7 @@ record(longin, "$(P){$(NO)}Chan2:FLT1_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan2:FLT2_Flt_CntLim-I") {
     field(DESC, "Fault 2 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 560")
+    field(INP , "@Rx$(NO) 31 568")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -824,7 +842,7 @@ record(longin, "$(P){$(NO)}Chan2:FLT2_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan2:FLT3_Flt_CntLim-I") {
     field(DESC, "Fault 3 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 564")
+    field(INP , "@Rx$(NO) 31 572")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -832,7 +850,7 @@ record(longin, "$(P){$(NO)}Chan2:FLT3_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan2:ON_Flt_CntLim-I") {
     field(DESC, "PowerSupply ON Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 568")
+    field(INP , "@Rx$(NO) 31 576")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -840,7 +858,7 @@ record(longin, "$(P){$(NO)}Chan2:ON_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan2:HeartBeat_Flt_CntLim-I") {
     field(DESC, "HeartBeat Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 572")
+    field(INP , "@Rx$(NO) 31 580")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -848,7 +866,7 @@ record(longin, "$(P){$(NO)}Chan2:HeartBeat_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan2:FaultClear-I") {
     field(DESC, "Fault Clear")
     field(DTYP, "PSC Reg")   
-    field(INP , "@Rx$(NO) 31 576")
+    field(INP , "@Rx$(NO) 31 584")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -856,7 +874,7 @@ record(longin, "$(P){$(NO)}Chan2:FaultClear-I") {
 record(longin, "$(P){$(NO)}Chan2:FaultMask-I") {
     field(DESC, "Fault 3 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 580")
+    field(INP , "@Rx$(NO) 31 588")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -864,7 +882,7 @@ record(longin, "$(P){$(NO)}Chan2:FaultMask-I") {
 record(longin, "$(P){$(NO)}Chan2:DigOut_ON1-I") {
     field(DESC, "Digital Output ON1")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 584")
+    field(INP , "@Rx$(NO) 31 592")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -872,7 +890,7 @@ record(longin, "$(P){$(NO)}Chan2:DigOut_ON1-I") {
 record(longin, "$(P){$(NO)}Chan2:DigOut_ON2-I") {
     field(DESC, "Digital Output ON2")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 588")
+    field(INP , "@Rx$(NO) 31 596")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -881,7 +899,7 @@ record(longin, "$(P){$(NO)}Chan2:DigOut_ON2-I") {
 record(longin, "$(P){$(NO)}Chan2:DigOut_Reset-I") {
     field(DESC, "Digital Output Reset")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 592")
+    field(INP , "@Rx$(NO) 31 600")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -889,7 +907,7 @@ record(longin, "$(P){$(NO)}Chan2:DigOut_Reset-I") {
 record(longin, "$(P){$(NO)}Chan2:DigOut_Spare-I") {
     field(DESC, "Digital Output Spare")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 596")
+    field(INP , "@Rx$(NO) 31 604")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -897,7 +915,7 @@ record(longin, "$(P){$(NO)}Chan2:DigOut_Spare-I") {
 record(longin, "$(P){$(NO)}Chan2:DigOut_Park-I") {
     field(DESC, "Digital Output Park")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 600")
+    field(INP , "@Rx$(NO) 31 608")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -905,7 +923,7 @@ record(longin, "$(P){$(NO)}Chan2:DigOut_Park-I") {
 record(mbbiDirect, "$(P){$(NO)}Chan2:DigIn-I") {
     field(DESC, "Digital Input Bits")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 604")
+    field(INP , "@Rx$(NO) 31 612")
     field(SCAN, "I/O Intr")
 }
 
@@ -913,7 +931,7 @@ record(mbbiDirect, "$(P){$(NO)}Chan2:DigIn-I") {
 record(mbbiDirect, "$(P){$(NO)}Chan2:FaultsLive-I") {
     field(DESC, "PS2 Live Faults")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 608")
+    field(INP , "@Rx$(NO) 31 616")
     field(SCAN, "I/O Intr")
 }
 
@@ -921,7 +939,7 @@ record(mbbiDirect, "$(P){$(NO)}Chan2:FaultsLive-I") {
 record(mbbiDirect, "$(P){$(NO)}Chan2:FaultsLat-I") {
     field(DESC, "PS2 Latched Faults")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 612")
+    field(INP , "@Rx$(NO) 31 620")
     field(SCAN, "I/O Intr")
 }
 
@@ -1135,10 +1153,28 @@ record(longin, "$(P){$(NO)}Chan3:DACSetPt-I") {
     field(EGU,  "")
 }
 
+record(longin, "$(P){$(NO)}Chan3:DACSetPt-Offset-I") {
+    field(DESC, "DAC SetPoint Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 800")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan3:DACSetPt-Gain-I") {
+    field(DESC, "DAC SetPoint Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 804")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+
 record(longin, "$(P){$(NO)}Chan3:DACRampActive-I") {
     field(DESC, "DAC SetPoint Readback")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 800")
+    field(INP , "@Rx$(NO) 31 808")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1147,7 +1183,7 @@ record(longin, "$(P){$(NO)}Chan3:DACRampActive-I") {
 record(longin, "$(P){$(NO)}Chan3:OVC1_Flt_Threshold-I") {
     field(DESC, "DCCT1 OVC Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 804")
+    field(INP , "@Rx$(NO) 31 812")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1155,7 +1191,7 @@ record(longin, "$(P){$(NO)}Chan3:OVC1_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan3:OVC2_Flt_Threshold-I") {
     field(DESC, "DCCT2 OVC Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 808")
+    field(INP , "@Rx$(NO) 31 816")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1163,7 +1199,7 @@ record(longin, "$(P){$(NO)}Chan3:OVC2_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan3:OVV_Flt_Threshold-I") {
     field(DESC, "OVV Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 812")
+    field(INP , "@Rx$(NO) 31 820")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1171,7 +1207,7 @@ record(longin, "$(P){$(NO)}Chan3:OVV_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan3:ERR1_Flt_Threshold-I") {
     field(DESC, "ERR1 Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 816")
+    field(INP , "@Rx$(NO) 31 824")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1179,7 +1215,7 @@ record(longin, "$(P){$(NO)}Chan3:ERR1_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan3:ERR2_Flt_Threshold-I") {
     field(DESC, "ERR2 Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 820")
+    field(INP , "@Rx$(NO) 31 828")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1187,7 +1223,7 @@ record(longin, "$(P){$(NO)}Chan3:ERR2_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan3:IGND_Flt_Threshold-I") {
     field(DESC, "Ignd Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 824")
+    field(INP , "@Rx$(NO) 31 832")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1195,7 +1231,7 @@ record(longin, "$(P){$(NO)}Chan3:IGND_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan3:OVC1_Flt_CntLim-I") {
     field(DESC, "DCCT1 OVC Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 828")
+    field(INP , "@Rx$(NO) 31 836")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1203,7 +1239,7 @@ record(longin, "$(P){$(NO)}Chan3:OVC1_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan3:OVC2_Flt_CntLim-I") {
     field(DESC, "DCCT2 OVC Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 832")
+    field(INP , "@Rx$(NO) 31 840")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1211,7 +1247,7 @@ record(longin, "$(P){$(NO)}Chan3:OVC2_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan3:OVV_Flt_CntLim-I") {
     field(DESC, "OVV Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 836")
+    field(INP , "@Rx$(NO) 31 844")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1219,7 +1255,7 @@ record(longin, "$(P){$(NO)}Chan3:OVV_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan3:ERR1_Flt_CntLim-I") {
     field(DESC, "PID Error 1 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 840")
+    field(INP , "@Rx$(NO) 31 848")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1227,7 +1263,7 @@ record(longin, "$(P){$(NO)}Chan3:ERR1_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan3:ERR2_Flt_CntLim-I") {
     field(DESC, "PID Error 2  Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 844")
+    field(INP , "@Rx$(NO) 31 852")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1235,7 +1271,7 @@ record(longin, "$(P){$(NO)}Chan3:ERR2_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan3:IGND_Flt_CntLim-I") {
     field(DESC, "Ignd Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 848")
+    field(INP , "@Rx$(NO) 31 856")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1243,7 +1279,7 @@ record(longin, "$(P){$(NO)}Chan3:IGND_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan3:DCCT_Flt_CntLim-I") {
     field(DESC, "DCCT Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 852")
+    field(INP , "@Rx$(NO) 31 860")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1251,7 +1287,7 @@ record(longin, "$(P){$(NO)}Chan3:DCCT_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan3:FLT1_Flt_CntLim-I") {
     field(DESC, "Fault 1 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 856")
+    field(INP , "@Rx$(NO) 31 864")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1259,7 +1295,7 @@ record(longin, "$(P){$(NO)}Chan3:FLT1_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan3:FLT2_Flt_CntLim-I") {
     field(DESC, "Fault 2 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 860")
+    field(INP , "@Rx$(NO) 31 868")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1267,7 +1303,7 @@ record(longin, "$(P){$(NO)}Chan3:FLT2_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan3:FLT3_Flt_CntLim-I") {
     field(DESC, "Fault 3 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 864")
+    field(INP , "@Rx$(NO) 31 872")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1275,7 +1311,7 @@ record(longin, "$(P){$(NO)}Chan3:FLT3_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan3:ON_Flt_CntLim-I") {
     field(DESC, "PowerSupply ON Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 868")
+    field(INP , "@Rx$(NO) 31 876")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1283,7 +1319,7 @@ record(longin, "$(P){$(NO)}Chan3:ON_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan3:HeartBeat_Flt_CntLim-I") {
     field(DESC, "HeartBeat Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 872")
+    field(INP , "@Rx$(NO) 31 880")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1291,7 +1327,7 @@ record(longin, "$(P){$(NO)}Chan3:HeartBeat_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan3:FaultClear-I") {
     field(DESC, "Fault Clear")
     field(DTYP, "PSC Reg")   
-    field(INP , "@Rx$(NO) 31 876")
+    field(INP , "@Rx$(NO) 31 884")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1299,7 +1335,7 @@ record(longin, "$(P){$(NO)}Chan3:FaultClear-I") {
 record(longin, "$(P){$(NO)}Chan3:FaultMask-I") {
     field(DESC, "Fault 3 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 880")
+    field(INP , "@Rx$(NO) 31 888")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1307,7 +1343,7 @@ record(longin, "$(P){$(NO)}Chan3:FaultMask-I") {
 record(longin, "$(P){$(NO)}Chan3:DigOut_ON1-I") {
     field(DESC, "Digital Output ON1")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 884")
+    field(INP , "@Rx$(NO) 31 892")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1315,7 +1351,7 @@ record(longin, "$(P){$(NO)}Chan3:DigOut_ON1-I") {
 record(longin, "$(P){$(NO)}Chan3:DigOut_ON2-I") {
     field(DESC, "Digital Output ON2")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 888")
+    field(INP , "@Rx$(NO) 31 896")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1324,7 +1360,7 @@ record(longin, "$(P){$(NO)}Chan3:DigOut_ON2-I") {
 record(longin, "$(P){$(NO)}Chan3:DigOut_Reset-I") {
     field(DESC, "Digital Output Reset")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 892")
+    field(INP , "@Rx$(NO) 31 900")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1332,7 +1368,7 @@ record(longin, "$(P){$(NO)}Chan3:DigOut_Reset-I") {
 record(longin, "$(P){$(NO)}Chan3:DigOut_Spare-I") {
     field(DESC, "Digital Output Spare")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 896")
+    field(INP , "@Rx$(NO) 31 904")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1340,7 +1376,7 @@ record(longin, "$(P){$(NO)}Chan3:DigOut_Spare-I") {
 record(longin, "$(P){$(NO)}Chan3:DigOut_Park-I") {
     field(DESC, "Digital Output Park")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 900")
+    field(INP , "@Rx$(NO) 31 908")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1348,7 +1384,7 @@ record(longin, "$(P){$(NO)}Chan3:DigOut_Park-I") {
 record(mbbiDirect, "$(P){$(NO)}Chan3:DigIn-I") {
     field(DESC, "Digital Input Bits")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 904")
+    field(INP , "@Rx$(NO) 31 912")
     field(SCAN,"I/O Intr")
 }
 
@@ -1356,7 +1392,7 @@ record(mbbiDirect, "$(P){$(NO)}Chan3:DigIn-I") {
 record(mbbiDirect, "$(P){$(NO)}Chan3:FaultsLive-I") {
     field(DESC, "PS3 Live Faults")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 908")
+    field(INP , "@Rx$(NO) 31 916")
     field(SCAN, "I/O Intr")
 }
 
@@ -1364,7 +1400,7 @@ record(mbbiDirect, "$(P){$(NO)}Chan3:FaultsLive-I") {
 record(mbbiDirect, "$(P){$(NO)}Chan3:FaultsLat-I") {
     field(DESC, "PS1 Latched Faults")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 912")
+    field(INP , "@Rx$(NO) 31 920")
     field(SCAN, "I/O Intr")
 }
 
@@ -1578,10 +1614,28 @@ record(longin, "$(P){$(NO)}Chan4:DACSetPt-I") {
     field(EGU,  "")
 }
 
+record(longin, "$(P){$(NO)}Chan4:DACSetPt-Offset-I") {
+    field(DESC, "DAC SetPoint Offset Readback")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 1100")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+record(ai, "$(P){$(NO)}Chan4:DACSetPt-Gain-I") {
+    field(DESC, "DAC SetPoint Gain Readback")
+    field(DTYP, "PSC Reg F32")
+    field(INP , "@Rx$(NO) 31 1104")
+    field(SCAN,"I/O Intr")
+    field(EGU,  "")
+}
+
+
+
 record(longin, "$(P){$(NO)}Chan4:DACRampActive-I") {
     field(DESC, "DAC SetPoint Readback")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1100")
+    field(INP , "@Rx$(NO) 31 1108")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1590,7 +1644,7 @@ record(longin, "$(P){$(NO)}Chan4:DACRampActive-I") {
 record(longin, "$(P){$(NO)}Chan4:OVC1_Flt_Threshold-I") {
     field(DESC, "DCCT1 OVC Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1104")
+    field(INP , "@Rx$(NO) 31 1112")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1598,7 +1652,7 @@ record(longin, "$(P){$(NO)}Chan4:OVC1_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan4:OVC2_Flt_Threshold-I") {
     field(DESC, "DCCT2 OVC Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1108")
+    field(INP , "@Rx$(NO) 31 1116")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1606,7 +1660,7 @@ record(longin, "$(P){$(NO)}Chan4:OVC2_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan4:OVV_Flt_Threshold-I") {
     field(DESC, "OVV Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1112")
+    field(INP , "@Rx$(NO) 31 1120")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1614,7 +1668,7 @@ record(longin, "$(P){$(NO)}Chan4:OVV_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan4:ERR1_Flt_Threshold-I") {
     field(DESC, "ERR1 Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1116")
+    field(INP , "@Rx$(NO) 31 1124")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1622,7 +1676,7 @@ record(longin, "$(P){$(NO)}Chan4:ERR1_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan4:ERR2_Flt_Threshold-I") {
     field(DESC, "ERR2 Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1120")
+    field(INP , "@Rx$(NO) 31 1128")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1630,7 +1684,7 @@ record(longin, "$(P){$(NO)}Chan4:ERR2_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan4:IGND_Flt_Threshold-I") {
     field(DESC, "Ignd Fault Threshold")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1124")
+    field(INP , "@Rx$(NO) 31 1132")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1638,7 +1692,7 @@ record(longin, "$(P){$(NO)}Chan4:IGND_Flt_Threshold-I") {
 record(longin, "$(P){$(NO)}Chan4:OVC1_Flt_CntLim-I") {
     field(DESC, "DCCT1 OVC Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1128")
+    field(INP , "@Rx$(NO) 31 1136")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1646,7 +1700,7 @@ record(longin, "$(P){$(NO)}Chan4:OVC1_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan4:OVC2_Flt_CntLim-I") {
     field(DESC, "DCCT2 OVC Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1132")
+    field(INP , "@Rx$(NO) 31 1140")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1654,7 +1708,7 @@ record(longin, "$(P){$(NO)}Chan4:OVC2_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan4:OVV_Flt_CntLim-I") {
     field(DESC, "OVV Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1136")
+    field(INP , "@Rx$(NO) 31 1144")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1662,7 +1716,7 @@ record(longin, "$(P){$(NO)}Chan4:OVV_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan4:ERR1_Flt_CntLim-I") {
     field(DESC, "PID Error 1 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1140")
+    field(INP , "@Rx$(NO) 31 1148")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1670,7 +1724,7 @@ record(longin, "$(P){$(NO)}Chan4:ERR1_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan4:ERR2_Flt_CntLim-I") {
     field(DESC, "PID Error 2  Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1144")
+    field(INP , "@Rx$(NO) 31 1152")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1678,7 +1732,7 @@ record(longin, "$(P){$(NO)}Chan4:ERR2_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan4:IGND_Flt_CntLim-I") {
     field(DESC, "Ignd Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1148")
+    field(INP , "@Rx$(NO) 31 1156")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1686,7 +1740,7 @@ record(longin, "$(P){$(NO)}Chan4:IGND_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan4:DCCT_Flt_CntLim-I") {
     field(DESC, "DCCT Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1152")
+    field(INP , "@Rx$(NO) 31 1160")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1694,7 +1748,7 @@ record(longin, "$(P){$(NO)}Chan4:DCCT_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan4:FLT1_Flt_CntLim-I") {
     field(DESC, "Fault 1 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1156")
+    field(INP , "@Rx$(NO) 31 1164")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1702,7 +1756,7 @@ record(longin, "$(P){$(NO)}Chan4:FLT1_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan4:FLT2_Flt_CntLim-I") {
     field(DESC, "Fault 2 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1160")
+    field(INP , "@Rx$(NO) 31 1168")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1710,7 +1764,7 @@ record(longin, "$(P){$(NO)}Chan4:FLT2_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan4:FLT3_Flt_CntLim-I") {
     field(DESC, "Fault 3 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1164")
+    field(INP , "@Rx$(NO) 31 1172")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1718,7 +1772,7 @@ record(longin, "$(P){$(NO)}Chan4:FLT3_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan4:ON_Flt_CntLim-I") {
     field(DESC, "PowerSupply ON Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1168")
+    field(INP , "@Rx$(NO) 31 1176")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1726,7 +1780,7 @@ record(longin, "$(P){$(NO)}Chan4:ON_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan4:HeartBeat_Flt_CntLim-I") {
     field(DESC, "HeartBeat Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1172")
+    field(INP , "@Rx$(NO) 31 1180")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1734,7 +1788,7 @@ record(longin, "$(P){$(NO)}Chan4:HeartBeat_Flt_CntLim-I") {
 record(longin, "$(P){$(NO)}Chan4:FaultClear-I") {
     field(DESC, "Fault Clear")
     field(DTYP, "PSC Reg")   
-    field(INP , "@Rx$(NO) 31 1176")
+    field(INP , "@Rx$(NO) 31 1184")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1742,7 +1796,7 @@ record(longin, "$(P){$(NO)}Chan4:FaultClear-I") {
 record(longin, "$(P){$(NO)}Chan4:FaultMask-I") {
     field(DESC, "Fault 3 Fault Counter Limit")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1180")
+    field(INP , "@Rx$(NO) 31 1188")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1750,7 +1804,7 @@ record(longin, "$(P){$(NO)}Chan4:FaultMask-I") {
 record(longin, "$(P){$(NO)}Chan4:DigOut_ON1-I") {
     field(DESC, "Digital Output ON1")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1184")
+    field(INP , "@Rx$(NO) 31 1192")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1758,7 +1812,7 @@ record(longin, "$(P){$(NO)}Chan4:DigOut_ON1-I") {
 record(longin, "$(P){$(NO)}Chan4:DigOut_ON2-I") {
     field(DESC, "Digital Output ON2")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1188")
+    field(INP , "@Rx$(NO) 31 1196")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1767,7 +1821,7 @@ record(longin, "$(P){$(NO)}Chan4:DigOut_ON2-I") {
 record(longin, "$(P){$(NO)}Chan4:DigOut_Reset-I") {
     field(DESC, "Digital Output Reset")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1192")
+    field(INP , "@Rx$(NO) 31 1200")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1775,7 +1829,7 @@ record(longin, "$(P){$(NO)}Chan4:DigOut_Reset-I") {
 record(longin, "$(P){$(NO)}Chan4:DigOut_Spare-I") {
     field(DESC, "Digital Output Spare")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1196")
+    field(INP , "@Rx$(NO) 31 1204")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1783,7 +1837,7 @@ record(longin, "$(P){$(NO)}Chan4:DigOut_Spare-I") {
 record(longin, "$(P){$(NO)}Chan4:DigOut_Park-I") {
     field(DESC, "Digital Output Park")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1200")
+    field(INP , "@Rx$(NO) 31 1208")
     field(SCAN,"I/O Intr")
     field(EGU,  "")
 }
@@ -1791,7 +1845,7 @@ record(longin, "$(P){$(NO)}Chan4:DigOut_Park-I") {
 record(mbbiDirect, "$(P){$(NO)}Chan4:DigIn-I") {
     field(DESC, "Digital Input Bits")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1204")
+    field(INP , "@Rx$(NO) 31 1212")
     field(SCAN,"I/O Intr")
 }
 
@@ -1799,7 +1853,7 @@ record(mbbiDirect, "$(P){$(NO)}Chan4:DigIn-I") {
 record(mbbiDirect, "$(P){$(NO)}Chan4:FaultsLive-I") {
     field(DESC, "PS4 Live Faults")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1208")
+    field(INP , "@Rx$(NO) 31 1216")
     field(SCAN, "I/O Intr")
 }
 
@@ -1807,7 +1861,7 @@ record(mbbiDirect, "$(P){$(NO)}Chan4:FaultsLive-I") {
 record(mbbiDirect, "$(P){$(NO)}Chan4:FaultsLat-I") {
     field(DESC, "PS4 Latched Faults")
     field(DTYP, "PSC Reg")
-    field(INP , "@Rx$(NO) 31 1212")
+    field(INP , "@Rx$(NO) 31 1220")
     field(SCAN, "I/O Intr")
 }
 

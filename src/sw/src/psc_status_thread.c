@@ -185,7 +185,7 @@ void ReadSAData(char *msg) {
        sadata.ps[chan].dac_setpt = Xil_In32(base + DAC_CURRSETPT_REG);
        sadata.ps[chan].dac_setpt_offset = Xil_In32(base + DAC_SETPT_OFFSET_REG);
        sadata.ps[chan].dac_setpt_gain = Xil_In32(base + DAC_SETPT_GAIN_REG) / GAIN20BITFRACT;
-       printf("Chan: %d   DAC Gain: %f\r\n",chan,sadata.ps[chan].dac_setpt_gain);
+       //printf("Chan: %d   DAC Gain: %f\r\n",chan,sadata.ps[chan].dac_setpt_gain);
        sadata.ps[chan].dac_rampactive = Xil_In32(base + DAC_RAMPACTIVE_REG);
 
 
