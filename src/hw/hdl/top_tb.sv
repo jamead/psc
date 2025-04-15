@@ -186,19 +186,28 @@ module top_tb;
     //#1000;           
 
     //write the dcct gain and offset
-    `zynq.write_data(32'h43C00400,4, 32'h20, resp);   //ps1 dcct0 offset 
-    `zynq.write_data(32'h43C00404,4, 32'h7FFF, resp); //ps1 dcct0 gain   
-    `zynq.write_data(32'h43C004C0,4, 32'h20, resp);   //ps4 dcct0 offset 
-    `zynq.write_data(32'h43C004C4,4, 32'h1234, resp); //ps4 dcct0 gain  
-    
+    `zynq.write_data(32'h43C00150,4, 32'h20, resp);   //ps1 dcct0 offset 
+    `zynq.write_data(32'h43C00154,4, 32'h7FFF, resp); //ps1 dcct0 gain   
+    `zynq.write_data(32'h43C00158,4, 32'h20, resp);   //ps4 dcct1 offset 
+    `zynq.write_data(32'h43C0015C,4, 32'h1234, resp); //ps4 dcct1 gain  
     
     //Set DAC opmode to jump
-    `zynq.write_data(32'h43C0010C,4, 32'h3, resp);
+    `zynq.write_data(32'h43C0012C,4, 32'h3, resp);    
     
+    //write the dac gain and offset
+    `zynq.write_data(32'h43C00120,4, 32'h20, resp);   //ps1 dac offset 
+    `zynq.write_data(32'h43C00124,4, 32'h3FFFF, resp); //ps1 dac gain   
+     #200        
+        
     //write DAC setpoint
-    `zynq.write_data(32'h43C00108,4, 32'h1234, resp);
+    `zynq.write_data(32'h43C00128,4, 32'h1234, resp);
+    #200
     `zynq.write_data(32'h43C00108,4, 32'h1000, resp); 
-    #200;     
+    #200
+
+    
+
+    
        
     //write DAC opmode to smooth
     `zynq.write_data(32'h43C0010C,4, 32'h0, resp);     

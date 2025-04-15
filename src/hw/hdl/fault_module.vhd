@@ -52,7 +52,7 @@ ch1_faults: entity work.fault_block
     ac_on_in => rsts(0), 
     ac_on_out => rcom(0), 
     park => rcom(16), 
-    dac_setpoint => dac_stat.ps1.dac_setpt,
+    dac_setpoint => std_logic_vector(dac_stat.ps1.dac_setpt),
     evr_flt_in => '0',
     fault_stat => fault_stat.ps1  
 
@@ -74,7 +74,7 @@ ch2_faults: entity work.fault_block
     ac_on_in => rsts(4), 
     ac_on_out => rcom(4), 
     park => rcom(16), 
-    dac_setpoint => dac_stat.ps2.dac_setpt,
+    dac_setpoint => std_logic_vector(dac_stat.ps2.dac_setpt),
     evr_flt_in => '0',
     fault_stat => fault_stat.ps2
   
@@ -96,7 +96,7 @@ ch3_faults: entity work.fault_block
     ac_on_in => rsts(8), 
     ac_on_out => rcom(8), 
     park => rcom(18), 
-    dac_setpoint => dac_stat.ps3.dac_setpt,
+    dac_setpoint => std_logic_vector(dac_stat.ps3.dac_setpt),
     evr_flt_in => '0',
     fault_stat => fault_stat.ps3 
 );    
@@ -117,7 +117,7 @@ ch4_faults: entity work.fault_block
     ac_on_in => rsts(12), 
     ac_on_out => rcom(12), 
     park => rcom(19), 
-    dac_setpoint => dac_stat.ps4.dac_setpt,
+    dac_setpoint => std_logic_vector(dac_stat.ps4.dac_setpt),
     evr_flt_in => '0',
     fault_stat => fault_stat.ps4 
 );    

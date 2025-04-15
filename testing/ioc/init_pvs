@@ -39,12 +39,13 @@ caput lab{1}Chan1:Error-Offset-SP -4
 caput lab{1}Chan1:DigOut_ON1-SP 0
 caput lab{1}Chan1:DigOut_ON2-SP 0
 caput lab{1}Chan1:DigOut_Reset-SP 0
+caput lab{1}Chan1:DigOut_Spare-SP 0
 caput lab{1}Chan1:DigOut_Park-SP 0
 
 caput lab{1}Chan1:DAC_OpMode-SP 0
 caput lab{1}Chan1:DAC_SetPt-SP 0
-caput lab{1}Chan1:DAC_Gain-SP 1.000
-caput lab{1}Chan1:DAC_Offset-SP 0 
+caput lab{1}Chan1:DACSetPt-Gain-SP 1.000
+caput lab{1}Chan1:DACSetPt-Offset-SP 0 
 caput lab{1}Chan1:DAC_RampLen-SP 45000
 caput lab{1}Chan1:DAC_RampRun-SP 0
 
@@ -91,12 +92,13 @@ caput lab{1}Chan2:Error-Offset-SP -4
 caput lab{1}Chan2:DigOut_ON1-SP 0
 caput lab{1}Chan2:DigOut_ON2-SP 0
 caput lab{1}Chan2:DigOut_Reset-SP 0
+caput lab{1}Chan2:DigOut_Spare-SP 0
 caput lab{1}Chan2:DigOut_Park-SP 0
 
 caput lab{1}Chan2:DAC_OpMode-SP 0
 caput lab{1}Chan2:DAC_SetPt-SP 0
-caput lab{1}Chan2:DAC_Gain-SP 1.000
-caput lab{1}Chan2:DAC_Offset-SP 0 
+caput lab{1}Chan2:DACSetPt-Gain-SP 1.000
+caput lab{1}Chan2:DACSetPt-Offset-SP 0 
 caput lab{1}Chan2:DAC_RampLen-SP 45000
 caput lab{1}Chan2:DAC_RampRun-SP 0
 
@@ -147,12 +149,13 @@ caput lab{1}Chan3:Error-Offset-SP -4
 caput lab{1}Chan3:DigOut_ON1-SP 0
 caput lab{1}Chan3:DigOut_ON2-SP 0
 caput lab{1}Chan3:DigOut_Reset-SP 0
+caput lab{1}Chan3:DigOut_Spare-SP 0
 caput lab{1}Chan3:DigOut_Park-SP 0
 
 caput lab{1}Chan3:DAC_OpMode-SP 0
 caput lab{1}Chan3:DAC_SetPt-SP 0
-caput lab{1}Chan3:DAC_Gain-SP 1.000
-caput lab{1}Chan3:DAC_Offset-SP 0 
+caput lab{1}Chan3:DACSetPt-Gain-SP 1.000
+caput lab{1}Chan3:DACSetPt-Offset-SP 0 
 caput lab{1}Chan3:DAC_RampLen-SP 45000
 caput lab{1}Chan3:DAC_RampRun-SP 0
 
@@ -200,12 +203,13 @@ caput lab{1}Chan4:Error-Offset-SP -4
 caput lab{1}Chan4:DigOut_ON1-SP 0
 caput lab{1}Chan4:DigOut_ON2-SP 0
 caput lab{1}Chan4:DigOut_Reset-SP 0
+caput lab{1}Chan4:DigOut_Spare-SP 0
 caput lab{1}Chan4:DigOut_Park-SP 0
 
 caput lab{1}Chan4:DAC_OpMode-SP 0
 caput lab{1}Chan4:DAC_SetPt-SP 0
-caput lab{1}Chan4:DAC_Gain-SP 1.000
-caput lab{1}Chan4:DAC_Offset-SP 0 
+caput lab{1}Chan4:DACSetPt-Gain-SP 1.000
+caput lab{1}Chan4:DACSetPt-Offset-SP 0 
 caput lab{1}Chan4:DAC_RampLen-SP 45000
 caput lab{1}Chan4:DAC_RampRun-SP 0
 

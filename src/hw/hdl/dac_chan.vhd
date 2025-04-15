@@ -46,9 +46,11 @@ type state_type is (IDLE, RUN_RAMP, UPDATE_DAC);
   signal dac_rddata      : std_logic_vector(19 downto 0);
   signal dac_rden        : std_logic;
   signal ramp_dac_setpt  : std_logic_vector(19 downto 0);
-  signal dac_setpt       : std_logic_vector(19 downto 0);
+  signal dac_setpt_raw   : std_logic_vector(19 downto 0);
+  signal dac_setpt       : signed(19 downto 0);
   signal ramp_active     : std_logic;
   signal dac_trig        : std_logic;
+  signal gainoff_done    : std_logic;
   
   signal state : state_type;
 
@@ -72,6 +74,22 @@ begin
 dac_stat.dac_setpt <= dac_setpt;
 dac_stat.active <= ramp_active;
 
+
+
+gainoff_dac : entity work.dac_gainoffset
+  port map (
+    clk => clk,
+    reset => reset,
+    tenkhz_trig => tenkhz_trig,
+    dac_setpt_raw => signed(dac_setpt_raw),
+    dac_cntrl => dac_cntrl,
+    dac_setpt => dac_setpt,
+    done => gainoff_done
+);
+
+
+
+
 --Source of DAC data depenods on Mode
 --Because DAC sync's are tied together, must always update every DAC
 --  0=smooth ramp, 1=ramp table, 2=FOFB, 3=Jump Mode
@@ -79,13 +97,13 @@ process(clk)
 begin 
     if rising_edge(clk) then 
       if (reset = '1') then
-        dac_setpt <= (others => '0');
+        dac_setpt_raw <= (others => '0');
       else
         if (tenkhz_trig = '1') then   
           if (dac_cntrl.mode = "00" or dac_cntrl.mode = "01" ) then
-            dac_setpt <= ramp_dac_setpt;
+            dac_setpt_raw <= ramp_dac_setpt;
           else
-            dac_setpt <= dac_cntrl.setpoint;    
+            dac_setpt_raw <= dac_cntrl.setpoint;    
           end if;
         end if;
       end if;
@@ -158,16 +176,16 @@ begin
 
 
 
-setpt_dac:  entity work.dac_ad5781_intf 
+spi_dac:  entity work.dac_ad5781_intf 
   generic map
     (SPI_CLK_DIV => 5) --10MHz sclk
   port map(
 	--Control inputs
     clk => clk,
     reset => dac_cntrl.reset, 
-	start => tenkhz_trig,  
+	start => gainoff_done, --tenkhz_trig,  
     --DAC Inputs         
-    dac_data => dac_setpt(17 downto 0),
+    dac_data => std_logic_vector(dac_setpt(17 downto 0)),
     dac_ctrl_bits => dac_cntrl.cntrl(4 downto 0),
 	--DAC Outputs        
     n_sync => n_sync1234, 

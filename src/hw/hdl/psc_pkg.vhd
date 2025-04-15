@@ -205,7 +205,7 @@ end record;
 type t_dac_stat_onech is record
   active                : std_logic;
   cur_addr              : std_logic_vector(15 downto 0);
-  dac_setpt             : std_logic_vector(19 downto 0);
+  dac_setpt             : signed(19 downto 0);
 end record;
 
 type t_dac_stat is record
@@ -221,8 +221,8 @@ type t_dac_cntrl_onech is record
   setpoint            : std_logic_vector(19 downto 0); 
   ramprun             : std_logic; 
   ramplen             : std_logic_vector(15 downto 0);
-  gain                : std_logic_vector(23 downto 0);  --Q3.20 format
-  offset              : std_logic_vector(19 downto 0);
+  gain                : signed(23 downto 0);  --Q3.20 format
+  offset              : signed(19 downto 0);
   --Control Register Bits 
   cntrl               : std_logic_vector(7 downto 0); 
   -- DPRAM for table

@@ -17,15 +17,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="3,308.214994 us"></ZoomStartTime>
-      <ZoomEndTime time="6,095.185002 us"></ZoomEndTime>
-      <Cursor1Time time="5,630.690000 us"></Cursor1Time>
+      <ZoomStartTime time="300,532.492 ns"></ZoomStartTime>
+      <ZoomEndTime time="301,090.625 ns"></ZoomEndTime>
+      <Cursor1Time time="300,675.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="238"></NameColumnWidth>
+      <NameColumnWidth column_width="234"></NameColumnWidth>
       <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="58" />
+   <WVObjectSize size="60" />
    <wvobject type="logic" fp_name="/top_tb/clk">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -37,10 +37,6 @@
    <wvobject type="logic" fp_name="/top_tb/dut/tenkhz_trig">
       <obj_property name="ElementShortName">tenkhz_trig</obj_property>
       <obj_property name="ObjectShortName">tenkhz_trig</obj_property>
-   </wvobject>
-   <wvobject type="array" fp_name="/top_tb/dut/ps_regs/leds">
-      <obj_property name="ElementShortName">leds[7:0]</obj_property>
-      <obj_property name="ObjectShortName">leds[7:0]</obj_property>
    </wvobject>
    <wvobject type="array" fp_name="/top_tb/dut/fp_leds">
       <obj_property name="ElementShortName">fp_leds[7:0]</obj_property>
@@ -110,10 +106,6 @@
       <obj_property name="ElementShortName">state</obj_property>
       <obj_property name="ObjectShortName">state</obj_property>
    </wvobject>
-   <wvobject type="logic" fp_name="/top_tb/dut/read_dcct_adcs/conv_done_last">
-      <obj_property name="ElementShortName">conv_done_last</obj_property>
-      <obj_property name="ObjectShortName">conv_done_last</obj_property>
-   </wvobject>
    <wvobject type="logic" fp_name="/top_tb/dut/read_dcct_adcs/conv_done">
       <obj_property name="ElementShortName">conv_done</obj_property>
       <obj_property name="ObjectShortName">conv_done</obj_property>
@@ -122,9 +114,9 @@
       <obj_property name="ElementShortName">dcct_params</obj_property>
       <obj_property name="ObjectShortName">dcct_params</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/top_tb/dut/read_dcct_adcs/DCCT_out">
-      <obj_property name="ElementShortName">DCCT_out</obj_property>
-      <obj_property name="ObjectShortName">DCCT_out</obj_property>
+   <wvobject type="array" fp_name="/top_tb/dut/read_dcct_adcs/dcct_out">
+      <obj_property name="ElementShortName">dcct_out</obj_property>
+      <obj_property name="ObjectShortName">dcct_out</obj_property>
    </wvobject>
    <wvobject fp_name="divider163" type="divider">
       <obj_property name="label">RampTable</obj_property>
@@ -142,6 +134,10 @@
    <wvobject type="logic" fp_name="/top_tb/dut/write_dacs/tenkhz_trig">
       <obj_property name="ElementShortName">tenkhz_trig</obj_property>
       <obj_property name="ObjectShortName">tenkhz_trig</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/top_tb/dut/write_dacs/dac1/gainoff_done">
+      <obj_property name="ElementShortName">gainoff_done</obj_property>
+      <obj_property name="ObjectShortName">gainoff_done</obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/top_tb/stpt_dac_sck">
       <obj_property name="ElementShortName">stpt_dac_sck</obj_property>
@@ -163,6 +159,21 @@
    <wvobject type="array" fp_name="/top_tb/dut/write_dacs/dac1/ramp_dac_setpt">
       <obj_property name="ElementShortName">ramp_dac_setpt[19:0]</obj_property>
       <obj_property name="ObjectShortName">ramp_dac_setpt[19:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/write_dacs/dac1/gainoff_dac/dac_setpt_raw">
+      <obj_property name="ElementShortName">dac_setpt_raw[19:0]</obj_property>
+      <obj_property name="ObjectShortName">dac_setpt_raw[19:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/write_dacs/dac1/gainoff_dac/dac_setpt_oc">
+      <obj_property name="ElementShortName">dac_setpt_oc[19:0]</obj_property>
+      <obj_property name="ObjectShortName">dac_setpt_oc[19:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/top_tb/dut/write_dacs/dac1/gainoff_dac/dac_setpt">
+      <obj_property name="ElementShortName">dac_setpt[19:0]</obj_property>
+      <obj_property name="ObjectShortName">dac_setpt[19:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
    </wvobject>
    <wvobject type="logic" fp_name="/top_tb/dut/write_dacs/dac1/ramp_active">
       <obj_property name="ElementShortName">ramp_active</obj_property>
@@ -187,7 +198,51 @@
    <wvobject type="array" fp_name="/top_tb/dut/write_dacs/dac_cntrl.ps1">
       <obj_property name="ElementShortName">.ps1</obj_property>
       <obj_property name="ObjectShortName">.ps1</obj_property>
-      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/top_tb/dut/write_dacs/dac_cntrl.ps1.setpoint">
+         <obj_property name="ElementShortName">.setpoint[19:0]</obj_property>
+         <obj_property name="ObjectShortName">.setpoint[19:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/dut/write_dacs/dac_cntrl.ps1.ramprun">
+         <obj_property name="ElementShortName">.ramprun</obj_property>
+         <obj_property name="ObjectShortName">.ramprun</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/dut/write_dacs/dac_cntrl.ps1.ramplen">
+         <obj_property name="ElementShortName">.ramplen[15:0]</obj_property>
+         <obj_property name="ObjectShortName">.ramplen[15:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/dut/write_dacs/dac_cntrl.ps1.gain">
+         <obj_property name="ElementShortName">.gain[23:0]</obj_property>
+         <obj_property name="ObjectShortName">.gain[23:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/dut/write_dacs/dac_cntrl.ps1.offset">
+         <obj_property name="ElementShortName">.offset[19:0]</obj_property>
+         <obj_property name="ObjectShortName">.offset[19:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/dut/write_dacs/dac_cntrl.ps1.cntrl">
+         <obj_property name="ElementShortName">.cntrl[7:0]</obj_property>
+         <obj_property name="ObjectShortName">.cntrl[7:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/dut/write_dacs/dac_cntrl.ps1.dpram_addr">
+         <obj_property name="ElementShortName">.dpram_addr[15:0]</obj_property>
+         <obj_property name="ObjectShortName">.dpram_addr[15:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/dut/write_dacs/dac_cntrl.ps1.dpram_data">
+         <obj_property name="ElementShortName">.dpram_data[19:0]</obj_property>
+         <obj_property name="ObjectShortName">.dpram_data[19:0]</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/dut/write_dacs/dac_cntrl.ps1.dpram_we">
+         <obj_property name="ElementShortName">.dpram_we</obj_property>
+         <obj_property name="ObjectShortName">.dpram_we</obj_property>
+      </wvobject>
+      <wvobject type="logic" fp_name="/top_tb/dut/write_dacs/dac_cntrl.ps1.reset">
+         <obj_property name="ElementShortName">.reset</obj_property>
+         <obj_property name="ObjectShortName">.reset</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/top_tb/dut/write_dacs/dac_cntrl.ps1.mode">
+         <obj_property name="ElementShortName">.mode[1:0]</obj_property>
+         <obj_property name="ObjectShortName">.mode[1:0]</obj_property>
+      </wvobject>
    </wvobject>
    <wvobject fp_name="divider162" type="divider">
       <obj_property name="label">GTX</obj_property>
