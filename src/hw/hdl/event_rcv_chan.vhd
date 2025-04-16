@@ -23,16 +23,16 @@ architecture behv of event_rcv_chan is
     signal startWidth   : STD_LOGIC := '0';
     signal trigVal      : STD_LOGIC;
     
-    attribute mark_debug                  : string;
-    attribute mark_debug of delayCounter  : signal is "true";
-    attribute mark_debug of widthCounter  : signal is "true";
-    attribute mark_debug of startDelay    : signal is "true";
-    attribute mark_debug of startWidth    : signal is "true";
-    attribute mark_debug of trigVal       : signal is "true";
-    attribute mark_debug of myEvent       : signal is "true";
-    attribute mark_debug of myDelay       : signal is "true";   
-    attribute mark_debug of trigger       : signal is "true";
-    attribute mark_debug of eventStream   : signal is "true";
+--    attribute mark_debug                  : string;
+--    attribute mark_debug of delayCounter  : signal is "true";
+--    attribute mark_debug of widthCounter  : signal is "true";
+--    attribute mark_debug of startDelay    : signal is "true";
+--    attribute mark_debug of startWidth    : signal is "true";
+--    attribute mark_debug of trigVal       : signal is "true";
+--    attribute mark_debug of myEvent       : signal is "true";
+--    attribute mark_debug of myDelay       : signal is "true";   
+--    attribute mark_debug of trigger       : signal is "true";
+--    attribute mark_debug of eventStream   : signal is "true";
 
 
 begin

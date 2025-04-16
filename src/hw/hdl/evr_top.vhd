@@ -177,17 +177,17 @@ ts : entity work.event_rcv_ts
 
 
 	
--- 1 Hz GPS tick	
-event_gps : entity work.event_rcv_chan 
+-- Post Mortem Event	
+event_pm : entity work.event_rcv_chan 
     port map(
        clock => rxusr_clk,
        reset => sys_rst,
        eventstream => eventstream,
-       myevent => (x"7D"),     -- 125d
+       myevent => evr_params.pm_eventno, 
        mydelay => (x"00000001"),
        mywidth => (x"00000175"),   -- //creates a pulse about 3us long
        mypolarity => ('0'),
-       trigger => evr_trigs.gps_trig
+       trigger => evr_trigs.pm_trig
 );
 
 
@@ -222,18 +222,44 @@ event_10KHz : entity work.event_rcv_chan
 );
 		
 		
--- On demand 	
-event_usr : entity work.event_rcv_chan
+-- Inj Event 	
+event_inj : entity work.event_rcv_chan
     port map(
        clock => rxusr_clk,
        reset => sys_rst,
        eventstream => eventstream,
-       myevent => evr_params.usr_trig_code,
+       myevent => evr_params.inj_eventno,
        mydelay => 32d"1",  --evr_params.trigdly, 
        mywidth => (x"00000175"),   -- //creates a pulse about 3us long
        mypolarity => ('0'),
-       trigger => evr_trigs.usr_trig
+       trigger => evr_trigs.inj_trig
 );
+
+
+
+
+--stretch the sa_trig signal so can be seen on LED
+sa_led : entity work.stretch
+  port map (
+	clk => sys_clk,
+	reset => sys_rst, 
+	sig_in => evr_trigs.sa_trig, 
+	len => 3000000, -- ~25ms;
+	sig_out => evr_trigs.sa_trig_stretch
+);	  	
+
+
+--stretch the inj_trig signal so can be seen on LED
+inj_led : entity work.stretch
+  port map (
+	clk => sys_clk,
+	reset => sys_rst, 
+	sig_in => evr_trigs.inj_trig, 
+	len => 3000000, -- ~25ms;
+	sig_out => evr_trigs.inj_trig_stretch
+);	  	
+
+
 
 
 evr_gtx_init_i : evr_gtx

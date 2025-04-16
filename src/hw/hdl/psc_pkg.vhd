@@ -60,8 +60,8 @@ end record;
 
 type t_evr_params is record
    reset         : std_logic_vector(7 downto 0);
-   usr_trig_code : std_logic_vector(7 downto 0);
-   pm_trig_code  : std_logic_vector(7 downto 0);
+   inj_eventno   : std_logic_vector(7 downto 0);
+   pm_eventno    : std_logic_vector(7 downto 0);
 end record;
 
 type t_evr_trigs is record
@@ -70,8 +70,9 @@ type t_evr_trigs is record
    fa_trig         : std_logic;  
    sa_trig         : std_logic; 
    sa_trig_stretch : std_logic;
-   usr_trig        : std_logic;  
-   gps_trig        : std_logic;
+   inj_trig        : std_logic;
+   inj_trig_stretch: std_logic;  
+   pm_trig         : std_logic;
    ts_s            : std_logic_vector(31 downto 0);
    ts_ns           : std_logic_vector(31 downto 0);
 end record;  

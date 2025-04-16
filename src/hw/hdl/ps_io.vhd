@@ -85,6 +85,9 @@ reg_i.fpgaver.val.data <= std_logic_vector(to_unsigned(FPGA_VERSION,32));
 reg_i.evr_ts_s.val.data <= evr_trigs.ts_s;
 reg_i.evr_ts_ns.val.data <= evr_trigs.ts_ns; 
 evr_params.reset <= reg_o.evr_reset.val.data;
+evr_params.inj_eventno <= reg_o.evr_inj_eventno.val.data;
+evr_params.pm_eventno <= reg_o.evr_pm_eventno.val.data;
+
 
 
 

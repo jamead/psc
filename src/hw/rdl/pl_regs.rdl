@@ -44,10 +44,6 @@ reg {
   } leds @0x4;
   
 
-
-
-
-
 reg {
     desc="EVR Timestamp (s)";
     default sw = rw;
@@ -70,6 +66,19 @@ reg {
   } evr_reset @0x18;
 
 
+reg {
+    desc="EVR Injection Event Code";
+    default sw = rw;
+    default hw = r;
+    field {} val[8];
+  } evr_inj_eventno @0x20;
+
+reg {
+    desc="EVR Post Mortem Event Code";
+    default sw = rw;
+    default hw = r;
+    field {} val[8];
+  } evr_pm_eventno @0x24;
 
 
 

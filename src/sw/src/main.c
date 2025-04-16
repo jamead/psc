@@ -326,8 +326,8 @@ int main()
 
 	//EVR reset
     xil_printf("Resetting EVR GTX...\r\n");
-	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET, 0xFF);
-	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET, 0);
+	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET_REG, 0xFF);
+	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET_REG, 0);
     usleep(1000);
 
 

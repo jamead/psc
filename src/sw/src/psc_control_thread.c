@@ -32,7 +32,7 @@ typedef union {
 
 
 void set_fpleds(u32 msgVal)  {
-	Xil_Out32(XPAR_M_AXI_BASEADDR + LEDS, msgVal);
+	Xil_Out32(XPAR_M_AXI_BASEADDR + LEDS_REG, msgVal);
 }
 
 
@@ -174,11 +174,23 @@ void GlobSetting(u32 addr, MsgUnion data) {
 			Xil_Out32(XPAR_M_AXI_BASEADDR + TESTTRIG, 0);
             break;
 
-
         case FP_LED_MSG:
          	xil_printf("Setting FP LED:   Value=%d\r\n",data.u);
          	set_fpleds(data.u);
          	break;
+
+		case EVR_INJ_EVENTNUM_MSG:
+			xil_printf("Setting INJ Event Number:   Value=%d\r\n",data.u);
+			Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_INJ_EVENTNUM_REG, data.u);
+            break;
+
+		case EVR_PM_EVENTNUM_MSG:
+			xil_printf("Setting Post Mortem Event Number:   Value=%d\r\n",data.u);
+			Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_PM_EVENTNUM_REG, data.u);
+            break;
+
+
+
     }
 
 }

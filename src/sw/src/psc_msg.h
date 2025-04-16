@@ -220,6 +220,8 @@ typedef struct SysHealthMsg {
 #define SOFT_TRIG_MSG        0
 #define TEST_TRIG_MSG        4
 #define FP_LED_MSG           8
+#define EVR_INJ_EVENTNUM_MSG 20
+#define EVR_PM_EVENTNUM_MSG  24
 
 #define DAC_OPMODE_MSG       100
 #define DAC_SETPT_MSG        104

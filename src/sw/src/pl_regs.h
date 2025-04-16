@@ -1,19 +1,22 @@
 #define AXI_CIRBUFBASE 0x10000000
 
-
-#define FPGAVER               0X0       // FPGA Version
-#define LEDS                  0X4       // PS Leds
-#define EVR_TS_S              0X10      // EVR Timestamp (s)
-#define EVR_TS_NS             0X14      // EVR Timestamp (ns)
-#define EVR_RESET             0X18      // EVR Reset
-
-
 #define CHBASEADDR      0x100
 #define CH1_BASE        0x100
 #define CH2_BASE        0x200
 #define CH3_BASE        0x300
 #define CH4_BASE        0x400
 
+
+// global registers
+#define FPGAVER_REG               0X0       // FPGA Version
+#define LEDS_REG                  0X4       // PS Leds
+#define EVR_TS_S_REG              0X10      // EVR Timestamp (s)
+#define EVR_TS_NS_REG             0X14      // EVR Timestamp (ns)
+#define EVR_RESET_REG             0X18      // EVR Reset
+#define EVR_INJ_EVENTNUM_REG      0x20      // EVR Injection Event Code (for Shot-to-Shot)
+#define EVR_PM_EVENTNUM_REG       0x24      // EVR Post-Mortem Event Code
+
+// channel registers
 #define DCCT1_REG                0X00     // PS1 DCCT 0
 #define DCCT2_REG                0X04     // PS1 DCCT 1
 #define DACMON_REG               0X08     // PS1 DAC Monitor

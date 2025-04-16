@@ -117,8 +117,22 @@ record(bo, "$(P){$(NO)}LEDs-SP") {
 }
 
 
+record(longout, "$(P){$(NO)}EVR_Inj_EventNo-SP") {
+    field(DESC, "EVR Event Code for Injection")
+    field(DTYP, "PSC Single I32")  
+    field(OUT , "@Tx$(NO) 0 20")
+    info(autosaveFields, "VAL")
+    field(FLNK, "$(P){$(NO)}GoRegSingleWrite0")
+}
 
 
+record(longout, "$(P){$(NO)}EVR_PM_EventNo-SP") {
+    field(DESC, "EVR Event Code for Post Mortem")
+    field(DTYP, "PSC Single I32")  
+    field(OUT , "@Tx$(NO) 0 24")
+    info(autosaveFields, "VAL")
+    field(FLNK, "$(P){$(NO)}GoRegSingleWrite0")
+}
 
 
 

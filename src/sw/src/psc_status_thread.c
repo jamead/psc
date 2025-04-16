@@ -148,8 +148,8 @@ void ReadSAData(char *msg) {
 
     sadata.count = UptimeCounter;
 
-    sadata.evr_ts_s =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S);
-    sadata.evr_ts_ns =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS);
+    sadata.evr_ts_s =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S_REG);
+    sadata.evr_ts_ns =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS_REG);
     //xil_printf("%d  %d\r\n",sadata.evr_ts_s, sadata.evr_ts_ns);
 
 

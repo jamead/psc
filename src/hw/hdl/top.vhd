@@ -162,9 +162,11 @@ architecture behv of top is
   
    --debug signals (connect to ila)
    attribute mark_debug                 : string;
-   attribute mark_debug of pl_reset        : signal is "true";
-   attribute mark_debug of pl_resetn       : signal is "true";
-   attribute mark_debug of tenkhz_trig     : signal is "true";
+   attribute mark_debug of pl_reset : signal is "true";
+   attribute mark_debug of pl_resetn : signal is "true";
+   attribute mark_debug of tenkhz_trig : signal is "true";
+   attribute mark_debug of evr_params : signal is "true";
+   attribute mark_debug of evr_trigs : signal is "true";
    --attribute mark_debug of m_axi4_m2s      : signal is "true";
    --attribute mark_debug of m_axi4_s2m      : signal is "true";
 
@@ -173,15 +175,15 @@ architecture behv of top is
 begin
 
 
-fp_leds(0) <= gtx_evr_refclk;
+fp_leds(0) <= evr_trigs.inj_trig_stretch; --gtx_evr_refclk;
 fp_leds(1) <= '0';
 fp_leds(2) <= '0';
-fp_leds(3) <= evr_trigs.rcvd_clk; 
+fp_leds(3) <= '0'; --evr_trigs.rcvd_clk; 
 fp_leds(7 downto 4) <= "0000";
 --sfp_leds <= leds;
 
 sfp_leds(3 downto 0) <= "0000";
-sfp_leds(4) <= sa_trig_stretch;
+sfp_leds(4) <= evr_trigs.sa_trig_stretch;
 sfp_leds(7 downto 5) <= "000";
 
 
@@ -439,15 +441,7 @@ sys: component system
   );
 
 
---stretch the sa_trig signal so can be seen on LED
-sa_led : entity work.stretch
-  port map (
-	clk => pl_clk0,
-	reset => pl_reset, 
-	sig_in => evr_trigs.sa_trig, 
-	len => 3000000, -- ~25ms;
-	sig_out => evr_trigs.sa_trig_stretch
-);	  	
+
 
 
 
