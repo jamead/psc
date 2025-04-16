@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-04-15 09:00:19 by mead-->
+<!--Saved on 2025-04-16 07:56:27 by mead-->
 <display version="2.0.0">
   <name>$(CHAN):$(PriSys)</name>
   <width>900</width>
@@ -2257,9 +2257,9 @@
           <widget type="textentry" version="3.0.0">
             <name>Text Update_146</name>
             <pv_name>$(PriSys){$(PSC)}$(CHAN):FaultMask-SP</pv_name>
-            <x>97</x>
-            <y>548</y>
-            <width>90</width>
+            <x>32</x>
+            <y>413</y>
+            <width>53</width>
             <font>
               <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
               </font>
@@ -2278,15 +2278,6 @@
               <color red="0" green="128" blue="255">
               </color>
             </border_color>
-          </widget>
-          <widget type="label" version="2.0.0">
-            <name>Label_92</name>
-            <text>Fault Mask</text>
-            <x>103</x>
-            <y>531</y>
-            <width>78</width>
-            <height>27</height>
-            <horizontal_alignment>1</horizontal_alignment>
           </widget>
           <widget type="label" version="2.0.0">
             <name>Label_98</name>
@@ -2373,6 +2364,120 @@
             <pv_name>$(PriSys){$(PSC)}$(CHAN):FaultsLive-I.B2</pv_name>
             <x>104</x>
             <y>342</y>
+          </widget>
+          <widget type="checkbox" version="2.0.0">
+            <name>Check Box</name>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):FaultMask:B0-SP</pv_name>
+            <label></label>
+            <x>56</x>
+            <y>382</y>
+            <width>18</width>
+          </widget>
+          <widget type="checkbox" version="2.0.0">
+            <name>Check Box_1</name>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):FaultMask:B1-SP</pv_name>
+            <label></label>
+            <x>56</x>
+            <y>362</y>
+            <width>18</width>
+          </widget>
+          <widget type="checkbox" version="2.0.0">
+            <name>Check Box_2</name>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):FaultMask:B2-SP</pv_name>
+            <label></label>
+            <x>56</x>
+            <y>342</y>
+            <width>18</width>
+          </widget>
+          <widget type="checkbox" version="2.0.0">
+            <name>Check Box_3</name>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):FaultMask:B3-SP</pv_name>
+            <label></label>
+            <x>56</x>
+            <y>322</y>
+            <width>18</width>
+          </widget>
+          <widget type="checkbox" version="2.0.0">
+            <name>Check Box_4</name>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):FaultMask:B4-SP</pv_name>
+            <label></label>
+            <x>56</x>
+            <y>301</y>
+            <width>18</width>
+            <height>21</height>
+          </widget>
+          <widget type="checkbox" version="2.0.0">
+            <name>Check Box_5</name>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):FaultMask:B5-SP</pv_name>
+            <label></label>
+            <x>56</x>
+            <y>281</y>
+            <width>18</width>
+          </widget>
+          <widget type="checkbox" version="2.0.0">
+            <name>Check Box_12</name>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):FaultMask:B6-SP</pv_name>
+            <label></label>
+            <x>56</x>
+            <y>261</y>
+            <width>18</width>
+          </widget>
+          <widget type="checkbox" version="2.0.0">
+            <name>Check Box_13</name>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):FaultMask:B7-SP</pv_name>
+            <label></label>
+            <x>56</x>
+            <y>241</y>
+            <width>18</width>
+          </widget>
+          <widget type="checkbox" version="2.0.0">
+            <name>Check Box_14</name>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):FaultMask:B8-SP</pv_name>
+            <label></label>
+            <x>56</x>
+            <y>221</y>
+            <width>18</width>
+          </widget>
+          <widget type="checkbox" version="2.0.0">
+            <name>Check Box_15</name>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):FaultMask:B9-SP</pv_name>
+            <label></label>
+            <x>56</x>
+            <y>201</y>
+            <width>18</width>
+          </widget>
+          <widget type="checkbox" version="2.0.0">
+            <name>Check Box_16</name>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):FaultMask:B10-SP</pv_name>
+            <label></label>
+            <x>56</x>
+            <y>181</y>
+            <width>18</width>
+          </widget>
+          <widget type="checkbox" version="2.0.0">
+            <name>Check Box_17</name>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):FaultMask:B11-SP</pv_name>
+            <label></label>
+            <x>56</x>
+            <y>161</y>
+            <width>18</width>
+          </widget>
+          <widget type="checkbox" version="2.0.0">
+            <name>Check Box_18</name>
+            <pv_name>$(PriSys){$(PSC)}$(CHAN):FaultMask:B12-SP</pv_name>
+            <label></label>
+            <x>56</x>
+            <y>141</y>
+            <width>18</width>
+          </widget>
+          <widget type="label" version="2.0.0">
+            <name>Label_103</name>
+            <text>Enable</text>
+            <x>38</x>
+            <y>114</y>
+            <width>49</width>
+            <height>18</height>
+            <horizontal_alignment>1</horizontal_alignment>
           </widget>
         </children>
       </tab>
@@ -5548,7 +5653,7 @@
     <y>6</y>
     <width>882</width>
     <height>924</height>
-    <active_tab>4</active_tab>
+    <active_tab>3</active_tab>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED_36</name>

@@ -66,7 +66,7 @@ dbLoadRecords("$(PSC_DBDIR)/wfmstats.db", "P=$(IOCNAME), PSC=1")
 
 
 #####################################################
-var(PSCDebug, 5)	#5 full debug
+var(PSCDebug, 1)	#5 full debug
 
 #psc1 Create the PSC
 createPSC("Tx1", $(PSC1_IP), 7, 0)

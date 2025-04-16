@@ -376,17 +376,138 @@ record(bo, "$(P){$(NO)}Chan$(CHAN):FaultClear-SP") {
 #}
 
 
-
-
-
-
 record(longout, "$(P){$(NO)}Chan$(CHAN):FaultMask-SP") {
-    field(DESC, "Fault 3 Fault Counter Limit")
-    field(DTYP, "PSC Single I32")
+    field(DESC, "Fault Mask")
+    field(DTYP, "PSC Single I32")  
     field(OUT , "@Tx$(NO) $(CHAN) 264")
     info(autosaveFields, "VAL")
     field(FLNK, "$(P){$(NO)}GoRegSingleWrite$(CHAN)")
 }
+
+
+
+record(bo, "$(P){$(NO)}Chan$(CHAN):FaultMask:B0-SP") {
+    field(DESC, "Fault Mask Bit 0")
+    field(VAL, "1")
+    field(PINI, "YES")   
+    field(FLNK, "$(P){$(NO)}Chan$(CHAN):FaultMask:Lower6")
+}
+record(bo, "$(P){$(NO)}Chan$(CHAN):FaultMask:B1-SP") {
+    field(DESC, "Fault Mask Bit 1")
+    field(VAL, "1")
+    field(PINI, "YES")   
+    field(FLNK, "$(P){$(NO)}Chan$(CHAN):FaultMask:Lower6")
+}
+record(bo, "$(P){$(NO)}Chan$(CHAN):FaultMask:B2-SP") {
+    field(DESC, "Fault Mask Bit 2")
+    field(VAL, "1")
+    field(PINI, "YES")   
+    field(FLNK, "$(P){$(NO)}Chan$(CHAN):FaultMask:Lower6")
+}
+record(bo, "$(P){$(NO)}Chan$(CHAN):FaultMask:B3-SP") {
+    field(DESC, "Fault Mask Bit 3")
+    field(VAL, "1")
+    field(PINI, "YES")   
+    field(FLNK, "$(P){$(NO)}Chan$(CHAN):FaultMask:Lower6")
+}
+record(bo, "$(P){$(NO)}Chan$(CHAN):FaultMask:B4-SP") {
+    field(DESC, "Fault Mask Bit 4")
+    field(VAL, "1")
+    field(PINI, "YES")   
+    field(FLNK, "$(P){$(NO)}Chan$(CHAN):FaultMask:Lower6")
+}
+record(bo, "$(P){$(NO)}Chan$(CHAN):FaultMask:B5-SP") {
+    field(DESC, "Fault Mask Bit 5")
+    field(VAL, "1")
+    field(PINI, "YES")   
+    field(FLNK, "$(P){$(NO)}Chan$(CHAN):FaultMask:Lower6")
+}
+record(bo, "$(P){$(NO)}Chan$(CHAN):FaultMask:B6-SP") {
+    field(DESC, "Fault Mask Bit 6")
+    field(VAL, "1")
+    field(PINI, "YES")   
+    field(FLNK, "$(P){$(NO)}Chan$(CHAN):FaultMask:Mid6")
+}
+record(bo, "$(P){$(NO)}Chan$(CHAN):FaultMask:B7-SP") {
+    field(DESC, "Fault Mask Bit 7")
+    field(VAL, "1")
+    field(PINI, "YES")   
+    field(FLNK, "$(P){$(NO)}Chan$(CHAN):FaultMask:Mid6")
+}
+record(bo, "$(P){$(NO)}Chan$(CHAN):FaultMask:B8-SP") {
+    field(DESC, "Fault Mask Bit 8")
+    field(VAL, "1")
+    field(PINI, "YES")   
+    field(FLNK, "$(P){$(NO)}Chan$(CHAN):FaultMask:Mid6")
+}
+record(bo, "$(P){$(NO)}Chan$(CHAN):FaultMask:B9-SP") {
+    field(DESC, "Fault Mask Bit 9")
+    field(VAL, "1")
+    field(PINI, "YES")       
+    field(FLNK, "$(P){$(NO)}Chan$(CHAN):FaultMask:Mid6")
+}
+record(bo, "$(P){$(NO)}Chan$(CHAN):FaultMask:B10-SP") {
+    field(DESC, "Fault Mask Bit 10")
+    field(VAL, "1")
+    field(PINI, "YES")    
+    field(FLNK, "$(P){$(NO)}Chan$(CHAN):FaultMask:Mid6")
+}
+record(bo, "$(P){$(NO)}Chan$(CHAN):FaultMask:B11-SP") {
+    field(DESC, "Fault Mask Bit 11")
+    field(VAL, "1")
+    field(PINI, "YES")
+    field(FLNK, "$(P){$(NO)}Chan$(CHAN):FaultMask:Mid6")
+}
+
+record(bo, "$(P){$(NO)}Chan$(CHAN):FaultMask:B12-SP") {
+    field(DESC, "Fault Mask Bit 12")
+    field(VAL, "1")
+    field(PINI, "YES")
+    field(FLNK, "$(P){$(NO)}Chan$(CHAN):FaultMask:All13")
+}
+
+record(calcout, "$(P){$(NO)}Chan$(CHAN):FaultMask:Lower6") {
+    field(DESC, "Bits 0-5")
+    field(INPA, "$(P){$(NO)}Chan$(CHAN):FaultMask:B0-SP.VAL NPP NMS")
+    field(INPB, "$(P){$(NO)}Chan$(CHAN):FaultMask:B1-SP.VAL NPP NMS")
+    field(INPC, "$(P){$(NO)}Chan$(CHAN):FaultMask:B2-SP.VAL NPP NMS")
+    field(INPD, "$(P){$(NO)}Chan$(CHAN):FaultMask:B3-SP.VAL NPP NMS")
+    field(INPE, "$(P){$(NO)}Chan$(CHAN):FaultMask:B4-SP.VAL NPP NMS")
+    field(INPF, "$(P){$(NO)}Chan$(CHAN):FaultMask:B5-SP.VAL NPP NMS")
+    field(CALC, "A + B*2 + C*4 + D*8 + E*16 + F*32")
+    field(OUT , "$(P){$(NO)}Chan$(CHAN):FaultMask:All13.VAL PP NMS")
+    field(DOPT, "Use CALC")    
+    field(SCAN, "Passive") 
+}
+
+record(calcout, "$(P){$(NO)}Chan$(CHAN):FaultMask:Mid6") {
+    field(DESC, "Bits 6-11")
+    field(INPA, "$(P){$(NO)}Chan$(CHAN):FaultMask:B6-SP.VAL NPP NMS")
+    field(INPB, "$(P){$(NO)}Chan$(CHAN):FaultMask:B7-SP.VAL NPP NMS")
+    field(INPC, "$(P){$(NO)}Chan$(CHAN):FaultMask:B8-SP.VAL NPP NMS")
+    field(INPD, "$(P){$(NO)}Chan$(CHAN):FaultMask:B9-SP.VAL NPP NMS")
+    field(INPE, "$(P){$(NO)}Chan$(CHAN):FaultMask:B10-SP.VAL NPP NMS")
+    field(INPF, "$(P){$(NO)}Chan$(CHAN):FaultMask:B11-SP.VAL NPP NMS")
+    field(CALC, "A*64 + B*128 + C*256 + D*512 + E*1024 + F*2048")
+    field(OUT , "$(P){$(NO)}Chan$(CHAN):FaultMask:All13.VAL PP NMS")
+    field(DOPT, "Use CALC")    
+    field(SCAN, "Passive") 
+}
+
+record(calcout, "$(P){$(NO)}Chan$(CHAN):FaultMask:All13") {
+    field(DESC, "Combine bits 0-12")
+    field(INPA, "$(P){$(NO)}Chan$(CHAN):FaultMask:Lower6.VAL NPP NMS")
+    field(INPB, "$(P){$(NO)}Chan$(CHAN):FaultMask:Mid6.VAL NPP NMS")
+    field(INPC, "$(P){$(NO)}Chan$(CHAN):FaultMask:B12-SP.VAL NPP NMS")
+    field(CALC, "A + B + C*4096")
+    field(OUT , "$(P){$(NO)}Chan$(CHAN):FaultMask-SP.VAL PP NMS")
+    field(DOPT, "Use CALC")
+    field(SCAN, "Passive") 
+}
+
+
+
+
 
 record(longout, "$(P){$(NO)}Chan$(CHAN):DigOut_ON1-SP") {
     field(DESC, "Digital Output ON1")

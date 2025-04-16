@@ -33,7 +33,34 @@ record(longin, "$(P){$(PSC)}SS:LatSoft_ts_s-I") {
     field(DTYP, "PSC Reg")
     field(INP , "@Wfm$(PSC) 50 16")
     field(SCAN,"I/O Intr")
+    field(TSE, "-2")
+    field(FLNK, "$(P){$(PSC)}SS:LatSoft-TimeDate-I")
 }
+
+#record(stringin, "$(P){$(PSC)}SS:LatSoft-TimeDate") {
+#    field(DTYP, "Soft Timestamp")
+#    field(INP , "@ %m/%d/%Y,%H:%M:%S")
+#    field(TSEL, "$(P){BPM:$(NO)}LatSoft_ts_s-I.TIME")
+#}
+
+record(longin, "$(P):EpochTime-I") {
+    field(DESC, "Epoch time in seconds")
+    field(VAL, "1712763054")  # Example epoch time
+    field(SCAN, "Passive")
+    field(FLNK, "$(P):EpochTime-STR")
+}
+
+record(stringin, "$(P):EpochTime-STR") {
+    field(DESC, "Formatted timestamp")
+    field(DTYP, "Soft Timestamp")
+    field(INP , "@ %Y-%m-%d %H:%M:%S")  # Customize date/time format here
+    field(TSEL, "$(P):EpochTime-I.VAL NPP NMS")
+    field(TSE, "-2")
+    field(SCAN, "Passive")
+}
+
+
+
 
 record(longin, "$(P){$(PSC)}SS:LatSoft_ts_ns-I") {
     field(DESC, "Latched Timestamp on last soft trigger")
