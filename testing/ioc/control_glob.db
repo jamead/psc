@@ -94,7 +94,11 @@ record(mbbo, "$(P){$(NO)}Trig:Fault-SP") {
     field( FVST, "Err Chan2")
     field( SXST, "Err Chan3")
     field( SVST, "Err Chan4")
-    field( EIST, "EVR")     
+    field( EIST, "Inj Chan1") 
+    field( NIST, "Inj Chan2")
+    field( TEST, "Inj Chan3")
+    field( ELST, "Inj Chan4")
+    field( TVST, "EVR")       
     field( ZRVL, "1")
     field( ONVL, "2")
     field( TWVL, "4")
@@ -103,7 +107,11 @@ record(mbbo, "$(P){$(NO)}Trig:Fault-SP") {
     field( FVVL, "32")    # Bit 5
     field( SXVL, "64")    # Bit 6
     field( SVVL, "128")   # Bit 7
-    field( EIVL, "256")   # Bit 8  
+    field( EIVL, "256")   # Bit 8 
+    field( NIVL, "512")   # Bit 9
+    field( TEVL, "1024")  # Bit 10
+    field( ELVL, "2048")  # Bit 11
+    field( TVVL, "4096")  # Bit 12     
     field(FLNK, "$(P){$(NO)}GoRegSingleWrite0")
  
 }

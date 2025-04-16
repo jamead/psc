@@ -551,7 +551,13 @@ record(longout, "$(P){$(NO)}Chan$(CHAN):DigOut_Park-SP") {
 }
 
 
-
+record(longout, "$(P){$(NO)}Chan$(CHAN):PostTrigNumPts-SP") {
+    field(DESC, "For Shot Mode selects Num Samples")
+    field(DTYP, "PSC Single I32")
+    field(OUT , "@Tx$(NO) $(CHAN) 288")
+    info(autosaveFields, "VAL")
+    field(FLNK, "$(P){$(NO)}GoRegSingleWrite$(CHAN)")
+}
 
 
 

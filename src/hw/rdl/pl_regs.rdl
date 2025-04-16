@@ -2029,12 +2029,12 @@ reg {
  
  
 reg {
-    desc="Test Trig - Test the 4-Fault, 4-Error and EVR Trigger";
+    desc="Test Trig - Test the 4-Fault, 4-Error, 4-Injection and EVR Trigger";
     default sw = rw;
     default hw = r;  
     default swacc=true;
     default swmod=true;          
-    field {} val[9];
+    field {} val[16];
   } testtrig @0x50C; 
   
  
@@ -2240,25 +2240,113 @@ reg {
 
 
 reg {
+    desc="Inj1 Buffer Ptr.  Buffer Point latched value gets put here on Inj1 trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } inj1trig_bufptr @0x5B0; 
+
+reg {
+    desc="Inj1 Trig Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } inj1trig_ts_s @0x5B4; 
+
+reg {
+    desc="Inj1 Trig Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } inj1trig_ts_ns @0x5B; 
+
+
+reg {
+    desc="Inj2 Buffer Ptr.  Buffer Point latched value gets put here on Inj2 trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } inj2trig_bufptr @0x5C0; 
+
+reg {
+    desc="Inj2 Trig Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } inj2trig_ts_s @0x5C4; 
+
+reg {
+    desc="Inj2 Trig Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } inj2trig_ts_ns @0x5C8; 
+
+
+reg {
+    desc="Inj3 Buffer Ptr.  Buffer Point latched value gets put here on Inj3 trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } inj3trig_bufptr @0x5D0; 
+
+reg {
+    desc="Inj3 Trig Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } inj3trig_ts_s @0x5D4; 
+
+reg {
+    desc="Inj3 Trig Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } inj3trig_ts_ns @0x5D8; 
+
+
+reg {
+    desc="Inj4 Buffer Ptr.  Buffer Point latched value gets put here on Inj4 trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } inj4trig_bufptr @0x5E0; 
+
+reg {
+    desc="Inj4 Trig Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } inj4trig_ts_s @0x5E4; 
+
+reg {
+    desc="Inj4 Trig Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } inj4trig_ts_ns @0x5E8; 
+
+
+reg {
     desc="EVR Buffer Ptr.  Buffer Point latched value gets put here on EVR trigger";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } evrtrig_bufptr @0x5B0; 
+  } evrtrig_bufptr @0x5F0; 
 
 reg {
     desc="EVR Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } evrtrig_ts_s @0x5B4; 
+  } evrtrig_ts_s @0x5F4; 
 
 reg {
     desc="EVR Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } evrtrig_ts_ns @0x5B8; 
+  } evrtrig_ts_ns @0x5F8; 
 
 
 

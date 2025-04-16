@@ -28,7 +28,11 @@
 #define MSGERRCH2 57
 #define MSGERRCH3 58
 #define MSGERRCH4 59
-#define MSGEVR 60
+#define MSGINJCH1 60
+#define MSGINJCH2 61
+#define MSGINJCH3 62
+#define MSGINJCH4 63
+#define MSGEVR 64
 
 
 #define MSGWFMLEN 16000000   //in bytes
@@ -61,6 +65,10 @@ extern char msgErrCh1_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgErrCh2_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgErrCh3_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgErrCh4_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgInjCh1_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgInjCh2_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgInjCh3_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgInjCh4_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgEVR_buf[MSGWFMLEN+MSGHDRLEN];
 
 extern char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];
@@ -183,6 +191,22 @@ typedef struct SnapStatsMsg {
     u32 err4_active;     // PSC Offset 140
     u32 err4_ts_s;       // PSC Offset 144
     u32 err4_ts_ns;      // PSC Offset 148
+    u32 inj1_lataddr;    // PSC Offset 88
+    u32 inj1_active;     // PSC Offset 92
+    u32 inj1_ts_s;       // PSC Offset 96
+    u32 inj1_ts_ns;      // PSC Offset 100
+    u32 inj2_lataddr;    // PSC Offset 104
+    u32 inj2_active;     // PSC Offset 108
+    u32 inj2_ts_s;       // PSC Offset 112
+    u32 inj2_ts_ns;      // PSC Offset 116
+    u32 inj3_lataddr;    // PSC Offset 120
+    u32 inj3_active;     // PSC Offset 124
+    u32 inj3_ts_s;       // PSC Offset 128
+    u32 inj3_ts_ns;      // PSC Offset 132
+    u32 inj4_lataddr;    // PSC Offset 136
+    u32 inj4_active;     // PSC Offset 140
+    u32 inj4_ts_s;       // PSC Offset 144
+    u32 inj4_ts_ns;      // PSC Offset 148
     u32 evr_lataddr;     // PSC Offset 152
     u32 evr_active;      // PSC Offset 156
     u32 evr_ts_s;        // PSC Offset 160

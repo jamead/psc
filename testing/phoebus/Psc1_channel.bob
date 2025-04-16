@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-04-16 07:56:27 by mead-->
+<!--Saved on 2025-04-16 15:38:41 by mead-->
 <display version="2.0.0">
   <name>$(CHAN):$(PriSys)</name>
   <width>900</width>
@@ -4157,9 +4157,18 @@
                     <show_legend>false</show_legend>
                     <actions>
                     </actions>
+                    <scripts>
+                      <script file="EmbeddedPy">
+                        <text><![CDATA[# Embedded python script
+from org.csstudio.display.builder.runtime.script import PVUtil, ScriptUtil
+#print 'Hello'
+widget.setPropertyValue('x_axis.maximum', PVUtil.getDouble(pvs[0])-1)]]></text>
+                        <pv_name>$(PriSys){$(PSC)}$(CHAN):PostTrigNumPts-SP</pv_name>
+                      </script>
+                    </scripts>
                     <x_axis>
                       <title></title>
-                      <autoscale>true</autoscale>
+                      <autoscale>false</autoscale>
                       <log_scale>false</log_scale>
                       <minimum>0.0</minimum>
                       <maximum>100000.0</maximum>
@@ -4180,7 +4189,7 @@
                         <autoscale>true</autoscale>
                         <log_scale>false</log_scale>
                         <minimum>0.0</minimum>
-                        <maximum>100.0</maximum>
+                        <maximum>100000.0</maximum>
                         <show_grid>true</show_grid>
                         <title_font>
                           <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -4439,6 +4448,50 @@
                         <visible>true</visible>
                       </trace>
                     </traces>
+                  </widget>
+                  <widget type="textentry" version="3.0.0">
+                    <name>Text Update_116</name>
+                    <pv_name>$(PriSys){$(PSC)}$(CHAN):PostTrigNumPts-SP</pv_name>
+                    <x>417</x>
+                    <y>7</y>
+                    <width>80</width>
+                    <font>
+                      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                      </font>
+                    </font>
+                    <background_color>
+                      <color red="255" green="255" blue="255">
+                      </color>
+                    </background_color>
+                    <format>1</format>
+                    <precision>0</precision>
+                    <show_units>false</show_units>
+                    <horizontal_alignment>1</horizontal_alignment>
+                    <actions>
+                    </actions>
+                    <border_color>
+                      <color red="0" green="128" blue="255">
+                      </color>
+                    </border_color>
+                  </widget>
+                  <widget type="label" version="2.0.0">
+                    <name>Label_60</name>
+                    <text>PostTrigPts</text>
+                    <x>302</x>
+                    <y>7</y>
+                    <width>106</width>
+                    <font>
+                      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                      </font>
+                    </font>
+                    <horizontal_alignment>2</horizontal_alignment>
+                    <vertical_alignment>1</vertical_alignment>
+                    <actions>
+                    </actions>
+                    <border_color>
+                      <color red="0" green="128" blue="255">
+                      </color>
+                    </border_color>
                   </widget>
                 </children>
               </tab>
@@ -5653,7 +5706,7 @@
     <y>6</y>
     <width>882</width>
     <height>924</height>
-    <active_tab>3</active_tab>
+    <active_tab>5</active_tab>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED_36</name>

@@ -72,6 +72,10 @@ char msgErrCh1_buf[MSGWFMLEN+MSGHDRLEN];
 char msgErrCh2_buf[MSGWFMLEN+MSGHDRLEN];
 char msgErrCh3_buf[MSGWFMLEN+MSGHDRLEN];
 char msgErrCh4_buf[MSGWFMLEN+MSGHDRLEN];
+char msgInjCh1_buf[MSGWFMLEN+MSGHDRLEN];
+char msgInjCh2_buf[MSGWFMLEN+MSGHDRLEN];
+char msgInjCh3_buf[MSGWFMLEN+MSGHDRLEN];
+char msgInjCh4_buf[MSGWFMLEN+MSGHDRLEN];
 char msgEVR_buf[MSGWFMLEN+MSGHDRLEN];
 
 char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];

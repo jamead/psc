@@ -113,9 +113,24 @@
 #define ERR4TRIG_BUFPTR       0X5A0     // Err4 Buffer Ptr.  Buffer Point latched value gets put here on Err4 trigger
 #define ERR4TRIG_TS_S         0X5A4     // Err4 Trig Timestamp (s)
 #define ERR4TRIG_TS_NS        0X5A8     // Err4 Trig Timestamp (ns)
-#define EVRTRIG_BUFPTR        0X5B0     // EVR Buffer Ptr.  Buffer Point latched value gets put here on EVR trigger
-#define EVRTRIG_TS_S          0X5B4     // EVR Trig Timestamp (s)
-#define EVRTRIG_TS_NS         0X5B8     // EVR Trig Timestamp (ns)
+#define INJ1TRIG_BUFPTR       0X5B0     // Inj1 Buffer Ptr.  Buffer Point latched value gets put here on Inj1 trigger
+#define INJ1TRIG_TS_S         0X5B4     // Inj1 Trig Timestamp (s)
+#define INJ1TRIG_TS_NS        0X5B8     // Inj1 Trig Timestamp (ns)
+#define INJ2TRIG_BUFPTR       0X5C0     // Inj2 Buffer Ptr.  Buffer Point latched value gets put here on Inj2 trigger
+#define INJ2TRIG_TS_S         0X5C4     // Inj2 Trig Timestamp (s)
+#define INJ2TRIG_TS_NS        0X5C8     // Inj2 Trig Timestamp (ns)
+#define INJ3TRIG_BUFPTR       0X5D0     // Inj3 Buffer Ptr.  Buffer Point latched value gets put here on Inj3 trigger
+#define INJ3TRIG_TS_S         0X5D4     // Inj3 Trig Timestamp (s)
+#define INJ3TRIG_TS_NS        0X5D8     // Inj3 Trig Timestamp (ns)
+#define INJ4TRIG_BUFPTR       0X5E0     // Inj4 Buffer Ptr.  Buffer Point latched value gets put here on Inj4 trigger
+#define INJ4TRIG_TS_S         0X5E4     // Inj4 Trig Timestamp (s)
+#define INJ4TRIG_TS_NS        0X5E8     // Inj4 Trig Timestamp (ns)
+#define EVRTRIG_BUFPTR        0X5F0     // EVR Buffer Ptr.  Buffer Point latched value gets put here on EVR trigger
+#define EVRTRIG_TS_S          0X5F4     // EVR Trig Timestamp (s)
+#define EVRTRIG_TS_NS         0X5F8     // EVR Trig Timestamp (ns)
+
+
+
 #define ID                    0X800     // Module Identification Number
 #define VERSION               0X804     // Module Version Number
 #define PRJ_ID                0X808     // Project Identification Number

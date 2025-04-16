@@ -17,6 +17,8 @@
 typedef struct TriggerInfo {
 	u32 addr;
 	u32 addr_last;
+	u32 pretrigpts;
+	u32 posttrigpts;
 	u32 active;
 	u32 postdlycnt;
 	u32 sendbuf;
@@ -35,6 +37,10 @@ typedef struct TriggerTypes {
 	struct TriggerInfo err2;
 	struct TriggerInfo err3;
 	struct TriggerInfo err4;
+	struct TriggerInfo inj1;
+	struct TriggerInfo inj2;
+	struct TriggerInfo inj3;
+	struct TriggerInfo inj4;
 	struct TriggerInfo evr;
 
 } TriggerTypes;

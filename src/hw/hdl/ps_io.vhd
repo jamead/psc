@@ -57,10 +57,12 @@ architecture behv of ps_io is
   
   signal flt_trig        : std_logic_vector(3 downto 0);
   signal err_trig        : std_logic_vector(3 downto 0);
+  signal inj_trig        : std_logic_vector(3 downto 0);  
   signal evr_trig        : std_logic;
 
   signal flt_trig_prev   : std_logic_vector(3 downto 0);
   signal err_trig_prev   : std_logic_vector(3 downto 0);
+  signal inj_trig_prev   : std_logic_vector(3 downto 0);  
   signal evr_trig_prev   : std_logic;
 
   
@@ -451,7 +453,11 @@ err_trig(0) <= reg_o.testtrig.val.data(4) or fault_stat.ps1.err_trig;
 err_trig(1) <= reg_o.testtrig.val.data(5) or fault_stat.ps2.err_trig;
 err_trig(2) <= reg_o.testtrig.val.data(6) or fault_stat.ps3.err_trig;
 err_trig(3) <= reg_o.testtrig.val.data(7) or fault_stat.ps4.err_trig;
-evr_trig    <= reg_o.testtrig.val.data(8);
+inj_trig(0) <= reg_o.testtrig.val.data(8); --or fault_stat.ps1.err_trig;
+inj_trig(1) <= reg_o.testtrig.val.data(9); --or fault_stat.ps2.err_trig;
+inj_trig(2) <= reg_o.testtrig.val.data(10); --or fault_stat.ps3.err_trig;
+inj_trig(3) <= reg_o.testtrig.val.data(11); --or fault_stat.ps4.err_trig;
+evr_trig    <= reg_o.testtrig.val.data(12);
 
 
 
@@ -468,13 +474,19 @@ begin
       reg_i.err1trig_bufptr.val.data <= 32d"0";
       reg_i.err2trig_bufptr.val.data <= 32d"0";  
       reg_i.err3trig_bufptr.val.data <= 32d"0";
-      reg_i.err4trig_bufptr.val.data <= 32d"0";       
+      reg_i.err4trig_bufptr.val.data <= 32d"0";   
+      reg_i.inj1trig_bufptr.val.data <= 32d"0";
+      reg_i.inj2trig_bufptr.val.data <= 32d"0";  
+      reg_i.inj3trig_bufptr.val.data <= 32d"0";
+      reg_i.inj4trig_bufptr.val.data <= 32d"0";            
       reg_i.evrtrig_bufptr.val.data  <= 32d"0";                   
     else    
       soft_trig_prev <= soft_trig;
       flt_trig_prev <= flt_trig;
       err_trig_prev <= err_trig;
+      inj_trig_prev <= inj_trig;
       evr_trig_prev <= evr_trig;
+      
       if (soft_trig = '1' and soft_trig_prev = '0') then     
         reg_i.softtrig_bufptr.val.data <= ss_buf_stat.addr_ptr;
         reg_i.softtrig_ts_s.val.data <= evr_trigs.ts_s; 
@@ -505,21 +517,41 @@ begin
         reg_i.err1trig_ts_s.val.data <= evr_trigs.ts_s;
         reg_i.err1trig_ts_ns.val.data <= evr_trigs.ts_ns;                           
       end if;
-      if (err_trig(1) = '1' and flt_trig_prev(1) = '0') then
+      if (err_trig(1) = '1' and err_trig_prev(1) = '0') then
         reg_i.err2trig_bufptr.val.data <= ss_buf_stat.addr_ptr;  
         reg_i.err2trig_ts_s.val.data <= evr_trigs.ts_s;
         reg_i.err2trig_ts_ns.val.data <= evr_trigs.ts_ns;                         
       end if;      
-      if (err_trig(2) = '1' and flt_trig_prev(2) = '0') then
+      if (err_trig(2) = '1' and err_trig_prev(2) = '0') then
         reg_i.err3trig_bufptr.val.data <= ss_buf_stat.addr_ptr;  
         reg_i.err3trig_ts_s.val.data <= evr_trigs.ts_s;
         reg_i.err3trig_ts_ns.val.data <= evr_trigs.ts_ns;                 
       end if;
-      if (err_trig(3) = '1' and flt_trig_prev(3) = '0') then
+      if (err_trig(3) = '1' and err_trig_prev(3) = '0') then
         reg_i.err4trig_bufptr.val.data <= ss_buf_stat.addr_ptr;   
         reg_i.err4trig_ts_s.val.data <= evr_trigs.ts_s;
         reg_i.err4trig_ts_ns.val.data <= evr_trigs.ts_ns;                 
       end if;  
+      if (inj_trig(0) = '1' and inj_trig_prev(0) = '0') then
+        reg_i.inj1trig_bufptr.val.data <= ss_buf_stat.addr_ptr; 
+        reg_i.inj1trig_ts_s.val.data <= evr_trigs.ts_s;
+        reg_i.inj1trig_ts_ns.val.data <= evr_trigs.ts_ns;                           
+      end if;
+      if (inj_trig(1) = '1' and inj_trig_prev(1) = '0') then
+        reg_i.inj2trig_bufptr.val.data <= ss_buf_stat.addr_ptr;  
+        reg_i.inj2trig_ts_s.val.data <= evr_trigs.ts_s;
+        reg_i.inj2trig_ts_ns.val.data <= evr_trigs.ts_ns;                         
+      end if;      
+      if (inj_trig(2) = '1' and inj_trig_prev(2) = '0') then
+        reg_i.inj3trig_bufptr.val.data <= ss_buf_stat.addr_ptr;  
+        reg_i.inj3trig_ts_s.val.data <= evr_trigs.ts_s;
+        reg_i.inj3trig_ts_ns.val.data <= evr_trigs.ts_ns;                 
+      end if;
+      if (inj_trig(3) = '1' and inj_trig_prev(3) = '0') then
+        reg_i.inj4trig_bufptr.val.data <= ss_buf_stat.addr_ptr;   
+        reg_i.inj4trig_ts_s.val.data <= evr_trigs.ts_s;
+        reg_i.inj4trig_ts_ns.val.data <= evr_trigs.ts_ns;                 
+      end if;        
       if (evr_trig = '1' and evr_trig_prev = '0') then
         reg_i.evrtrig_bufptr.val.data <= ss_buf_stat.addr_ptr;  
         reg_i.evrtrig_ts_s.val.data <= evr_trigs.ts_s;
