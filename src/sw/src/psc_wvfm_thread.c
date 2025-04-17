@@ -112,6 +112,7 @@ void ReadSnapShotStats(char *msg, TriggerTypes *trig) {
    snapstats.inj1_active = trig->inj[0].active;
    snapstats.inj1_ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + INJ1TRIG_TS_S);
    snapstats.inj1_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + INJ1TRIG_TS_NS);
+
    snapstats.inj2_lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + INJ2TRIG_BUFPTR);
    snapstats.inj2_active = trig->inj[1].active;
    snapstats.inj2_ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + INJ2TRIG_TS_S);
@@ -131,6 +132,7 @@ void ReadSnapShotStats(char *msg, TriggerTypes *trig) {
    snapstats.evr_ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + EVRTRIG_TS_S);
    snapstats.evr_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + EVRTRIG_TS_NS);
 
+   //xil_printf("Inj1 TS_S: %d    TS_NS: %d\r\n",snapstats.inj1_ts_s, snapstats.inj1_ts_ns);
    //copy the structure to the PSC msg buffer
    memcpy(&msg[MSGHDRLEN],&snapstats,sizeof(snapstats));
 

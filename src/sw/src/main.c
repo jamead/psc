@@ -268,48 +268,29 @@ void main_thread(void *p)
 
 void InitGainsOffsets() {
 
-	float gain_dcct0, gain_dcct1, gain_dacsp, gain_volt, gain_gnd, gain_spare, gain_reg, gain_err;
-	s32 offset_dcct0, offset_dcct1, offset_dacsp, offset_volt, offset_gnd;
-	s32 offset_spare, offset_reg, offset_err;
     u32 base, chan;
-
-	offset_dcct0 = 0;
-	offset_dcct1 = 0;
-    offset_dacsp = 0;
-    offset_volt = 0;
-    offset_gnd = 0;
-    offset_spare = 0;
-    offset_reg = 0;
-    offset_err = 0;
-
-	gain_dcct0 = 1.0;
-	gain_dcct1 = 1.0;
-    gain_dacsp = 1.0;
-    gain_volt = 1.0;
-    gain_gnd = 1.0;
-    gain_spare = 1.0;
-    gain_reg = 1.0;
-    gain_err = 1.0;
-
 
     for (chan=0; chan<4; chan++) {
        base = XPAR_M_AXI_BASEADDR + (chan + 1) * CHBASEADDR;
-       Xil_Out32(base + DCCT1_OFFSET_REG, offset_dcct0);
-       Xil_Out32(base + DCCT2_OFFSET_REG, offset_dcct1);
-       Xil_Out32(base + DACMON_OFFSET_REG, offset_dacsp);
-       Xil_Out32(base + VOLT_OFFSET_REG, offset_volt);
-       Xil_Out32(base + GND_OFFSET_REG, offset_gnd);
-       Xil_Out32(base + SPARE_OFFSET_REG, offset_spare);
-       Xil_Out32(base + REG_OFFSET_REG, offset_reg);
-       Xil_Out32(base + ERR_OFFSET_REG, offset_err);
-       Xil_Out32(base + DCCT1_GAIN_REG, gain_dcct0 * GAIN20BITFRACT);
-       Xil_Out32(base + DCCT2_GAIN_REG, gain_dcct1 * GAIN20BITFRACT);
-       Xil_Out32(base + DACMON_GAIN_REG, gain_dacsp * GAIN20BITFRACT);
-       Xil_Out32(base + VOLT_GAIN_REG, gain_volt * GAIN20BITFRACT);
-       Xil_Out32(base + GND_GAIN_REG, gain_gnd * GAIN20BITFRACT);
-       Xil_Out32(base + SPARE_GAIN_REG, gain_spare * GAIN20BITFRACT);
-       Xil_Out32(base + REG_GAIN_REG, gain_reg * GAIN20BITFRACT);
-       Xil_Out32(base + ERR_GAIN_REG, gain_err * GAIN20BITFRACT);
+       Xil_Out32(base + DCCT1_OFFSET_REG, 0);
+       Xil_Out32(base + DCCT2_OFFSET_REG, 0);
+       Xil_Out32(base + DACMON_OFFSET_REG, 0);
+       Xil_Out32(base + VOLT_OFFSET_REG, 0);
+       Xil_Out32(base + GND_OFFSET_REG, 0);
+       Xil_Out32(base + SPARE_OFFSET_REG, 0);
+       Xil_Out32(base + REG_OFFSET_REG, 0);
+       Xil_Out32(base + ERR_OFFSET_REG, 0);
+       Xil_Out32(base + DAC_SETPT_OFFSET_REG, 0);
+       Xil_Out32(base + DCCT1_GAIN_REG, 1.0 * GAIN20BITFRACT);
+       Xil_Out32(base + DCCT2_GAIN_REG, 1.0 * GAIN20BITFRACT);
+       Xil_Out32(base + DACMON_GAIN_REG, 1.0 * GAIN20BITFRACT);
+       Xil_Out32(base + VOLT_GAIN_REG, 1.0 * GAIN20BITFRACT);
+       Xil_Out32(base + GND_GAIN_REG, 1.0 * GAIN20BITFRACT);
+       Xil_Out32(base + SPARE_GAIN_REG, 1.0 * GAIN20BITFRACT);
+       Xil_Out32(base + REG_GAIN_REG, 1.0 * GAIN20BITFRACT);
+       Xil_Out32(base + ERR_GAIN_REG, 1.0 * GAIN20BITFRACT);
+       Xil_Out32(base + DAC_SETPT_GAIN_REG, 1.0 * GAIN20BITFRACT);
+
     }
 
 

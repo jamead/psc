@@ -63,25 +63,28 @@ architecture behv of evr_top is
    signal tbt_trig_i        : std_logic;
    signal tbt_trig_stretch  : std_logic;
    signal tbt_cnt           : std_logic_vector(2 downto 0);
+   signal inj_trig          : std_logic;
+   signal inj_trig_sync     : std_logic_vector(1 downto 0);
    
    
 
 
    --debug signals (connect to ila)
---   attribute mark_debug     : string;
---   attribute mark_debug of eventstream: signal is "true";
---   attribute mark_debug of datastream: signal is "true";
+   attribute mark_debug     : string;
+   attribute mark_debug of eventstream: signal is "true";
+   attribute mark_debug of datastream: signal is "true";
+   attribute mark_debug of evr_trigs: signal is "true";
+   attribute mark_debug of evr_params: signal is "true";
+   attribute mark_debug of inj_trig: signal is "true";
+   attribute mark_debug of inj_trig_sync: signal is "true";
+   
 --   attribute mark_debug of timestamp: signal is "true";
 --   attribute mark_debug of eventclock: signal is "true";
 --   attribute mark_debug of prev_datastream: signal is "true";
---   attribute mark_debug of tbt_trig: signal is "true";
---   attribute mark_debug of tbt_trig_i: signal is "true";   
---   attribute mark_debug of trignum: signal is "true";
---   attribute mark_debug of trigdly: signal is "true";
---   attribute mark_debug of tbt_trig_stretch: signal is "true";
---   attribute mark_debug of tbt_cnt: signal is "true";   
---   attribute mark_debug of rxdata: signal is "true";
---   attribute mark_debug of rxcharisk: signal is "true";
+
+  
+   attribute mark_debug of rxdata: signal is "true";
+   attribute mark_debug of rxcharisk: signal is "true";
 --   attribute mark_debug of gtx_reset: signal is "true";
    
 --   attribute mark_debug of rxresetdone: signal is "true"; 
@@ -101,6 +104,19 @@ evr_trigs.tbt_trig <= tbt_trig_stretch;
 
 rxoutclk_bufg0_i : BUFG
         port map ( I => rxout_clk, O => rxusr_clk);  
+
+
+
+ process(sys_clk)
+    begin
+        if rising_edge(sys_clk) then
+            inj_trig_sync(0) <= inj_trig;
+            inj_trig_sync(1) <= inj_trig_sync(0); 
+            evr_trigs.inj_trig <= inj_trig_sync(1);
+        end if;
+    end process;
+
+
 
 
 
@@ -230,9 +246,9 @@ event_inj : entity work.event_rcv_chan
        eventstream => eventstream,
        myevent => evr_params.inj_eventno,
        mydelay => 32d"1",  --evr_params.trigdly, 
-       mywidth => (x"00000175"),   -- //creates a pulse about 3us long
+       mywidth => (x"0000000B"),   -- //creates a pulse about 100ns long
        mypolarity => ('0'),
-       trigger => evr_trigs.inj_trig
+       trigger => inj_trig --evr_trigs.inj_trig
 );
 
 

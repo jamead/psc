@@ -165,8 +165,8 @@ architecture behv of top is
    attribute mark_debug of pl_reset : signal is "true";
    attribute mark_debug of pl_resetn : signal is "true";
    attribute mark_debug of tenkhz_trig : signal is "true";
-   attribute mark_debug of evr_params : signal is "true";
-   attribute mark_debug of evr_trigs : signal is "true";
+   --attribute mark_debug of evr_params : signal is "true";
+   --attribute mark_debug of evr_trigs : signal is "true";
    --attribute mark_debug of m_axi4_m2s      : signal is "true";
    --attribute mark_debug of m_axi4_s2m      : signal is "true";
 

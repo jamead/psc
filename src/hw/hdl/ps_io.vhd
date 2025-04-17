@@ -68,6 +68,7 @@ architecture behv of ps_io is
   
   attribute mark_debug     : string;
   attribute mark_debug of dac_cntrl: signal is "true";
+  attribute mark_debug of inj_trig: signal is "true";
 --  attribute mark_debug of soft_trig_prev: signal is "true";  
 --  attribute mark_debug of reg_i: signal is "true";
 --  attribute mark_debug of ss_buf_stat: signal is "true";
@@ -133,7 +134,7 @@ dac_cntrl.ps1.ramplen <= reg_o.ps1_dac_ramplen.val.data;
 dac_cntrl.ps1.dpram_addr <= reg_o.ps1_dac_rampaddr.val.data;
 dac_cntrl.ps1.dpram_data <= reg_o.ps1_dac_rampdata.val.data;
 dac_cntrl.ps1.dpram_we <= reg_o.ps1_dac_rampdata.val.swacc;
-dac_cntrl.ps1.ramprun <= reg_o.ps1_dac_runramp.val.swacc; --data(0);
+dac_cntrl.ps1.ramprun <= reg_o.ps1_dac_runramp.val.swacc or evr_trigs.inj_trig; --data(0);
 
 reg_i.ps1_dac_rampactive.val.data(0) <= dac_stat.ps1.active;
 reg_i.ps1_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps1.dac_setpt),32));
@@ -453,7 +454,7 @@ err_trig(0) <= reg_o.testtrig.val.data(4) or fault_stat.ps1.err_trig;
 err_trig(1) <= reg_o.testtrig.val.data(5) or fault_stat.ps2.err_trig;
 err_trig(2) <= reg_o.testtrig.val.data(6) or fault_stat.ps3.err_trig;
 err_trig(3) <= reg_o.testtrig.val.data(7) or fault_stat.ps4.err_trig;
-inj_trig(0) <= reg_o.testtrig.val.data(8); --or fault_stat.ps1.err_trig;
+inj_trig(0) <= reg_o.testtrig.val.data(8) or evr_trigs.inj_trig; --or fault_stat.ps1.err_trig;
 inj_trig(1) <= reg_o.testtrig.val.data(9); --or fault_stat.ps2.err_trig;
 inj_trig(2) <= reg_o.testtrig.val.data(10); --or fault_stat.ps3.err_trig;
 inj_trig(3) <= reg_o.testtrig.val.data(11); --or fault_stat.ps4.err_trig;

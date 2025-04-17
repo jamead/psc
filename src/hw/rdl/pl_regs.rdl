@@ -2258,7 +2258,7 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj1trig_ts_ns @0x5B; 
+  } inj1trig_ts_ns @0x5B8; 
 
 
 reg {
