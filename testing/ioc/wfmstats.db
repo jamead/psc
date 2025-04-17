@@ -39,23 +39,23 @@ record(longin, "$(P){$(PSC)}SS:LatSoft_ts_s-I") {
 
 #record(stringin, "$(P){$(PSC)}SS:LatSoft-TimeDate") {
 #    field(DTYP, "Soft Timestamp")
-#    field(INP , "@ %m/%d/%Y,%H:%M:%S")
-#    field(TSEL, "$(P){BPM:$(NO)}LatSoft_ts_s-I.TIME")
+#    field(INP , "@ %m/%d/%Y, %H:%M:%S")
+#    #field(TSEL, "$(P){BPM:$(NO)}LatSoft_ts_s-I.VAL NPP MMS")
 #}
 
 record(longin, "$(P):EpochTime-I") {
     field(DESC, "Epoch time in seconds")
     field(VAL, "1712763054")  # Example epoch time
-    field(SCAN, "Passive")
+    field(SCAN, "I/O Intr")
     field(FLNK, "$(P):EpochTime-STR")
 }
 
 record(stringin, "$(P):EpochTime-STR") {
     field(DESC, "Formatted timestamp")
     field(DTYP, "Soft Timestamp")
-    field(INP , "@ %Y-%m-%d %H:%M:%S")  # Customize date/time format here
-    field(TSEL, "$(P):EpochTime-I.VAL NPP NMS")
-    field(TSE, "-2")
+    field(INP , "@ %m/%d/%Y, %H:%M:%S")  #Customize date/time format here
+    field(TSEL, "$(P):EpochTime-I.TIME NPP NMS")
+    #field(TSE, "-2")
     field(SCAN, "Passive")
 }
 

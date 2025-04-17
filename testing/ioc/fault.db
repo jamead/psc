@@ -1,0 +1,91 @@
+
+
+record(waveform,"$(P){$(NO)}Chan$(CHAN):FLT:Hdr-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) $(MSGID) 0 40")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+}
+
+record(waveform,"$(P){$(NO)}Chan$(CHAN):FLT:Cnt-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) $(MSGID) 4 40")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+}
+
+###   PS1 
+
+record(waveform,"$(P){$(NO)}Chan$(CHAN):FLT:DCCT1-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) $(MSGID) 8 40")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+}
+
+record(waveform,"$(P){$(NO)}Chan$(CHAN):FLT:DCCT2-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) $(MSGID) 12 40")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+}
+
+record(waveform,"$(P){$(NO)}Chan$(CHAN):FLT:DAC-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) $(MSGID) 16 40")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+}
+
+record(waveform,"$(P){$(NO)}Chan$(CHAN):FLT:Volt-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) $(MSGID) 20 40")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+} 
+    
+record(waveform,"$(P){$(NO)}Chan$(CHAN):FLT:Gnd-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) $(MSGID) 24 40")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+}
+ 
+record(waveform,"$(P){$(NO)}Chan$(CHAN):FLT:Spare-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) $(MSGID) 28 40")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+}
+  
+record(waveform,"$(P){$(NO)}Chan$(CHAN):FLT:Reg-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) $(MSGID) 32 40")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")
+} 
+ 
+    
+record(waveform,"$(P){$(NO)}Chan$(CHAN):FLT:Error-Wfm") {
+    field(DTYP, "PSC Block I32 In")
+    field(INP , "@Wfm$(NO) $(MSGID) 36 40")
+    field(SCAN,"I/O Intr")
+    field(FTVL,"DOUBLE")
+    field(NELM,"$(BUF_LEN)")   
+}    
+    
+    
+    
+
+
+      
+    

@@ -23,26 +23,17 @@ typedef struct TriggerInfo {
 	u32 postdlycnt;
 	u32 sendbuf;
 	u32 msgID;
+	u32 channum;
 } TriggerInfo;
 
 
 
 typedef struct TriggerTypes {
-	struct TriggerInfo soft;
-	struct TriggerInfo flt1;
-	struct TriggerInfo flt2;
-	struct TriggerInfo flt3;
-	struct TriggerInfo flt4;
-	struct TriggerInfo err1;
-	struct TriggerInfo err2;
-	struct TriggerInfo err3;
-	struct TriggerInfo err4;
-	struct TriggerInfo inj1;
-	struct TriggerInfo inj2;
-	struct TriggerInfo inj3;
-	struct TriggerInfo inj4;
-	struct TriggerInfo evr;
-
+	struct TriggerInfo usr[4];
+	struct TriggerInfo flt[4];
+	struct TriggerInfo err[4];
+	struct TriggerInfo inj[4];
+	struct TriggerInfo evr[4];
 } TriggerTypes;
 
 

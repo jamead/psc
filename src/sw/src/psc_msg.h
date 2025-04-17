@@ -17,34 +17,48 @@
 
 
 
+//Waveform Thread: Snapshot Statistics (pointers, etc)
+// Updated at 10Hz, keeps waveform connection alive
+#define MSGWFMSTATS 50
+#define MSGWFMSTATSLEN 256
+
+
 //Waveform Thread: This message is for Snapshot 10KHz data
-//10KS/s * 10sec *160bytes/sample = 16Mbytes
-#define MSGSOFT 51
-#define MSGFLTCH1 52
-#define MSGFLTCH2 53
-#define MSGFLTCH3 54
-#define MSGFLTCH4 55
-#define MSGERRCH1 56
-#define MSGERRCH2 57
-#define MSGERRCH3 58
-#define MSGERRCH4 59
-#define MSGINJCH1 60
-#define MSGINJCH2 61
-#define MSGINJCH3 62
-#define MSGINJCH4 63
-#define MSGEVR 64
+//10KS/s * 10sec *40bytes/sample = 4Mbytes
+#define MSGUSRCH1 60
+#define MSGUSRCH2 61
+#define MSGUSRCH3 62
+#define MSGUSRCH4 63
+
+#define MSGFLTCH1 70
+#define MSGFLTCH2 71
+#define MSGFLTCH3 72
+#define MSGFLTCH4 73
+
+#define MSGERRCH1 80
+#define MSGERRCH2 81
+#define MSGERRCH3 82
+#define MSGERRCH4 83
+
+#define MSGINJCH1 90
+#define MSGINJCH2 91
+#define MSGINJCH3 92
+#define MSGINJCH4 93
+
+#define MSGEVRCH1 100
+#define MSGEVRCH2 101
+#define MSGEVRCH3 102
+#define MSGEVRCH4 103
 
 
-#define MSGWFMLEN 16000000   //in bytes
+
+
+#define MSGWFMLEN 4000000   //in bytes
 
 
 //#define MSGFLTCH1LEN 16000000
 
 
-//Waveform Thread: Snapshot Statistics (pointers, etc)
-// Updated at 10Hz, keeps waveform connection alive
-#define MSGWFMSTATS 50
-#define MSGWFMSTATSLEN 256
 
 
 
@@ -56,7 +70,10 @@ extern char ramp_buf[MAX_RAMP_TABLE];
 extern char msgid30_buf[MSGID30LEN+MSGHDRLEN];
 extern char msgStat10Hz_buf[MSGSTAT10HzLEN+MSGHDRLEN];
 
-extern char msgSoft_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgUsrCh1_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgUsrCh2_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgUsrCh3_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgUsrCh4_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgFltCh1_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgFltCh2_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgFltCh3_buf[MSGWFMLEN+MSGHDRLEN];
@@ -69,7 +86,10 @@ extern char msgInjCh1_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgInjCh2_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgInjCh3_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgInjCh4_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgEVR_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgEvrCh1_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgEvrCh2_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgEvrCh3_buf[MSGWFMLEN+MSGHDRLEN];
+extern char msgEvrCh4_buf[MSGWFMLEN+MSGHDRLEN];
 
 extern char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];
 
@@ -211,8 +231,6 @@ typedef struct SnapStatsMsg {
     u32 evr_active;      // PSC Offset 156
     u32 evr_ts_s;        // PSC Offset 160
     u32 evr_ts_ns;       // PSC Offset 164
-
-
 
 } SnapStatsMsg;
 
