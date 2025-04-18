@@ -86,9 +86,9 @@
 #define SNAPSHOT_TOTALTRIGS   0X504     // Snapshot 20 sec circular buffer total data points written
 #define SOFTTRIG              0X508     // Soft Trig
 #define TESTTRIG              0X50C     // Test Trig - Test the 4-Fault, 4-Error and EVR Trigger
-#define SOFTTRIG_BUFPTR       0X520     // Soft Trig Buffer Ptr.  Buffer Point latched value gets put here on soft trigger
-#define SOFTTRIG_TS_S         0X524     // Soft Trig Timestamp (s)
-#define SOFTTRIG_TS_NS        0X528     // Soft Trig Timestamp (ns)
+#define USRTRIG_BUFPTR        0X520     // Soft Trig Buffer Ptr.  Buffer Point latched value gets put here on soft trigger
+#define USRTRIG_TS_S          0X524     // Soft Trig Timestamp (s)
+#define USRTRIG_TS_NS         0X528     // Soft Trig Timestamp (ns)
 #define FLT1TRIG_BUFPTR       0X530     // Fault1 Buffer Ptr.  Buffer Point latched value gets put here on Fault1 trigger
 #define FLT1TRIG_TS_S         0X534     // Fault1 Trig Timestamp (s)
 #define FLT1TRIG_TS_NS        0X538     // Fault1 Trig Timestamp (ns)

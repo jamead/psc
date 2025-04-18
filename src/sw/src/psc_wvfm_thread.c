@@ -58,6 +58,7 @@ void ReadSnapShotStats(char *msg, TriggerTypes *trig) {
 
    u32 *msg_u32ptr;
    struct SnapStatsMsg snapstats;
+   u32 i;
 
 
    //write the PSC Header
@@ -71,66 +72,34 @@ void ReadSnapShotStats(char *msg, TriggerTypes *trig) {
 
    snapstats.cur_bufaddr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
    snapstats.totalfacnt = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_TOTALTRIGS);
-   snapstats.soft_lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG_BUFPTR);
-   snapstats.soft_active = trig->usr[3].active;
-   snapstats.soft_ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG_TS_S);
-   snapstats.soft_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG_TS_NS);
 
-   snapstats.flt1_lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + FLT1TRIG_BUFPTR);
-   snapstats.flt1_active = trig->flt[0].active;
-   snapstats.flt1_ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + FLT1TRIG_TS_S);
-   snapstats.flt1_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + FLT1TRIG_TS_NS);
-   snapstats.flt2_lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + FLT2TRIG_BUFPTR);
-   snapstats.flt2_active = trig->flt[1].active;
-   snapstats.flt2_ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + FLT2TRIG_TS_S);
-   snapstats.flt2_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + FLT2TRIG_TS_NS);
-   snapstats.flt3_lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + FLT3TRIG_BUFPTR);
-   snapstats.flt3_active = trig->flt[2].active;
-   snapstats.flt3_ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + FLT3TRIG_TS_S);
-   snapstats.flt3_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + FLT3TRIG_TS_NS);
-   snapstats.flt4_lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + FLT4TRIG_BUFPTR);
-   snapstats.flt4_active = trig->flt[3].active;
-   snapstats.flt4_ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + FLT4TRIG_TS_S);
-   snapstats.flt4_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + FLT4TRIG_TS_NS);
-   snapstats.err1_lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + ERR1TRIG_BUFPTR);
-   snapstats.err1_active = trig->err[0].active;
-   snapstats.err1_ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + ERR1TRIG_TS_S);
-   snapstats.err1_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + ERR1TRIG_TS_NS);
-   snapstats.err2_lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + ERR2TRIG_BUFPTR);
-   snapstats.err2_active = trig->err[1].active;
-   snapstats.err2_ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + ERR2TRIG_TS_S);
-   snapstats.err2_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + ERR2TRIG_TS_NS);
-   snapstats.err3_lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + ERR3TRIG_BUFPTR);
-   snapstats.err3_active = trig->err[2].active;
-   snapstats.err3_ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + ERR3TRIG_TS_S);
-   snapstats.err3_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + ERR3TRIG_TS_NS);
-   snapstats.err4_lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + ERR4TRIG_BUFPTR);
-   snapstats.err4_active = trig->err[3].active;
-   snapstats.err4_ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + ERR4TRIG_TS_S);
-   snapstats.err4_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + ERR4TRIG_TS_NS);
-   snapstats.inj1_lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + INJ1TRIG_BUFPTR);
-   snapstats.inj1_active = trig->inj[0].active;
-   snapstats.inj1_ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + INJ1TRIG_TS_S);
-   snapstats.inj1_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + INJ1TRIG_TS_NS);
+   for (i=0;i<4;i++) {
+       snapstats.usr[i].lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + USRTRIG_BUFPTR);
+       snapstats.usr[i].active  = trig->usr[3].active;
+       snapstats.usr[i].ts_s    = Xil_In32(XPAR_M_AXI_BASEADDR + USRTRIG_TS_S);
+       snapstats.usr[i].ts_ns   = Xil_In32(XPAR_M_AXI_BASEADDR + USRTRIG_TS_NS);
 
-   snapstats.inj2_lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + INJ2TRIG_BUFPTR);
-   snapstats.inj2_active = trig->inj[1].active;
-   snapstats.inj2_ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + INJ2TRIG_TS_S);
-   snapstats.inj2_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + INJ2TRIG_TS_NS);
-   snapstats.inj3_lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + INJ3TRIG_BUFPTR);
-   snapstats.inj3_active = trig->inj[2].active;
-   snapstats.inj3_ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + INJ3TRIG_TS_S);
-   snapstats.inj3_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + INJ3TRIG_TS_NS);
-   snapstats.inj4_lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + INJ4TRIG_BUFPTR);
-   snapstats.inj4_active = trig->inj[3].active;
-   snapstats.inj4_ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + INJ4TRIG_TS_S);
-   snapstats.inj4_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + INJ4TRIG_TS_NS);
+       snapstats.flt[i].lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + FLT1TRIG_BUFPTR + i*0x10);
+       snapstats.flt[i].active  = trig->flt[i].active;
+       snapstats.flt[i].ts_s    = Xil_In32(XPAR_M_AXI_BASEADDR + FLT1TRIG_TS_S + i*0x10);
+       snapstats.flt[i].ts_ns   = Xil_In32(XPAR_M_AXI_BASEADDR + FLT1TRIG_TS_NS + i*0x10);
 
+       snapstats.err[i].lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + ERR1TRIG_BUFPTR + i*0x10);
+       snapstats.err[i].active  = trig->err[i].active;
+       snapstats.err[i].ts_s    = Xil_In32(XPAR_M_AXI_BASEADDR + ERR1TRIG_TS_S + i*0x10);
+       snapstats.err[i].ts_ns   = Xil_In32(XPAR_M_AXI_BASEADDR + ERR1TRIG_TS_NS + i*0x10);
 
-   snapstats.evr_lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + EVRTRIG_BUFPTR);
-   snapstats.evr_active = trig->evr[3].active;
-   snapstats.evr_ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + EVRTRIG_TS_S);
-   snapstats.evr_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + EVRTRIG_TS_NS);
+       snapstats.inj[i].lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + INJ1TRIG_BUFPTR + i*0x10);
+       snapstats.inj[i].active  = trig->inj[i].active;
+       snapstats.inj[i].ts_s    = Xil_In32(XPAR_M_AXI_BASEADDR + INJ1TRIG_TS_S + i*0x10);
+       snapstats.inj[i].ts_ns   = Xil_In32(XPAR_M_AXI_BASEADDR + INJ1TRIG_TS_NS + i*0x10);
+
+       snapstats.evr[i].lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + EVRTRIG_BUFPTR);
+       snapstats.evr[i].active  = trig->evr[3].active;
+       snapstats.evr[i].ts_s    = Xil_In32(XPAR_M_AXI_BASEADDR + EVRTRIG_TS_S);
+       snapstats.evr[i].ts_ns   = Xil_In32(XPAR_M_AXI_BASEADDR + EVRTRIG_TS_NS);
+   }
+
 
    //xil_printf("Inj1 TS_S: %d    TS_NS: %d\r\n",snapstats.inj1_ts_s, snapstats.inj1_ts_ns);
    //copy the structure to the PSC msg buffer
@@ -171,19 +140,19 @@ void CheckforTriggers(TriggerTypes *trig) {
 
 
     if (trig->usr[0].active == 0)
-       trig->usr[0].addr = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG_BUFPTR);
+       trig->usr[0].addr = Xil_In32(XPAR_M_AXI_BASEADDR + USRTRIG_BUFPTR);
     ProcessTrigger(&trig->usr[0], "Usr1");
 
     if (trig->usr[1].active == 0)
-       trig->usr[1].addr = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG_BUFPTR);
+       trig->usr[1].addr = Xil_In32(XPAR_M_AXI_BASEADDR + USRTRIG_BUFPTR);
     ProcessTrigger(&trig->usr[1], "Usr2");
 
     if (trig->usr[2].active == 0)
-       trig->usr[2].addr = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG_BUFPTR);
+       trig->usr[2].addr = Xil_In32(XPAR_M_AXI_BASEADDR + USRTRIG_BUFPTR);
     ProcessTrigger(&trig->usr[2], "Usr3");
 
     if (trig->usr[3].active == 0)
-       trig->usr[3].addr = Xil_In32(XPAR_M_AXI_BASEADDR + SOFTTRIG_BUFPTR);
+       trig->usr[3].addr = Xil_In32(XPAR_M_AXI_BASEADDR + USRTRIG_BUFPTR);
     ProcessTrigger(&trig->usr[3], "Usr4");
 
 
@@ -558,8 +527,8 @@ void psc_wvfm_thread()
 	  trig.err[i].msgID = MSGERRCH1+i;
 
 	  trig.inj[i].addr_last = trig.inj[i].addr = trig.inj[i].active = trig.inj[i].sendbuf = trig.inj[i].postdlycnt = 0;
-      trig.inj[i].pretrigpts = 1000;
-      trig.inj[i].posttrigpts = 10000;
+      trig.inj[i].pretrigpts = 0;
+      trig.inj[i].posttrigpts = 8000;
 	  trig.inj[i].channum = i+1;
 	  trig.inj[i].msgID = MSGINJCH1+i;
 

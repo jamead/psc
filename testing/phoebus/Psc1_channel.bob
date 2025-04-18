@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-04-17 15:42:37 by mead-->
+<!--Saved on 2025-04-18 10:48:29 by mead-->
 <display version="2.0.0">
   <name>$(CHAN):$(PriSys)</name>
   <width>900</width>
@@ -4440,6 +4440,60 @@
                       </trace>
                     </traces>
                   </widget>
+                  <widget type="led" version="2.0.0">
+                    <name>LED_18</name>
+                    <pv_name>$(PriSys){$(PSC)}$(CHAN):UsrTrigActive-I</pv_name>
+                    <x>556</x>
+                    <y>7</y>
+                  </widget>
+                  <widget type="textentry" version="3.0.0">
+                    <name>Text Update_80</name>
+                    <pv_name>$(PriSys){$(PSC)}$(CHAN):UsrTrigTS-S-I</pv_name>
+                    <x>262</x>
+                    <y>4</y>
+                    <width>90</width>
+                    <font>
+                      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                      </font>
+                    </font>
+                    <background_color>
+                      <color red="255" green="255" blue="255">
+                      </color>
+                    </background_color>
+                    <precision>0</precision>
+                    <show_units>false</show_units>
+                    <horizontal_alignment>1</horizontal_alignment>
+                    <actions>
+                    </actions>
+                    <border_color>
+                      <color red="0" green="128" blue="255">
+                      </color>
+                    </border_color>
+                  </widget>
+                  <widget type="textentry" version="3.0.0">
+                    <name>Text Update_82</name>
+                    <pv_name>$(PriSys){$(PSC)}$(CHAN):UsrTrigTS-NS-I</pv_name>
+                    <x>358</x>
+                    <y>4</y>
+                    <width>90</width>
+                    <font>
+                      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                      </font>
+                    </font>
+                    <background_color>
+                      <color red="255" green="255" blue="255">
+                      </color>
+                    </background_color>
+                    <precision>0</precision>
+                    <show_units>false</show_units>
+                    <horizontal_alignment>1</horizontal_alignment>
+                    <actions>
+                    </actions>
+                    <border_color>
+                      <color red="0" green="128" blue="255">
+                      </color>
+                    </border_color>
+                  </widget>
                 </children>
               </tab>
               <tab>
@@ -4799,7 +4853,7 @@
                       <trace>
                         <name></name>
                         <x_pv></x_pv>
-                        <y_pv>$(PriSys){$(PSC)}$(CHAN):FLT:Cnt-Wfm</y_pv>
+                        <y_pv>$(PriSys){$(PSC)}$(CHAN):FLT:DCCT1-Wfm</y_pv>
                         <err_pv></err_pv>
                         <axis>0</axis>
                         <trace_type>1</trace_type>
@@ -5036,6 +5090,60 @@
                         <visible>true</visible>
                       </trace>
                     </traces>
+                  </widget>
+                  <widget type="textentry" version="3.0.0">
+                    <name>Text Update_83</name>
+                    <pv_name>$(PriSys){$(PSC)}$(CHAN):FltTrigTS-S-I</pv_name>
+                    <x>256</x>
+                    <y>4</y>
+                    <width>90</width>
+                    <font>
+                      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                      </font>
+                    </font>
+                    <background_color>
+                      <color red="255" green="255" blue="255">
+                      </color>
+                    </background_color>
+                    <precision>0</precision>
+                    <show_units>false</show_units>
+                    <horizontal_alignment>1</horizontal_alignment>
+                    <actions>
+                    </actions>
+                    <border_color>
+                      <color red="0" green="128" blue="255">
+                      </color>
+                    </border_color>
+                  </widget>
+                  <widget type="textentry" version="3.0.0">
+                    <name>Text Update_84</name>
+                    <pv_name>$(PriSys){$(PSC)}$(CHAN):FltTrigTS-NS-I</pv_name>
+                    <x>352</x>
+                    <y>4</y>
+                    <width>90</width>
+                    <font>
+                      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                      </font>
+                    </font>
+                    <background_color>
+                      <color red="255" green="255" blue="255">
+                      </color>
+                    </background_color>
+                    <precision>0</precision>
+                    <show_units>false</show_units>
+                    <horizontal_alignment>1</horizontal_alignment>
+                    <actions>
+                    </actions>
+                    <border_color>
+                      <color red="0" green="128" blue="255">
+                      </color>
+                    </border_color>
+                  </widget>
+                  <widget type="led" version="2.0.0">
+                    <name>LED_19</name>
+                    <pv_name>$(PriSys){$(PSC)}$(CHAN):FltTrigActive-I</pv_name>
+                    <x>550</x>
+                    <y>7</y>
                   </widget>
                 </children>
               </tab>
@@ -5633,6 +5741,60 @@
                         <visible>true</visible>
                       </trace>
                     </traces>
+                  </widget>
+                  <widget type="textentry" version="3.0.0">
+                    <name>Text Update_87</name>
+                    <pv_name>$(PriSys){$(PSC)}$(CHAN):ErrTrigTS-S-I</pv_name>
+                    <x>256</x>
+                    <y>4</y>
+                    <width>90</width>
+                    <font>
+                      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                      </font>
+                    </font>
+                    <background_color>
+                      <color red="255" green="255" blue="255">
+                      </color>
+                    </background_color>
+                    <precision>0</precision>
+                    <show_units>false</show_units>
+                    <horizontal_alignment>1</horizontal_alignment>
+                    <actions>
+                    </actions>
+                    <border_color>
+                      <color red="0" green="128" blue="255">
+                      </color>
+                    </border_color>
+                  </widget>
+                  <widget type="textentry" version="3.0.0">
+                    <name>Text Update_88</name>
+                    <pv_name>$(PriSys){$(PSC)}$(CHAN):ErrTrigTS-NS-I</pv_name>
+                    <x>352</x>
+                    <y>4</y>
+                    <width>90</width>
+                    <font>
+                      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                      </font>
+                    </font>
+                    <background_color>
+                      <color red="255" green="255" blue="255">
+                      </color>
+                    </background_color>
+                    <precision>0</precision>
+                    <show_units>false</show_units>
+                    <horizontal_alignment>1</horizontal_alignment>
+                    <actions>
+                    </actions>
+                    <border_color>
+                      <color red="0" green="128" blue="255">
+                      </color>
+                    </border_color>
+                  </widget>
+                  <widget type="led" version="2.0.0">
+                    <name>LED_21</name>
+                    <pv_name>$(PriSys){$(PSC)}$(CHAN):ErrTrigActive-I</pv_name>
+                    <x>550</x>
+                    <y>7</y>
                   </widget>
                 </children>
               </tab>
@@ -6239,6 +6401,60 @@ widget.setPropertyValue('x_axis.maximum', PVUtil.getDouble(pvs[0])-1)]]></text>
                         <visible>true</visible>
                       </trace>
                     </traces>
+                  </widget>
+                  <widget type="textentry" version="3.0.0">
+                    <name>Text Update_89</name>
+                    <pv_name>$(PriSys){$(PSC)}$(CHAN):EvrTrigTS-S-I</pv_name>
+                    <x>262</x>
+                    <y>10</y>
+                    <width>90</width>
+                    <font>
+                      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                      </font>
+                    </font>
+                    <background_color>
+                      <color red="255" green="255" blue="255">
+                      </color>
+                    </background_color>
+                    <precision>0</precision>
+                    <show_units>false</show_units>
+                    <horizontal_alignment>1</horizontal_alignment>
+                    <actions>
+                    </actions>
+                    <border_color>
+                      <color red="0" green="128" blue="255">
+                      </color>
+                    </border_color>
+                  </widget>
+                  <widget type="textentry" version="3.0.0">
+                    <name>Text Update_117</name>
+                    <pv_name>$(PriSys){$(PSC)}$(CHAN):EvrTrigTS-NS-I</pv_name>
+                    <x>358</x>
+                    <y>10</y>
+                    <width>90</width>
+                    <font>
+                      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                      </font>
+                    </font>
+                    <background_color>
+                      <color red="255" green="255" blue="255">
+                      </color>
+                    </background_color>
+                    <precision>0</precision>
+                    <show_units>false</show_units>
+                    <horizontal_alignment>1</horizontal_alignment>
+                    <actions>
+                    </actions>
+                    <border_color>
+                      <color red="0" green="128" blue="255">
+                      </color>
+                    </border_color>
+                  </widget>
+                  <widget type="led" version="2.0.0">
+                    <name>LED_48</name>
+                    <pv_name>$(PriSys){$(PSC)}$(CHAN):EvrTrigActive-I</pv_name>
+                    <x>556</x>
+                    <y>13</y>
                   </widget>
                 </children>
               </tab>
@@ -6912,8 +7128,8 @@ widget.setPropertyValue('x_axis.maximum', PVUtil.getDouble(pvs[0])-1)]]></text>
                   <widget type="textentry" version="3.0.0">
                     <name>Text Update_116</name>
                     <pv_name>$(PriSys){$(PSC)}$(CHAN):PostTrigNumPts-SP</pv_name>
-                    <x>352</x>
-                    <y>4</y>
+                    <x>736</x>
+                    <y>7</y>
                     <width>80</width>
                     <font>
                       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -6937,8 +7153,8 @@ widget.setPropertyValue('x_axis.maximum', PVUtil.getDouble(pvs[0])-1)]]></text>
                   <widget type="label" version="2.0.0">
                     <name>Label_60</name>
                     <text>PostTrigPts</text>
-                    <x>238</x>
-                    <y>4</y>
+                    <x>622</x>
+                    <y>7</y>
                     <width>106</width>
                     <font>
                       <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
@@ -6953,12 +7169,67 @@ widget.setPropertyValue('x_axis.maximum', PVUtil.getDouble(pvs[0])-1)]]></text>
                       </color>
                     </border_color>
                   </widget>
+                  <widget type="textentry" version="3.0.0">
+                    <name>Text Update_85</name>
+                    <pv_name>$(PriSys){$(PSC)}$(CHAN):InjTrigTS-S-I</pv_name>
+                    <x>262</x>
+                    <y>7</y>
+                    <width>90</width>
+                    <font>
+                      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                      </font>
+                    </font>
+                    <background_color>
+                      <color red="255" green="255" blue="255">
+                      </color>
+                    </background_color>
+                    <precision>0</precision>
+                    <show_units>false</show_units>
+                    <horizontal_alignment>1</horizontal_alignment>
+                    <actions>
+                    </actions>
+                    <border_color>
+                      <color red="0" green="128" blue="255">
+                      </color>
+                    </border_color>
+                  </widget>
+                  <widget type="textentry" version="3.0.0">
+                    <name>Text Update_86</name>
+                    <pv_name>$(PriSys){$(PSC)}$(CHAN):InjTrigTS-NS-I</pv_name>
+                    <x>358</x>
+                    <y>7</y>
+                    <width>90</width>
+                    <font>
+                      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+                      </font>
+                    </font>
+                    <background_color>
+                      <color red="255" green="255" blue="255">
+                      </color>
+                    </background_color>
+                    <precision>0</precision>
+                    <show_units>false</show_units>
+                    <horizontal_alignment>1</horizontal_alignment>
+                    <actions>
+                    </actions>
+                    <border_color>
+                      <color red="0" green="128" blue="255">
+                      </color>
+                    </border_color>
+                  </widget>
+                  <widget type="led" version="2.0.0">
+                    <name>LED_20</name>
+                    <pv_name>$(PriSys){$(PSC)}$(CHAN):InjTrigActive-I</pv_name>
+                    <x>556</x>
+                    <y>10</y>
+                  </widget>
                 </children>
               </tab>
             </tabs>
             <x>8</x>
             <width>858</width>
             <height>870</height>
+            <active_tab>4</active_tab>
           </widget>
         </children>
       </tab>
@@ -6967,7 +7238,7 @@ widget.setPropertyValue('x_axis.maximum', PVUtil.getDouble(pvs[0])-1)]]></text>
     <y>6</y>
     <width>882</width>
     <height>924</height>
-    <active_tab>2</active_tab>
+    <active_tab>5</active_tab>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED_36</name>

@@ -20,7 +20,7 @@
 //Waveform Thread: Snapshot Statistics (pointers, etc)
 // Updated at 10Hz, keeps waveform connection alive
 #define MSGWFMSTATS 50
-#define MSGWFMSTATSLEN 256
+#define MSGWFMSTATSLEN 500
 
 
 //Waveform Thread: This message is for Snapshot 10KHz data
@@ -169,8 +169,27 @@ typedef struct SAdataMsg {
 
 
 
+typedef struct SnapTrigData {
+	u32 lataddr;
+	u32 active;
+	u32 ts_s;
+	u32 ts_ns;
+} SnapTrigData;
 
 
+typedef struct SnapStatsMsg {
+	u32 cur_bufaddr;     // PSC Offset 0
+	u32 totalfacnt;      // PSC Offset 4
+    SnapTrigData usr[4]; // PSC Offset 8
+    SnapTrigData flt[4]; // PSC Offset 72
+    SnapTrigData err[4]; // PSC Offset 136
+    SnapTrigData inj[4]; // PSC Offset 200
+    SnapTrigData evr[4]; // PSC OFfset 264
+} SnapStatsMsg;
+
+
+
+/*
 // PSC Snapshot Stats Message ID 50
 typedef struct SnapStatsMsg {
 	u32 cur_bufaddr;     // PSC Offset 0
@@ -234,7 +253,7 @@ typedef struct SnapStatsMsg {
 
 } SnapStatsMsg;
 
-
+*/
 
 
 

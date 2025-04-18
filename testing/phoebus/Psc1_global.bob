@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-04-16 16:37:47 by mead-->
+<!--Saved on 2025-04-18 10:30:24 by mead-->
 <display version="2.0.0">
   <name>$(PriSys):$(PSC)</name>
   <width>700</width>
@@ -53,7 +53,7 @@
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>Text Update_78</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatEVR_ts_s-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan4:EvrTrigTS-S-I</pv_name>
       <x>335</x>
       <y>317</y>
       <width>90</width>
@@ -78,7 +78,7 @@
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>Text Update_79</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatEVR_ts_ns-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan4:EvrTrigTS-NS-I</pv_name>
       <x>431</x>
       <y>317</y>
       <width>90</width>
@@ -103,13 +103,13 @@
     </widget>
     <widget type="led" version="2.0.0">
       <name>LED_9</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatEVR_active-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan4:EvrTrigActive-I</pv_name>
       <x>545</x>
       <y>317</y>
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>Text Update_61</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatEVR_bufaddr-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan4:EvrTrigBufAddr-I</pv_name>
       <x>226</x>
       <y>316</y>
       <width>90</width>
@@ -134,7 +134,7 @@
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>Text Update_91</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatInj1_ts_s-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan1:InjTrigTS-S-I</pv_name>
       <x>335</x>
       <y>236</y>
       <width>90</width>
@@ -159,7 +159,7 @@
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>Text Update_92</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatInj1_ts_ns-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan1:InjTrigTS-NS-I</pv_name>
       <x>431</x>
       <y>236</y>
       <width>90</width>
@@ -184,7 +184,7 @@
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>Text Update_93</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatInj2_ts_s-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan2:InjTrigTS-S-I</pv_name>
       <x>335</x>
       <y>256</y>
       <width>90</width>
@@ -209,7 +209,7 @@
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>Text Update_94</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatInj2_ts_ns-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan2:InjTrigTS-NS-I</pv_name>
       <x>431</x>
       <y>256</y>
       <width>90</width>
@@ -234,7 +234,7 @@
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>Text Update_95</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatInj3_ts_s-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan3:InjTrigTS-S-I</pv_name>
       <x>335</x>
       <y>276</y>
       <width>90</width>
@@ -259,7 +259,7 @@
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>Text Update_96</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatInj3_ts_ns-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan3:InjTrigTS-NS-I</pv_name>
       <x>431</x>
       <y>276</y>
       <width>90</width>
@@ -284,7 +284,7 @@
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>Text Update_97</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatInj4_ts_s-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan4:InjTrigTS-S-I</pv_name>
       <x>335</x>
       <y>296</y>
       <width>90</width>
@@ -309,7 +309,7 @@
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>Text Update_98</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatInj4_ts_ns-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan4:InjTrigTS-NS-I</pv_name>
       <x>431</x>
       <y>296</y>
       <width>90</width>
@@ -334,31 +334,31 @@
     </widget>
     <widget type="led" version="2.0.0">
       <name>LED_10</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatInj1_active-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan1:InjTrigActive-I</pv_name>
       <x>545</x>
       <y>236</y>
     </widget>
     <widget type="led" version="2.0.0">
       <name>LED_11</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatInj2_active-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan2:InjTrigActive-I</pv_name>
       <x>545</x>
       <y>256</y>
     </widget>
     <widget type="led" version="2.0.0">
       <name>LED_12</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatInj3_active-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan3:InjTrigActive-I</pv_name>
       <x>545</x>
       <y>276</y>
     </widget>
     <widget type="led" version="2.0.0">
       <name>LED_13</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatInj4_active-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan4:InjTrigActive-I</pv_name>
       <x>545</x>
       <y>296</y>
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>Text Update_99</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatInj2_bufaddr-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan2:InjTrigBufAddr-I</pv_name>
       <x>226</x>
       <y>255</y>
       <width>90</width>
@@ -383,7 +383,7 @@
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>Text Update_100</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatInj3_bufaddr-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan3:InjTrigBufAddr-I</pv_name>
       <x>226</x>
       <y>275</y>
       <width>90</width>
@@ -408,7 +408,7 @@
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>Text Update_101</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatInj4_bufaddr-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan4:InjTrigBufAddr-I</pv_name>
       <x>226</x>
       <y>295</y>
       <width>90</width>
@@ -433,7 +433,7 @@
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>Text Update_102</name>
-      <pv_name>$(PriSys){$(PSC)}SS:LatInj1_bufaddr-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}Chan1:InjTrigBufAddr-I</pv_name>
       <x>226</x>
       <y>236</y>
       <width>90</width>
@@ -585,7 +585,7 @@
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>Text Update_47</name>
-      <pv_name>$(PriSys){$(PSC)}SS:Currbufaddr-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}CurrBufAddr-I</pv_name>
       <x>133</x>
       <y>43</y>
       <width>90</width>
@@ -629,7 +629,7 @@
     </widget>
     <widget type="textentry" version="3.0.0">
       <name>Text Update_52</name>
-      <pv_name>$(PriSys){$(PSC)}SS:TotalTrigs-I</pv_name>
+      <pv_name>$(PriSys){$(PSC)}TotalTrigs-I</pv_name>
       <x>133</x>
       <y>23</y>
       <width>90</width>
@@ -732,7 +732,7 @@ $(pv_value)</tooltip>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_48</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatSoft_bufaddr-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan1:UsrTrigBufAddr-I</pv_name>
     <x>269</x>
     <y>318</y>
     <width>90</width>
@@ -868,7 +868,7 @@ Fault Triggers</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_53</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt1_bufaddr-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan1:FltTrigBufAddr-I</pv_name>
     <x>269</x>
     <y>350</y>
     <width>90</width>
@@ -913,7 +913,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_54</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt2_bufaddr-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan2:FltTrigBufAddr-I</pv_name>
     <x>269</x>
     <y>370</y>
     <width>90</width>
@@ -938,7 +938,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_55</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt3_bufaddr-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan3:FltTrigBufAddr-I</pv_name>
     <x>269</x>
     <y>390</y>
     <width>90</width>
@@ -963,7 +963,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_56</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt4_bufaddr-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan4:FltTrigBufAddr-I</pv_name>
     <x>269</x>
     <y>410</y>
     <width>90</width>
@@ -988,7 +988,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_57</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatErr1_bufaddr-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan1:ErrTrigBufAddr-I</pv_name>
     <x>269</x>
     <y>430</y>
     <width>90</width>
@@ -1013,7 +1013,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_58</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatErr2_bufaddr-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan2:ErrTrigBufAddr-I</pv_name>
     <x>269</x>
     <y>450</y>
     <width>90</width>
@@ -1038,7 +1038,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_59</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatErr3_bufaddr-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan3:ErrTrigBufAddr-I</pv_name>
     <x>269</x>
     <y>470</y>
     <width>90</width>
@@ -1063,7 +1063,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_60</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatErr4_bufaddr-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan4:ErrTrigBufAddr-I</pv_name>
     <x>269</x>
     <y>490</y>
     <width>90</width>
@@ -1088,7 +1088,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_62</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt1_ts_s-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan1:FltTrigTS-S-I</pv_name>
     <x>378</x>
     <y>351</y>
     <width>90</width>
@@ -1112,7 +1112,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_63</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt1_ts_ns-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan1:FltTrigTS-NS-I</pv_name>
     <x>474</x>
     <y>351</y>
     <width>90</width>
@@ -1137,7 +1137,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_64</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt2_ts_s-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan2:FltTrigTS-S-I</pv_name>
     <x>378</x>
     <y>371</y>
     <width>90</width>
@@ -1162,7 +1162,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_65</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt2_ts_ns-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan2:FltTrigTS-NS-I</pv_name>
     <x>474</x>
     <y>371</y>
     <width>90</width>
@@ -1186,7 +1186,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_66</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt3_ts_s-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan3:FltTrigTS-S-I</pv_name>
     <x>378</x>
     <y>391</y>
     <width>90</width>
@@ -1211,7 +1211,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_67</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt3_ts_ns-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan3:FltTrigTS-NS-I</pv_name>
     <x>474</x>
     <y>391</y>
     <width>90</width>
@@ -1236,7 +1236,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_68</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt4_ts_s-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan4:FltTrigTS-S-I</pv_name>
     <x>378</x>
     <y>411</y>
     <width>90</width>
@@ -1261,7 +1261,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_69</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt4_ts_ns-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan4:FltTrigTS-NS-I</pv_name>
     <x>474</x>
     <y>411</y>
     <width>90</width>
@@ -1286,7 +1286,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_70</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatErr1_ts_s-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan1:ErrTrigTS-S-I</pv_name>
     <x>378</x>
     <y>431</y>
     <width>90</width>
@@ -1311,7 +1311,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_71</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatErr1_ts_ns-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan1:ErrTrigTS-NS-I</pv_name>
     <x>474</x>
     <y>431</y>
     <width>90</width>
@@ -1336,7 +1336,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_72</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatErr2_ts_s-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan2:ErrTrigTS-S-I</pv_name>
     <x>378</x>
     <y>451</y>
     <width>90</width>
@@ -1361,7 +1361,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_73</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatErr2_ts_ns-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan2:ErrTrigTS-NS-I</pv_name>
     <x>474</x>
     <y>451</y>
     <width>90</width>
@@ -1386,7 +1386,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_74</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatErr3_ts_s-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan3:ErrTrigTS-S-I</pv_name>
     <x>378</x>
     <y>471</y>
     <width>90</width>
@@ -1411,7 +1411,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_75</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatErr3_ts_ns-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan3:ErrTrigTS-NS-I</pv_name>
     <x>474</x>
     <y>471</y>
     <width>90</width>
@@ -1436,7 +1436,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_76</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatErr4_ts_s-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan4:ErrTrigTS-S-I</pv_name>
     <x>378</x>
     <y>491</y>
     <width>90</width>
@@ -1461,7 +1461,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_77</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatErr4_ts_ns-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan4:ErrTrigTS-NS-I</pv_name>
     <x>474</x>
     <y>491</y>
     <width>90</width>
@@ -1546,7 +1546,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_80</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatSoft_ts_s-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan1:UsrTrigTS-S-I</pv_name>
     <x>378</x>
     <y>318</y>
     <width>90</width>
@@ -1570,7 +1570,7 @@ Buffer Addr</text>
   </widget>
   <widget type="textentry" version="3.0.0">
     <name>Text Update_81</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatSoft_ts_ns-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan1:UsrTrigTS-NS-I</pv_name>
     <x>474</x>
     <y>318</y>
     <width>90</width>
@@ -1594,55 +1594,55 @@ Buffer Addr</text>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatSoft_active-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan1:UsrTrigActive-I</pv_name>
     <x>588</x>
     <y>318</y>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED_1</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt1_active-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan1:FltTrigActive-I</pv_name>
     <x>588</x>
     <y>351</y>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED_2</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt2_active-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan2:FltTrigActive-I</pv_name>
     <x>588</x>
     <y>371</y>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED_3</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt3_active-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan3:FltTrigActive-I</pv_name>
     <x>588</x>
     <y>391</y>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED_4</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatFlt4_active-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan4:FltTrigActive-I</pv_name>
     <x>588</x>
     <y>411</y>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED_5</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatErr1_active-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan1:ErrTrigActive-I</pv_name>
     <x>588</x>
     <y>431</y>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED_6</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatErr2_active-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan2:ErrTrigActive-I</pv_name>
     <x>588</x>
     <y>451</y>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED_7</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatErr3_active-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan3:ErrTrigActive-I</pv_name>
     <x>588</x>
     <y>471</y>
   </widget>
   <widget type="led" version="2.0.0">
     <name>LED_8</name>
-    <pv_name>$(PriSys){$(PSC)}SS:LatErr4_active-I</pv_name>
+    <pv_name>$(PriSys){$(PSC)}Chan4:ErrTrigActive-I</pv_name>
     <x>588</x>
     <y>491</y>
   </widget>
