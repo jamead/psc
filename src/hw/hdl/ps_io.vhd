@@ -91,7 +91,7 @@ evr_params.reset <= reg_o.evr_reset.val.data;
 evr_params.inj_eventno <= reg_o.evr_inj_eventno.val.data;
 evr_params.pm_eventno <= reg_o.evr_pm_eventno.val.data;
 
-
+dcct_params.numbits_sel <= '0';
 
 
 -- PS1 Registers

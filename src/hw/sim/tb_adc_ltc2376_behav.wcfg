@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_adc_ltc2376_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="tb_adc_ltc2376" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="35.429598 us"></ZoomStartTime>
+      <ZoomEndTime time="42.114081 us"></ZoomEndTime>
+      <Cursor1Time time="41.000000 us"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="198"></NameColumnWidth>
+      <ValueColumnWidth column_width="144"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="18" />
+   <wave_markers>
+      <marker label="" time="7950000" />
+   </wave_markers>
+   <wvobject type="logic" fp_name="/tb_adc_ltc2376/resolution">
+      <obj_property name="ElementShortName">resolution</obj_property>
+      <obj_property name="ObjectShortName">resolution</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_adc_ltc2376/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_adc_ltc2376/uut/clk_enb">
+      <obj_property name="ElementShortName">clk_enb</obj_property>
+      <obj_property name="ObjectShortName">clk_enb</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_adc_ltc2376/reset">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_adc_ltc2376/start">
+      <obj_property name="ElementShortName">start</obj_property>
+      <obj_property name="ObjectShortName">start</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_adc_ltc2376/busy">
+      <obj_property name="ElementShortName">busy</obj_property>
+      <obj_property name="ObjectShortName">busy</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_adc_ltc2376/cnv">
+      <obj_property name="ElementShortName">cnv</obj_property>
+      <obj_property name="ObjectShortName">cnv</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/tb_adc_ltc2376/uut/state">
+      <obj_property name="ElementShortName">state</obj_property>
+      <obj_property name="ObjectShortName">state</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_adc_ltc2376/sdi">
+      <obj_property name="ElementShortName">sdi</obj_property>
+      <obj_property name="ObjectShortName">sdi</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_adc_ltc2376/sclk">
+      <obj_property name="ElementShortName">sclk</obj_property>
+      <obj_property name="ObjectShortName">sclk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_adc_ltc2376/data_rdy">
+      <obj_property name="ElementShortName">data_rdy</obj_property>
+      <obj_property name="ObjectShortName">data_rdy</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/tb_adc_ltc2376/uut/cnv_count">
+      <obj_property name="ElementShortName">cnv_count</obj_property>
+      <obj_property name="ObjectShortName">cnv_count</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/tb_adc_ltc2376/uut/clk_count">
+      <obj_property name="ElementShortName">clk_count</obj_property>
+      <obj_property name="ObjectShortName">clk_count</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/tb_adc_ltc2376/uut/bit_count">
+      <obj_property name="ElementShortName">bit_count</obj_property>
+      <obj_property name="ObjectShortName">bit_count</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/tb_adc_ltc2376/uut/num_bits">
+      <obj_property name="ElementShortName">num_bits</obj_property>
+      <obj_property name="ObjectShortName">num_bits</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_adc_ltc2376/uut/shift_reg">
+      <obj_property name="ElementShortName">shift_reg[39:0]</obj_property>
+      <obj_property name="ObjectShortName">shift_reg[39:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_adc_ltc2376/dcct1">
+      <obj_property name="ElementShortName">dcct1[19:0]</obj_property>
+      <obj_property name="ObjectShortName">dcct1[19:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_adc_ltc2376/dcct2">
+      <obj_property name="ElementShortName">dcct2[19:0]</obj_property>
+      <obj_property name="ObjectShortName">dcct2[19:0]</obj_property>
+   </wvobject>
+</wave_config>

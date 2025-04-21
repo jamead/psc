@@ -81,11 +81,7 @@ end record;
 
 
 -- DCCT ADC record types
-type t_dcct_adcs_onech is record
-  dcct0_raw      : signed(19 downto 0);
-  dcct1_raw      : signed(19 downto 0);
-  dcct0_oc       : signed(19 downto 0);
-  dcct1_oc       : signed(19 downto 0);  
+type t_dcct_adcs_onech is record 
   dcct0          : signed(19 downto 0);
   dcct1          : signed(19 downto 0);  
   
@@ -98,7 +94,7 @@ type t_dcct_adcs is record
   ps4           : t_dcct_adcs_onech;
 end record;
 
-type t_dcct_adcs_params_onech is record 
+type t_dcct_adcs_params_onech is record  
   dcct0_gain      : signed(23 downto 0); --Q3.20 format
   dcct0_offset    : signed(19 downto 0);
   dcct1_gain      : signed(23 downto 0); --Q3.20 format
@@ -106,6 +102,7 @@ type t_dcct_adcs_params_onech is record
 end record;
 
 type t_dcct_adcs_params is record
+  numbits_sel   : std_logic;   --0=18 bits, 1=20bits
   ps1           : t_dcct_adcs_params_onech;
   ps2           : t_dcct_adcs_params_onech;
   ps3           : t_dcct_adcs_params_onech;

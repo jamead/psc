@@ -9,7 +9,8 @@ entity dcct_gainoffset is
       clk            : in std_logic;
       reset          : in std_logic; 
       conv_done      : in std_logic; 
-      dcct_adc       : in std_logic_vector(35 downto 0);
+      dcct0_raw      : in signed(19 downto 0);
+      dcct1_raw      : in signed(19 downto 0);
       dcct_params    : in t_dcct_adcs_params_onech; 
       dcct_out       : out t_dcct_adcs_onech;
       done           : out std_logic 
@@ -23,6 +24,8 @@ architecture arch of dcct_gainoffset is
   signal state :  state_type;
   signal conv_done_last : std_logic;
   signal multdlycnt : std_logic_vector(3 downto 0);
+  signal dcct0_oc   : signed(19 downto 0);
+  signal dcct1_oc   : signed(19 downto 0);
 
 
 
@@ -62,23 +65,20 @@ process(clk)
 	       done <= '0';
 	       conv_done_last <= conv_done;
 		   if (conv_done = '1' and conv_done_last = '0') then 				   
-		      dcct_out.dcct0_raw <= resize(signed(dcct_adc(17 downto 0)),20); 
-		      dcct_out.dcct1_raw <= resize(signed(dcct_adc(35 downto 18)),20);
 		      state <= apply_offsets;
            end if;
          
-
          when APPLY_OFFSETS =>
-           dcct_out.dcct0_oc <= dcct_out.dcct0_raw - dcct_params.dcct0_offset;
-           dcct_out.dcct1_oc <= dcct_out.dcct1_raw - dcct_params.dcct1_offset;
+           dcct0_oc <= dcct0_raw - dcct_params.dcct0_offset;
+           dcct1_oc <= dcct1_raw - dcct_params.dcct1_offset;
            state <= apply_gains;
 
            
          when APPLY_GAINS =>
            --dcct adc format is Q0.19 format (1sign, 0 integer, 19 fractional bits) range -1 to 0.99999
            --gain is Q3.20 format (1sign, 3 integer, 20 fractional bits) range -8 to 7.99999
-           dcct_out.dcct0 <= fixed_mul(dcct_out.dcct0_oc, dcct_params.dcct0_gain, 4);
-           dcct_out.dcct1 <= fixed_mul(dcct_out.dcct1_oc, dcct_params.dcct1_gain, 4);
+           dcct_out.dcct0 <= fixed_mul(dcct0_oc, dcct_params.dcct0_gain, 4);
+           dcct_out.dcct1 <= fixed_mul(dcct1_oc, dcct_params.dcct1_gain, 4);
            state <= mult_dly;
            multdlycnt <= 4d"0";
            
