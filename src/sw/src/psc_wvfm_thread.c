@@ -138,7 +138,6 @@ void ProcessTrigger(TriggerInfo *trig, const char *trig_name) {
 void CheckforTriggers(TriggerTypes *trig) {
 
 
-
     if (trig->usr[0].active == 0)
        trig->usr[0].addr = Xil_In32(XPAR_M_AXI_BASEADDR + USRTRIG_BUFPTR);
     ProcessTrigger(&trig->usr[0], "Usr1");
@@ -223,30 +222,6 @@ void CheckforTriggers(TriggerTypes *trig) {
        trig->evr[3].addr = Xil_In32(XPAR_M_AXI_BASEADDR + EVRTRIG_BUFPTR);
     ProcessTrigger(&trig->evr[3], "Evr4");
 
-
-
-
-
-
-    //debug messages
-    /*
-    if (trig->soft.active == 1)
-        xil_printf("Soft: Addr: %x    Active: %d   SendBuf: %d   Posttrigcnt: %d\r\n",
-    		 trig->soft.addr, trig->soft.active, trig->soft.sendbuf, trig->soft.postdlycnt);
-    if (trig->flt1.active == 1)
-       xil_printf("Flt1: Addr: %x    Active: %d   SendBuf: %d   Posttrigcnt: %d\r\n",
-    		 trig->flt1.addr, trig->flt1.active, trig->flt1.sendbuf, trig->flt1.postdlycnt);
-    if (trig->flt2.active == 1)
-       xil_printf("Flt2: Addr: %x    Active: %d   SendBuf: %d   Posttrigcnt: %d\r\n",
-    		 trig->flt2.addr, trig->flt2.active, trig->flt2.sendbuf, trig->flt2.postdlycnt);
-    if (trig->flt3.active == 1)
-       xil_printf("Flt3: Addr: %x    Active: %d   SendBuf: %d   Posttrigcnt: %d\r\n",
-    		 trig->flt3.addr, trig->flt3.active, trig->flt3.sendbuf, trig->flt3.postdlycnt);
-    if (trig->flt4.active == 1)
-       xil_printf("Flt4: Addr: %x    Active: %d   SendBuf: %d   Posttrigcnt: %d\r\n",
-    		 trig->flt4.addr, trig->flt4.active, trig->flt4.sendbuf, trig->flt4.postdlycnt);
-
-    */
 }
 
 
@@ -450,7 +425,7 @@ s32 SendWfmData(int newsockfd, char *msg, TriggerInfo *trig) {
 
     //write out Snapshot data (msg51)
 	xil_printf("Tx 10 sec of Snapshot Data\r\n");
-    Host2NetworkConvWvfm(msg,sizeof(msgUsrCh1_buf)+MSGHDRLEN);
+    Host2NetworkConvWvfm(msg,sizeof(msgUsr_buf[0])+MSGHDRLEN);
 
     n = write(newsockfd,msg,MSGWFMLEN+MSGHDRLEN);
     xil_printf("Transferred %d bytes\r\n", n);
@@ -567,18 +542,38 @@ reconnect:
 
 		CheckforTriggers(&trig);
 
+        // Scan through all the trigger types, send waveform if there was a trigger
+		for (int i = 0; i < 4; ++i) {
+		    if (trig.usr[i].sendbuf == 1) {
+		        if (SendWfmData(newsockfd, msgUsr_buf[i], &trig.usr[i]) < 0) goto reconnect;
+		    }
+		    if (trig.flt[i].sendbuf == 1) {
+		        if (SendWfmData(newsockfd, msgFlt_buf[i], &trig.flt[i]) < 0) goto reconnect;
+		    }
+		    if (trig.err[i].sendbuf == 1) {
+		        if (SendWfmData(newsockfd, msgErr_buf[i], &trig.err[i]) < 0) goto reconnect;
+		    }
+		    if (trig.inj[i].sendbuf == 1) {
+		        if (SendWfmData(newsockfd, msgInj_buf[i], &trig.inj[i]) < 0) goto reconnect;
+		    }
+		    if (trig.evr[i].sendbuf == 1) {
+		        if (SendWfmData(newsockfd, msgEvr_buf[i], &trig.evr[i]) < 0) goto reconnect;
+		    }
 
+		}
+
+		/*
         if (trig.usr[0].sendbuf == 1)
-        	if ((n = SendWfmData(newsockfd,msgUsrCh1_buf,&trig.usr[0])) < 0) goto reconnect;
+        	if ((n = SendWfmData(newsockfd,msgUsr_buf[0],&trig.usr[0])) < 0) goto reconnect;
 
         if (trig.usr[1].sendbuf == 1)
-         	if ((n = SendWfmData(newsockfd,msgUsrCh2_buf,&trig.usr[1])) < 0) goto reconnect;
+         	if ((n = SendWfmData(newsockfd,msgUsr_buf[1],&trig.usr[1])) < 0) goto reconnect;
 
         if (trig.usr[2].sendbuf == 1)
-         	if ((n = SendWfmData(newsockfd,msgUsrCh3_buf,&trig.usr[2])) < 0) goto reconnect;
+         	if ((n = SendWfmData(newsockfd,msgUsr_buf[2],&trig.usr[2])) < 0) goto reconnect;
 
         if (trig.usr[3].sendbuf == 1)
-          	if ((n = SendWfmData(newsockfd,msgUsrCh4_buf,&trig.usr[3])) < 0) goto reconnect;
+          	if ((n = SendWfmData(newsockfd,msgUsr_buf[3],&trig.usr[3])) < 0) goto reconnect;
 
         if (trig.flt[0].sendbuf == 1)
          	if ((n = SendWfmData(newsockfd,msgFltCh1_buf,&trig.flt[0])) < 0) goto reconnect;
@@ -628,7 +623,7 @@ reconnect:
         if (trig.evr[3].sendbuf == 1)
           	if ((n = SendWfmData(newsockfd,msgEvrCh4_buf,&trig.evr[3])) < 0) goto reconnect;
 
-
+        */
 
         // Send out Wfm Stats
 		//xil_printf("Sending SnapShot Stats...\r\n");

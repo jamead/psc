@@ -10,9 +10,9 @@
 #include "xparameters.h"
 
 #include "xiicps.h"
+#include "xadcps.h"
 
 #include "xstatus.h"       // For XStatus
-
 
 /* Hardware support includes */
 #include "psc_defs.h"
@@ -49,6 +49,8 @@ static sys_thread_t main_thread_handle;
 
 struct netif server_netif;
 
+XAdcPs XAdcInstance;
+
 //global buffers
 struct SAdataMsg sadata;
 
@@ -62,7 +64,15 @@ char msgStat10Hz_buf[MSGSTAT10HzLEN+MSGHDRLEN];
 char temp[1000];  //temp buffer, msgStat10Hz_buf was overwriting msgid51_buf sometimes
 
 
-//Waveform Thread Buffers
+
+
+char msgUsr_buf[4][MSGWFMLEN+MSGHDRLEN];
+char msgFlt_buf[4][MSGWFMLEN+MSGHDRLEN];
+char msgErr_buf[4][MSGWFMLEN+MSGHDRLEN];
+char msgInj_buf[4][MSGWFMLEN+MSGHDRLEN];
+char msgEvr_buf[4][MSGWFMLEN+MSGHDRLEN];
+
+/*
 char msgUsrCh1_buf[MSGWFMLEN+MSGHDRLEN];
 char msgUsrCh2_buf[MSGWFMLEN+MSGHDRLEN];
 char msgUsrCh3_buf[MSGWFMLEN+MSGHDRLEN];
@@ -83,6 +93,7 @@ char msgEvrCh1_buf[MSGWFMLEN+MSGHDRLEN];
 char msgEvrCh2_buf[MSGWFMLEN+MSGHDRLEN];
 char msgEvrCh3_buf[MSGWFMLEN+MSGHDRLEN];
 char msgEvrCh4_buf[MSGWFMLEN+MSGHDRLEN];
+*/
 
 char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];
 
@@ -297,21 +308,82 @@ void InitGainsOffsets() {
 
 }
 
+void ReadXAdc() {
 
+    XAdcPs XAdcInstance;
+    XAdcPs_Config *ConfigPtr;
+    s32 Status;
+
+    ConfigPtr = XAdcPs_LookupConfig(XPAR_XADCPS_0_DEVICE_ID);
+    XAdcPs_CfgInitialize(&XAdcInstance, ConfigPtr, ConfigPtr->BaseAddress);
+
+    // Self-test of the System Monitor/ADC subsystem (optional but recommended)
+    Status = XAdcPs_SelfTest(&XAdcInstance);
+    if (Status != XST_SUCCESS) {
+        xil_printf("Error: XADC self-test failed (Status %d)\n", Status);
+       }
+
+
+    // Safe mode before config
+    XAdcPs_SetSequencerMode(&XAdcInstance, XADCPS_SEQ_MODE_SAFE);
+
+    // Enable desired channels
+    XAdcPs_SetSeqChEnables(&XAdcInstance,
+        XADCPS_CH_TEMP	| XADCPS_CH_VCCINT | XADCPS_CH_VCCAUX |
+        XADCPS_CH_VBRAM | XADCPS_CH_VCCPINT |
+        XADCPS_CH_VCCPAUX);
+
+    // Use continuous pass mode for automatic sequencing
+    XAdcPs_SetSequencerMode(&XAdcInstance, XADCPS_SEQ_MODE_CONTINPASS);
+
+    for (;;) {
+
+          float tempC, vccint, vccaux, vbram, vccpint, vccpaux;
+          // Use continuous pass mode for automatic sequencing
+          XAdcPs_SetSequencerMode(&XAdcInstance, XADCPS_SEQ_MODE_CONTINPASS);
+
+          // Optionally clear the EOS flag (check the driver documentation)
+          // XAdcPs_ClearStatusReg(&XAdcInstance, XADCPS_SR_EOS_MASK);
+
+          tempC = XAdcPs_RawToTemperature(
+              XAdcPs_GetAdcData(&XAdcInstance, XADCPS_CH_TEMP));
+          vccint = XAdcPs_RawToVoltage(
+              XAdcPs_GetAdcData(&XAdcInstance, XADCPS_CH_VCCINT));
+          vccaux = XAdcPs_RawToVoltage(
+              XAdcPs_GetAdcData(&XAdcInstance, XADCPS_CH_VCCAUX));
+          vbram = XAdcPs_RawToVoltage(
+              XAdcPs_GetAdcData(&XAdcInstance, XADCPS_CH_VBRAM));
+          vccpint = XAdcPs_RawToVoltage(
+              XAdcPs_GetAdcData(&XAdcInstance, XADCPS_CH_VCCPINT));
+          vccpaux = XAdcPs_RawToVoltage(
+              XAdcPs_GetAdcData(&XAdcInstance, XADCPS_CH_VCCPAUX));
+
+          printf("Temperature : %.2f C\n", tempC);
+          printf("VCCINT      : %.3f V\n", vccint);
+          printf("VCCAUX      : %.3f V\n", vccaux);
+          printf("VBRAM       : %.3f V\n", vbram);
+          printf("VCCPINT     : %.3f V\n", vccpint);
+          printf("VCCPAUX     : %.3f V\n", vccpaux);
+          printf("--------------------------\n");
+
+          sleep(2);
+      }
+
+
+
+}
 
 
 
 int main()
 {
-    u32 i;
-    u32 ts_s, ts_ns;
 
 
 	xil_printf("BNL Power Supply Controller ...\r\n");
     print_firmware_version();
     
 	init_i2c();
-	prog_si570();
+	//prog_si570();
 	
     sleep(1);
 
@@ -326,22 +398,9 @@ int main()
 
 
     InitGainsOffsets();
-    /*
-    for (i=0;i<100;i++) {
-    	Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DCCT0_GAIN, i*100);
-    	xil_printf("i=%d\r\n",i);
-        sleep(1);
-    }
-    */
-    //read Timestamp
-    /*
-    for (i=0;i<5;i++) {
-      ts_s = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S);
-      ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS);
-      xil_printf("ts= %d    %d\r\n",ts_s,ts_ns);
-      sleep(1);
-    }
-    */
+    
+    //ReadXAdc();
+
 
 	main_thread_handle = sys_thread_new("main_thread", main_thread, 0, THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
 

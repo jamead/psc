@@ -70,6 +70,14 @@ extern char ramp_buf[MAX_RAMP_TABLE];
 extern char msgid30_buf[MSGID30LEN+MSGHDRLEN];
 extern char msgStat10Hz_buf[MSGSTAT10HzLEN+MSGHDRLEN];
 
+//extern char msgBuf[NUM_MSG_TYPES][NUM_CHANNELS][BUFFER_SIZE];
+extern char msgUsr_buf[4][MSGWFMLEN+MSGHDRLEN];
+extern char msgFlt_buf[4][MSGWFMLEN+MSGHDRLEN];
+extern char msgErr_buf[4][MSGWFMLEN+MSGHDRLEN];
+extern char msgInj_buf[4][MSGWFMLEN+MSGHDRLEN];
+extern char msgEvr_buf[4][MSGWFMLEN+MSGHDRLEN];
+
+/*
 extern char msgUsrCh1_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgUsrCh2_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgUsrCh3_buf[MSGWFMLEN+MSGHDRLEN];
@@ -90,6 +98,7 @@ extern char msgEvrCh1_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgEvrCh2_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgEvrCh3_buf[MSGWFMLEN+MSGHDRLEN];
 extern char msgEvrCh4_buf[MSGWFMLEN+MSGHDRLEN];
+*/
 
 extern char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];
 
