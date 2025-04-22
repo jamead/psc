@@ -311,7 +311,7 @@ int main()
     print_firmware_version();
     
 	init_i2c();
-	//prog_si570();
+	prog_si570();
 	
     sleep(1);
 
@@ -321,6 +321,8 @@ int main()
 	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET_REG, 0);
     usleep(1000);
 
+    //Set Resolution
+	Xil_Out32(XPAR_M_AXI_BASEADDR + RESOLUTION, 1);
 
 
     InitGainsOffsets();

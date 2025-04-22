@@ -43,6 +43,15 @@ reg {
     field {} val[8];
   } leds @0x4;
   
+  
+reg {
+    desc="HiRes/MidRes Number of Bits 0=18 or 1=20";
+    default sw = rw;
+    default hw = r;
+    field {} val[1];
+  } resolution @0x8;
+
+
 
 reg {
     desc="EVR Timestamp (s)";

@@ -150,6 +150,7 @@ void ReadSAData(char *msg) {
 
     sadata.evr_ts_s =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S_REG);
     sadata.evr_ts_ns =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS_REG);
+    sadata.resolution =  Xil_In32(XPAR_M_AXI_BASEADDR + RESOLUTION);
     //xil_printf("%d  %d\r\n",sadata.evr_ts_s, sadata.evr_ts_ns);
 
 

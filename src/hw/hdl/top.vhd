@@ -111,7 +111,6 @@ architecture behv of top is
 
    signal pl_reset              : std_logic;
    signal pl_resetn             : std_logic_vector(0 downto 0);
-   signal gtx_reset             : std_logic_vector(7 downto 0);
    signal pl_clk0               : std_logic;
    
    signal i2c0_scl_i            : std_logic;
@@ -178,7 +177,7 @@ begin
 fp_leds(0) <= evr_trigs.inj_trig_stretch; --gtx_evr_refclk;
 fp_leds(1) <= '0';
 fp_leds(2) <= '0';
-fp_leds(3) <= '0'; --evr_trigs.rcvd_clk; 
+fp_leds(3) <= evr_trigs.rcvd_clk; 
 fp_leds(7 downto 4) <= "0000";
 --sfp_leds <= leds;
 
@@ -319,7 +318,6 @@ evr: entity work.evr_top
   port map(
     sys_clk => pl_clk0,
     sys_rst => pl_reset,
-    gtx_reset => gtx_reset,
     gtx_refclk => gtx_evr_refclk, 
     rx_p => gtx_evr_rx_p,
     rx_n => gtx_evr_rx_n,

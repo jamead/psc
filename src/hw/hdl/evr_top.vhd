@@ -19,13 +19,10 @@ entity evr_top is
    port(
 
     sys_clk        : in std_logic;
-    sys_rst        : in std_logic;
-    gtx_reset      : in std_logic_vector(7 downto 0);
-    
+    sys_rst        : in std_logic;   
     gtx_refclk     : in std_logic;
     rx_p           : in std_logic;
-    rx_n           : in std_logic;
-    
+    rx_n           : in std_logic; 
     evr_params     : in t_evr_params;
     evr_trigs      : out t_evr_trigs
    
@@ -78,14 +75,14 @@ architecture behv of evr_top is
    attribute mark_debug of inj_trig: signal is "true";
    attribute mark_debug of inj_trig_sync: signal is "true";
    
---   attribute mark_debug of timestamp: signal is "true";
+   attribute mark_debug of timestamp: signal is "true";
 --   attribute mark_debug of eventclock: signal is "true";
 --   attribute mark_debug of prev_datastream: signal is "true";
 
   
    attribute mark_debug of rxdata: signal is "true";
    attribute mark_debug of rxcharisk: signal is "true";
---   attribute mark_debug of gtx_reset: signal is "true";
+   --attribute mark_debug of gtx_reset: signal is "true";
    
 --   attribute mark_debug of rxresetdone: signal is "true"; 
 --   attribute mark_debug of tx_fsm_reset_done: signal is "true"; 
@@ -282,7 +279,7 @@ evr_gtx_init_i : evr_gtx
     port map
     (
         sysclk_in                       =>      sys_clk,
-        soft_reset_rx_in                =>      gtx_reset(1), 
+        soft_reset_rx_in                =>      evr_params.reset(1), 
         dont_reset_on_data_error_in     =>      '0', 
         gt0_tx_fsm_reset_done_out       =>      tx_fsm_reset_done,
         gt0_rx_fsm_reset_done_out       =>      rx_fsm_reset_done,
@@ -296,7 +293,7 @@ evr_gtx_init_i : evr_gtx
         gt0_cpllfbclklost_out           =>      cpllfbcklost, 
         gt0_cplllock_out                =>      cplllock,
         gt0_cplllockdetclk_in           =>      sys_clk,
-        gt0_cpllreset_in                =>      gtx_reset(0), 
+        gt0_cpllreset_in                =>      evr_params.reset(0), 
         -------------------------- Channel - Clocking Ports ------------------------
         gt0_gtrefclk0_in                =>      '0',
         gt0_gtrefclk1_in                =>      gtx_refclk, 
@@ -338,15 +335,15 @@ evr_gtx_init_i : evr_gtx
         gt0_rxoutclk_out                =>      rxout_clk,
         gt0_rxoutclkfabric_out          =>      open,
         ------------- Receive Ports - RX Initialization and Reset Ports ------------
-        gt0_gtrxreset_in                =>      gtx_reset(3), 
-        gt0_rxpmareset_in               =>      gtx_reset(4), 
+        gt0_gtrxreset_in                =>      evr_params.reset(3), 
+        gt0_rxpmareset_in               =>      evr_params.reset(4), 
         ------------------- Receive Ports - RX8B/10B Decoder Ports -----------------
         gt0_rxchariscomma_out           =>      open, 
         gt0_rxcharisk_out               =>      rxcharisk,
         -------------- Receive Ports -RX Initialization and Reset Ports ------------
         gt0_rxresetdone_out             =>      rxresetdone,
         --------------------- TX Initialization and Reset Ports --------------------
-        gt0_gttxreset_in                =>      gtx_reset(5),
+        gt0_gttxreset_in                =>      evr_params.reset(5),
 
         gt0_qplloutclk_in               =>      '0', 
         gt0_qplloutrefclk_in            =>      '0'

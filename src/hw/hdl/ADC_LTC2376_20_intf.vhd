@@ -54,6 +54,26 @@ signal cnv_count   : natural range 0 to 500 := 0;
 signal clk_count   : natural range 0 to 500 := 0; 
 signal bit_count   : natural range 0 to 500 := 0; 
 
+
+  --debug signals (connect to ila)
+   attribute mark_debug                 : string;
+   attribute mark_debug of start  : signal is "true";
+   attribute mark_debug of busy     : signal is "true";
+   attribute mark_debug of sdi    : signal is "true";
+   attribute mark_debug of cnv     : signal is "true";
+   attribute mark_debug of sclk  : signal is "true";
+   attribute mark_debug of data_out     : signal is "true";
+   attribute mark_debug of present_state : signal is "true";
+   attribute mark_debug of data_rdy  : signal is "true";
+   attribute mark_debug of cnv_count     : signal is "true";
+   attribute mark_debug of clk_count  : signal is "true";
+   attribute mark_debug of bit_count     : signal is "true";
+   
+  
+
+
+
+
 begin
 
 process(clk) 

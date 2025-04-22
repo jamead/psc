@@ -52,6 +52,20 @@ architecture arch of adc_ltc2376 is
   signal clk_enb     : std_logic;  
   signal clk_cnt     : std_logic_vector(7 downto 0);  
 
+--debug signals (connect to ila)
+   attribute mark_debug                 : string;
+   attribute mark_debug of state  : signal is "true";
+   attribute mark_debug of cnv     : signal is "true";
+   attribute mark_debug of sclk  : signal is "true";
+   attribute mark_debug of sdi     : signal is "true";
+   attribute mark_debug of dcct1  : signal is "true";
+   attribute mark_debug of dcct2  : signal is "true";
+   attribute mark_debug of num_bits     : signal is "true";
+   attribute mark_debug of bit_count     : signal is "true";
+   attribute mark_debug of data_rdy     : signal is "true";
+   attribute mark_debug of start     : signal is "true";
+   attribute mark_debug of shift_reg     : signal is "true";  
+   
 
 begin
 
@@ -121,11 +135,11 @@ begin
      
            when DONE => 
                 if (resolution = '0') then
-                   dcct1 <= resize(signed(shift_reg(35 downto 18)),20); 
-                   dcct2 <= resize(signed(shift_reg(17 downto 0)),20);
+                   dcct2 <= resize(signed(shift_reg(35 downto 18)),20); 
+                   dcct1 <= resize(signed(shift_reg(17 downto 0)),20);
                 else
-                   dcct1 <= signed(shift_reg(39 downto 20));
-                   dcct2 <= signed(shift_reg(19 downto 0));
+                   dcct2 <= signed(shift_reg(39 downto 20));
+                   dcct1 <= signed(shift_reg(19 downto 0));
                 end if;
                 bit_count <= 0; 
                 data_rdy <= '1';

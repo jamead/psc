@@ -39,7 +39,7 @@ architecture arch of dac_ctrlr is
 
 
    --debug signals (connect to ila)
-   attribute mark_debug                 : string;   attribute mark_debug of tenkhz_trig: signal is "true";
+   attribute mark_debug: string;   attribute mark_debug of tenkhz_trig: signal is "true";
 
 
 
@@ -48,51 +48,55 @@ begin
 
 dac1: entity work.dac_chan
   port map (
-    clk         => clk,
-    reset       => reset,
+    clk  => clk,
+    reset => reset,
     tenkhz_trig => tenkhz_trig,
-    dac_cntrl   => dac_cntrl.ps1,
-    dac_stat    => dac_stat.ps1,
-    n_sync1234  => n_sync1234,
-    sclk1234    => sclk1234,
-    sdo         => sdo(0)
+    dac_numbits_sel => dac_cntrl.numbits_sel,
+    dac_cntrl => dac_cntrl.ps1,
+    dac_stat => dac_stat.ps1,
+    n_sync1234 => n_sync1234,
+    sclk1234 => sclk1234,
+    sdo => sdo(0)
   );
 
 
 dac2: entity work.dac_chan
   port map (
-    clk         => clk,
-    reset       => reset,
+    clk => clk,
+    reset => reset,
     tenkhz_trig => tenkhz_trig,
-    dac_cntrl   => dac_cntrl.ps2,
-    dac_stat    => dac_stat.ps2,
-    n_sync1234  => open, 
-    sclk1234    => open, 
-    sdo         => sdo(1)
+    dac_numbits_sel => dac_cntrl.numbits_sel,    
+    dac_cntrl => dac_cntrl.ps2,
+    dac_stat => dac_stat.ps2,
+    n_sync1234 => open, 
+    sclk1234 => open, 
+    sdo => sdo(1)
   );
 
 dac3: entity work.dac_chan
   port map (
-    clk         => clk,
-    reset       => reset,
+    clk => clk,
+    reset => reset,
     tenkhz_trig => tenkhz_trig,
-    dac_cntrl   => dac_cntrl.ps3,
-    dac_stat    => dac_stat.ps3,
-    n_sync1234  => open, 
-    sclk1234    => open, 
-    sdo         => sdo(2)
+    dac_numbits_sel => dac_cntrl.numbits_sel,   
+    dac_cntrl => dac_cntrl.ps3,
+    dac_stat => dac_stat.ps3,
+    n_sync1234 => open, 
+    sclk1234 => open, 
+    sdo => sdo(2)
   );
 
 dac4: entity work.dac_chan
   port map (
-    clk         => clk,
-    reset       => reset,
+    clk => clk,
+    reset => reset,
     tenkhz_trig => tenkhz_trig,
-    dac_cntrl   => dac_cntrl.ps4,
-    dac_stat    => dac_stat.ps4,
-    n_sync1234  => open,
-    sclk1234    => open,
-    sdo         => sdo(3)
+    dac_numbits_sel => dac_cntrl.numbits_sel,
+    dac_cntrl => dac_cntrl.ps4,
+    dac_stat => dac_stat.ps4,
+    n_sync1234 => open,
+    sclk1234 => open,
+    sdo => sdo(3)
   );
 
 

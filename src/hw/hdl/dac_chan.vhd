@@ -26,6 +26,7 @@ entity dac_chan is
     clk                  : in std_logic; 
     reset                : in std_logic; 
     tenkhz_trig          : in std_logic;
+    dac_numbits_sel      : in std_logic;
     dac_cntrl            : in t_dac_cntrl_onech;
     dac_stat             : out t_dac_stat_onech;
     n_sync1234		     : out std_logic; 
@@ -41,7 +42,7 @@ type state_type is (IDLE, RUN_RAMP, UPDATE_DAC);
 
 
  
-
+  signal dac_data        : std_logic_vector(19 downto 0);
   signal dac_rdaddr      : std_logic_vector(15 downto 0);
   signal dac_rddata      : std_logic_vector(19 downto 0);
   signal dac_rden        : std_logic;
@@ -58,6 +59,7 @@ type state_type is (IDLE, RUN_RAMP, UPDATE_DAC);
 
    --debug signals (connect to ila)
    attribute mark_debug                 : string;
+   attribute mark_debug of dac_data: signal is "true";
    attribute mark_debug of dac_rdaddr: signal is "true";
    attribute mark_debug of dac_rddata: signal is "true";
    attribute mark_debug of dac_rden: signal is "true"; 
@@ -173,10 +175,13 @@ begin
  end process;           
   
 
+--select 18 bit or 20 bit, put hard limits on dac
+
+dac_data <= std_logic_vector(dac_setpt) when dac_numbits_sel = '1' else std_logic_vector((dac_setpt(17 downto 0) & "00"));
 
 
 
-spi_dac:  entity work.dac_ad5781_intf 
+spi_dac:  entity work.dac_ad5781 
   generic map
     (SPI_CLK_DIV => 5) --10MHz sclk
   port map(
@@ -185,7 +190,7 @@ spi_dac:  entity work.dac_ad5781_intf
     reset => dac_cntrl.reset, 
 	start => gainoff_done, --tenkhz_trig,  
     --DAC Inputs         
-    dac_data => std_logic_vector(dac_setpt(17 downto 0)),
+    dac_data => dac_data, --std_logic_vector(dac_setpt(17 downto 0)),
     dac_ctrl_bits => dac_cntrl.cntrl(4 downto 0),
 	--DAC Outputs        
     n_sync => n_sync1234, 

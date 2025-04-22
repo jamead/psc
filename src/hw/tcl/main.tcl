@@ -23,7 +23,8 @@ proc setSources {} {
   lappend Sources {"../hdl/ps_io.vhd" "VHDL 2008"} 
 
   lappend Sources {"../hdl/DCCT_ADC_module.vhd" "VHDL 2008"} 
-  lappend Sources {"../hdl/ADC_LTC2376_20_intf.vhd" "VHDL 2008"} 
+  lappend Sources {"../hdl/adc_ltc2376.vhd"  "VHDL 2008"}
+  #lappend Sources {"../hdl/ADC_LTC2376_20_intf.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/dcct_gainoffset.vhd" "VHDL 2008"}   
    
   lappend Sources {"../hdl/ADC_8CH_module.vhd" "VHDL 2008"} 
@@ -32,7 +33,8 @@ proc setSources {} {
   
   lappend Sources {"../hdl/DAC_ctrlr.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/dac_chan.vhd" "VHDL 2008"} 
-  lappend Sources {"../hdl/DAC_AD5781_intf.vhd" "VHDL 2008"}  
+  #lappend Sources {"../hdl/DAC_AD5781_intf.vhd" "VHDL 2008"}  
+  lappend Sources {"../hdl/dac_ad5781.vhd" "VHDL 2008"}  
   lappend Sources {"../hdl/dac_gainoffset.vhd" "VHDL 2008"}    
   
   lappend Sources {"../hdl/fault_module.vhd" "VHDL 2008"} 

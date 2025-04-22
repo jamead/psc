@@ -162,7 +162,8 @@ typedef struct SAdataMsg {
 	u32 count;                // PSC Offset 0
 	u32 evr_ts_ns;            // PSC Offset 4
 	u32 evr_ts_s;             // PSC Offset 8
-	u32 rsvd[22];
+	u32 resolution;           // PSC Offset 12
+	u32 rsvd[21];
     struct SAdataChan ps[4];  // PSC Offset 100
 } SAdataMsg;
 

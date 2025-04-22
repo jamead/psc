@@ -10,6 +10,7 @@
 // global registers
 #define FPGAVER_REG               0X0       // FPGA Version
 #define LEDS_REG                  0X4       // PS Leds
+#define RESOLUTION                0x8       // DCCT, DAC Number of Bits (0=18, 1=20)
 #define EVR_TS_S_REG              0X10      // EVR Timestamp (s)
 #define EVR_TS_NS_REG             0X14      // EVR Timestamp (ns)
 #define EVR_RESET_REG             0X18      // EVR Reset

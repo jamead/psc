@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 # Parameters
 num_points = 8000
-amplitude = 30000
+amplitude = 131072*3.9 
 
 # Time base: 0 to 2π (full cosine period)
 t = np.linspace(0, 2 * np.pi, num_points)

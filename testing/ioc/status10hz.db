@@ -26,8 +26,14 @@ record(longin, "$(P){$(NO)}TS-S-I") {
     field(SCAN,"I/O Intr")
 }
 
-
-
+record(longin, "$(P){$(NO)}Resolution-I") {
+    field(DESC, "DCCT, DAC Resolution")
+    field(DTYP, "PSC Reg")
+    field(INP , "@Rx$(NO) 31 12")
+    #field(ZNAM,"HS")
+    #field(ONAM,"MS")
+    field(SCAN,"I/O Intr")
+}
 
 
 

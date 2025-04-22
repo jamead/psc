@@ -234,6 +234,7 @@ type t_dac_cntrl_onech is record
 end record; 
 
 type t_dac_cntrl is record
+  numbits_sel  : std_logic;   --0=18 bits, 1=20bits 
   ps1           : t_dac_cntrl_onech;
   ps2           : t_dac_cntrl_onech;
   ps3           : t_dac_cntrl_onech;
