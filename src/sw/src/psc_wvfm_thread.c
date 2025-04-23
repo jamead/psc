@@ -427,7 +427,7 @@ s32 SendWfmData(int newsockfd, char *msg, TriggerInfo *trig) {
 	xil_printf("Tx 10 sec of Snapshot Data\r\n");
     Host2NetworkConvWvfm(msg,sizeof(msgUsr_buf[0])+MSGHDRLEN);
 
-    n = write(newsockfd,msg,MSGWFMLEN+MSGHDRLEN);
+    n = lwip_write(newsockfd,msg,MSGWFMLEN+MSGHDRLEN);
     xil_printf("Transferred %d bytes\r\n", n);
     if (n < 0) {
   	   printf("PSC Waveform: ERROR writing Snapshot Waveform\n");
@@ -562,74 +562,13 @@ reconnect:
 
 		}
 
-		/*
-        if (trig.usr[0].sendbuf == 1)
-        	if ((n = SendWfmData(newsockfd,msgUsr_buf[0],&trig.usr[0])) < 0) goto reconnect;
 
-        if (trig.usr[1].sendbuf == 1)
-         	if ((n = SendWfmData(newsockfd,msgUsr_buf[1],&trig.usr[1])) < 0) goto reconnect;
-
-        if (trig.usr[2].sendbuf == 1)
-         	if ((n = SendWfmData(newsockfd,msgUsr_buf[2],&trig.usr[2])) < 0) goto reconnect;
-
-        if (trig.usr[3].sendbuf == 1)
-          	if ((n = SendWfmData(newsockfd,msgUsr_buf[3],&trig.usr[3])) < 0) goto reconnect;
-
-        if (trig.flt[0].sendbuf == 1)
-         	if ((n = SendWfmData(newsockfd,msgFltCh1_buf,&trig.flt[0])) < 0) goto reconnect;
-
-        if (trig.flt[1].sendbuf == 1)
-         	if ((n = SendWfmData(newsockfd,msgFltCh2_buf,&trig.flt[1])) < 0) goto reconnect;
-
-        if (trig.flt[2].sendbuf == 1)
-         	if ((n = SendWfmData(newsockfd,msgFltCh3_buf,&trig.flt[2])) < 0) goto reconnect;
-
-        if (trig.flt[3].sendbuf == 1)
-         	if ((n = SendWfmData(newsockfd,msgFltCh4_buf,&trig.flt[3])) < 0) goto reconnect;
-
-        if (trig.err[0].sendbuf == 1)
-         	if ((n = SendWfmData(newsockfd,msgErrCh1_buf,&trig.err[0])) < 0) goto reconnect;
-
-        if (trig.err[1].sendbuf == 1)
-         	if ((n = SendWfmData(newsockfd,msgErrCh2_buf,&trig.err[1])) < 0) goto reconnect;
-
-        if (trig.err[2].sendbuf == 1)
-         	if ((n = SendWfmData(newsockfd,msgErrCh3_buf,&trig.err[2])) < 0) goto reconnect;
-
-        if (trig.err[3].sendbuf == 1)
-         	if ((n = SendWfmData(newsockfd,msgErrCh4_buf,&trig.err[3])) < 0) goto reconnect;
-
-        if (trig.inj[0].sendbuf == 1)
-         	if ((n = SendWfmData(newsockfd,msgInjCh1_buf,&trig.inj[0])) < 0) goto reconnect;
-
-        if (trig.inj[1].sendbuf == 1)
-         	if ((n = SendWfmData(newsockfd,msgInjCh2_buf,&trig.inj[1])) < 0) goto reconnect;
-
-        if (trig.inj[2].sendbuf == 1)
-         	if ((n = SendWfmData(newsockfd,msgInjCh3_buf,&trig.inj[2])) < 0) goto reconnect;
-
-        if (trig.inj[3].sendbuf == 1)
-         	if ((n = SendWfmData(newsockfd,msgInjCh4_buf,&trig.inj[3])) < 0) goto reconnect;
-
-        if (trig.evr[0].sendbuf == 1)
-          	if ((n = SendWfmData(newsockfd,msgEvrCh1_buf,&trig.evr[0])) < 0) goto reconnect;
-
-        if (trig.evr[1].sendbuf == 1)
-          	if ((n = SendWfmData(newsockfd,msgEvrCh2_buf,&trig.evr[1])) < 0) goto reconnect;
-
-        if (trig.evr[2].sendbuf == 1)
-          	if ((n = SendWfmData(newsockfd,msgEvrCh3_buf,&trig.evr[2])) < 0) goto reconnect;
-
-        if (trig.evr[3].sendbuf == 1)
-          	if ((n = SendWfmData(newsockfd,msgEvrCh4_buf,&trig.evr[3])) < 0) goto reconnect;
-
-        */
 
         // Send out Wfm Stats
 		//xil_printf("Sending SnapShot Stats...\r\n");
 		ReadSnapShotStats(msgWfmStats_buf,&trig);
 	    Host2NetworkConvWvfm(msgWfmStats_buf,sizeof(msgWfmStats_buf)+MSGHDRLEN);
-	    statbytes = write(newsockfd,msgWfmStats_buf,MSGWFMSTATSLEN+MSGHDRLEN);
+	    statbytes = lwip_write(newsockfd,msgWfmStats_buf,MSGWFMSTATSLEN+MSGHDRLEN);
 	    //xil_printf("Sent %d bytes\r\n",n);
 	    if (statbytes < 0) {
 	      xil_printf("PSC Waveform: ERROR writing WfmStats...\r\n");

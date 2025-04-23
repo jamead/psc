@@ -65,35 +65,13 @@ char temp[1000];  //temp buffer, msgStat10Hz_buf was overwriting msgid51_buf som
 
 
 
-
+// Waveform Buffers for Snapshots
 char msgUsr_buf[4][MSGWFMLEN+MSGHDRLEN];
 char msgFlt_buf[4][MSGWFMLEN+MSGHDRLEN];
 char msgErr_buf[4][MSGWFMLEN+MSGHDRLEN];
 char msgInj_buf[4][MSGWFMLEN+MSGHDRLEN];
 char msgEvr_buf[4][MSGWFMLEN+MSGHDRLEN];
 
-/*
-char msgUsrCh1_buf[MSGWFMLEN+MSGHDRLEN];
-char msgUsrCh2_buf[MSGWFMLEN+MSGHDRLEN];
-char msgUsrCh3_buf[MSGWFMLEN+MSGHDRLEN];
-char msgUsrCh4_buf[MSGWFMLEN+MSGHDRLEN];
-char msgFltCh1_buf[MSGWFMLEN+MSGHDRLEN];
-char msgFltCh2_buf[MSGWFMLEN+MSGHDRLEN];
-char msgFltCh3_buf[MSGWFMLEN+MSGHDRLEN];
-char msgFltCh4_buf[MSGWFMLEN+MSGHDRLEN];
-char msgErrCh1_buf[MSGWFMLEN+MSGHDRLEN];
-char msgErrCh2_buf[MSGWFMLEN+MSGHDRLEN];
-char msgErrCh3_buf[MSGWFMLEN+MSGHDRLEN];
-char msgErrCh4_buf[MSGWFMLEN+MSGHDRLEN];
-char msgInjCh1_buf[MSGWFMLEN+MSGHDRLEN];
-char msgInjCh2_buf[MSGWFMLEN+MSGHDRLEN];
-char msgInjCh3_buf[MSGWFMLEN+MSGHDRLEN];
-char msgInjCh4_buf[MSGWFMLEN+MSGHDRLEN];
-char msgEvrCh1_buf[MSGWFMLEN+MSGHDRLEN];
-char msgEvrCh2_buf[MSGWFMLEN+MSGHDRLEN];
-char msgEvrCh3_buf[MSGWFMLEN+MSGHDRLEN];
-char msgEvrCh4_buf[MSGWFMLEN+MSGHDRLEN];
-*/
 
 char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];
 
@@ -383,7 +361,7 @@ int main()
     print_firmware_version();
     
 	init_i2c();
-	//prog_si570();
+	prog_si570();
 	
     sleep(1);
 

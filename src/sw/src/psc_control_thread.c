@@ -502,7 +502,7 @@ reconnect:
 	while (1) {
 	    int received = 0;
 	    while (received < CNTRL_PACKET_SIZE) {
-	        int n = read(newsockfd, buffer + received, CNTRL_PACKET_SIZE - received);
+	        int n = lwip_read(newsockfd, buffer + received, CNTRL_PACKET_SIZE - received);
 		    //n = read(newsockfd, buffer, RECV_BUF_SIZE);
 	        xil_printf("N=%d\r\n",n);
 			if (n < 0) {
