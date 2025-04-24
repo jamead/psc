@@ -11,6 +11,7 @@
 
 #include "xiicps.h"
 #include "xadcps.h"
+#include "xqspips.h"
 
 #include "xstatus.h"       // For XStatus
 
@@ -20,8 +21,6 @@
 #include "psc_msg.h"
 
 #include "xil_cache.h"
-
-
 
 
 #define PLATFORM_EMAC_BASEADDR XPAR_XEMACPS_0_BASEADDR

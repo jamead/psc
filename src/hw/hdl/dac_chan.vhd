@@ -83,6 +83,7 @@ gainoff_dac : entity work.dac_gainoffset
     clk => clk,
     reset => reset,
     tenkhz_trig => tenkhz_trig,
+    numbits_sel => dac_numbits_sel,
     dac_setpt_raw => signed(dac_setpt_raw),
     dac_cntrl => dac_cntrl,
     dac_setpt => dac_setpt,
