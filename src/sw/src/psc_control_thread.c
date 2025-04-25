@@ -138,12 +138,23 @@ void Set_dacOpmode(u32 chan, s32 new_opmode) {
 
 
 
-void Set_dac(u32 chan, s32 new_setpt) {
+void Set_dac(u32 chan, float new_setpt_volts) {
 
 	u32 dac_mode;
+	s32 new_setpt;
 
 	//first get the DAC opmode
 	dac_mode = Xil_In32(XPAR_M_AXI_BASEADDR + DAC_OPMODE_REG + chan*CHBASEADDR);
+
+	//check boundary conditions (firmware only checking if setpt*gain is above limits, need to fix)
+	if (new_setpt_volts > 9.9999)
+		new_setpt_volts = 9.9999;
+	else if (new_setpt_volts < -10)
+		new_setpt_volts = -10;
+
+	new_setpt = (s32)(new_setpt_volts * CONV20BITSTOVOLTS);
+	printf("New DAC Setpt: %f    %d\r\n",new_setpt_volts, (int)new_setpt);
+
 
 	if (dac_mode == SMOOTH) {
         xil_printf("In Smooth Mode\r\n");
@@ -208,8 +219,8 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 	        break;
 
         case DAC_SETPT_MSG:
-	        xil_printf("Setting DAC CH%d SetPoint:   Value=%d\r\n",chan,data.i);
-	        Set_dac(chan, data.i);
+	        printf("Setting DAC CH%d SetPoint:   Value=%f   Bits=%d\r\n",(int)chan,data.f,(int)(data.f*CONV20BITSTOVOLTS));
+	        Set_dac(chan, data.f);
 	        break;
 
         case DAC_RAMPLEN_MSG:
@@ -228,8 +239,8 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 	        break;
 
         case DAC_SETPT_OFFSET_MSG:
-	        xil_printf("Setting DAC SetPt CH%d Offset:   Value=%d\r\n",chan,data.i);
-	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_SETPT_OFFSET_REG + chan*CHBASEADDR, data.i);
+	        printf("Setting DAC SetPt CH%d Offset:   Value=%f\r\n",(int)chan,data.f);
+	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_SETPT_OFFSET_REG + chan*CHBASEADDR, (s32)(data.f*CONV20BITSTOVOLTS));
 	        break;
 
         case DCCT1_GAIN_MSG:
@@ -238,8 +249,8 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
  	        break;
 
         case DCCT1_OFFSET_MSG:
- 	        xil_printf("Setting DCCT1 CH%d Offset:   Value=%d\r\n",chan,data.i);
- 	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT1_OFFSET_REG + chan*CHBASEADDR, data.i);
+ 	        printf("Setting DCCT1 CH%d Offset:   Value=%f\r\n",(int)chan,data.f);
+ 	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT1_OFFSET_REG + chan*CHBASEADDR, (s32)(data.f*CONV20BITSTOVOLTS));
  	        break;
 
         case DCCT2_GAIN_MSG:
@@ -248,8 +259,8 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
   	        break;
 
         case DCCT2_OFFSET_MSG:
-  	        xil_printf("Setting DCCT2 CH%d Offset:   Value=%d\r\n",chan,data.i);
-  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT2_OFFSET_REG + chan*CHBASEADDR, data.i);
+  	        printf("Setting DCCT2 CH%d Offset:   Value=%f\r\n",(int)chan,data.f);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT2_OFFSET_REG + chan*CHBASEADDR, (s32)(data.f*CONV20BITSTOVOLTS));
   	        break;
 
         case DACMON_GAIN_MSG:
@@ -258,8 +269,8 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
   	        break;
 
         case DACMON_OFFSET_MSG:
-  	        xil_printf("Setting DAC Mon CH%d Offset:   Value=%d\r\n",chan,data.i);
-  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DACMON_OFFSET_REG + chan*CHBASEADDR, data.i);
+  	        printf("Setting DAC Mon CH%d Offset:   Value=%f\r\n",(int)chan,data.f);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DACMON_OFFSET_REG + chan*CHBASEADDR, (s32)(data.f*CONV16BITSTOVOLTS));
   	        break;
 
         case VOLT_GAIN_MSG:
@@ -268,8 +279,8 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
   	        break;
 
         case VOLT_OFFSET_MSG:
-  	        xil_printf("Setting Voltage CH%d Offset:   Value=%d\r\n",chan,data.i);
-  	        Xil_Out32(XPAR_M_AXI_BASEADDR + VOLT_OFFSET_REG + chan*CHBASEADDR, data.i);
+  	        printf("Setting Voltage CH%d Offset:   Value=%f\r\n",(int)chan,data.f);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + VOLT_OFFSET_REG + chan*CHBASEADDR, (s32)(data.f*CONV16BITSTOVOLTS));
   	        break;
 
         case GND_GAIN_MSG:
@@ -278,8 +289,8 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
   	        break;
 
         case GND_OFFSET_MSG:
-  	        xil_printf("Setting iGND CH%d Offset:   Value=%d\r\n",chan,data.i);
-  	        Xil_Out32(XPAR_M_AXI_BASEADDR + GND_OFFSET_REG + chan*CHBASEADDR, data.i);
+  	        printf("Setting iGND CH%d Offset:   Value=%f\r\n",(int)chan,data.f);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + GND_OFFSET_REG + chan*CHBASEADDR, (s32)(data.f*CONV16BITSTOVOLTS));
   	        break;
 
         case SPARE_GAIN_MSG:
@@ -288,8 +299,8 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
    	        break;
 
         case SPARE_OFFSET_MSG:
-   	        xil_printf("Setting Spare CH%d Offset:   Value=%d\r\n",chan,data.i);
-   	        Xil_Out32(XPAR_M_AXI_BASEADDR + SPARE_OFFSET_REG + chan*CHBASEADDR, data.i);
+   	        printf("Setting Spare CH%d Offset:   Value=%f\r\n",(int)chan,data.f);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + SPARE_OFFSET_REG + chan*CHBASEADDR, (s32)(data.f*CONV16BITSTOVOLTS));
    	        break;
 
         case REG_GAIN_MSG:
@@ -298,8 +309,8 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
    	        break;
 
         case REG_OFFSET_MSG:
-   	        xil_printf("Setting Regulator CH%d Offset:   Value=%d\r\n",chan,data.i);
-   	        Xil_Out32(XPAR_M_AXI_BASEADDR + REG_OFFSET_REG + chan*CHBASEADDR, data.i);
+   	        printf("Setting Regulator CH%d Offset:   Value=%f\r\n",(int)chan,data.f);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + REG_OFFSET_REG + chan*CHBASEADDR, (s32)(data.f*CONV16BITSTOVOLTS));
    	        break;
 
         case ERR_GAIN_MSG:
@@ -308,8 +319,8 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
    	        break;
 
         case ERR_OFFSET_MSG:
-   	        xil_printf("Setting Error CH%d Offset:   Value=%d\r\n",chan,data.i);
-   	        Xil_Out32(XPAR_M_AXI_BASEADDR + ERR_OFFSET_REG + chan*CHBASEADDR, data.i);
+   	        printf("Setting Error CH%d Offset:   Value=%f\r\n",(int)chan,data.f);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + ERR_OFFSET_REG + chan*CHBASEADDR, (s32)(data.f*CONV16BITSTOVOLTS));
    	        break;
 
 

@@ -452,7 +452,7 @@ void psc_wvfm_thread()
 	struct sockaddr_in serv_addr, cli_addr;
 	struct TriggerTypes trig;
     u32 loopcnt=0, i;
-    s32 n, statbytes;
+    s32 statbytes;
     //u32 ssbufptr, ssbufptr_softtrig, ssbufptr_softtrig_prev;
     //u32 got_trig=0, post_trig_cnt, send_buf;
 

@@ -135,6 +135,8 @@ void ReadSAData(char *msg) {
     //struct SAdataMsg sadata;
     u32 chan;
     u32 base;
+    s32 temp;
+    float tempflt;
 
 
 
@@ -157,35 +159,41 @@ void ReadSAData(char *msg) {
     for (chan=0; chan<4; chan++) {
        base = XPAR_M_AXI_BASEADDR + (chan + 1) * CHBASEADDR;
        //ADC's
-       sadata.ps[chan].dcct1 = Xil_In32(base + DCCT1_REG);
-       sadata.ps[chan].dcct1_offset = Xil_In32(base + DCCT1_OFFSET_REG);
-       sadata.ps[chan].dcct1_gain = Xil_In32(base + DCCT1_GAIN_REG) / GAIN20BITFRACT;
-       sadata.ps[chan].dcct2 = Xil_In32(base + DCCT2_REG);
-       sadata.ps[chan].dcct2_offset = Xil_In32(base + DCCT2_OFFSET_REG);
-       sadata.ps[chan].dcct2_gain = Xil_In32(base + DCCT2_GAIN_REG) / GAIN20BITFRACT;
-       sadata.ps[chan].dacmon = Xil_In32(base + DACMON_REG);
-       sadata.ps[chan].dacmon_offset = Xil_In32(base + DACMON_OFFSET_REG);
-       sadata.ps[chan].dacmon_gain = Xil_In32(base + DACMON_GAIN_REG) / GAIN20BITFRACT;
-       sadata.ps[chan].volt = Xil_In32(base + VOLT_REG);
-       sadata.ps[chan].volt_offset = Xil_In32(base + VOLT_OFFSET_REG);
-       sadata.ps[chan].volt_gain = Xil_In32(base + VOLT_GAIN_REG) / GAIN20BITFRACT;
-       sadata.ps[chan].gnd = Xil_In32(base + GND_REG);
-       sadata.ps[chan].gnd_offset = Xil_In32(base + GND_OFFSET_REG);
-       sadata.ps[chan].gnd_gain = Xil_In32(base + GND_GAIN_REG) / GAIN20BITFRACT;
-       sadata.ps[chan].spare = Xil_In32(base + SPARE_REG);
-       sadata.ps[chan].spare_offset = Xil_In32(base + SPARE_OFFSET_REG);
-       sadata.ps[chan].spare_gain = Xil_In32(base + SPARE_GAIN_REG) / GAIN20BITFRACT;
-       sadata.ps[chan].reg = Xil_In32(base + REG_REG);
-       sadata.ps[chan].reg_offset = Xil_In32(base + REG_OFFSET_REG);
-       sadata.ps[chan].reg_gain = Xil_In32(base + REG_GAIN_REG) / GAIN20BITFRACT;
-       sadata.ps[chan].error = Xil_In32(base + ERR_REG);
-       sadata.ps[chan].error_offset = Xil_In32(base + ERR_OFFSET_REG);
-       sadata.ps[chan].error_gain = Xil_In32(base + ERR_GAIN_REG) / GAIN20BITFRACT;
+
+
+       sadata.ps[chan].dcct1 = (s32)Xil_In32(base + DCCT1_REG) / CONV20BITSTOVOLTS;
+       sadata.ps[chan].dcct1_offset = (s32)Xil_In32(base + DCCT1_OFFSET_REG) / CONV20BITSTOVOLTS;
+       sadata.ps[chan].dcct1_gain = (s32)Xil_In32(base + DCCT1_GAIN_REG) / GAIN20BITFRACT;
+       sadata.ps[chan].dcct2 = (s32)Xil_In32(base + DCCT2_REG) / CONV20BITSTOVOLTS;
+       sadata.ps[chan].dcct2_offset = (s32)Xil_In32(base + DCCT2_OFFSET_REG) / CONV20BITSTOVOLTS;;
+       sadata.ps[chan].dcct2_gain = (s32)Xil_In32(base + DCCT2_GAIN_REG) / GAIN20BITFRACT;
+       sadata.ps[chan].dacmon = (s32)Xil_In32(base + DACMON_REG) / CONV16BITSTOVOLTS;
+       sadata.ps[chan].dacmon_offset = (s32)Xil_In32(base + DACMON_OFFSET_REG) / CONV16BITSTOVOLTS;
+       sadata.ps[chan].dacmon_gain = (s32)Xil_In32(base + DACMON_GAIN_REG) / GAIN20BITFRACT;
+       sadata.ps[chan].volt = (s32)Xil_In32(base + VOLT_REG) / CONV16BITSTOVOLTS;
+       sadata.ps[chan].volt_offset = (s32)Xil_In32(base + VOLT_OFFSET_REG) / CONV16BITSTOVOLTS;
+       sadata.ps[chan].volt_gain = (s32)Xil_In32(base + VOLT_GAIN_REG) / GAIN20BITFRACT;
+       sadata.ps[chan].gnd = (s32)Xil_In32(base + GND_REG) / CONV16BITSTOVOLTS;
+       sadata.ps[chan].gnd_offset = (s32)Xil_In32(base + GND_OFFSET_REG) / CONV16BITSTOVOLTS;
+       sadata.ps[chan].gnd_gain = (s32)Xil_In32(base + GND_GAIN_REG) / GAIN20BITFRACT;
+       sadata.ps[chan].spare = (s32)Xil_In32(base + SPARE_REG) / CONV16BITSTOVOLTS;
+       sadata.ps[chan].spare_offset = (s32)Xil_In32(base + SPARE_OFFSET_REG) / CONV16BITSTOVOLTS;
+       sadata.ps[chan].spare_gain = (s32)Xil_In32(base + SPARE_GAIN_REG) / GAIN20BITFRACT;
+       sadata.ps[chan].reg = (s32)Xil_In32(base + REG_REG) / CONV16BITSTOVOLTS;
+       sadata.ps[chan].reg_offset = (s32)Xil_In32(base + REG_OFFSET_REG) / CONV16BITSTOVOLTS;
+       sadata.ps[chan].reg_gain = (s32)Xil_In32(base + REG_GAIN_REG) / GAIN20BITFRACT;
+       sadata.ps[chan].error = (s32)Xil_In32(base + ERR_REG) / CONV16BITSTOVOLTS;
+       sadata.ps[chan].error_offset = (s32)Xil_In32(base + ERR_OFFSET_REG) / CONV16BITSTOVOLTS;
+       sadata.ps[chan].error_gain = (s32)Xil_In32(base + ERR_GAIN_REG) / GAIN20BITFRACT;
 
        //DAC
-       sadata.ps[chan].dac_setpt = Xil_In32(base + DAC_CURRSETPT_REG);
-       sadata.ps[chan].dac_setpt_offset = Xil_In32(base + DAC_SETPT_OFFSET_REG);
-       sadata.ps[chan].dac_setpt_gain = Xil_In32(base + DAC_SETPT_GAIN_REG) / GAIN20BITFRACT;
+       sadata.ps[chan].dac_setpt = (s32)Xil_In32(base + DAC_CURRSETPT_REG) / CONV20BITSTOVOLTS;
+
+       //temp = Xil_In32(base + DAC_SETPT_OFFSET_REG);
+       //tempflt = (s32)Xil_In32(base + DAC_SETPT_OFFSET_REG) / CONV20BITSTOVOLTS;
+       //printf("DAC: %d     %f\r\n",temp, tempflt);
+       sadata.ps[chan].dac_setpt_offset = (s32)Xil_In32(base + DAC_SETPT_OFFSET_REG) / CONV20BITSTOVOLTS;
+       sadata.ps[chan].dac_setpt_gain = (s32)Xil_In32(base + DAC_SETPT_GAIN_REG) / GAIN20BITFRACT;
        //printf("Chan: %d   DAC Gain: %f\r\n",chan,sadata.ps[chan].dac_setpt_gain);
        sadata.ps[chan].dac_rampactive = Xil_In32(base + DAC_RAMPACTIVE_REG);
 
