@@ -36,6 +36,7 @@ extern XIicPs IicPsInstance;
 
 extern u32 UptimeCounter;
 extern struct SAdataMsg sadata;
+extern ScaleFactorType scalefactors[4];
 
 
 
@@ -72,8 +73,8 @@ void i2c_sfp_get_stats(struct SysHealthMsg *p, u8 sfp_slot) {
     u8 txBuf[3] = {96};
     u8 rxBuf[10] = {0,0,0,0,0,0,0,0,0,0};
 
-	i2c_set_port_expander(I2C_PORTEXP0_ADDR,(1 << sfp_slot));
-	i2c_set_port_expander(I2C_PORTEXP1_ADDR,0);
+	//i2c_set_port_expander(I2C_PORTEXP0_ADDR,(1 << sfp_slot));
+	//i2c_set_port_expander(I2C_PORTEXP1_ADDR,0);
 	//read 10 bytes starting at address 96 (see data sheet)
     i2c_write(txBuf,1,addr);
     status = i2c_read(rxBuf,10,addr);
@@ -160,15 +161,14 @@ void ReadSAData(char *msg) {
        base = XPAR_M_AXI_BASEADDR + (chan + 1) * CHBASEADDR;
        //ADC's
 
-
-       sadata.ps[chan].dcct1 = (s32)Xil_In32(base + DCCT1_REG) / CONV20BITSTOVOLTS;
-       sadata.ps[chan].dcct1_offset = (s32)Xil_In32(base + DCCT1_OFFSET_REG) / CONV20BITSTOVOLTS;
+       sadata.ps[chan].dcct1 = (s32)Xil_In32(base + DCCT1_REG) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;
+       sadata.ps[chan].dcct1_offset = (s32)Xil_In32(base + DCCT1_OFFSET_REG) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;
        sadata.ps[chan].dcct1_gain = (s32)Xil_In32(base + DCCT1_GAIN_REG) / GAIN20BITFRACT;
-       sadata.ps[chan].dcct2 = (s32)Xil_In32(base + DCCT2_REG) / CONV20BITSTOVOLTS;
-       sadata.ps[chan].dcct2_offset = (s32)Xil_In32(base + DCCT2_OFFSET_REG) / CONV20BITSTOVOLTS;;
+       sadata.ps[chan].dcct2 = (s32)Xil_In32(base + DCCT2_REG) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;
+       sadata.ps[chan].dcct2_offset = (s32)Xil_In32(base + DCCT2_OFFSET_REG) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;
        sadata.ps[chan].dcct2_gain = (s32)Xil_In32(base + DCCT2_GAIN_REG) / GAIN20BITFRACT;
-       sadata.ps[chan].dacmon = (s32)Xil_In32(base + DACMON_REG) / CONV16BITSTOVOLTS;
-       sadata.ps[chan].dacmon_offset = (s32)Xil_In32(base + DACMON_OFFSET_REG) / CONV16BITSTOVOLTS;
+       sadata.ps[chan].dacmon = (s32)Xil_In32(base + DACMON_REG) / CONV16BITSTOVOLTS * scalefactors[chan].ampspervolt;
+       sadata.ps[chan].dacmon_offset = (s32)Xil_In32(base + DACMON_OFFSET_REG) / CONV16BITSTOVOLTS * scalefactors[chan].ampspervolt;
        sadata.ps[chan].dacmon_gain = (s32)Xil_In32(base + DACMON_GAIN_REG) / GAIN20BITFRACT;
        sadata.ps[chan].volt = (s32)Xil_In32(base + VOLT_REG) / CONV16BITSTOVOLTS;
        sadata.ps[chan].volt_offset = (s32)Xil_In32(base + VOLT_OFFSET_REG) / CONV16BITSTOVOLTS;
@@ -187,7 +187,7 @@ void ReadSAData(char *msg) {
        sadata.ps[chan].error_gain = (s32)Xil_In32(base + ERR_GAIN_REG) / GAIN20BITFRACT;
 
        //DAC
-       sadata.ps[chan].dac_setpt = (s32)Xil_In32(base + DAC_CURRSETPT_REG) / CONV20BITSTOVOLTS;
+       sadata.ps[chan].dac_setpt = (s32)Xil_In32(base + DAC_CURRSETPT_REG) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;
 
        //temp = Xil_In32(base + DAC_SETPT_OFFSET_REG);
        //tempflt = (s32)Xil_In32(base + DAC_SETPT_OFFSET_REG) / CONV20BITSTOVOLTS;
@@ -199,25 +199,25 @@ void ReadSAData(char *msg) {
 
 
        //Faults
-       sadata.ps[chan].ovc1_thresh = Xil_In32(base + OVC1_THRESH_REG);
-       sadata.ps[chan].ovc2_thresh = Xil_In32(base + OVC2_THRESH_REG);
-       sadata.ps[chan].ovv_thresh = Xil_In32(base + OVV_THRESH_REG);
-       sadata.ps[chan].err1_thresh = Xil_In32(base + ERR1_THRESH_REG);
-       sadata.ps[chan].err2_thresh = Xil_In32(base + ERR2_THRESH_REG);
-       sadata.ps[chan].ignd_thresh = Xil_In32(base + IGND_THRESH_REG);
-       sadata.ps[chan].ovc1_cntlim = Xil_In32(base + OVC1_CNTLIM_REG);
-       sadata.ps[chan].ovc2_cntlim = Xil_In32(base + OVC2_CNTLIM_REG);
-       sadata.ps[chan].ovv_cntlim = Xil_In32(base + OVV_CNTLIM_REG);
-       sadata.ps[chan].err1_cntlim = Xil_In32(base + ERR1_CNTLIM_REG);
-       sadata.ps[chan].err2_cntlim = Xil_In32(base + ERR2_CNTLIM_REG);
-       sadata.ps[chan].ignd_cntlim = Xil_In32(base + IGND_CNTLIM_REG);
+       sadata.ps[chan].ovc1_thresh = Xil_In32(base + OVC1_THRESH_REG) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;
+       sadata.ps[chan].ovc2_thresh = Xil_In32(base + OVC2_THRESH_REG) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;
+       sadata.ps[chan].ovv_thresh = Xil_In32(base + OVV_THRESH_REG) / CONV16BITSTOVOLTS;
+       sadata.ps[chan].err1_thresh = Xil_In32(base + ERR1_THRESH_REG) / CONV16BITSTOVOLTS;
+       sadata.ps[chan].err2_thresh = Xil_In32(base + ERR2_THRESH_REG) / CONV16BITSTOVOLTS;
+       sadata.ps[chan].ignd_thresh = Xil_In32(base + IGND_THRESH_REG) / CONV16BITSTOVOLTS;
 
-       sadata.ps[chan].dcct_cntlim = Xil_In32(base + DCCT_CNTLIM_REG);
-       sadata.ps[chan].flt1_cntlim = Xil_In32(base + FLT1_CNTLIM_REG);
-       sadata.ps[chan].flt2_cntlim = Xil_In32(base + FLT2_CNTLIM_REG);
-       sadata.ps[chan].flt3_cntlim = Xil_In32(base + FLT3_CNTLIM_REG);
-       sadata.ps[chan].on_cntlim = Xil_In32(base + ON_CNTLIM_REG);
-       sadata.ps[chan].heartbeat_cntlim = Xil_In32(base + HEARTBEAT_CNTLIM_REG);
+       sadata.ps[chan].ovc1_cntlim = Xil_In32(base + OVC1_CNTLIM_REG) / SAMPLERATE;
+       sadata.ps[chan].ovc2_cntlim = Xil_In32(base + OVC2_CNTLIM_REG) / SAMPLERATE;
+       sadata.ps[chan].ovv_cntlim = Xil_In32(base + OVV_CNTLIM_REG) / SAMPLERATE;
+       sadata.ps[chan].err1_cntlim = Xil_In32(base + ERR1_CNTLIM_REG) / SAMPLERATE;
+       sadata.ps[chan].err2_cntlim = Xil_In32(base + ERR2_CNTLIM_REG) / SAMPLERATE;
+       sadata.ps[chan].ignd_cntlim = Xil_In32(base + IGND_CNTLIM_REG) / SAMPLERATE;
+       sadata.ps[chan].dcct_cntlim = Xil_In32(base + DCCT_CNTLIM_REG) / SAMPLERATE;
+       sadata.ps[chan].flt1_cntlim = Xil_In32(base + FLT1_CNTLIM_REG) / SAMPLERATE;
+       sadata.ps[chan].flt2_cntlim = Xil_In32(base + FLT2_CNTLIM_REG) / SAMPLERATE;
+       sadata.ps[chan].flt3_cntlim = Xil_In32(base + FLT3_CNTLIM_REG) / SAMPLERATE;
+       sadata.ps[chan].on_cntlim = Xil_In32(base + ON_CNTLIM_REG) / SAMPLERATE;
+       sadata.ps[chan].heartbeat_cntlim = Xil_In32(base + HEARTBEAT_CNTLIM_REG) / SAMPLERATE;
 
        sadata.ps[chan].fault_clear = Xil_In32(base + FAULT_CLEAR_REG);
        sadata.ps[chan].fault_mask = Xil_In32(base + FAULT_MASK_REG);
@@ -230,6 +230,9 @@ void ReadSAData(char *msg) {
 
        sadata.ps[chan].faults_live = Xil_In32(base + FAULTS_LIVE_REG);
        sadata.ps[chan].faults_latched = Xil_In32(base + FAULTS_LAT_REG);
+
+       sadata.ps[chan].ampspervolt = scalefactors[chan].ampspervolt;
+       sadata.ps[chan].ampspersec = scalefactors[chan].ampspersec;
 
     }
 

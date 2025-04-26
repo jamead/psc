@@ -33,6 +33,7 @@
 #define PORT  20
 
 extern u32 UptimeCounter;
+extern ScaleFactorType scalefactors[4];
 
 
 void Host2NetworkConvWvfm(char *inbuf, int len) {

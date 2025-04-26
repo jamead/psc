@@ -52,6 +52,7 @@ XAdcPs XAdcInstance;
 
 //global buffers
 struct SAdataMsg sadata;
+struct ScaleFactorType scalefactors[4];
 
 
 //Ramping Buffer, 10s
@@ -254,12 +255,21 @@ void main_thread(void *p)
 }
 
 
-void InitGainsOffsets() {
+void InitSettings() {
 
     u32 base, chan;
 
+    // global values
+    Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_INJ_EVENTNUM_REG, 10);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_PM_EVENTNUM_REG, 10);
+
+    //channel values
     for (chan=0; chan<4; chan++) {
        base = XPAR_M_AXI_BASEADDR + (chan + 1) * CHBASEADDR;
+
+       scalefactors[chan].ampspervolt = 1.0;
+       scalefactors[chan].ampspersec = 1.0;
+
        Xil_Out32(base + DCCT1_OFFSET_REG, 0);
        Xil_Out32(base + DCCT2_OFFSET_REG, 0);
        Xil_Out32(base + DACMON_OFFSET_REG, 0);
@@ -278,6 +288,25 @@ void InitGainsOffsets() {
        Xil_Out32(base + REG_GAIN_REG, 1.0 * GAIN20BITFRACT);
        Xil_Out32(base + ERR_GAIN_REG, 1.0 * GAIN20BITFRACT);
        Xil_Out32(base + DAC_SETPT_GAIN_REG, 1.0 * GAIN20BITFRACT);
+
+       Xil_Out32(base + OVC1_THRESH_REG, 1.0 * CONV20BITSTOVOLTS);
+       Xil_Out32(base + OVC2_THRESH_REG, 1.0 * CONV20BITSTOVOLTS);
+       Xil_Out32(base + OVV_THRESH_REG, 1.0 * CONV16BITSTOVOLTS);
+       Xil_Out32(base + ERR1_THRESH_REG, 1.0 * CONV16BITSTOVOLTS);
+       Xil_Out32(base + ERR2_THRESH_REG, 1.0 * CONV16BITSTOVOLTS);
+       Xil_Out32(base + IGND_THRESH_REG, 1.0 * CONV16BITSTOVOLTS);
+
+       Xil_Out32(base + OVC1_CNTLIM_REG, 3.0 * SAMPLERATE);
+       Xil_Out32(base + OVC2_CNTLIM_REG, 3.0 * SAMPLERATE);
+       Xil_Out32(base + OVV_CNTLIM_REG, 3.0 * SAMPLERATE);
+       Xil_Out32(base + ERR1_CNTLIM_REG, 3.0 * SAMPLERATE);
+       Xil_Out32(base + ERR2_CNTLIM_REG, 3.0 * SAMPLERATE);
+       Xil_Out32(base + IGND_CNTLIM_REG, 3.0 * SAMPLERATE);
+       Xil_Out32(base + DCCT_CNTLIM_REG, 3.0 * SAMPLERATE);
+       Xil_Out32(base + FLT1_CNTLIM_REG, 2.0 * SAMPLERATE);
+       Xil_Out32(base + FLT2_CNTLIM_REG, 2.0 * SAMPLERATE);
+       Xil_Out32(base + FLT3_CNTLIM_REG, 2.5 * SAMPLERATE);
+       Xil_Out32(base + ON_CNTLIM_REG, 5.0 * SAMPLERATE);
 
     }
 
@@ -374,7 +403,7 @@ int main()
 	Xil_Out32(XPAR_M_AXI_BASEADDR + RESOLUTION, 1);
 
 
-    InitGainsOffsets();
+    InitSettings();
     
     //ReadXAdc();
 

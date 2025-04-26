@@ -56,11 +56,6 @@
 #define MSGWFMLEN 4000000   //in bytes
 
 
-//#define MSGFLTCH1LEN 16000000
-
-
-
-
 
 
 //global buffers
@@ -76,29 +71,6 @@ extern char msgFlt_buf[4][MSGWFMLEN+MSGHDRLEN];
 extern char msgErr_buf[4][MSGWFMLEN+MSGHDRLEN];
 extern char msgInj_buf[4][MSGWFMLEN+MSGHDRLEN];
 extern char msgEvr_buf[4][MSGWFMLEN+MSGHDRLEN];
-
-/*
-extern char msgUsrCh1_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgUsrCh2_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgUsrCh3_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgUsrCh4_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgFltCh1_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgFltCh2_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgFltCh3_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgFltCh4_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgErrCh1_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgErrCh2_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgErrCh3_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgErrCh4_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgInjCh1_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgInjCh2_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgInjCh3_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgInjCh4_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgEvrCh1_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgEvrCh2_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgEvrCh3_buf[MSGWFMLEN+MSGHDRLEN];
-extern char msgEvrCh4_buf[MSGWFMLEN+MSGHDRLEN];
-*/
 
 extern char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];
 
@@ -134,24 +106,24 @@ typedef struct SAdataChan {
     float dac_setpt_offset;
     float dac_setpt_gain;
     s32 dac_rampactive;
-    u32 ovc1_thresh;
-    u32 ovc2_thresh;
-    u32 ovv_thresh;
-    u32 err1_thresh;
-    u32 err2_thresh;
-    u32 ignd_thresh;
-    u32 ovc1_cntlim;
-    u32 ovc2_cntlim;
-    u32 ovv_cntlim;
-    u32 err1_cntlim;
-    u32 err2_cntlim;
-    u32 ignd_cntlim;
-    u32 dcct_cntlim;
-    u32 flt1_cntlim;
-    u32 flt2_cntlim;
-    u32 flt3_cntlim;
-    u32 on_cntlim;
-    u32 heartbeat_cntlim;
+    float ovc1_thresh;
+    float ovc2_thresh;
+    float ovv_thresh;
+    float err1_thresh;
+    float err2_thresh;
+    float ignd_thresh;
+    float ovc1_cntlim;
+    float ovc2_cntlim;
+    float ovv_cntlim;
+    float err1_cntlim;
+    float err2_cntlim;
+    float ignd_cntlim;
+    float dcct_cntlim;
+    float flt1_cntlim;
+    float flt2_cntlim;
+    float flt3_cntlim;
+    float on_cntlim;
+    float heartbeat_cntlim;
     u32 fault_clear;
     u32 fault_mask;
     u32 digout_on1;
@@ -162,7 +134,9 @@ typedef struct SAdataChan {
     u32 digin;
     u32 faults_live;
     u32 faults_latched;
-    u32 rsvd[19];
+    float ampspervolt;
+    float ampspersec;
+    u32 rsvd[17];
 } SAdataChan;
 
 
@@ -199,71 +173,6 @@ typedef struct SnapStatsMsg {
 
 
 
-/*
-// PSC Snapshot Stats Message ID 50
-typedef struct SnapStatsMsg {
-	u32 cur_bufaddr;     // PSC Offset 0
-	u32 totalfacnt;      // PSC Offset 4
-	u32 soft_lataddr;    // PSC Offset 8
-	u32 soft_active;     // PSC Offset 12
-	u32 soft_ts_s;       // PSC Offset 16
-	u32 soft_ts_ns;      // PSC Offset 20
-    u32 flt1_lataddr;    // PSC Offset 24
-    u32 flt1_active;     // PSC Offset 28
-    u32 flt1_ts_s;       // PSC Offset 32
-    u32 flt1_ts_ns;      // PSC Offset 36
-    u32 flt2_lataddr;    // PSC Offset 40
-    u32 flt2_active;     // PSC Offset 44
-    u32 flt2_ts_s;       // PSC Offset 48
-    u32 flt2_ts_ns;      // PSC Offset 52
-    u32 flt3_lataddr;    // PSC Offset 56
-    u32 flt3_active;     // PSC Offset 60
-    u32 flt3_ts_s;       // PSC Offset 64
-    u32 flt3_ts_ns;      // PSC Offset 68
-    u32 flt4_lataddr;    // PSC Offset 72
-    u32 flt4_active;     // PSC Offset 76
-    u32 flt4_ts_s;       // PSC Offset 80
-    u32 flt4_ts_ns;      // PSC Offset 84
-    u32 err1_lataddr;    // PSC Offset 88
-    u32 err1_active;     // PSC Offset 92
-    u32 err1_ts_s;       // PSC Offset 96
-    u32 err1_ts_ns;      // PSC Offset 100
-    u32 err2_lataddr;    // PSC Offset 104
-    u32 err2_active;     // PSC Offset 108
-    u32 err2_ts_s;       // PSC Offset 112
-    u32 err2_ts_ns;      // PSC Offset 116
-    u32 err3_lataddr;    // PSC Offset 120
-    u32 err3_active;     // PSC Offset 124
-    u32 err3_ts_s;       // PSC Offset 128
-    u32 err3_ts_ns;      // PSC Offset 132
-    u32 err4_lataddr;    // PSC Offset 136
-    u32 err4_active;     // PSC Offset 140
-    u32 err4_ts_s;       // PSC Offset 144
-    u32 err4_ts_ns;      // PSC Offset 148
-    u32 inj1_lataddr;    // PSC Offset 88
-    u32 inj1_active;     // PSC Offset 92
-    u32 inj1_ts_s;       // PSC Offset 96
-    u32 inj1_ts_ns;      // PSC Offset 100
-    u32 inj2_lataddr;    // PSC Offset 104
-    u32 inj2_active;     // PSC Offset 108
-    u32 inj2_ts_s;       // PSC Offset 112
-    u32 inj2_ts_ns;      // PSC Offset 116
-    u32 inj3_lataddr;    // PSC Offset 120
-    u32 inj3_active;     // PSC Offset 124
-    u32 inj3_ts_s;       // PSC Offset 128
-    u32 inj3_ts_ns;      // PSC Offset 132
-    u32 inj4_lataddr;    // PSC Offset 136
-    u32 inj4_active;     // PSC Offset 140
-    u32 inj4_ts_s;       // PSC Offset 144
-    u32 inj4_ts_ns;      // PSC Offset 148
-    u32 evr_lataddr;     // PSC Offset 152
-    u32 evr_active;      // PSC Offset 156
-    u32 evr_ts_s;        // PSC Offset 160
-    u32 evr_ts_ns;       // PSC Offset 164
-
-} SnapStatsMsg;
-
-*/
 
 
 
@@ -343,6 +252,9 @@ typedef struct SysHealthMsg {
 #define DIGOUT_RESET_MSG     276
 #define DIGOUT_SPARE_MSG     280
 #define DIGOUT_PARK_MSG      284
+
+#define AMPS_PER_VOLT_MSG    300
+#define AMPS_PER_SEC_MSG     304
 
 
 

@@ -29,6 +29,8 @@ typedef union {
 #define PORT  7
 #define CNTRL_PACKET_SIZE 16
 
+extern ScaleFactorType scalefactors[4];
+
 
 
 void set_fpleds(u32 msgVal)  {
@@ -138,7 +140,7 @@ void Set_dacOpmode(u32 chan, s32 new_opmode) {
 
 
 
-void Set_dac(u32 chan, float new_setpt_volts) {
+void Set_dac(u32 chan, float new_setpt_amps) {
 
 	u32 dac_mode;
 	s32 new_setpt;
@@ -147,13 +149,18 @@ void Set_dac(u32 chan, float new_setpt_volts) {
 	dac_mode = Xil_In32(XPAR_M_AXI_BASEADDR + DAC_OPMODE_REG + chan*CHBASEADDR);
 
 	//check boundary conditions (firmware only checking if setpt*gain is above limits, need to fix)
-	if (new_setpt_volts > 9.9999)
-		new_setpt_volts = 9.9999;
-	else if (new_setpt_volts < -10)
-		new_setpt_volts = -10;
+	if (new_setpt_amps > (9.9999 * scalefactors[chan-1].ampspervolt)) {
+	    xil_printf("Saturated High\r\n");
+	    new_setpt_amps = 9.9999 * scalefactors[chan-1].ampspervolt;
+	}
+	else if (new_setpt_amps < (-10 * scalefactors[chan-1].ampspervolt)) {
+	    xil_printf("Saturated Low\r\n");
+	    new_setpt_amps = -10 * scalefactors[chan-1].ampspervolt;
+	}
 
-	new_setpt = (s32)(new_setpt_volts * CONV20BITSTOVOLTS);
-	printf("New DAC Setpt: %f    %d\r\n",new_setpt_volts, (int)new_setpt);
+
+	new_setpt = (s32)(new_setpt_amps * CONV20BITSTOVOLTS / scalefactors[chan-1].ampspervolt);
+	printf("New DAC Setpt: %f    %d\r\n",new_setpt_amps, (int)new_setpt);
 
 
 	if (dac_mode == SMOOTH) {
@@ -209,7 +216,7 @@ void GlobSetting(u32 addr, MsgUnion data) {
 
 void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 
-
+    s32 scaled_val;
 
     switch(addr) {
 
@@ -219,7 +226,8 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 	        break;
 
         case DAC_SETPT_MSG:
-	        printf("Setting DAC CH%d SetPoint:   Value=%f   Bits=%d\r\n",(int)chan,data.f,(int)(data.f*CONV20BITSTOVOLTS));
+        	scaled_val = data.f*CONV20BITSTOVOLTS / scalefactors[chan-1].ampspervolt;
+	        printf("Setting DAC CH%d SetPoint:   Value=%f   Bits=%d\r\n", (int)chan, data.f, (int)scaled_val);
 	        Set_dac(chan, data.f);
 	        break;
 
@@ -240,7 +248,8 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 
         case DAC_SETPT_OFFSET_MSG:
 	        printf("Setting DAC SetPt CH%d Offset:   Value=%f\r\n",(int)chan,data.f);
-	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_SETPT_OFFSET_REG + chan*CHBASEADDR, (s32)(data.f*CONV20BITSTOVOLTS));
+	        scaled_val = data.f * CONV20BITSTOVOLTS / scalefactors[chan-1].ampspervolt;
+	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_SETPT_OFFSET_REG + chan*CHBASEADDR, scaled_val);
 	        break;
 
         case DCCT1_GAIN_MSG:
@@ -250,7 +259,8 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 
         case DCCT1_OFFSET_MSG:
  	        printf("Setting DCCT1 CH%d Offset:   Value=%f\r\n",(int)chan,data.f);
- 	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT1_OFFSET_REG + chan*CHBASEADDR, (s32)(data.f*CONV20BITSTOVOLTS));
+ 	        scaled_val = data.f*CONV20BITSTOVOLTS / scalefactors[chan-1].ampspervolt;
+ 	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT1_OFFSET_REG + chan*CHBASEADDR, scaled_val);
  	        break;
 
         case DCCT2_GAIN_MSG:
@@ -260,7 +270,8 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 
         case DCCT2_OFFSET_MSG:
   	        printf("Setting DCCT2 CH%d Offset:   Value=%f\r\n",(int)chan,data.f);
-  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT2_OFFSET_REG + chan*CHBASEADDR, (s32)(data.f*CONV20BITSTOVOLTS));
+  	        scaled_val = data.f*CONV20BITSTOVOLTS / scalefactors[chan-1].ampspervolt;
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT2_OFFSET_REG + chan*CHBASEADDR, scaled_val);
   	        break;
 
         case DACMON_GAIN_MSG:
@@ -270,7 +281,8 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 
         case DACMON_OFFSET_MSG:
   	        printf("Setting DAC Mon CH%d Offset:   Value=%f\r\n",(int)chan,data.f);
-  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DACMON_OFFSET_REG + chan*CHBASEADDR, (s32)(data.f*CONV16BITSTOVOLTS));
+  	        scaled_val = data.f*CONV16BITSTOVOLTS / scalefactors[chan-1].ampspervolt;
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DACMON_OFFSET_REG + chan*CHBASEADDR, scaled_val);
   	        break;
 
         case VOLT_GAIN_MSG:
@@ -325,93 +337,112 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 
 
         case OVC1_THRESH_MSG:
-   	        xil_printf("Setting OVC1 Threshold CH%d :   Value=%d\r\n",chan,data.i);
-   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVC1_THRESH_REG + chan*CHBASEADDR, data.i);
+   	        printf("Setting OVC1 Threshold CH%d :   Value=%f\r\n",(int)chan,data.f);
+   	        scaled_val = data.f*CONV20BITSTOVOLTS / scalefactors[chan-1].ampspervolt;
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVC1_THRESH_REG + chan*CHBASEADDR, scaled_val);
    	        break;
 
         case OVC2_THRESH_MSG:
-   	        xil_printf("Setting OVC2 Threshold CH%d :   Value=%d\r\n",chan,data.i);
-   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVC2_THRESH_REG + chan*CHBASEADDR, data.i);
+   	        printf("Setting OVC2 Threshold CH%d :   Value=%f\r\n",(int)chan,data.f);
+   	        scaled_val = data.f*CONV20BITSTOVOLTS / scalefactors[chan-1].ampspervolt;
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVC2_THRESH_REG + chan*CHBASEADDR, scaled_val);
    	        break;
 
         case OVV_THRESH_MSG:
-   	        xil_printf("Setting OVV Threshold CH%d :   Value=%d\r\n",chan,data.i);
-   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVV_THRESH_REG + chan*CHBASEADDR, data.i);
+   	        printf("Setting OVV Threshold CH%d :   Value=%f\r\n",(int)chan,data.f);
+   	        scaled_val = data.f*CONV16BITSTOVOLTS;
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVV_THRESH_REG + chan*CHBASEADDR, scaled_val);
    	        break;
 
         case ERR1_THRESH_MSG:
-   	        xil_printf("Setting Err1 Threshold CH%d :   Value=%d\r\n",chan,data.i);
-   	        Xil_Out32(XPAR_M_AXI_BASEADDR + ERR1_THRESH_REG + chan*CHBASEADDR, data.i);
+   	        printf("Setting Err1 Threshold CH%d :   Value=%f\r\n",(int)chan,data.f);
+   	        scaled_val = data.f*CONV16BITSTOVOLTS;
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + ERR1_THRESH_REG + chan*CHBASEADDR, scaled_val);
    	        break;
 
         case ERR2_THRESH_MSG:
-   	        xil_printf("Setting Err2 Threshold CH%d :   Value=%d\r\n",chan,data.i);
-   	        Xil_Out32(XPAR_M_AXI_BASEADDR + ERR2_THRESH_REG + chan*CHBASEADDR, data.i);
+   	        printf("Setting Err2 Threshold CH%d :   Value=%f\r\n",(int)chan,data.f);
+   	        scaled_val = data.f*CONV16BITSTOVOLTS;
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + ERR2_THRESH_REG + chan*CHBASEADDR, scaled_val);
    	        break;
 
         case IGND_THRESH_MSG:
-   	        xil_printf("Setting Ignd Threshold CH%d :   Value=%d\r\n",chan,data.i);
-   	        Xil_Out32(XPAR_M_AXI_BASEADDR + IGND_THRESH_REG + chan*CHBASEADDR, data.i);
+   	        printf("Setting Ignd Threshold CH%d :   Value=%f\r\n",(int)chan,data.f);
+   	        scaled_val = data.f*CONV16BITSTOVOLTS;
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + IGND_THRESH_REG + chan*CHBASEADDR, scaled_val);
    	        break;
 
         case OVC1_CNTLIM_MSG:
-   	        xil_printf("Setting OVC1 Count Limit CH%d :   Value=%d\r\n",chan,data.u);
-   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVC1_CNTLIM_REG + chan*CHBASEADDR, data.u);
+   	        printf("Setting OVC1 Count Limit CH%d :   Value=%f sec\r\n",(int)chan,data.f);
+   	        scaled_val = (s32)(data.f * SAMPLERATE);
+   	        printf("Scaled Val: %d\r\n",(int)scaled_val);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVC1_CNTLIM_REG + chan*CHBASEADDR, scaled_val);
    	        break;
 
         case OVC2_CNTLIM_MSG:
-   	        xil_printf("Setting OVC2 Count Limit CH%d :   Value=%d\r\n",chan,data.u);
-   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVC2_CNTLIM_REG + chan*CHBASEADDR, data.u);
+   	        printf("Setting OVC2 Count Limit CH%d :   Value=%f sec\r\n",(int)chan,data.f);
+   	        scaled_val = (s32)(data.f * SAMPLERATE);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVC2_CNTLIM_REG + chan*CHBASEADDR, scaled_val);
    	        break;
 
         case OVV_CNTLIM_MSG:
-   	        xil_printf("Setting OVV Count Limit CH%d :   Value=%d\r\n",chan,data.u);
-   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVV_CNTLIM_REG + chan*CHBASEADDR, data.u);
+   	        printf("Setting OVV Count Limit CH%d :   Value=%f sec\r\n",(int)chan,data.f);
+   	        scaled_val = (s32)(data.f * SAMPLERATE);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVV_CNTLIM_REG + chan*CHBASEADDR, scaled_val);
    	        break;
 
         case ERR1_CNTLIM_MSG:
-   	        xil_printf("Setting Err1 Count Limit CH%d :   Value=%d\r\n",chan,data.u);
-   	        Xil_Out32(XPAR_M_AXI_BASEADDR + ERR1_CNTLIM_REG + chan*CHBASEADDR, data.u);
+   	        printf("Setting Err1 Count Limit CH%d :   Value=%f sec\r\n",(int)chan,data.f);
+   	        scaled_val = (s32)(data.f * SAMPLERATE);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + ERR1_CNTLIM_REG + chan*CHBASEADDR, scaled_val);
    	        break;
 
         case ERR2_CNTLIM_MSG:
-   	        xil_printf("Setting Err2 Count Limit CH%d :   Value=%d\r\n",chan,data.u);
-   	        Xil_Out32(XPAR_M_AXI_BASEADDR + ERR2_CNTLIM_REG + chan*CHBASEADDR, data.u);
+   	        printf("Setting Err2 Count Limit CH%d :   Value=%f sec\r\n",(int)chan,data.f);
+   	        scaled_val = (s32)(data.f * SAMPLERATE);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + ERR2_CNTLIM_REG + chan*CHBASEADDR, scaled_val);
    	        break;
 
         case IGND_CNTLIM_MSG:
-   	        xil_printf("Setting Ignd Count Limit CH%d :   Value=%d\r\n",chan,data.u);
-   	        Xil_Out32(XPAR_M_AXI_BASEADDR + IGND_CNTLIM_REG + chan*CHBASEADDR, data.u);
+   	        printf("Setting Ignd Count Limit CH%d :   Value=%f sec\r\n",(int)chan,data.f);
+   	        scaled_val = (s32)(data.f * SAMPLERATE);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + IGND_CNTLIM_REG + chan*CHBASEADDR, scaled_val);
    	        break;
 
         case DCCT_CNTLIM_MSG:
-   	        xil_printf("Setting DCCT Count Limit CH%d :   Value=%d\r\n",chan,data.u);
-   	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT_CNTLIM_REG + chan*CHBASEADDR, data.u);
+   	        printf("Setting DCCT Count Limit CH%d :   Value=%f sec\r\n",(int)chan,data.f);
+   	        scaled_val = (s32)(data.f * SAMPLERATE);
+   	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT_CNTLIM_REG + chan*CHBASEADDR, scaled_val);
    	        break;
 
         case FLT1_CNTLIM_MSG:
-    	    xil_printf("Setting Fault1 Count Limit CH%d :   Value=%d\r\n",chan,data.u);
-    	    Xil_Out32(XPAR_M_AXI_BASEADDR + FLT1_CNTLIM_REG + chan*CHBASEADDR, data.u);
+    	    printf("Setting Fault1 Count Limit CH%d :   Value=%f sec\r\n",(int)chan,data.f);
+   	        scaled_val = (s32)(data.f * SAMPLERATE);
+    	    Xil_Out32(XPAR_M_AXI_BASEADDR + FLT1_CNTLIM_REG + chan*CHBASEADDR, scaled_val);
     	    break;
 
         case FLT2_CNTLIM_MSG:
-    	    xil_printf("Setting Fault2 Count Limit CH%d :   Value=%d\r\n",chan,data.u);
-    	    Xil_Out32(XPAR_M_AXI_BASEADDR + FLT2_CNTLIM_REG + chan*CHBASEADDR, data.u);
+    	    printf("Setting Fault2 Count Limit CH%d :   Value=%f sec\r\n",(int)chan,data.f);
+   	        scaled_val = (s32)(data.f * SAMPLERATE);
+    	    Xil_Out32(XPAR_M_AXI_BASEADDR + FLT2_CNTLIM_REG + chan*CHBASEADDR, scaled_val);
     	    break;
 
         case FLT3_CNTLIM_MSG:
-    	    xil_printf("Setting Fault3 Count Limit CH%d :   Value=%d\r\n",chan,data.u);
-    	    Xil_Out32(XPAR_M_AXI_BASEADDR + FLT3_CNTLIM_REG + chan*CHBASEADDR, data.u);
+    	    printf("Setting Fault3 Count Limit CH%d :   Value=%f sec\r\n",(int)chan,data.f);
+   	        scaled_val = (s32)(data.f * SAMPLERATE);
+    	    Xil_Out32(XPAR_M_AXI_BASEADDR + FLT3_CNTLIM_REG + chan*CHBASEADDR, scaled_val);
     	    break;
 
         case ON_CNTLIM_MSG:
-    	    xil_printf("Setting On Count Limit CH%d :   Value=%d\r\n",chan,data.u);
-    	    Xil_Out32(XPAR_M_AXI_BASEADDR + ON_CNTLIM_REG + chan*CHBASEADDR, data.u);
+    	    printf("Setting On Count Limit CH%d :   Value=%f sec\r\n",(int)chan,data.f);
+   	        scaled_val = (s32)(data.f * SAMPLERATE);
+    	    Xil_Out32(XPAR_M_AXI_BASEADDR + ON_CNTLIM_REG + chan*CHBASEADDR, scaled_val);
     	    break;
 
         case HEART_CNTLIM_MSG:
-    	    xil_printf("Setting Heart Beat Limit CH%d :   Value=%d\r\n",chan,data.u);
-    	    Xil_Out32(XPAR_M_AXI_BASEADDR + HEARTBEAT_CNTLIM_REG + chan*CHBASEADDR, data.u);
+    	    printf("Setting Heart Beat Limit CH%d :   Value=%f sec\r\n",(int)chan,data.f);
+   	        scaled_val = (s32)(data.f * SAMPLERATE);
+    	    Xil_Out32(XPAR_M_AXI_BASEADDR + HEARTBEAT_CNTLIM_REG + chan*CHBASEADDR, scaled_val);
     	    break;
 
         case FAULT_CLEAR_MSG:
@@ -447,6 +478,16 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
         case DIGOUT_PARK_MSG:
        	    xil_printf("Setting DigOut Park CH%d :   Value=%d\r\n",chan,data.u);
        	    Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_PARK_REG + chan*CHBASEADDR, data.u);
+       	    break;
+
+        case AMPS_PER_VOLT_MSG:
+       	    printf("Setting Amps/Volt CH%d :   Value=%f\r\n",(int)chan,data.f);
+       	    scalefactors[chan-1].ampspervolt = data.f;
+       	    break;
+
+        case AMPS_PER_SEC_MSG:
+       	    printf("Setting Amps/Sec CH%d :   Value=%f\r\n",(int)chan,data.f);
+       	    scalefactors[chan-1].ampspersec = data.f;
        	    break;
 
         default:

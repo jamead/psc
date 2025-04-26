@@ -7,16 +7,13 @@
 #define CONV18BITSTOVOLTS  1.0 //13107.2  // 2^20/20.0
 #define CONV20BITSTOVOLTS  52428.8  // 2^20/20.0
 
+#define SAMPLERATE 10000.0
 
 //DAC modes
 #define SMOOTH  0
 #define RAMP    1
 #define FOFB    2
 #define JUMP    3
-
-
-#define I2C_PORTEXP0_ADDR 0x70
-#define I2C_PORTEXP1_ADDR 0x71
 
 
 
@@ -41,6 +38,13 @@ typedef struct TriggerTypes {
 	struct TriggerInfo inj[4];
 	struct TriggerInfo evr[4];
 } TriggerTypes;
+
+
+
+typedef struct ScaleFactorType {
+	float ampspervolt;
+	float ampspersec;
+} ScaleFactorType;
 
 
 
