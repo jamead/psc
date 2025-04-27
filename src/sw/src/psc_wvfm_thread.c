@@ -227,16 +227,39 @@ void CheckforTriggers(TriggerTypes *trig) {
 
 
 
-void CopyDataChan(u32 **msg_u32ptr, const u32 *buf_data, u32 numwords, int chan) {
+void CopyDataChan(float **msg_ptr, const u32 *buf_data, u32 numwords, int chan) {
 
 	u32 i,j;
 
     switch (chan) {
         case 1:  // Copy elements 0-9
-            for (i=0; i<numwords; i=i+40)
-        	  for (j=0; j<10; j++) {
-                **msg_u32ptr = buf_data[i+j];
-                (*msg_u32ptr)++;
+            for (i=0; i<numwords; i=i+40) {
+        	  //for (j=0; j<2; j++) {
+                **msg_ptr = buf_data[i+0];   //header
+                (*msg_ptr)++;
+                **msg_ptr = buf_data[i+1];   //data pt. counter
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+2]) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;   //DCCT1
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+3]) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;   //DCCT2
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+4]) / CONV16BITSTOVOLTS;   //DAC Monitor
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+5]) / CONV16BITSTOVOLTS;   //Voltage Monitor
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+6]) / CONV16BITSTOVOLTS;   //iGND Monitor
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+7]) / CONV16BITSTOVOLTS;   //Spare Monitor
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+8]) / CONV16BITSTOVOLTS;   //Regulator
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+9]) / CONV16BITSTOVOLTS;   //Error
+                (*msg_ptr)++;
+
+
+
+
+
         	  }
             break;
 
@@ -244,12 +267,12 @@ void CopyDataChan(u32 **msg_u32ptr, const u32 *buf_data, u32 numwords, int chan)
         case 2: // Copy elements 0, 1, 10-17
             for (i=0; i<numwords; i=i+40) {
               for (j=0;j<2;j++) {
-            	**msg_u32ptr = buf_data[i+j];
-                (*msg_u32ptr)++;
+            	**msg_ptr = buf_data[i+j];
+                (*msg_ptr)++;
               }
         	  for (j=10; j<18; j++) {
-                **msg_u32ptr = buf_data[i+j];
-                (*msg_u32ptr)++;
+                **msg_ptr = buf_data[i+j];
+                (*msg_ptr)++;
         	  }
             }
             break;
@@ -257,12 +280,12 @@ void CopyDataChan(u32 **msg_u32ptr, const u32 *buf_data, u32 numwords, int chan)
         case 3: // Copy elements 0, 1, 18-25
             for (i=0; i<numwords; i=i+40) {
               for (j=0;j<2;j++) {
-            	**msg_u32ptr = buf_data[i+j];
-                (*msg_u32ptr)++;
+            	**msg_ptr = buf_data[i+j];
+                (*msg_ptr)++;
               }
         	  for (j=18; j<26; j++) {
-                **msg_u32ptr = buf_data[i+j];
-                (*msg_u32ptr)++;
+                **msg_ptr = buf_data[i+j];
+                (*msg_ptr)++;
         	  }
             }
             break;
@@ -270,12 +293,12 @@ void CopyDataChan(u32 **msg_u32ptr, const u32 *buf_data, u32 numwords, int chan)
         case 4: // Copy elements 0, 1, 26-33
             for (i=0; i<numwords; i=i+40) {
               for (j=0;j<2;j++) {
-            	**msg_u32ptr = buf_data[i+j];
-                (*msg_u32ptr)++;
+            	**msg_ptr = buf_data[i+j];
+                (*msg_ptr)++;
               }
         	  for (j=26; j<34; j++) {
-                **msg_u32ptr = buf_data[i+j];
-                (*msg_u32ptr)++;
+                **msg_ptr = buf_data[i+j];
+                (*msg_ptr)++;
         	  }
             }
             break;
@@ -298,6 +321,7 @@ void ReadDMABuf(char *msg, TriggerInfo *trig) {
     u32 const WORDSPERSAMPLE = 40;
 	u32 *buf_data;
     u32 *msg_u32ptr;
+    float *msg_fltptr;
     //u32 i;
     u32 startaddr, stopaddr;
     u32 postfirstnumwords, postsecnumwords, postfirstnumpts, postsecnumpts;
@@ -307,12 +331,17 @@ void ReadDMABuf(char *msg, TriggerInfo *trig) {
     //write the PSC Header
     xil_printf("In ReadDMABuf Message ID: %d\r\n",trig->msgID);
     msg_u32ptr = (u32 *)msg;
+    msg_fltptr = (float *)msg;
     msg[0] = 'P';
     msg[1] = 'S';
     msg[2] = 0;
     msg[3] = (short int) trig->msgID; //MSGSOFT;
     *++msg_u32ptr = htonl(MSGWFMLEN); //body length
+
 	msg_u32ptr++;
+	msg_fltptr++;
+	msg_fltptr++;
+	xil_printf("U32: %d    FLT: %d\r\n",msg_u32ptr, msg_fltptr);
 
 
 	xil_printf("Copying Snapshot Data from CircBuf to PSC Message...\r\n");
@@ -347,18 +376,18 @@ void ReadDMABuf(char *msg, TriggerInfo *trig) {
 	   //copy pre-trigger
 	   xil_printf("    Copying 1st part of pre-trigger points\r\n");
 	   buf_data = (u32 *) startaddr;
-	   CopyDataChan(&msg_u32ptr, buf_data, prefirstnumwords, trig->channum);
+	   CopyDataChan(&msg_fltptr, buf_data, prefirstnumwords, trig->channum);
 
 	   //copy first postbuf
 	   xil_printf("    Copying 2nd part of pre-trigger points\r\n");
 	   buf_data = (u32 *) BUFSTART;
 	   xil_printf("Msg_u32ptr = %d\r\n",msg_u32ptr);
-	   CopyDataChan(&msg_u32ptr, buf_data, presecnumwords, trig->channum);
+	   CopyDataChan(&msg_fltptr, buf_data, presecnumwords, trig->channum);
 
 	   //copy second postbuf
   	   xil_printf("    Copying post-trigger points\r\n");
   	   buf_data = (u32 *) trig->addr;
-	   CopyDataChan(&msg_u32ptr, buf_data, trig->posttrigpts*BUFSTEPWORDS, trig->channum);
+	   CopyDataChan(&msg_fltptr, buf_data, trig->posttrigpts*BUFSTEPWORDS, trig->channum);
 
 
     }
@@ -382,18 +411,18 @@ void ReadDMABuf(char *msg, TriggerInfo *trig) {
 	   //copy pre-trigger
 	   xil_printf("    Copying pre-trigger points\r\n");
 	   buf_data = (u32 *) startaddr;
-	   CopyDataChan(&msg_u32ptr, buf_data, trig->pretrigpts*BUFSTEPWORDS, trig->channum);
+	   CopyDataChan(&msg_fltptr, buf_data, trig->pretrigpts*BUFSTEPWORDS, trig->channum);
 
 		//copy first postbuf
 	   xil_printf("    Copying 1st part of post-trigger points\r\n");
 	   buf_data = (u32 *) trig->addr;
-	   CopyDataChan(&msg_u32ptr, buf_data, postfirstnumwords, trig->channum);
+	   CopyDataChan(&msg_fltptr, buf_data, postfirstnumwords, trig->channum);
 
   	   //copy second postbuf
   	   xil_printf("    Copying 2nd part of post-trigger points\r\n");
   	   buf_data = (u32 *) BUFSTART;
-	   xil_printf("Msg_u32ptr = %d\r\n",msg_u32ptr);
-	   CopyDataChan(&msg_u32ptr, buf_data, postsecnumwords, trig->channum);
+	   //xil_printf("Msg_u32ptr = %d\r\n",msg_u32ptr);
+	   CopyDataChan(&msg_fltptr, buf_data, postsecnumwords, trig->channum);
 
     }
 
@@ -401,7 +430,7 @@ void ReadDMABuf(char *msg, TriggerInfo *trig) {
        xil_printf("    No Wraps\r\n");
 	   xil_printf("    Copying Buffer\r\n");
 	   buf_data = (u32 *) startaddr;
-	   CopyDataChan(&msg_u32ptr, buf_data, (trig->pretrigpts+trig->posttrigpts)*BUFSTEPWORDS, trig->channum);
+	   CopyDataChan(&msg_fltptr, buf_data, (trig->pretrigpts+trig->posttrigpts)*BUFSTEPWORDS, trig->channum);
     }
 
 	xil_printf("Done Copying Snapshot Data from CircBuf to PSC Message...\r\n");
@@ -415,7 +444,10 @@ void ReadDMABuf(char *msg, TriggerInfo *trig) {
 
 s32 SendWfmData(int newsockfd, char *msg, TriggerInfo *trig) {
 
-    int n;
+    int i,n;
+    u32 *msg_u32ptr;
+    float *msg_fltptr;
+
 
     xil_printf("In SendWfmData...\r\n");
     trig->sendbuf = 0;
@@ -423,6 +455,17 @@ s32 SendWfmData(int newsockfd, char *msg, TriggerInfo *trig) {
 
 	xil_printf("Calling ReadDMABuf...\r\n");
 	ReadDMABuf(msg,trig);
+
+    msg_u32ptr = (u32 *)msg;
+    msg_fltptr = (float *)msg;
+    xil_printf("Header\r\n");
+    for(i=0;i<8;i++) {
+    	xil_printf("%d: %d\r\n",i,msg[i]);
+    }
+    xil_printf("Data\r\n");
+	for(i=2;i<22;i++) {
+	    printf("%d: %f\r\n",i,msg_fltptr[i]);
+	}
 
     //write out Snapshot data (msg51)
 	xil_printf("Tx 10 sec of Snapshot Data\r\n");
