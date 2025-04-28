@@ -5,7 +5,35 @@ use ieee.numeric_std.all;
 package psc_pkg is
 
 
+type t_dig_cntrl_onech is record
+  on1        : std_logic;
+  on2        : std_logic;
+  reset      : std_logic;
+  spare      : std_logic;
+  park       : std_logic;
+end record;
 
+type t_dig_cntrl is record
+  ps1        : t_dig_cntrl_onech;
+  ps2        : t_dig_cntrl_onech;
+  ps3        : t_dig_cntrl_onech;
+  ps4        : t_dig_cntrl_onech;
+end record;
+
+type t_dig_stat_onech is record
+  acon       : std_logic;
+  flt1       : std_logic;
+  flt2       : std_logic;
+  spare      : std_logic;
+  dcct_flt   : std_logic;
+end record;
+
+type t_dig_stat is record
+  ps1        : t_dig_stat_onech;
+  ps2        : t_dig_stat_onech;
+  ps3        : t_dig_stat_onech;
+  ps4        : t_dig_stat_onech;
+end record;
 
 
 

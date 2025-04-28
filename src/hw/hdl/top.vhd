@@ -147,6 +147,9 @@ architecture behv of top is
    signal evr_params            : t_evr_params;
    signal evr_trigs             : t_evr_trigs;
    
+   signal dig_cntrl             : t_dig_cntrl;
+   signal dig_stat              : t_dig_stat;
+   
    signal accum_mode            : std_logic_vector(7 downto 0);
    signal accum_done            : std_logic_vector(3 downto 0);
    
@@ -310,7 +313,16 @@ clk_src: entity work.tenkhz_mux
 	O => tenkhz_trig
     ); 
 
-
+dig_io: entity work.digio_logic
+  port map(
+    clk => pl_clk0,
+    reset => pl_reset,
+    tenkhz_trig => tenkhz_trig,   
+    rsts => rsts,
+    rcom => rcom,
+    dig_cntrl => dig_cntrl,
+    dig_stat => dig_stat
+);
 
 
 --embedded event receiver
@@ -346,8 +358,10 @@ ps_regs: entity work.ps_io
     ss_buf_stat => ss_buf_stat,
     evr_params => evr_params,
     evr_trigs => evr_trigs,
-    rcom => rcom,
-    rsts => rsts,
+    dig_cntrl => dig_cntrl,
+    dig_stat => dig_stat,
+    --rcom => rcom,
+    --rsts => rsts,
     fault_params => fault_params,
     fault_stat => fault_stat               
   );

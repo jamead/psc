@@ -389,7 +389,7 @@ int main()
     print_firmware_version();
     
 	init_i2c();
-	prog_si570();
+	//prog_si570();
 	
     sleep(1);
 

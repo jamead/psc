@@ -32,13 +32,15 @@ proc setSources {} {
   lappend Sources {"../hdl/mon_gainoffset.vhd" "VHDL 2008"}  
   
   lappend Sources {"../hdl/DAC_ctrlr.vhd" "VHDL 2008"} 
-  lappend Sources {"../hdl/dac_chan.vhd" "VHDL 2008"} 
-  #lappend Sources {"../hdl/DAC_AD5781_intf.vhd" "VHDL 2008"}  
+  lappend Sources {"../hdl/dac_chan.vhd" "VHDL 2008"}  
   lappend Sources {"../hdl/dac_ad5781.vhd" "VHDL 2008"}  
   lappend Sources {"../hdl/dac_gainoffset.vhd" "VHDL 2008"}    
   
   lappend Sources {"../hdl/fault_module.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/fault_block.vhd" "VHDL 2008"}  
+  
+  lappend Sources {"../hdl/digio_logic.vhd" "VHDL 2008"} 
+  lappend Sources {"../hdl/pulse_enable.vhd" "VHDL 2008"}  
      
   lappend Sources {"../hdl/adc_accumulator_top.vhd" "VHDL 2008"}   
   lappend Sources {"../hdl/adc_accumulator.vhd" "VHDL 2008"} 

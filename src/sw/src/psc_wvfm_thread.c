@@ -229,7 +229,7 @@ void CheckforTriggers(TriggerTypes *trig) {
 
 void CopyDataChan(float **msg_ptr, const u32 *buf_data, u32 numwords, int chan) {
 
-	u32 i,j;
+	u32 i;
 
     switch (chan) {
         case 1:  // Copy elements 0-9
@@ -255,51 +255,82 @@ void CopyDataChan(float **msg_ptr, const u32 *buf_data, u32 numwords, int chan) 
                 (*msg_ptr)++;
                 **msg_ptr = (float)(s32)(buf_data[i+9]) / CONV16BITSTOVOLTS;   //Error
                 (*msg_ptr)++;
-
-
-
-
-
         	  }
             break;
 
 
         case 2: // Copy elements 0, 1, 10-17
             for (i=0; i<numwords; i=i+40) {
-              for (j=0;j<2;j++) {
-            	**msg_ptr = buf_data[i+j];
+                **msg_ptr = buf_data[i+0];   //header
                 (*msg_ptr)++;
-              }
-        	  for (j=10; j<18; j++) {
-                **msg_ptr = buf_data[i+j];
+                **msg_ptr = buf_data[i+1];   //data pt. counter
                 (*msg_ptr)++;
-        	  }
+                **msg_ptr = (float)(s32)(buf_data[i+10]) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;   //DCCT1
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+11]) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;   //DCCT2
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+12]) / CONV16BITSTOVOLTS;   //DAC Monitor
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+13]) / CONV16BITSTOVOLTS;   //Voltage Monitor
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+14]) / CONV16BITSTOVOLTS;   //iGND Monitor
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+15]) / CONV16BITSTOVOLTS;   //Spare Monitor
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+16]) / CONV16BITSTOVOLTS;   //Regulator
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+17]) / CONV16BITSTOVOLTS;   //Error
+                (*msg_ptr)++;
             }
             break;
 
         case 3: // Copy elements 0, 1, 18-25
             for (i=0; i<numwords; i=i+40) {
-              for (j=0;j<2;j++) {
-            	**msg_ptr = buf_data[i+j];
+                **msg_ptr = buf_data[i+0];   //header
                 (*msg_ptr)++;
-              }
-        	  for (j=18; j<26; j++) {
-                **msg_ptr = buf_data[i+j];
+                **msg_ptr = buf_data[i+1];   //data pt. counter
                 (*msg_ptr)++;
-        	  }
+                **msg_ptr = (float)(s32)(buf_data[i+18]) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;   //DCCT1
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+19]) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;   //DCCT2
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+20]) / CONV16BITSTOVOLTS;   //DAC Monitor
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+21]) / CONV16BITSTOVOLTS;   //Voltage Monitor
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+22]) / CONV16BITSTOVOLTS;   //iGND Monitor
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+23]) / CONV16BITSTOVOLTS;   //Spare Monitor
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+24]) / CONV16BITSTOVOLTS;   //Regulator
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+25]) / CONV16BITSTOVOLTS;   //Error
+                (*msg_ptr)++;
             }
             break;
 
         case 4: // Copy elements 0, 1, 26-33
             for (i=0; i<numwords; i=i+40) {
-              for (j=0;j<2;j++) {
-            	**msg_ptr = buf_data[i+j];
+                **msg_ptr = buf_data[i+0];   //header
                 (*msg_ptr)++;
-              }
-        	  for (j=26; j<34; j++) {
-                **msg_ptr = buf_data[i+j];
+                **msg_ptr = buf_data[i+1];   //data pt. counter
                 (*msg_ptr)++;
-        	  }
+                **msg_ptr = (float)(s32)(buf_data[i+26]) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;   //DCCT1
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+27]) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;   //DCCT2
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+28]) / CONV16BITSTOVOLTS;   //DAC Monitor
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+29]) / CONV16BITSTOVOLTS;   //Voltage Monitor
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+30]) / CONV16BITSTOVOLTS;   //iGND Monitor
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+31]) / CONV16BITSTOVOLTS;   //Spare Monitor
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+32]) / CONV16BITSTOVOLTS;   //Regulator
+                (*msg_ptr)++;
+                **msg_ptr = (float)(s32)(buf_data[i+33]) / CONV16BITSTOVOLTS;   //Error
+                (*msg_ptr)++;
             }
             break;
 
@@ -445,7 +476,6 @@ void ReadDMABuf(char *msg, TriggerInfo *trig) {
 s32 SendWfmData(int newsockfd, char *msg, TriggerInfo *trig) {
 
     int i,n;
-    u32 *msg_u32ptr;
     float *msg_fltptr;
 
 
@@ -456,7 +486,6 @@ s32 SendWfmData(int newsockfd, char *msg, TriggerInfo *trig) {
 	xil_printf("Calling ReadDMABuf...\r\n");
 	ReadDMABuf(msg,trig);
 
-    msg_u32ptr = (u32 *)msg;
     msg_fltptr = (float *)msg;
     xil_printf("Header\r\n");
     for(i=0;i<8;i++) {

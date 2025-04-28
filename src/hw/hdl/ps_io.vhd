@@ -35,8 +35,10 @@ entity ps_io is
 	ss_buf_stat      : in t_snapshot_stat;
 	evr_params       : out t_evr_params;
 	evr_trigs        : in t_evr_trigs;  
-	rcom             : out std_logic_vector(19 downto 0);
-	rsts             : in std_logic_vector(19 downto 0);
+	dig_cntrl        : out t_dig_cntrl;
+	dig_stat         : in t_dig_stat;
+	--rcom             : out std_logic_vector(19 downto 0);
+	--rsts             : in std_logic_vector(19 downto 0);
 	fault_stat       : in t_fault_stat;
 	fault_params     : out t_fault_params
      
@@ -142,14 +144,19 @@ reg_i.ps1_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps1.
 
 
 -- Digital Outputs
-rcom(0) <= reg_o.ps1_digout_on1.val.data(0);
-rcom(1) <= reg_o.ps1_digout_on2.val.data(0);
-rcom(2) <= reg_o.ps1_digout_reset.val.data(0);
-rcom(3) <= reg_o.ps1_digout_spare.val.data(0);
-rcom(16) <= reg_o.ps1_digout_park.val.data(0);
+dig_cntrl.ps1.on1 <= reg_o.ps1_digout_on1.val.data(0);
+dig_cntrl.ps1.on2 <= reg_o.ps1_digout_on2.val.data(0);
+dig_cntrl.ps1.reset <= reg_o.ps1_digout_reset.val.data(0);
+dig_cntrl.ps1.spare <= reg_o.ps1_digout_spare.val.data(0);
+dig_cntrl.ps1.park <= reg_o.ps1_digout_park.val.data(0);
 
 -- Digital Inputs
-reg_i.ps1_digin.val.data <= rsts(16) & rsts(3 downto 0);
+reg_i.ps1_digin.val.data(0) <= dig_stat.ps1.acon;
+reg_i.ps1_digin.val.data(1) <= dig_stat.ps1.flt1;
+reg_i.ps1_digin.val.data(2) <= dig_stat.ps1.flt2;
+reg_i.ps1_digin.val.data(3) <= dig_stat.ps1.spare;
+reg_i.ps1_digin.val.data(4) <= dig_stat.ps1.dcct_flt;
+
 
 
 --Fault Threasholds and Counter Limits
@@ -223,15 +230,30 @@ dac_cntrl.ps2.ramprun <= reg_o.ps2_dac_runramp.val.swacc; --data(0);
 reg_i.ps2_dac_rampactive.val.data(0) <= dac_stat.ps2.active;
 reg_i.ps2_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps2.dac_setpt),32));
 
+
 -- Digital Outputs
-rcom(4) <= reg_o.ps2_digout_on1.val.data(0);
-rcom(5) <= reg_o.ps2_digout_on2.val.data(0);
-rcom(6) <= reg_o.ps2_digout_reset.val.data(0);
-rcom(7) <= reg_o.ps2_digout_spare.val.data(0);
-rcom(17) <= reg_o.ps2_digout_park.val.data(0);
+dig_cntrl.ps1.on1 <= reg_o.ps1_digout_on1.val.data(0);
+dig_cntrl.ps1.on2 <= reg_o.ps1_digout_on2.val.data(0);
+dig_cntrl.ps1.reset <= reg_o.ps1_digout_reset.val.data(0);
+dig_cntrl.ps1.spare <= reg_o.ps1_digout_spare.val.data(0);
+dig_cntrl.ps1.park <= reg_o.ps1_digout_park.val.data(0);
 
 -- Digital Inputs
-reg_i.ps2_digin.val.data <= rsts(17) & rsts(7 downto 4);
+reg_i.ps1_digin.val.data(0) <= dig_stat.ps1.acon;
+reg_i.ps1_digin.val.data(1) <= dig_stat.ps1.flt1;
+reg_i.ps1_digin.val.data(2) <= dig_stat.ps1.flt2;
+reg_i.ps1_digin.val.data(3) <= dig_stat.ps1.spare;
+reg_i.ps1_digin.val.data(4) <= dig_stat.ps1.dcct_flt;
+
+---- Digital Outputs
+--rcom(4) <= reg_o.ps2_digout_on1.val.data(0);
+--rcom(5) <= reg_o.ps2_digout_on2.val.data(0);
+--rcom(6) <= reg_o.ps2_digout_reset.val.data(0);
+--rcom(7) <= reg_o.ps2_digout_spare.val.data(0);
+--rcom(17) <= reg_o.ps2_digout_park.val.data(0);
+
+---- Digital Inputs
+--reg_i.ps2_digin.val.data <= rsts(17) & rsts(7 downto 4);
 
 
 --Fault Threasholds and Counter Limits
@@ -309,14 +331,29 @@ reg_i.ps3_dac_rampactive.val.data(0) <= dac_stat.ps3.active;
 reg_i.ps3_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps3.dac_setpt),32));
 
 -- Digital Outputs
-rcom(8) <= reg_o.ps3_digout_on1.val.data(0);
-rcom(9) <= reg_o.ps3_digout_on2.val.data(0);
-rcom(10) <= reg_o.ps3_digout_reset.val.data(0);
-rcom(11) <= reg_o.ps3_digout_spare.val.data(0);
-rcom(18) <= reg_o.ps3_digout_park.val.data(0);
+dig_cntrl.ps1.on1 <= reg_o.ps1_digout_on1.val.data(0);
+dig_cntrl.ps1.on2 <= reg_o.ps1_digout_on2.val.data(0);
+dig_cntrl.ps1.reset <= reg_o.ps1_digout_reset.val.data(0);
+dig_cntrl.ps1.spare <= reg_o.ps1_digout_spare.val.data(0);
+dig_cntrl.ps1.park <= reg_o.ps1_digout_park.val.data(0);
 
 -- Digital Inputs
-reg_i.ps3_digin.val.data <= rsts(18) & rsts(11 downto 8);
+reg_i.ps1_digin.val.data(0) <= dig_stat.ps1.acon;
+reg_i.ps1_digin.val.data(1) <= dig_stat.ps1.flt1;
+reg_i.ps1_digin.val.data(2) <= dig_stat.ps1.flt2;
+reg_i.ps1_digin.val.data(3) <= dig_stat.ps1.spare;
+reg_i.ps1_digin.val.data(4) <= dig_stat.ps1.dcct_flt;
+
+
+---- Digital Outputs
+--rcom(8) <= reg_o.ps3_digout_on1.val.data(0);
+--rcom(9) <= reg_o.ps3_digout_on2.val.data(0);
+--rcom(10) <= reg_o.ps3_digout_reset.val.data(0);
+--rcom(11) <= reg_o.ps3_digout_spare.val.data(0);
+--rcom(18) <= reg_o.ps3_digout_park.val.data(0);
+
+---- Digital Inputs
+--reg_i.ps3_digin.val.data <= rsts(18) & rsts(11 downto 8);
 
 
 --Fault Threasholds and Counter Limits
@@ -397,14 +434,29 @@ reg_i.ps4_dac_rampactive.val.data(0) <= dac_stat.ps4.active;
 reg_i.ps4_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps4.dac_setpt),32));
 
 -- Digital Outputs
-rcom(12) <= reg_o.ps4_digout_on1.val.data(0);
-rcom(13) <= reg_o.ps4_digout_on2.val.data(0);
-rcom(14) <= reg_o.ps4_digout_reset.val.data(0);
-rcom(15) <= reg_o.ps4_digout_spare.val.data(0);
-rcom(19) <= reg_o.ps4_digout_park.val.data(0);
+dig_cntrl.ps1.on1 <= reg_o.ps1_digout_on1.val.data(0);
+dig_cntrl.ps1.on2 <= reg_o.ps1_digout_on2.val.data(0);
+dig_cntrl.ps1.reset <= reg_o.ps1_digout_reset.val.data(0);
+dig_cntrl.ps1.spare <= reg_o.ps1_digout_spare.val.data(0);
+dig_cntrl.ps1.park <= reg_o.ps1_digout_park.val.data(0);
 
 -- Digital Inputs
-reg_i.ps4_digin.val.data <= rsts(19) & rsts(15 downto 12);
+reg_i.ps1_digin.val.data(0) <= dig_stat.ps1.acon;
+reg_i.ps1_digin.val.data(1) <= dig_stat.ps1.flt1;
+reg_i.ps1_digin.val.data(2) <= dig_stat.ps1.flt2;
+reg_i.ps1_digin.val.data(3) <= dig_stat.ps1.spare;
+reg_i.ps1_digin.val.data(4) <= dig_stat.ps1.dcct_flt;
+
+
+---- Digital Outputs
+--rcom(12) <= reg_o.ps4_digout_on1.val.data(0);
+--rcom(13) <= reg_o.ps4_digout_on2.val.data(0);
+--rcom(14) <= reg_o.ps4_digout_reset.val.data(0);
+--rcom(15) <= reg_o.ps4_digout_spare.val.data(0);
+--rcom(19) <= reg_o.ps4_digout_park.val.data(0);
+
+---- Digital Inputs
+--reg_i.ps4_digin.val.data <= rsts(19) & rsts(15 downto 12);
 
 
 --Fault Threasholds and Counter Limits
