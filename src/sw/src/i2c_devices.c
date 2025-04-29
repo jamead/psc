@@ -11,10 +11,6 @@
 extern XIicPs IicPsInstance;			/* Instance of the IIC Device */
 
 
-//static const u32 si570_values [] = {
-//		0x00, 0xC2, 0xBB, 0xBE, 0x6E, 0x69,
-//};
-
 
 // Registers to program si570 to 312.3MHz.
 static const uint8_t si570_values[][2] = {

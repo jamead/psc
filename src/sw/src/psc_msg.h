@@ -134,9 +134,14 @@ typedef struct SAdataChan {
     u32 digin;
     u32 faults_live;
     u32 faults_latched;
-    float ampspervolt;
-    float ampspersec;
-    u32 rsvd[17];
+    float sf_ampspersec;
+    float sf_dac_dccts;
+    float sf_vout;
+    float sf_ignd;
+    float sf_spare;
+    float sf_regulator;
+    float sf_error;
+    u32 rsvd[12];
 } SAdataChan;
 
 
@@ -253,11 +258,13 @@ typedef struct SysHealthMsg {
 #define DIGOUT_SPARE_MSG     280
 #define DIGOUT_PARK_MSG      284
 
-#define AMPS_PER_VOLT_MSG    300
-#define AMPS_PER_SEC_MSG     304
-
-
-
+#define SF_AMPS_PER_SEC_MSG  300
+#define SF_DAC_DCCTS_MSG     304
+#define SF_VOUT_MSG          308
+#define SF_IGND_MSG          312
+#define SF_SPARE_MSG         316
+#define SF_REGULATOR_MSG     320
+#define SF_ERROR_MSG         324
 
 
 

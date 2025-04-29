@@ -1,11 +1,17 @@
 
 #define GAIN20BITFRACT 1048575.0
+
 #define GAIN16BITFRACT 65535.0
 
 
-#define CONV16BITSTOVOLTS  3276.8   // 2^16/20.0
+#define CONVVOLTSTO16BITS  3276.8   // 2^16/20.0
+#define CONV16BITSTOVOLTS  1/CONVVOLTSTO16BITS
+
 #define CONV18BITSTOVOLTS  1.0 //13107.2  // 2^20/20.0
-#define CONV20BITSTOVOLTS  52428.8  // 2^20/20.0
+
+#define CONVVOLTSTO20BITS  52428.8   // 2^20/20.0
+#define CONV20BITSTOVOLTS  1/CONVVOLTSTO20BITS
+
 
 #define SAMPLERATE 10000.0
 
@@ -42,8 +48,13 @@ typedef struct TriggerTypes {
 
 
 typedef struct ScaleFactorType {
-	float ampspervolt;
 	float ampspersec;
+	float dac_dccts;
+	float vout;
+	float ignd;
+	float spare;
+	float regulator;
+	float error;
 } ScaleFactorType;
 
 
