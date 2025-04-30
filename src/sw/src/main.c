@@ -267,8 +267,13 @@ void InitSettings() {
     for (chan=0; chan<4; chan++) {
        base = XPAR_M_AXI_BASEADDR + (chan + 1) * CHBASEADDR;
 
-       scalefactors[chan].ampspervolt = 1.0;
        scalefactors[chan].ampspersec = 1.0;
+       scalefactors[chan].dac_dccts = 1.0;
+       scalefactors[chan].vout = 1.0;
+       scalefactors[chan].ignd = 1.0;
+       scalefactors[chan].spare = 1.0;
+       scalefactors[chan].regulator = 1.0;
+       scalefactors[chan].error = 1.0;
 
        Xil_Out32(base + DCCT1_OFFSET_REG, 0);
        Xil_Out32(base + DCCT2_OFFSET_REG, 0);

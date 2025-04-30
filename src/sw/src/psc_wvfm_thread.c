@@ -239,21 +239,21 @@ void CopyDataChan(float **msg_ptr, const u32 *buf_data, u32 numwords, int chan) 
                 (*msg_ptr)++;
                 **msg_ptr = buf_data[i+1];   //data pt. counter
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+2]) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;   //DCCT1
+                **msg_ptr = (float)(s32)(buf_data[i+2]) * CONV20BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT1
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+3]) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;   //DCCT2
+                **msg_ptr = (float)(s32)(buf_data[i+3]) * CONV20BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT2
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+4]) / CONV16BITSTOVOLTS;   //DAC Monitor
+                **msg_ptr = (float)(s32)(buf_data[i+4]) * CONV16BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DAC Monitor
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+5]) / CONV16BITSTOVOLTS;   //Voltage Monitor
+                **msg_ptr = (float)(s32)(buf_data[i+5]) * CONV16BITSTOVOLTS * scalefactors[chan-1].vout;   //Voltage Monitor
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+6]) / CONV16BITSTOVOLTS;   //iGND Monitor
+                **msg_ptr = (float)(s32)(buf_data[i+6]) * CONV16BITSTOVOLTS * scalefactors[chan-1].ignd;   //iGND Monitor
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+7]) / CONV16BITSTOVOLTS;   //Spare Monitor
+                **msg_ptr = (float)(s32)(buf_data[i+7]) * CONV16BITSTOVOLTS * scalefactors[chan-1].spare;   //Spare Monitor
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+8]) / CONV16BITSTOVOLTS;   //Regulator
+                **msg_ptr = (float)(s32)(buf_data[i+8]) * CONV16BITSTOVOLTS * scalefactors[chan-1].regulator;   //Regulator
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+9]) / CONV16BITSTOVOLTS;   //Error
+                **msg_ptr = (float)(s32)(buf_data[i+9]) * CONV16BITSTOVOLTS * scalefactors[chan-1].error;   //Error
                 (*msg_ptr)++;
         	  }
             break;
@@ -265,46 +265,46 @@ void CopyDataChan(float **msg_ptr, const u32 *buf_data, u32 numwords, int chan) 
                 (*msg_ptr)++;
                 **msg_ptr = buf_data[i+1];   //data pt. counter
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+10]) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;   //DCCT1
+                **msg_ptr = (float)(s32)(buf_data[i+2]) * CONV20BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT1
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+11]) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;   //DCCT2
+                **msg_ptr = (float)(s32)(buf_data[i+3]) * CONV20BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT2
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+12]) / CONV16BITSTOVOLTS;   //DAC Monitor
+                **msg_ptr = (float)(s32)(buf_data[i+4]) * CONV16BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DAC Monitor
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+13]) / CONV16BITSTOVOLTS;   //Voltage Monitor
+                **msg_ptr = (float)(s32)(buf_data[i+5]) * CONV16BITSTOVOLTS * scalefactors[chan-1].vout;   //Voltage Monitor
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+14]) / CONV16BITSTOVOLTS;   //iGND Monitor
+                **msg_ptr = (float)(s32)(buf_data[i+6]) * CONV16BITSTOVOLTS * scalefactors[chan-1].ignd;   //iGND Monitor
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+15]) / CONV16BITSTOVOLTS;   //Spare Monitor
+                **msg_ptr = (float)(s32)(buf_data[i+7]) * CONV16BITSTOVOLTS * scalefactors[chan-1].spare;   //Spare Monitor
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+16]) / CONV16BITSTOVOLTS;   //Regulator
+                **msg_ptr = (float)(s32)(buf_data[i+8]) * CONV16BITSTOVOLTS * scalefactors[chan-1].regulator;   //Regulator
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+17]) / CONV16BITSTOVOLTS;   //Error
+                **msg_ptr = (float)(s32)(buf_data[i+9]) * CONV16BITSTOVOLTS * scalefactors[chan-1].error;   //Error
                 (*msg_ptr)++;
             }
             break;
 
         case 3: // Copy elements 0, 1, 18-25
             for (i=0; i<numwords; i=i+40) {
-                **msg_ptr = buf_data[i+0];   //header
+                 **msg_ptr = buf_data[i+0];   //header
                 (*msg_ptr)++;
                 **msg_ptr = buf_data[i+1];   //data pt. counter
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+18]) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;   //DCCT1
+                **msg_ptr = (float)(s32)(buf_data[i+2]) * CONV20BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT1
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+19]) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;   //DCCT2
+                **msg_ptr = (float)(s32)(buf_data[i+3]) * CONV20BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT2
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+20]) / CONV16BITSTOVOLTS;   //DAC Monitor
+                **msg_ptr = (float)(s32)(buf_data[i+4]) * CONV16BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DAC Monitor
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+21]) / CONV16BITSTOVOLTS;   //Voltage Monitor
+                **msg_ptr = (float)(s32)(buf_data[i+5]) * CONV16BITSTOVOLTS * scalefactors[chan-1].vout;   //Voltage Monitor
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+22]) / CONV16BITSTOVOLTS;   //iGND Monitor
+                **msg_ptr = (float)(s32)(buf_data[i+6]) * CONV16BITSTOVOLTS * scalefactors[chan-1].ignd;   //iGND Monitor
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+23]) / CONV16BITSTOVOLTS;   //Spare Monitor
+                **msg_ptr = (float)(s32)(buf_data[i+7]) * CONV16BITSTOVOLTS * scalefactors[chan-1].spare;   //Spare Monitor
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+24]) / CONV16BITSTOVOLTS;   //Regulator
+                **msg_ptr = (float)(s32)(buf_data[i+8]) * CONV16BITSTOVOLTS * scalefactors[chan-1].regulator;   //Regulator
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+25]) / CONV16BITSTOVOLTS;   //Error
+                **msg_ptr = (float)(s32)(buf_data[i+9]) * CONV16BITSTOVOLTS * scalefactors[chan-1].error;   //Error
                 (*msg_ptr)++;
             }
             break;
@@ -315,23 +315,23 @@ void CopyDataChan(float **msg_ptr, const u32 *buf_data, u32 numwords, int chan) 
                 (*msg_ptr)++;
                 **msg_ptr = buf_data[i+1];   //data pt. counter
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+26]) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;   //DCCT1
+                **msg_ptr = (float)(s32)(buf_data[i+2]) * CONV20BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT1
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+27]) / CONV20BITSTOVOLTS * scalefactors[chan].ampspervolt;   //DCCT2
+                **msg_ptr = (float)(s32)(buf_data[i+3]) * CONV20BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT2
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+28]) / CONV16BITSTOVOLTS;   //DAC Monitor
+                **msg_ptr = (float)(s32)(buf_data[i+4]) * CONV16BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DAC Monitor
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+29]) / CONV16BITSTOVOLTS;   //Voltage Monitor
+                **msg_ptr = (float)(s32)(buf_data[i+5]) * CONV16BITSTOVOLTS * scalefactors[chan-1].vout;   //Voltage Monitor
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+30]) / CONV16BITSTOVOLTS;   //iGND Monitor
+                **msg_ptr = (float)(s32)(buf_data[i+6]) * CONV16BITSTOVOLTS * scalefactors[chan-1].ignd;   //iGND Monitor
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+31]) / CONV16BITSTOVOLTS;   //Spare Monitor
+                **msg_ptr = (float)(s32)(buf_data[i+7]) * CONV16BITSTOVOLTS * scalefactors[chan-1].spare;   //Spare Monitor
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+32]) / CONV16BITSTOVOLTS;   //Regulator
+                **msg_ptr = (float)(s32)(buf_data[i+8]) * CONV16BITSTOVOLTS * scalefactors[chan-1].regulator;   //Regulator
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+33]) / CONV16BITSTOVOLTS;   //Error
+                **msg_ptr = (float)(s32)(buf_data[i+9]) * CONV16BITSTOVOLTS * scalefactors[chan-1].error;   //Error
                 (*msg_ptr)++;
-            }
+             }
             break;
 
         default:
@@ -339,6 +339,7 @@ void CopyDataChan(float **msg_ptr, const u32 *buf_data, u32 numwords, int chan) 
             break;
     }
 }
+
 
 
 
@@ -486,6 +487,8 @@ s32 SendWfmData(int newsockfd, char *msg, TriggerInfo *trig) {
 	xil_printf("Calling ReadDMABuf...\r\n");
 	ReadDMABuf(msg,trig);
 
+	/*
+
     msg_fltptr = (float *)msg;
     xil_printf("Header\r\n");
     for(i=0;i<8;i++) {
@@ -495,7 +498,7 @@ s32 SendWfmData(int newsockfd, char *msg, TriggerInfo *trig) {
 	for(i=2;i<22;i++) {
 	    printf("%d: %f\r\n",i,msg_fltptr[i]);
 	}
-
+    */
     //write out Snapshot data (msg51)
 	xil_printf("Tx 10 sec of Snapshot Data\r\n");
     Host2NetworkConvWvfm(msg,sizeof(msgUsr_buf[0])+MSGHDRLEN);
