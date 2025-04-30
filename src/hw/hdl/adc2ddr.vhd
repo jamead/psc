@@ -44,14 +44,14 @@ architecture rtl of axi4_write_adc is
     signal prev_trigger : std_logic;
     
     --debug signals (connect to ila)
---    attribute mark_debug                 : string;
---    attribute mark_debug of trigger : signal is "true";
---    attribute mark_debug of prev_trigger : signal is "true";   
---    attribute mark_debug of s_axi4_m2s: signal is "true";
---    attribute mark_debug of s_axi4_s2m: signal is "true";   
---    attribute mark_debug of wordnum : signal is "true"; 
---    attribute mark_debug of datacnt : signal is "true";  
---    attribute mark_debug of state : signal is "true"; 
+    attribute mark_debug                 : string;
+    attribute mark_debug of trigger : signal is "true";
+    attribute mark_debug of prev_trigger : signal is "true";   
+    attribute mark_debug of s_axi4_m2s: signal is "true";
+    attribute mark_debug of s_axi4_s2m: signal is "true";   
+    attribute mark_debug of wordnum : signal is "true"; 
+    attribute mark_debug of datacnt : signal is "true";  
+    attribute mark_debug of state : signal is "true"; 
   
   
    
@@ -63,6 +63,7 @@ procedure write_word (
     constant state : state_type
 ) is
 begin
+   
     if (s_axi4_s2m.wready = '1') then
         wvalid <= '1';
         wdata <= data;
@@ -155,18 +156,18 @@ begin
           when PS4_MON5 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, std_logic_vector(resize(signed(mon_adcs.ps4.ps_reg), 32)), PS4_MON6);   
           when PS4_MON6 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, std_logic_vector(resize(signed(mon_adcs.ps4.ps_error), 32)), WRD35);
 
-          when WRD35 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, std_logic_vector(resize(signed(dac_stat.ps1.dac_setpt), 32)), WRD36);
-          when WRD36 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, 32d"0", WRD37);
-          when WRD37 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, 32d"0", WRD38);
-          when WRD38 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, 32d"0", WRD39);         
-          when WRD39 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, 32d"0", WRDLAST);        
+          when WRD35 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, 32d"35", WRD36);
+          when WRD36 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, 32d"36", WRD37);
+          when WRD37 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, 32d"37", WRD38);
+          when WRD38 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, 32d"38", WRD39);         
+          when WRD39 => write_word(s_axi4_m2s.wdata, s_axi4_m2s.wvalid, state, 32d"39", WRDLAST);        
 
           --assert wlast
           when WRDLAST => 
             if (s_axi4_s2m.wready = '1') then
               s_axi4_m2s.wvalid <= '1';
               s_axi4_m2s.wlast <= '1';
-              s_axi4_m2s.wdata <=  32d"0";  
+              s_axi4_m2s.wdata <=  32d"40";  
               state <= awaitresp;  
             end if;
                

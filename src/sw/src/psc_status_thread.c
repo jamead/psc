@@ -155,7 +155,7 @@ void ReadSAData(char *msg) {
     //vTaskSuspendAll();
 
 
-    /*
+
     sadata.evr_ts_s =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S_REG);
     sadata.evr_ts_ns =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS_REG);
     sadata.resolution =  Xil_In32(XPAR_M_AXI_BASEADDR + RESOLUTION);
@@ -247,7 +247,7 @@ void ReadSAData(char *msg) {
 
     }
 
-    */
+
     //xTaskResumeAll();
 
     //copy the structure to the PSC msg buffer

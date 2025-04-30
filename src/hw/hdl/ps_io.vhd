@@ -232,18 +232,18 @@ reg_i.ps2_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps2.
 
 
 -- Digital Outputs
-dig_cntrl.ps1.on1 <= reg_o.ps1_digout_on1.val.data(0);
-dig_cntrl.ps1.on2 <= reg_o.ps1_digout_on2.val.data(0);
-dig_cntrl.ps1.reset <= reg_o.ps1_digout_reset.val.data(0);
-dig_cntrl.ps1.spare <= reg_o.ps1_digout_spare.val.data(0);
-dig_cntrl.ps1.park <= reg_o.ps1_digout_park.val.data(0);
+dig_cntrl.ps2.on1 <= reg_o.ps1_digout_on1.val.data(0);
+dig_cntrl.ps2.on2 <= reg_o.ps1_digout_on2.val.data(0);
+dig_cntrl.ps2.reset <= reg_o.ps1_digout_reset.val.data(0);
+dig_cntrl.ps2.spare <= reg_o.ps1_digout_spare.val.data(0);
+dig_cntrl.ps2.park <= reg_o.ps1_digout_park.val.data(0);
 
 -- Digital Inputs
-reg_i.ps1_digin.val.data(0) <= dig_stat.ps1.acon;
-reg_i.ps1_digin.val.data(1) <= dig_stat.ps1.flt1;
-reg_i.ps1_digin.val.data(2) <= dig_stat.ps1.flt2;
-reg_i.ps1_digin.val.data(3) <= dig_stat.ps1.spare;
-reg_i.ps1_digin.val.data(4) <= dig_stat.ps1.dcct_flt;
+reg_i.ps2_digin.val.data(0) <= dig_stat.ps2.acon;
+reg_i.ps2_digin.val.data(1) <= dig_stat.ps2.flt1;
+reg_i.ps2_digin.val.data(2) <= dig_stat.ps2.flt2;
+reg_i.ps2_digin.val.data(3) <= dig_stat.ps2.spare;
+reg_i.ps2_digin.val.data(4) <= dig_stat.ps2.dcct_flt;
 
 ---- Digital Outputs
 --rcom(4) <= reg_o.ps2_digout_on1.val.data(0);
@@ -331,18 +331,18 @@ reg_i.ps3_dac_rampactive.val.data(0) <= dac_stat.ps3.active;
 reg_i.ps3_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps3.dac_setpt),32));
 
 -- Digital Outputs
-dig_cntrl.ps1.on1 <= reg_o.ps1_digout_on1.val.data(0);
-dig_cntrl.ps1.on2 <= reg_o.ps1_digout_on2.val.data(0);
-dig_cntrl.ps1.reset <= reg_o.ps1_digout_reset.val.data(0);
-dig_cntrl.ps1.spare <= reg_o.ps1_digout_spare.val.data(0);
-dig_cntrl.ps1.park <= reg_o.ps1_digout_park.val.data(0);
+dig_cntrl.ps3.on1 <= reg_o.ps3_digout_on1.val.data(0);
+dig_cntrl.ps3.on2 <= reg_o.ps3_digout_on2.val.data(0);
+dig_cntrl.ps3.reset <= reg_o.ps3_digout_reset.val.data(0);
+dig_cntrl.ps3.spare <= reg_o.ps3_digout_spare.val.data(0);
+dig_cntrl.ps3.park <= reg_o.ps3_digout_park.val.data(0);
 
 -- Digital Inputs
-reg_i.ps1_digin.val.data(0) <= dig_stat.ps1.acon;
-reg_i.ps1_digin.val.data(1) <= dig_stat.ps1.flt1;
-reg_i.ps1_digin.val.data(2) <= dig_stat.ps1.flt2;
-reg_i.ps1_digin.val.data(3) <= dig_stat.ps1.spare;
-reg_i.ps1_digin.val.data(4) <= dig_stat.ps1.dcct_flt;
+reg_i.ps3_digin.val.data(0) <= dig_stat.ps3.acon;
+reg_i.ps3_digin.val.data(1) <= dig_stat.ps3.flt1;
+reg_i.ps3_digin.val.data(2) <= dig_stat.ps3.flt2;
+reg_i.ps3_digin.val.data(3) <= dig_stat.ps3.spare;
+reg_i.ps3_digin.val.data(4) <= dig_stat.ps3.dcct_flt;
 
 
 ---- Digital Outputs
@@ -434,18 +434,18 @@ reg_i.ps4_dac_rampactive.val.data(0) <= dac_stat.ps4.active;
 reg_i.ps4_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps4.dac_setpt),32));
 
 -- Digital Outputs
-dig_cntrl.ps1.on1 <= reg_o.ps1_digout_on1.val.data(0);
-dig_cntrl.ps1.on2 <= reg_o.ps1_digout_on2.val.data(0);
-dig_cntrl.ps1.reset <= reg_o.ps1_digout_reset.val.data(0);
-dig_cntrl.ps1.spare <= reg_o.ps1_digout_spare.val.data(0);
-dig_cntrl.ps1.park <= reg_o.ps1_digout_park.val.data(0);
+dig_cntrl.ps4.on1 <= reg_o.ps1_digout_on1.val.data(0);
+dig_cntrl.ps4.on2 <= reg_o.ps1_digout_on2.val.data(0);
+dig_cntrl.ps4.reset <= reg_o.ps1_digout_reset.val.data(0);
+dig_cntrl.ps4.spare <= reg_o.ps1_digout_spare.val.data(0);
+dig_cntrl.ps4.park <= reg_o.ps1_digout_park.val.data(0);
 
 -- Digital Inputs
-reg_i.ps1_digin.val.data(0) <= dig_stat.ps1.acon;
-reg_i.ps1_digin.val.data(1) <= dig_stat.ps1.flt1;
-reg_i.ps1_digin.val.data(2) <= dig_stat.ps1.flt2;
-reg_i.ps1_digin.val.data(3) <= dig_stat.ps1.spare;
-reg_i.ps1_digin.val.data(4) <= dig_stat.ps1.dcct_flt;
+reg_i.ps4_digin.val.data(0) <= dig_stat.ps4.acon;
+reg_i.ps4_digin.val.data(1) <= dig_stat.ps4.flt1;
+reg_i.ps4_digin.val.data(2) <= dig_stat.ps4.flt2;
+reg_i.ps4_digin.val.data(3) <= dig_stat.ps4.spare;
+reg_i.ps4_digin.val.data(4) <= dig_stat.ps4.dcct_flt;
 
 
 ---- Digital Outputs
@@ -507,7 +507,7 @@ err_trig(0) <= reg_o.testtrig.val.data(4) or fault_stat.ps1.err_trig;
 err_trig(1) <= reg_o.testtrig.val.data(5) or fault_stat.ps2.err_trig;
 err_trig(2) <= reg_o.testtrig.val.data(6) or fault_stat.ps3.err_trig;
 err_trig(3) <= reg_o.testtrig.val.data(7) or fault_stat.ps4.err_trig;
-inj_trig(0) <= reg_o.testtrig.val.data(8) or evr_trigs.inj_trig; --or fault_stat.ps1.err_trig;
+inj_trig(0) <= reg_o.testtrig.val.data(8); -- or evr_trigs.inj_trig; --or fault_stat.ps1.err_trig;
 inj_trig(1) <= reg_o.testtrig.val.data(9); --or fault_stat.ps2.err_trig;
 inj_trig(2) <= reg_o.testtrig.val.data(10); --or fault_stat.ps3.err_trig;
 inj_trig(3) <= reg_o.testtrig.val.data(11); --or fault_stat.ps4.err_trig;
