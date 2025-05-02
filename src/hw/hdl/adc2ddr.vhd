@@ -44,14 +44,14 @@ architecture rtl of axi4_write_adc is
     signal prev_trigger : std_logic;
     
     --debug signals (connect to ila)
-    attribute mark_debug                 : string;
-    attribute mark_debug of trigger : signal is "true";
-    attribute mark_debug of prev_trigger : signal is "true";   
-    attribute mark_debug of s_axi4_m2s: signal is "true";
-    attribute mark_debug of s_axi4_s2m: signal is "true";   
-    attribute mark_debug of wordnum : signal is "true"; 
-    attribute mark_debug of datacnt : signal is "true";  
-    attribute mark_debug of state : signal is "true"; 
+--    attribute mark_debug                 : string;
+--    attribute mark_debug of trigger : signal is "true";
+--    attribute mark_debug of prev_trigger : signal is "true";   
+--    attribute mark_debug of s_axi4_m2s: signal is "true";
+--    attribute mark_debug of s_axi4_s2m: signal is "true";   
+--    attribute mark_debug of wordnum : signal is "true"; 
+--    attribute mark_debug of datacnt : signal is "true";  
+--    attribute mark_debug of state : signal is "true"; 
   
   
    

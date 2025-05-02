@@ -62,8 +62,8 @@ architecture arch of fault_block is
   signal dac_change_flag         : std_logic; 
   signal re, re_reg              : std_logic;
   signal clear_pulse             : std_logic;
-  signal fault_reg_out           : std_logic_vector(15 downto 0);
-  signal fault_reg_mask          : std_logic_vector(15 downto 0);
+  signal fault_reg_lat           : std_logic_vector(15 downto 0);
+  signal fault_reg_lat_mask      : std_logic_vector(15 downto 0);
   signal error_reg_mask          : std_logic_vector(15 downto 0);
 
   --signal err_abs                 : signed(15 downto 0); 
@@ -73,19 +73,19 @@ architecture arch of fault_block is
    attribute mark_debug                 : string;
    attribute mark_debug of clear_pulse: signal is "true";
    attribute mark_debug of fault_reg: signal is "true";
-   attribute mark_debug of fault_reg_out: signal is "true";
+   attribute mark_debug of fault_reg_lat: signal is "true";
    attribute mark_debug of fault_params: signal is "true";
    attribute mark_debug of fault_stat: signal is "true";
    attribute mark_debug of dac_change_flag: signal is "true";
-   attribute mark_debug of fault_reg_mask: signal is "true";
+   attribute mark_debug of fault_reg_lat_mask: signal is "true";
    attribute mark_debug of error_reg_mask: signal is "true";
 
 
 begin 
 
 fault_stat.live <= fault_reg;
-fault_stat.lat  <= fault_reg_out;
-fault_stat.flt_trig <= or fault_reg_mask;
+fault_stat.lat  <= fault_reg_lat_mask; 
+fault_stat.flt_trig <= or fault_reg_lat_mask;
 fault_stat.err_trig <= or error_reg_mask;
 
 
@@ -93,7 +93,7 @@ fault_stat.err_trig <= or error_reg_mask;
 process(clk) 
 begin 
     if rising_edge(clk) then      
-        fault_reg_mask <= x"1EEF" and fault_reg and fault_params.enable;
+        fault_reg_lat_mask <= x"1FEF" and fault_reg_lat and fault_params.enable;
         error_reg_mask <= x"0010" and fault_reg and fault_params.enable;      
     end if; 
 end process; 
@@ -200,7 +200,7 @@ begin
     if rising_edge(clk) then 
         if reset = '1' then 
             fault_reg <= (others => '0'); 
-            fault_reg_out <= (others => '0'); 
+            fault_reg_lat <= (others => '0'); 
             ovc_fault_cnt1 <= (others => '0'); 
             ovc_fault_cnt2 <= (others => '0'); 
             ovv_fault_cnt  <= (others => '0'); 
@@ -333,7 +333,7 @@ begin
                 fault_reg(7) <= '0'; 
             end if; 
             
-
+            --Bipolar Heartbeat Fault
             if fault2 = '1' and clear_pulse = '0' then 
                 if fault2_cnt = unsigned(fault_params.flt2_cntlim) then 
                     fault_reg(8) <= '1'; 
@@ -372,16 +372,16 @@ begin
          end if;     
          
          --Bipolar Converter Heartbeat Detection
-         if heartbeat = '0' and clear_pulse = '0'  then 
-             if heart_cnt = unsigned(fault_params.heart_cntlim) then 
-                 fault_reg(11) <= '1'; 
-             else 
-                 heart_cnt <= heart_cnt +1; 
-             end if; 
-         else 
-             heart_cnt <= (others => '0');
-             fault_reg(11) <= '0';  
-         end if;      
+--         if heartbeat = '0' and clear_pulse = '0'  then 
+--             if heart_cnt = unsigned(fault_params.heart_cntlim) then 
+--                 fault_reg(11) <= '1'; 
+--             else 
+--                 heart_cnt <= heart_cnt +1; 
+--             end if; 
+--         else 
+--             heart_cnt <= (others => '0');
+--             fault_reg(11) <= '0';  
+--         end if;      
          
          
         --#############################################################
@@ -391,10 +391,10 @@ begin
         for i in 0 to 12 loop
             if clear_pulse = '0' then
                 if fault_reg(i) = '1' then
-                    fault_reg_out(i) <= '1';
+                    fault_reg_lat(i) <= '1';
                 end if;
             else
-                fault_reg_out(i) <= '0';
+                fault_reg_lat(i) <= '0';
             end if;
          end loop;
 

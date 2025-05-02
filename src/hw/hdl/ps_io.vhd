@@ -232,11 +232,11 @@ reg_i.ps2_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps2.
 
 
 -- Digital Outputs
-dig_cntrl.ps2.on1 <= reg_o.ps1_digout_on1.val.data(0);
-dig_cntrl.ps2.on2 <= reg_o.ps1_digout_on2.val.data(0);
-dig_cntrl.ps2.reset <= reg_o.ps1_digout_reset.val.data(0);
-dig_cntrl.ps2.spare <= reg_o.ps1_digout_spare.val.data(0);
-dig_cntrl.ps2.park <= reg_o.ps1_digout_park.val.data(0);
+dig_cntrl.ps2.on1 <= reg_o.ps2_digout_on1.val.data(0);
+dig_cntrl.ps2.on2 <= reg_o.ps2_digout_on2.val.data(0);
+dig_cntrl.ps2.reset <= reg_o.ps2_digout_reset.val.data(0);
+dig_cntrl.ps2.spare <= reg_o.ps2_digout_spare.val.data(0);
+dig_cntrl.ps2.park <= reg_o.ps2_digout_park.val.data(0);
 
 -- Digital Inputs
 reg_i.ps2_digin.val.data(0) <= dig_stat.ps2.acon;
@@ -434,11 +434,11 @@ reg_i.ps4_dac_rampactive.val.data(0) <= dac_stat.ps4.active;
 reg_i.ps4_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps4.dac_setpt),32));
 
 -- Digital Outputs
-dig_cntrl.ps4.on1 <= reg_o.ps1_digout_on1.val.data(0);
-dig_cntrl.ps4.on2 <= reg_o.ps1_digout_on2.val.data(0);
-dig_cntrl.ps4.reset <= reg_o.ps1_digout_reset.val.data(0);
-dig_cntrl.ps4.spare <= reg_o.ps1_digout_spare.val.data(0);
-dig_cntrl.ps4.park <= reg_o.ps1_digout_park.val.data(0);
+dig_cntrl.ps4.on1 <= reg_o.ps4_digout_on1.val.data(0);
+dig_cntrl.ps4.on2 <= reg_o.ps4_digout_on2.val.data(0);
+dig_cntrl.ps4.reset <= reg_o.ps4_digout_reset.val.data(0);
+dig_cntrl.ps4.spare <= reg_o.ps4_digout_spare.val.data(0);
+dig_cntrl.ps4.park <= reg_o.ps4_digout_park.val.data(0);
 
 -- Digital Inputs
 reg_i.ps4_digin.val.data(0) <= dig_stat.ps4.acon;
@@ -507,7 +507,7 @@ err_trig(0) <= reg_o.testtrig.val.data(4) or fault_stat.ps1.err_trig;
 err_trig(1) <= reg_o.testtrig.val.data(5) or fault_stat.ps2.err_trig;
 err_trig(2) <= reg_o.testtrig.val.data(6) or fault_stat.ps3.err_trig;
 err_trig(3) <= reg_o.testtrig.val.data(7) or fault_stat.ps4.err_trig;
-inj_trig(0) <= reg_o.testtrig.val.data(8); -- or evr_trigs.inj_trig; --or fault_stat.ps1.err_trig;
+inj_trig(0) <= reg_o.testtrig.val.data(8) or evr_trigs.inj_trig; --or fault_stat.ps1.err_trig;
 inj_trig(1) <= reg_o.testtrig.val.data(9); --or fault_stat.ps2.err_trig;
 inj_trig(2) <= reg_o.testtrig.val.data(10); --or fault_stat.ps3.err_trig;
 inj_trig(3) <= reg_o.testtrig.val.data(11); --or fault_stat.ps4.err_trig;

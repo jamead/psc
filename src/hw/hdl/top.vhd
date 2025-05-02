@@ -177,12 +177,11 @@ architecture behv of top is
 begin
 
 
-fp_leds(0) <= evr_trigs.inj_trig_stretch; --gtx_evr_refclk;
+fp_leds(0) <= evr_trigs.inj_trig_stretch; 
 fp_leds(1) <= '0';
 fp_leds(2) <= '0';
 fp_leds(3) <= evr_trigs.rcvd_clk; 
 fp_leds(7 downto 4) <= "0000";
---sfp_leds <= leds;
 
 sfp_leds(3 downto 0) <= "0000";
 sfp_leds(4) <= evr_trigs.sa_trig_stretch;
@@ -278,8 +277,6 @@ fault_gen: entity work.fault_module
 );  
     
     
-    
-
 --accumulator (not yet integrated)
 accum: entity work.adc_accumulator_top
   generic map (
@@ -312,12 +309,14 @@ clk_src: entity work.tenkhz_mux
     flt_10kHz => open,  
 	O => tenkhz_trig
     ); 
+    
 
 dig_io: entity work.digio_logic
   port map(
     clk => pl_clk0,
     reset => pl_reset,
-    tenkhz_trig => tenkhz_trig,   
+    tenkhz_trig => tenkhz_trig,
+    fault => fault_stat,   
     rsts => rsts,
     rcom => rcom,
     dig_cntrl => dig_cntrl,

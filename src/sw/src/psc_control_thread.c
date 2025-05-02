@@ -56,17 +56,24 @@ void Calc_WriteSmooth(u32 chan, s32 new_setpt) {
 	u32 dpram_addr, dpram_data;
 	u32 i;
 	u32 smooth_len = 10000; //adjust to ramp rate later (Amps/sec)
+	u32 ramp_rate;
 	float val;
 	float PI = 3.14;
 
-
     cur_setpt = Xil_In32(XPAR_M_AXI_BASEADDR + DAC_CURRSETPT_REG + chan*CHBASEADDR);
+
+	//calculate the length of the smooth length using the ramp rate scale factor
+	ramp_rate = scalefactors[chan-1].ampspersec * scalefactors[chan-1].dac_dccts * CONVVOLTSTO20BITS;  // in bits/sec
+	smooth_len = abs(new_setpt - cur_setpt) / ramp_rate * SAMPLERATE;
+
+    //Set up DPRAM
 	dpram_addr = DAC_RAMPADDR_REG + chan*CHBASEADDR;
 	dpram_data = DAC_RAMPDATA_REG + chan*CHBASEADDR;
 	Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RAMPLEN_REG + chan*CHBASEADDR, smooth_len);
 
 
-	xil_printf("Cur Setpt: %d     New Setpt: %d\r\n",cur_setpt, new_setpt);
+	xil_printf("Cur SetPt = %d    New SetPt = %d  Ramp Rate = %d    Smooth Len = %d\r\n", cur_setpt, new_setpt, ramp_rate, smooth_len);
+	//xil_printf("Cur Setpt: %d     New Setpt: %d\r\n",cur_setpt, new_setpt);
 
     //update ramping table with smooth ramp
 	//s1 + ((s2 - s1) * 0.5 * (1.0 - cos(ramp_step * M_PI / T)));
@@ -344,13 +351,14 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 
         case OVC1_THRESH_MSG:
    	        printf("Setting OVC1 Threshold CH%d :   Value=%f\r\n",(int)chan,data.f);
-   	        scaled_val = data.f*CONV20BITSTOVOLTS / scalefactors[chan-1].dac_dccts;
+   	        scaled_val = data.f*CONVVOLTSTO20BITS / scalefactors[chan-1].dac_dccts;
+   	        xil_printf("ScaledVal: %d\r\n", scaled_val);
    	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVC1_THRESH_REG + chan*CHBASEADDR, scaled_val);
    	        break;
 
         case OVC2_THRESH_MSG:
    	        printf("Setting OVC2 Threshold CH%d :   Value=%f\r\n",(int)chan,data.f);
-   	        scaled_val = data.f*CONV20BITSTOVOLTS / scalefactors[chan-1].dac_dccts;
+   	        scaled_val = data.f*CONVVOLTSTO20BITS / scalefactors[chan-1].dac_dccts;
    	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVC2_THRESH_REG + chan*CHBASEADDR, scaled_val);
    	        break;
 

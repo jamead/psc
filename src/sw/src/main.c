@@ -12,6 +12,7 @@
 #include "xiicps.h"
 #include "xadcps.h"
 #include "xqspips.h"
+//#include "xsysmon.h"
 
 #include "xstatus.h"       // For XStatus
 
@@ -66,14 +67,14 @@ char temp[1000];  //temp buffer, msgStat10Hz_buf was overwriting msgid51_buf som
 
 
 // Waveform Buffers for Snapshots
-char msgUsr_buf[4][MSGWFMLEN+MSGHDRLEN];
-char msgFlt_buf[4][MSGWFMLEN+MSGHDRLEN];
-char msgErr_buf[4][MSGWFMLEN+MSGHDRLEN];
-char msgInj_buf[4][MSGWFMLEN+MSGHDRLEN];
-char msgEvr_buf[4][MSGWFMLEN+MSGHDRLEN];
+//char msgUsr_buf[4][MSGWFMLEN+MSGHDRLEN];
+//char msgFlt_buf[4][MSGWFMLEN+MSGHDRLEN];
+//char msgErr_buf[4][MSGWFMLEN+MSGHDRLEN];
+//char msgInj_buf[4][MSGWFMLEN+MSGHDRLEN];
+//char msgEvr_buf[4][MSGWFMLEN+MSGHDRLEN];
 
 
-char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];
+//char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];
 
 
 
@@ -234,7 +235,7 @@ void main_thread(void *p)
     vTaskDelay(pdMS_TO_TICKS(100));
     // Start the PSC Control Thread.  Handles incoming commands from IOC
     xil_printf("\r\n");
-    sys_thread_new("psc_cntrl_thread", psc_control_thread, 0, THREAD_STACKSIZE, 2);
+    sys_thread_new("psc_cntrl_thread", psc_control_thread, 0, THREAD_STACKSIZE, 1);
 
 	//setup an Uptime Timer
 	xUptimeTimer = xTimerCreate("UptimeTimer", pdMS_TO_TICKS(1000), pdTRUE, (void *)0, vUptimeTimerCallback);
@@ -294,24 +295,24 @@ void InitSettings() {
        Xil_Out32(base + ERR_GAIN_REG, 1.0 * GAIN20BITFRACT);
        Xil_Out32(base + DAC_SETPT_GAIN_REG, 1.0 * GAIN20BITFRACT);
 
-       Xil_Out32(base + OVC1_THRESH_REG, 1.0 * CONV20BITSTOVOLTS);
-       Xil_Out32(base + OVC2_THRESH_REG, 1.0 * CONV20BITSTOVOLTS);
-       Xil_Out32(base + OVV_THRESH_REG, 1.0 * CONV16BITSTOVOLTS);
-       Xil_Out32(base + ERR1_THRESH_REG, 1.0 * CONV16BITSTOVOLTS);
-       Xil_Out32(base + ERR2_THRESH_REG, 1.0 * CONV16BITSTOVOLTS);
-       Xil_Out32(base + IGND_THRESH_REG, 1.0 * CONV16BITSTOVOLTS);
+       Xil_Out32(base + OVC1_THRESH_REG, 5.0 * CONVVOLTSTO20BITS);
+       Xil_Out32(base + OVC2_THRESH_REG, 5.0 * CONVVOLTSTO20BITS);
+       Xil_Out32(base + OVV_THRESH_REG, 5.0 * CONVVOLTSTO16BITS);
+       Xil_Out32(base + ERR1_THRESH_REG, 5.0 * CONVVOLTSTO16BITS);
+       Xil_Out32(base + ERR2_THRESH_REG, 5.0 * CONVVOLTSTO16BITS);
+       Xil_Out32(base + IGND_THRESH_REG, 5.0 * CONVVOLTSTO16BITS);
 
-       Xil_Out32(base + OVC1_CNTLIM_REG, 3.0 * SAMPLERATE);
-       Xil_Out32(base + OVC2_CNTLIM_REG, 3.0 * SAMPLERATE);
-       Xil_Out32(base + OVV_CNTLIM_REG, 3.0 * SAMPLERATE);
-       Xil_Out32(base + ERR1_CNTLIM_REG, 3.0 * SAMPLERATE);
-       Xil_Out32(base + ERR2_CNTLIM_REG, 3.0 * SAMPLERATE);
-       Xil_Out32(base + IGND_CNTLIM_REG, 3.0 * SAMPLERATE);
-       Xil_Out32(base + DCCT_CNTLIM_REG, 3.0 * SAMPLERATE);
-       Xil_Out32(base + FLT1_CNTLIM_REG, 2.0 * SAMPLERATE);
+       Xil_Out32(base + OVC1_CNTLIM_REG, 0.005 * SAMPLERATE);
+       Xil_Out32(base + OVC2_CNTLIM_REG, 0.005 * SAMPLERATE);
+       Xil_Out32(base + OVV_CNTLIM_REG, 0.005 * SAMPLERATE);
+       Xil_Out32(base + ERR1_CNTLIM_REG, 0.1 * SAMPLERATE);
+       Xil_Out32(base + ERR2_CNTLIM_REG, 0.1 * SAMPLERATE);
+       Xil_Out32(base + IGND_CNTLIM_REG, 0.1 * SAMPLERATE);
+       Xil_Out32(base + DCCT_CNTLIM_REG, 1.0 * SAMPLERATE);
+       Xil_Out32(base + FLT1_CNTLIM_REG, 1.0 * SAMPLERATE);
        Xil_Out32(base + FLT2_CNTLIM_REG, 2.0 * SAMPLERATE);
-       Xil_Out32(base + FLT3_CNTLIM_REG, 2.5 * SAMPLERATE);
-       Xil_Out32(base + ON_CNTLIM_REG, 5.0 * SAMPLERATE);
+       Xil_Out32(base + FLT3_CNTLIM_REG, 3.0 * SAMPLERATE);
+       Xil_Out32(base + ON_CNTLIM_REG, 3.0 * SAMPLERATE);
 
     }
 
@@ -394,7 +395,7 @@ int main()
     print_firmware_version();
     
 	init_i2c();
-	//prog_si570();
+	prog_si570();
 	
     sleep(1);
 

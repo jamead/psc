@@ -204,8 +204,8 @@ void ReadSAData(char *msg) {
 
 
        //Faults
-       sadata.ps[chan].ovc1_thresh = Xil_In32(base + OVC1_THRESH_REG) * CONV20BITSTOVOLTS * scalefactors[chan].dac_dccts;
-       sadata.ps[chan].ovc2_thresh = Xil_In32(base + OVC2_THRESH_REG) * CONV20BITSTOVOLTS * scalefactors[chan].dac_dccts;
+       sadata.ps[chan].ovc1_thresh = (s32)Xil_In32(base + OVC1_THRESH_REG) * CONV20BITSTOVOLTS * scalefactors[chan].dac_dccts;
+       sadata.ps[chan].ovc2_thresh = (s32)Xil_In32(base + OVC2_THRESH_REG) * CONV20BITSTOVOLTS * scalefactors[chan].dac_dccts;
        sadata.ps[chan].ovv_thresh = Xil_In32(base + OVV_THRESH_REG) * CONV16BITSTOVOLTS * scalefactors[chan].vout;
        sadata.ps[chan].err1_thresh = Xil_In32(base + ERR1_THRESH_REG) * CONV16BITSTOVOLTS * scalefactors[chan].error;
        sadata.ps[chan].err2_thresh = Xil_In32(base + ERR2_THRESH_REG) * CONV16BITSTOVOLTS * scalefactors[chan].error;
@@ -361,7 +361,7 @@ reconnect:
 	while (1) {
 
 		//xil_printf("In Status main loop...\r\n");
-		vTaskDelay(pdMS_TO_TICKS(10));
+		vTaskDelay(pdMS_TO_TICKS(100));
 		//ssbufptr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
 		//totaltrigs = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_TOTALTRIGS);
 		//xil_printf("BufPtr: %x\t TotalTrigs: %d\r\n",ssbufptr,totaltrigs);
@@ -370,14 +370,14 @@ reconnect:
         ReadSAData(msgStat10Hz_buf);
         //write 10Hz msg31 packet
         Host2NetworkConvStatus(msgStat10Hz_buf,sizeof(msgStat10Hz_buf)+MSGHDRLEN);
-        /*
+
         n = write(newsockfd,msgStat10Hz_buf,MSGSTAT10HzLEN+MSGHDRLEN);
         if (n < 0) {
           printf("Status socket: ERROR writing MSG 31 - Pos Info\n");
           close(newsockfd);
           goto reconnect;
         }
-        */
+
 
 		loop++;
 
