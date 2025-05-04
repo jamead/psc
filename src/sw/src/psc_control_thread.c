@@ -55,8 +55,8 @@ void Calc_WriteSmooth(u32 chan, s32 new_setpt) {
 	s32 cur_setpt;
 	u32 dpram_addr, dpram_data;
 	u32 i;
-	u32 smooth_len = 10000; //adjust to ramp rate later (Amps/sec)
-	u32 ramp_rate;
+	u32 smooth_len;
+	float ramp_rate;
 	float val;
 	float PI = 3.14;
 
@@ -64,16 +64,16 @@ void Calc_WriteSmooth(u32 chan, s32 new_setpt) {
 
 	//calculate the length of the smooth length using the ramp rate scale factor
 	ramp_rate = scalefactors[chan-1].ampspersec * scalefactors[chan-1].dac_dccts * CONVVOLTSTO20BITS;  // in bits/sec
-	smooth_len = abs(new_setpt - cur_setpt) / ramp_rate * SAMPLERATE;
+	smooth_len = (u32)(abs(new_setpt - cur_setpt) / ramp_rate * SAMPLERATE);
+	xil_printf("Smooth Length: %d\r\n",smooth_len);
+	if (smooth_len >= 50000) {
+		xil_printf("C'mon Smooth Length too long... Ignoring Request...\r\n");
+		return;
+	}
 
     //Set up DPRAM
 	dpram_addr = DAC_RAMPADDR_REG + chan*CHBASEADDR;
 	dpram_data = DAC_RAMPDATA_REG + chan*CHBASEADDR;
-	Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RAMPLEN_REG + chan*CHBASEADDR, smooth_len);
-
-
-	xil_printf("Cur SetPt = %d    New SetPt = %d  Ramp Rate = %d    Smooth Len = %d\r\n", cur_setpt, new_setpt, ramp_rate, smooth_len);
-	//xil_printf("Cur Setpt: %d     New Setpt: %d\r\n",cur_setpt, new_setpt);
 
     //update ramping table with smooth ramp
 	//s1 + ((s2 - s1) * 0.5 * (1.0 - cos(ramp_step * M_PI / T)));
@@ -87,25 +87,15 @@ void Calc_WriteSmooth(u32 chan, s32 new_setpt) {
 
 	}
 
-
+    // Run it
     Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RAMPLEN_REG + chan*CHBASEADDR, smooth_len);
 	Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RUNRAMP_REG + chan*CHBASEADDR, 1);
 
-
-
-
-	//for (i=0;i<100;i++) {
-    //  xil_printf("SetPt: %d  ", Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_CURRSETPT));
-    //  xil_printf("RampActive: %d\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPACTIVE));
-    //	}
-	//update dac setpt with last value from ramp, so whenever we switch
-	// back to FOFB or JumpMode there is no change
-	// Xil_Out32(XPAR_M_AXI_BASEADDR + PS4_DAC_RAMPLEN, (s32)val);
-
-
-
-
 }
+
+
+
+
 
 //When changing modes between Smooth/Ramp and Jump, need to smoothly
 //transition
