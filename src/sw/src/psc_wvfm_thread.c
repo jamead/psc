@@ -75,10 +75,10 @@ void ReadSnapShotStats(char *msg, TriggerTypes *trig) {
    snapstats.totalfacnt = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_TOTALTRIGS);
 
    for (i=0;i<4;i++) {
-       snapstats.usr[i].lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + USRTRIG_BUFPTR);
-       snapstats.usr[i].active  = trig->usr[3].active;
-       snapstats.usr[i].ts_s    = Xil_In32(XPAR_M_AXI_BASEADDR + USRTRIG_TS_S);
-       snapstats.usr[i].ts_ns   = Xil_In32(XPAR_M_AXI_BASEADDR + USRTRIG_TS_NS);
+       snapstats.usr[i].lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + USR1TRIG_BUFPTR + i*0x10);
+       snapstats.usr[i].active  = trig->usr[i].active;
+       snapstats.usr[i].ts_s    = Xil_In32(XPAR_M_AXI_BASEADDR + USR1TRIG_TS_S + i*0x10);
+       snapstats.usr[i].ts_ns   = Xil_In32(XPAR_M_AXI_BASEADDR + USR1TRIG_TS_NS + i*0x10);
 
        snapstats.flt[i].lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + FLT1TRIG_BUFPTR + i*0x10);
        snapstats.flt[i].active  = trig->flt[i].active;
@@ -140,19 +140,19 @@ void CheckforTriggers(TriggerTypes *trig) {
 
 
     if (trig->usr[0].active == 0)
-       trig->usr[0].addr = Xil_In32(XPAR_M_AXI_BASEADDR + USRTRIG_BUFPTR);
+       trig->usr[0].addr = Xil_In32(XPAR_M_AXI_BASEADDR + USR1TRIG_BUFPTR);
     ProcessTrigger(&trig->usr[0], "Usr1");
 
     if (trig->usr[1].active == 0)
-       trig->usr[1].addr = Xil_In32(XPAR_M_AXI_BASEADDR + USRTRIG_BUFPTR);
+       trig->usr[1].addr = Xil_In32(XPAR_M_AXI_BASEADDR + USR2TRIG_BUFPTR);
     ProcessTrigger(&trig->usr[1], "Usr2");
 
     if (trig->usr[2].active == 0)
-       trig->usr[2].addr = Xil_In32(XPAR_M_AXI_BASEADDR + USRTRIG_BUFPTR);
+       trig->usr[2].addr = Xil_In32(XPAR_M_AXI_BASEADDR + USR3TRIG_BUFPTR);
     ProcessTrigger(&trig->usr[2], "Usr3");
 
     if (trig->usr[3].active == 0)
-       trig->usr[3].addr = Xil_In32(XPAR_M_AXI_BASEADDR + USRTRIG_BUFPTR);
+       trig->usr[3].addr = Xil_In32(XPAR_M_AXI_BASEADDR + USR4TRIG_BUFPTR);
     ProcessTrigger(&trig->usr[3], "Usr4");
 
 
@@ -229,7 +229,7 @@ void CheckforTriggers(TriggerTypes *trig) {
 
 void CopyDataChan(float **msg_ptr, u32 *buf_data, u32 numwords, int chan) {
 
-	u32 i, j;
+	u32 i;
 
 
 	//inject some errors at sample 30000 for DCCT1 & DCCT2 for testing
@@ -371,9 +371,8 @@ void ReadDMABuf(char *msg, TriggerInfo *trig) {
     float *msg_fltptr;
     //u32 i;
     u32 startaddr, stopaddr;
-    u32 postfirstnumwords, postsecnumwords, postfirstnumpts, postsecnumpts;
-    u32 prefirstnumwords, presecnumwords, prefirstnumpts, presecnumpts;
-
+    u32 prefirstnumwords, presecnumwords, postfirstnumwords, postsecnumwords;
+    //u32 prefirstnumpts, presecnumpts, postfirstnumpts, postsecnumpts;
 
     //write the PSC Header
     xil_printf("In ReadDMABuf Message ID: %d\r\n",trig->msgID);
@@ -405,9 +404,9 @@ void ReadDMABuf(char *msg, TriggerInfo *trig) {
     if (startaddr < 0x10000000) {
 	   xil_printf("    Pretrigger wraps\r\n");
 	   presecnumwords = (trig->addr - BUFSTART) >> 2;
-	   presecnumpts   = presecnumwords / WORDSPERSAMPLE;
+	   //presecnumpts   = presecnumwords / WORDSPERSAMPLE;
 	   prefirstnumwords   = trig->pretrigpts*WORDSPERSAMPLE - presecnumwords;
-	   prefirstnumpts = prefirstnumwords / BUFSTEPWORDS;
+	   //prefirstnumpts = prefirstnumwords / BUFSTEPWORDS;
 	   startaddr = BUFSTART+BUFLEN - prefirstnumwords*4;
 	   //xil_printf("    Start Addr          : %9d   0x%x\r\n", startaddr,startaddr);
 	   //xil_printf("    Latch Addr          : %9d   0x%x\r\n", trig->addr, trig->addr);
@@ -442,9 +441,9 @@ void ReadDMABuf(char *msg, TriggerInfo *trig) {
 	   xil_printf("    Postrigger wraps\r\n");
 
 	   postfirstnumwords = (BUFSTART+BUFLEN - trig->addr) >> 2;
-	   postfirstnumpts   = postfirstnumwords / WORDSPERSAMPLE;
+	   //postfirstnumpts   = postfirstnumwords / WORDSPERSAMPLE;
 	   postsecnumwords   = trig->posttrigpts*WORDSPERSAMPLE - postfirstnumwords;
-	   postsecnumpts = postsecnumwords / BUFSTEPWORDS;
+	   //postsecnumpts = postsecnumwords / BUFSTEPWORDS;
 	   //xil_printf("    Latch Addr          : %9d   0x%x\r\n", trig->addr, trig->addr);
 	   //xil_printf("    BUFSTART+BUFLEN     : %9d   0x%x\r\n", BUFSTART+BUFLEN,BUFSTART+BUFLEN);
 	   //xil_printf("    FirstPostNumWords   : %9d   0x%x\r\n", postfirstnumwords, postfirstnumwords);
@@ -491,8 +490,8 @@ void ReadDMABuf(char *msg, TriggerInfo *trig) {
 
 s32 SendWfmData(int newsockfd, char *msg, TriggerInfo *trig) {
 
-    int i,n;
-    float *msg_fltptr;
+    int n;
+    //float *msg_fltptr;
 
 
     xil_printf("In SendWfmData...\r\n");

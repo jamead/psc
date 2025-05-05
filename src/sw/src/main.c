@@ -12,7 +12,7 @@
 #include "xiicps.h"
 #include "xadcps.h"
 #include "xqspips.h"
-//#include "xsysmon.h"
+//#include "xsysmonps.h"
 
 #include "xstatus.h"       // For XStatus
 
@@ -83,8 +83,8 @@ ip_t ip_settings;
 
 
 
-XIicPs IicPsInstance;	    // Instance of the IIC Device
-
+XIicPs IicPsInstance0;	    // Instance of the IIC Device
+XIicPs IicPsInstance1;
 
 
 TimerHandle_t xUptimeTimer;  // Timer handle
@@ -117,34 +117,34 @@ static void assign_ip_settings()
 {
 	u8 data[4];
 
-	//xil_printf("Getting IP Address from EEPROM\r\n");
+	xil_printf("Getting IP Address from EEPROM\r\n");
 	//IP address is stored in EEPROM locations 0,1,2,3
-	//i2c_eeprom_readBytes(0, data, 4);
-	//xil_printf("IP Addr: %u.%u.%u.%u\r\n",data[0],data[1],data[2],data[3]);
-	data[0] = 10;
-	data[1] = 0;
-	data[2] = 142;
-	data[3] = 43;
+	i2c_eeprom_readBytes(0, data, 4);
+	xil_printf("IP Addr: %u.%u.%u.%u\r\n",data[0],data[1],data[2],data[3]);
+	//data[0] = 10;
+	//data[1] = 0;
+	//data[2] = 142;
+	//data[3] = 43;
 	IP4_ADDR(&server_netif.ip_addr, data[0],data[1],data[2],data[3]);
 
-	//xil_printf("Getting IP Netmask from EEPROM\r\n");
+	xil_printf("Getting IP Netmask from EEPROM\r\n");
 	//IP netmask is stored in EEPROM locations 16,17,18,19
-	//i2c_eeprom_readBytes(16, data, 4);
-	//xil_printf("IP Netmask: %u.%u.%u.%u\r\n",data[0],data[1],data[2],data[3]);
-	data[0] = 255;
-	data[1] = 255;
-	data[2] = 254;
-	data[3] = 0;
+	i2c_eeprom_readBytes(16, data, 4);
+	xil_printf("IP Netmask: %u.%u.%u.%u\r\n",data[0],data[1],data[2],data[3]);
+	//data[0] = 255;
+	//data[1] = 255;
+	//data[2] = 254;
+	//data[3] = 0;
 	IP4_ADDR(&server_netif.netmask, data[0],data[1],data[2],data[3]);
 
-	//xil_printf("Getting IP Netmask from EEPROM\r\n");
-	//i2c_eeprom_readBytes(32, data, 4);
+	xil_printf("Getting IP Netmask from EEPROM\r\n");
+	i2c_eeprom_readBytes(32, data, 4);
 	//IP gw is stored in EEPROM locations 32,33,34,35
-	//xil_printf("IP Gateway: %u.%u.%u.%u\r\n",data[0],data[1],data[2],data[3]);
-	data[0] = 10;
-	data[1] = 0;
-	data[2] = 142;
-	data[3] = 51;
+	xil_printf("IP Gateway: %u.%u.%u.%u\r\n",data[0],data[1],data[2],data[3]);
+	//data[0] = 10;
+	//data[1] = 0;
+	//data[2] = 142;
+	//data[3] = 51;
 	IP4_ADDR(&server_netif.gw, data[0],data[1],data[2],data[3]);
 
 }
@@ -320,85 +320,49 @@ void InitSettings() {
 
 }
 
-void ReadXAdc() {
+void XadcInit() {
 
-    XAdcPs XAdcInstance;
     XAdcPs_Config *ConfigPtr;
-    s32 Status;
 
-    ConfigPtr = XAdcPs_LookupConfig(XPAR_XADCPS_0_DEVICE_ID);
+    ConfigPtr = XAdcPs_LookupConfig(XPAR_XADC_WIZ_0_DEVICE_ID);
     XAdcPs_CfgInitialize(&XAdcInstance, ConfigPtr, ConfigPtr->BaseAddress);
 
-    // Self-test of the System Monitor/ADC subsystem (optional but recommended)
-    Status = XAdcPs_SelfTest(&XAdcInstance);
-    if (Status != XST_SUCCESS) {
-        xil_printf("Error: XADC self-test failed (Status %d)\n", Status);
-       }
-
-
-    // Safe mode before config
-    XAdcPs_SetSequencerMode(&XAdcInstance, XADCPS_SEQ_MODE_SAFE);
-
-    // Enable desired channels
-    XAdcPs_SetSeqChEnables(&XAdcInstance,
-        XADCPS_CH_TEMP	| XADCPS_CH_VCCINT | XADCPS_CH_VCCAUX |
-        XADCPS_CH_VBRAM | XADCPS_CH_VCCPINT |
-        XADCPS_CH_VCCPAUX);
-
-    // Use continuous pass mode for automatic sequencing
+    // Enable Sequencer for Temp/VCCINT/etc
+    //XAdcPs_SetSequencerMode(&XAdcInstance, XADCPS_SEQ_MODE_SINGCHAN);
     XAdcPs_SetSequencerMode(&XAdcInstance, XADCPS_SEQ_MODE_CONTINPASS);
 
-    for (;;) {
-
-          float tempC, vccint, vccaux, vbram, vccpint, vccpaux;
-          // Use continuous pass mode for automatic sequencing
-          XAdcPs_SetSequencerMode(&XAdcInstance, XADCPS_SEQ_MODE_CONTINPASS);
-
-          // Optionally clear the EOS flag (check the driver documentation)
-          // XAdcPs_ClearStatusReg(&XAdcInstance, XADCPS_SR_EOS_MASK);
-
-          tempC = XAdcPs_RawToTemperature(
-              XAdcPs_GetAdcData(&XAdcInstance, XADCPS_CH_TEMP));
-          vccint = XAdcPs_RawToVoltage(
-              XAdcPs_GetAdcData(&XAdcInstance, XADCPS_CH_VCCINT));
-          vccaux = XAdcPs_RawToVoltage(
-              XAdcPs_GetAdcData(&XAdcInstance, XADCPS_CH_VCCAUX));
-          vbram = XAdcPs_RawToVoltage(
-              XAdcPs_GetAdcData(&XAdcInstance, XADCPS_CH_VBRAM));
-          vccpint = XAdcPs_RawToVoltage(
-              XAdcPs_GetAdcData(&XAdcInstance, XADCPS_CH_VCCPINT));
-          vccpaux = XAdcPs_RawToVoltage(
-              XAdcPs_GetAdcData(&XAdcInstance, XADCPS_CH_VCCPAUX));
-
-          printf("Temperature : %.2f C\n", tempC);
-          printf("VCCINT      : %.3f V\n", vccint);
-          printf("VCCAUX      : %.3f V\n", vccaux);
-          printf("VBRAM       : %.3f V\n", vbram);
-          printf("VCCPINT     : %.3f V\n", vccpint);
-          printf("VCCPAUX     : %.3f V\n", vccpaux);
-          printf("--------------------------\n");
-
-          sleep(2);
-      }
-
-
+    u32 Mask;
+    Mask = XAdcPs_GetSeqChEnables(&XAdcInstance);
+    Mask |= XADCPS_CH_TEMP | XADCPS_CH_VCCINT | XADCPS_CH_VCCAUX;
+    XAdcPs_SetSeqChEnables(&XAdcInstance, Mask);
 
 }
+
+
+
 
 
 
 int main()
 {
 
-
 	xil_printf("BNL Power Supply Controller ...\r\n");
     print_firmware_version();
     
 	init_i2c();
+	XadcInit();
 	prog_si570();
-	
     sleep(1);
 
+	// the mac address of the board. this should be unique per board
+	u8_t mac_ethernet_address[] = { 0x00, 0x0B, 0x35, 0x11, 0x11, 0x12 };
+    i2c_get_mac_address(mac_ethernet_address);
+
+    xil_printf("%02x:%02x:%02x:%02x:%02x:%02x\r\n",
+          mac_ethernet_address[0], mac_ethernet_address[1], mac_ethernet_address[2],
+          mac_ethernet_address[3], mac_ethernet_address[4], mac_ethernet_address[5]);
+
+ 
 	//EVR reset
     xil_printf("Resetting EVR GTX...\r\n");
 	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET_REG, 0xFF);
@@ -411,8 +375,6 @@ int main()
 
     InitSettings();
     
-    //ReadXAdc();
-
 
 	main_thread_handle = sys_thread_new("main_thread", main_thread, 0, THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
 

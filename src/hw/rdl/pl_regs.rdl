@@ -175,6 +175,8 @@ reg {
     desc="PS1 DAC SetPoint - when in jumpmode";
     default sw = rw;
     default hw = r;
+    default swacc=true;
+    default swmod=true;    
     field {} val[20];
   } ps1_dac_setpt @0x128;
   
@@ -651,6 +653,8 @@ reg {
     desc="PS2 DAC SetPoint - when in jumpmode";
     default sw = rw;
     default hw = r;
+    default swacc=true;
+    default swmod=true;     
     field {} val[20];
   } ps2_dac_setpt @0x228;
   
@@ -1129,6 +1133,8 @@ reg {
     desc="PS3 DAC SetPoint - when in jumpmode";
     default sw = rw;
     default hw = r;
+    default swacc=true;
+    default swmod=true;     
     field {} val[20];
   } ps3_dac_setpt @0x328;
   
@@ -1607,6 +1613,8 @@ reg {
     desc="PS4 DAC SetPoint - when in jumpmode";
     default sw = rw;
     default hw = r;
+    default swacc=true;
+    default swmod=true;     
     field {} val[20];
   } ps4_dac_setpt @0x428;
   
@@ -2049,25 +2057,91 @@ reg {
  
   
 reg {
-    desc="Soft Trig Buffer Ptr.  Buffer Point latched value gets put here on soft trigger";
+    desc="Soft Trig Buffer Ptr.  Buffer Point latched value gets put here on Usr1 trigger";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } softtrig_bufptr @0x520; 
+  } usr1trig_bufptr @0x520; 
 
 reg {
     desc="Soft Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } softtrig_ts_s @0x524; 
+  } usr1trig_ts_s @0x524; 
 
 reg {
     desc="Soft Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } softtrig_ts_ns @0x528; 
+  } usr1trig_ts_ns @0x528; 
+
+
+
+reg {
+    desc="Soft Trig Buffer Ptr.  Buffer Point latched value gets put here on Usr2 trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } usr2trig_bufptr @0x530; 
+
+reg {
+    desc="Soft Trig Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } usr2trig_ts_s @0x534; 
+
+reg {
+    desc="Soft Trig Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } usr2trig_ts_ns @0x538; 
+
+reg {
+    desc="Soft Trig Buffer Ptr.  Buffer Point latched value gets put here on Usr3 trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } usr3trig_bufptr @0x540; 
+
+reg {
+    desc="Soft Trig Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } usr3trig_ts_s @0x544; 
+
+reg {
+    desc="Soft Trig Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } usr3trig_ts_ns @0x548; 
+
+
+reg {
+    desc="Soft Trig Buffer Ptr.  Buffer Point latched value gets put here on Usr4 trigger";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } usr4trig_bufptr @0x550; 
+
+reg {
+    desc="Soft Trig Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } usr4trig_ts_s @0x554; 
+
+reg {
+    desc="Soft Trig Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } usr4trig_ts_ns @0x558; 
 
 
 reg {
@@ -2075,21 +2149,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt1trig_bufptr @0x530; 
+  } flt1trig_bufptr @0x560; 
 
 reg {
     desc="Fault1 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt1trig_ts_s @0x534; 
+  } flt1trig_ts_s @0x564; 
 
 reg {
     desc="Fault1 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt1trig_ts_ns @0x538; 
+  } flt1trig_ts_ns @0x568; 
 
 
 
@@ -2098,21 +2172,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt2trig_bufptr @0x540; 
+  } flt2trig_bufptr @0x570; 
 
 reg {
     desc="Fault2 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt2trig_ts_s @0x544; 
+  } flt2trig_ts_s @0x574; 
 
 reg {
     desc="Fault2 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt2trig_ts_ns @0x548; 
+  } flt2trig_ts_ns @0x578; 
 
 
 reg {
@@ -2120,21 +2194,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt3trig_bufptr @0x550; 
+  } flt3trig_bufptr @0x580; 
 
 reg {
     desc="Fault3 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt3trig_ts_s @0x554; 
+  } flt3trig_ts_s @0x584; 
 
 reg {
     desc="Fault3 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt3trig_ts_ns @0x558; 
+  } flt3trig_ts_ns @0x588; 
 
 
 reg {
@@ -2142,21 +2216,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt4trig_bufptr @0x560; 
+  } flt4trig_bufptr @0x590; 
 
 reg {
     desc="Fault4 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt4trig_ts_s @0x564; 
+  } flt4trig_ts_s @0x594; 
 
 reg {
     desc="Fault4 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt4trig_ts_ns @0x568; 
+  } flt4trig_ts_ns @0x598; 
 
 
 reg {
@@ -2164,21 +2238,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err1trig_bufptr @0x570; 
+  } err1trig_bufptr @0x5A0; 
 
 reg {
     desc="Err1 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err1trig_ts_s @0x574; 
+  } err1trig_ts_s @0x5A4; 
 
 reg {
     desc="Err1 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err1trig_ts_ns @0x578; 
+  } err1trig_ts_ns @0x5A8; 
 
 
 reg {
@@ -2186,21 +2260,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err2trig_bufptr @0x580; 
+  } err2trig_bufptr @0x5B0; 
 
 reg {
     desc="Err2 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err2trig_ts_s @0x584; 
+  } err2trig_ts_s @0x5B4; 
 
 reg {
     desc="Err2 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err2trig_ts_ns @0x588; 
+  } err2trig_ts_ns @0x5B8; 
 
 
 reg {
@@ -2208,21 +2282,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err3trig_bufptr @0x590; 
+  } err3trig_bufptr @0x5C0; 
 
 reg {
     desc="Err3 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err3trig_ts_s @0x594; 
+  } err3trig_ts_s @0x5C4; 
 
 reg {
     desc="Err3 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err3trig_ts_ns @0x598; 
+  } err3trig_ts_ns @0x5C8; 
 
 
 reg {
@@ -2230,21 +2304,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err4trig_bufptr @0x5A0; 
+  } err4trig_bufptr @0x5D0; 
 
 reg {
     desc="Err4 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err4trig_ts_s @0x5A4; 
+  } err4trig_ts_s @0x5D4; 
 
 reg {
     desc="Err4 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err4trig_ts_ns @0x5A8; 
+  } err4trig_ts_ns @0x5D8; 
 
 
 
@@ -2253,21 +2327,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj1trig_bufptr @0x5B0; 
+  } inj1trig_bufptr @0x5E0; 
 
 reg {
     desc="Inj1 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj1trig_ts_s @0x5B4; 
+  } inj1trig_ts_s @0x5E4; 
 
 reg {
     desc="Inj1 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj1trig_ts_ns @0x5B8; 
+  } inj1trig_ts_ns @0x5E8; 
 
 
 reg {
@@ -2275,21 +2349,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj2trig_bufptr @0x5C0; 
+  } inj2trig_bufptr @0x5F0; 
 
 reg {
     desc="Inj2 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj2trig_ts_s @0x5C4; 
+  } inj2trig_ts_s @0x5F4; 
 
 reg {
     desc="Inj2 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj2trig_ts_ns @0x5C8; 
+  } inj2trig_ts_ns @0x5F8; 
 
 
 reg {
@@ -2297,21 +2371,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj3trig_bufptr @0x5D0; 
+  } inj3trig_bufptr @0x600; 
 
 reg {
     desc="Inj3 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj3trig_ts_s @0x5D4; 
+  } inj3trig_ts_s @0x604; 
 
 reg {
     desc="Inj3 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj3trig_ts_ns @0x5D8; 
+  } inj3trig_ts_ns @0x608; 
 
 
 reg {
@@ -2319,21 +2393,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj4trig_bufptr @0x5E0; 
+  } inj4trig_bufptr @0x610; 
 
 reg {
     desc="Inj4 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj4trig_ts_s @0x5E4; 
+  } inj4trig_ts_s @0x614; 
 
 reg {
     desc="Inj4 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj4trig_ts_ns @0x5E8; 
+  } inj4trig_ts_ns @0x618; 
 
 
 reg {
@@ -2341,21 +2415,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } evrtrig_bufptr @0x5F0; 
+  } evrtrig_bufptr @0x620; 
 
 reg {
     desc="EVR Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } evrtrig_ts_s @0x5F4; 
+  } evrtrig_ts_s @0x624; 
 
 reg {
     desc="EVR Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } evrtrig_ts_ns @0x5F8; 
+  } evrtrig_ts_ns @0x628; 
 
 
 

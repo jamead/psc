@@ -54,8 +54,8 @@ architecture behv of ps_io is
   signal reg_i           : t_addrmap_pl_regs_in;
   signal reg_o           : t_addrmap_pl_regs_out;
   
-  signal soft_trig       : std_logic;
-  signal soft_trig_prev  : std_logic;
+  signal usr_trig        : std_logic_vector(3 downto 0);
+  signal usr_trig_prev   : std_logic_vector(3 downto 0);
   
   signal flt_trig        : std_logic_vector(3 downto 0);
   signal err_trig        : std_logic_vector(3 downto 0);
@@ -498,7 +498,10 @@ reg_i.snapshot_totaltrigs.val.data <= ss_buf_stat.tenkhzcnt;
 
 
 -- user issues a soft trigger, latch the current snapshot buffer address
-soft_trig <= reg_o.softtrig.val.data(0);
+usr_trig(0) <= reg_o.softtrig.val.data(0) or dac_cntrl.ps1.ramprun or reg_o.ps4_dac_setpt.val.swacc;
+usr_trig(1) <= reg_o.softtrig.val.data(1) or dac_cntrl.ps2.ramprun or reg_o.ps4_dac_setpt.val.swacc;
+usr_trig(2) <= reg_o.softtrig.val.data(2) or dac_cntrl.ps3.ramprun or reg_o.ps4_dac_setpt.val.swacc;
+usr_trig(3) <= reg_o.softtrig.val.data(3) or dac_cntrl.ps4.ramprun or reg_o.ps4_dac_setpt.val.swacc;
 flt_trig(0) <= reg_o.testtrig.val.data(0) or fault_stat.ps1.flt_trig;
 flt_trig(1) <= reg_o.testtrig.val.data(1) or fault_stat.ps2.flt_trig;
 flt_trig(2) <= reg_o.testtrig.val.data(2) or fault_stat.ps3.flt_trig;
@@ -520,7 +523,10 @@ process (pl_clock)
 begin
   if (rising_edge(pl_clock)) then
     if (pl_reset = '1') then
-      reg_i.softtrig_bufptr.val.data <= 32d"0";
+      reg_i.usr1trig_bufptr.val.data <= 32d"0";
+      reg_i.usr2trig_bufptr.val.data <= 32d"0";
+      reg_i.usr3trig_bufptr.val.data <= 32d"0";
+      reg_i.usr4trig_bufptr.val.data <= 32d"0";                     
       reg_i.flt1trig_bufptr.val.data <= 32d"0";
       reg_i.flt2trig_bufptr.val.data <= 32d"0";  
       reg_i.flt3trig_bufptr.val.data <= 32d"0";
@@ -535,16 +541,31 @@ begin
       reg_i.inj4trig_bufptr.val.data <= 32d"0";            
       reg_i.evrtrig_bufptr.val.data  <= 32d"0";                   
     else    
-      soft_trig_prev <= soft_trig;
+      usr_trig_prev <= usr_trig;
       flt_trig_prev <= flt_trig;
       err_trig_prev <= err_trig;
       inj_trig_prev <= inj_trig;
       evr_trig_prev <= evr_trig;
       
-      if (soft_trig = '1' and soft_trig_prev = '0') then     
-        reg_i.softtrig_bufptr.val.data <= ss_buf_stat.addr_ptr;
-        reg_i.softtrig_ts_s.val.data <= evr_trigs.ts_s; 
-        reg_i.softtrig_ts_ns.val.data <= evr_trigs.ts_ns;         
+      if (usr_trig(0) = '1' and usr_trig_prev(0) = '0') then     
+        reg_i.usr1trig_bufptr.val.data <= ss_buf_stat.addr_ptr;
+        reg_i.usr1trig_ts_s.val.data <= evr_trigs.ts_s; 
+        reg_i.usr1trig_ts_ns.val.data <= evr_trigs.ts_ns;         
+      end if;
+      if (usr_trig(1) = '1' and usr_trig_prev(1) = '0') then     
+        reg_i.usr2trig_bufptr.val.data <= ss_buf_stat.addr_ptr;
+        reg_i.usr2trig_ts_s.val.data <= evr_trigs.ts_s; 
+        reg_i.usr2trig_ts_ns.val.data <= evr_trigs.ts_ns;         
+      end if;
+      if (usr_trig(2) = '1' and usr_trig_prev(2) = '0') then     
+        reg_i.usr3trig_bufptr.val.data <= ss_buf_stat.addr_ptr;
+        reg_i.usr3trig_ts_s.val.data <= evr_trigs.ts_s; 
+        reg_i.usr3trig_ts_ns.val.data <= evr_trigs.ts_ns;         
+      end if;
+      if (usr_trig(3) = '1' and usr_trig_prev(3) = '0') then     
+        reg_i.usr4trig_bufptr.val.data <= ss_buf_stat.addr_ptr;
+        reg_i.usr4trig_ts_s.val.data <= evr_trigs.ts_s; 
+        reg_i.usr4trig_ts_ns.val.data <= evr_trigs.ts_ns;         
       end if;
       if (flt_trig(0) = '1' and flt_trig_prev(0) = '0') then
         reg_i.flt1trig_bufptr.val.data <= ss_buf_stat.addr_ptr;  

@@ -19,6 +19,7 @@
 
 #include "lwip/sockets.h"
 #include "netif/xadapter.h"
+#include "xadcps.h"
 #include "lwipopts.h"
 #include "xil_printf.h"
 #include "FreeRTOS.h"
@@ -33,6 +34,7 @@
 #define PORT  600
 
 extern XIicPs IicPsInstance;
+extern XAdcPs XAdcInstance;
 
 extern u32 UptimeCounter;
 extern struct SAdataMsg sadata;
@@ -60,7 +62,7 @@ float power(float base, int exponent) {
 
 
 
-
+/*
 void i2c_sfp_get_stats(struct SysHealthMsg *p, u8 sfp_slot) {
 
 	const float TEMP_SCALE = 256;   //Temp is a 16bit signed 2's comp integer in increments of 1/256 degree C
@@ -93,7 +95,7 @@ void i2c_sfp_get_stats(struct SysHealthMsg *p, u8 sfp_slot) {
     	p->sfp_txpwr[sfp_slot]  = (float) ((rxBuf[6] << 8) | (rxBuf[7])) / PWR_SCALE;
     	p->sfp_rxpwr[sfp_slot]  = (float) ((rxBuf[8] << 8) | (rxBuf[9])) / PWR_SCALE;
     }
-   /*
+
     xil_printf("SFP Slot : %d\r\n",sfp_slot);
     printf("SFP Temp = %f\r\n", p->sfp_temp[sfp_slot]);
     printf("SFP VCC = %f\r\n", p->sfp_vcc[sfp_slot]);
@@ -101,11 +103,9 @@ void i2c_sfp_get_stats(struct SysHealthMsg *p, u8 sfp_slot) {
     printf("SFP Tx Pwr = %f\r\n", p->sfp_txpwr[sfp_slot]);
     printf("SFP Rx Pwr = %f\r\n", p->sfp_rxpwr[sfp_slot]);
     xil_printf("\r\n");
-    */
 
 }
-
-
+*/
 
 
 
@@ -127,17 +127,36 @@ void Host2NetworkConvStatus(char *inbuf, int len) {
 }
 
 
+void ReadXadc(float *dietemp, float *vccint, float *vccaux) {
+
+
+  u32 TempRaw, VccIntRaw, VccAuxRaw;
+
+  // Read VCCINT (Core Voltage)
+  VccIntRaw = XAdcPs_GetAdcData(&XAdcInstance, XADCPS_CH_VCCINT);
+  *vccint = XAdcPs_RawToVoltage(VccIntRaw);
+
+  // Read VCCAUX (Auxiliary Voltage)
+  VccAuxRaw = XAdcPs_GetAdcData(&XAdcInstance, XADCPS_CH_VCCAUX);
+  *vccaux = XAdcPs_RawToVoltage(VccAuxRaw);
+
+  // Read raw temperature data
+  TempRaw = XAdcPs_GetAdcData(&XAdcInstance, XADCPS_CH_TEMP);
+  *dietemp = XAdcPs_RawToTemperature(TempRaw);
+
+
+}
+
+
 
 
 
 void ReadSAData(char *msg) {
 
     u32 *msg_u32ptr;
-    //struct SAdataMsg sadata;
     u32 chan;
     u32 base;
-    s32 temp;
-    float tempflt;
+
 
 
 
@@ -151,9 +170,17 @@ void ReadSAData(char *msg) {
 
     sadata.count = UptimeCounter;
 
+    //ReadXadc(&dietemp,&vccint,&vccaux);
+    ReadXadc(&sadata.die_temp, &sadata.vccint, &sadata.vccaux);
+    //sadata.die_temp = dietemp;
+    //sadata.vccint = vccint;
+    //sadata.vccaux = vccaux;
+    //printf("Temperature: %.2f deg C | VCCINT: %.4f V | VCCAUX: %.4f V\n",
+    //            dietemp, vccint, vccaux);
 
-    //vTaskSuspendAll();
-
+    //read FPGA version (git checksum) from PL register
+    sadata.git_shasum = Xil_In32(XPAR_M_AXI_BASEADDR + PRJ_SHASUM);
+    //xil_printf("Git : %x\r\n",sadata.git_shasum);
 
 
     sadata.evr_ts_s =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S_REG);
@@ -254,6 +281,7 @@ void ReadSAData(char *msg) {
     memcpy(&msg[MSGHDRLEN],&sadata,sizeof(sadata));
 
 }
+
 
 
 

@@ -126,6 +126,7 @@ if { $bCheckIPs == 1 } {
 xilinx.com:ip:proc_sys_reset:5.0\
 xilinx.com:ip:processing_system7:5.5\
 xilinx.com:ip:smartconnect:1.0\
+xilinx.com:ip:xadc_wiz:3.3\
 "
 
    set list_ips_missing ""
@@ -195,6 +196,8 @@ proc create_root_design { parentCell } {
 
   set IIC_0 [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:iic_rtl:1.0 IIC_0 ]
 
+  set IIC_1 [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:iic_rtl:1.0 IIC_1 ]
+
   set m_axi [ create_bd_intf_port -mode Master -vlnv xilinx.com:interface:aximm_rtl:1.0 m_axi ]
   set_property -dict [ list \
    CONFIG.ADDR_WIDTH {32} \
@@ -240,6 +243,7 @@ proc create_root_design { parentCell } {
    CONFIG.ASSOCIATED_BUSIF {m_axi:s_axi} \
  ] $pl_clk0
   set pl_resetn [ create_bd_port -dir O -from 0 -to 0 -type rst pl_resetn ]
+  set pl_temp [ create_bd_port -dir O -from 11 -to 0 pl_temp ]
 
   # Create instance: proc_sys_reset_0, and set properties
   set proc_sys_reset_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 proc_sys_reset_0 ]
@@ -284,10 +288,12 @@ proc create_root_design { parentCell } {
     CONFIG.PCW_EN_EMIO_CD_SDIO0 {0} \
     CONFIG.PCW_EN_EMIO_ENET0 {0} \
     CONFIG.PCW_EN_EMIO_I2C0 {1} \
+    CONFIG.PCW_EN_EMIO_I2C1 {1} \
     CONFIG.PCW_EN_EMIO_TTC0 {1} \
     CONFIG.PCW_EN_EMIO_WDT {1} \
     CONFIG.PCW_EN_ENET0 {1} \
     CONFIG.PCW_EN_I2C0 {1} \
+    CONFIG.PCW_EN_I2C1 {1} \
     CONFIG.PCW_EN_QSPI {1} \
     CONFIG.PCW_EN_SDIO0 {1} \
     CONFIG.PCW_EN_TTC0 {1} \
@@ -298,6 +304,8 @@ proc create_root_design { parentCell } {
     CONFIG.PCW_FPGA_FCLK0_ENABLE {1} \
     CONFIG.PCW_I2C0_I2C0_IO {EMIO} \
     CONFIG.PCW_I2C0_PERIPHERAL_ENABLE {1} \
+    CONFIG.PCW_I2C1_I2C1_IO {EMIO} \
+    CONFIG.PCW_I2C1_PERIPHERAL_ENABLE {1} \
     CONFIG.PCW_I2C_PERIPHERAL_FREQMHZ {111.111115} \
     CONFIG.PCW_MIO_16_IOTYPE {LVCMOS 1.8V} \
     CONFIG.PCW_MIO_16_PULLUP {enabled} \
@@ -484,7 +492,10 @@ proc create_root_design { parentCell } {
 
   # Create instance: smartconnect_0, and set properties
   set smartconnect_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect:1.0 smartconnect_0 ]
-  set_property CONFIG.NUM_SI {1} $smartconnect_0
+  set_property -dict [list \
+    CONFIG.NUM_MI {2} \
+    CONFIG.NUM_SI {1} \
+  ] $smartconnect_0
 
 
   # Create instance: smartconnect_1, and set properties
@@ -492,22 +503,55 @@ proc create_root_design { parentCell } {
   set_property CONFIG.NUM_SI {1} $smartconnect_1
 
 
+  # Create instance: xadc_wiz_0, and set properties
+  set xadc_wiz_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xadc_wiz:3.3 xadc_wiz_0 ]
+  set_property -dict [list \
+    CONFIG.CHANNEL_ENABLE_TEMPERATURE {true} \
+    CONFIG.CHANNEL_ENABLE_VBRAM {true} \
+    CONFIG.CHANNEL_ENABLE_VCCAUX {true} \
+    CONFIG.CHANNEL_ENABLE_VCCDDRO {true} \
+    CONFIG.CHANNEL_ENABLE_VCCINT {true} \
+    CONFIG.CHANNEL_ENABLE_VCCPAUX {true} \
+    CONFIG.CHANNEL_ENABLE_VCCPINT {true} \
+    CONFIG.CHANNEL_ENABLE_VP_VN {false} \
+    CONFIG.ENABLE_AXI4STREAM {false} \
+    CONFIG.ENABLE_EXTERNAL_MUX {false} \
+    CONFIG.ENABLE_TEMP_BUS {true} \
+    CONFIG.ENABLE_VCCDDRO_ALARM {false} \
+    CONFIG.ENABLE_VCCPAUX_ALARM {false} \
+    CONFIG.ENABLE_VCCPINT_ALARM {false} \
+    CONFIG.EXTERNAL_MUX_CHANNEL {VP_VN} \
+    CONFIG.OT_ALARM {false} \
+    CONFIG.SEQUENCER_MODE {Off} \
+    CONFIG.SINGLE_CHANNEL_ENABLE_CALIBRATION {true} \
+    CONFIG.SINGLE_CHANNEL_SELECTION {TEMPERATURE} \
+    CONFIG.USER_TEMP_ALARM {false} \
+    CONFIG.VCCAUX_ALARM {false} \
+    CONFIG.VCCINT_ALARM {false} \
+    CONFIG.XADC_STARUP_SELECTION {simultaneous_sampling} \
+  ] $xadc_wiz_0
+
+
   # Create interface connections
   connect_bd_intf_net -intf_net S00_AXI_0_1 [get_bd_intf_ports s_axi] [get_bd_intf_pins smartconnect_1/S00_AXI]
   connect_bd_intf_net -intf_net processing_system7_0_DDR [get_bd_intf_ports DDR] [get_bd_intf_pins processing_system7_0/DDR]
   connect_bd_intf_net -intf_net processing_system7_0_FIXED_IO [get_bd_intf_ports FIXED_IO] [get_bd_intf_pins processing_system7_0/FIXED_IO]
   connect_bd_intf_net -intf_net processing_system7_0_IIC_0 [get_bd_intf_ports IIC_0] [get_bd_intf_pins processing_system7_0/IIC_0]
+  connect_bd_intf_net -intf_net processing_system7_0_IIC_1 [get_bd_intf_ports IIC_1] [get_bd_intf_pins processing_system7_0/IIC_1]
   connect_bd_intf_net -intf_net processing_system7_0_M_AXI_GP0 [get_bd_intf_pins processing_system7_0/M_AXI_GP0] [get_bd_intf_pins smartconnect_0/S00_AXI]
   connect_bd_intf_net -intf_net smartconnect_0_M00_AXI [get_bd_intf_ports m_axi] [get_bd_intf_pins smartconnect_0/M00_AXI]
+  connect_bd_intf_net -intf_net smartconnect_0_M01_AXI [get_bd_intf_pins smartconnect_0/M01_AXI] [get_bd_intf_pins xadc_wiz_0/s_axi_lite]
   connect_bd_intf_net -intf_net smartconnect_1_M00_AXI [get_bd_intf_pins processing_system7_0/S_AXI_HP0] [get_bd_intf_pins smartconnect_1/M00_AXI]
 
   # Create port connections
-  connect_bd_net -net proc_sys_reset_0_peripheral_aresetn [get_bd_ports pl_resetn] [get_bd_pins proc_sys_reset_0/peripheral_aresetn] [get_bd_pins smartconnect_0/aresetn] [get_bd_pins smartconnect_1/aresetn]
-  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_ports pl_clk0] [get_bd_pins proc_sys_reset_0/slowest_sync_clk] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins processing_system7_0/S_AXI_HP0_ACLK] [get_bd_pins smartconnect_0/aclk] [get_bd_pins smartconnect_1/aclk]
+  connect_bd_net -net proc_sys_reset_0_peripheral_aresetn [get_bd_ports pl_resetn] [get_bd_pins proc_sys_reset_0/peripheral_aresetn] [get_bd_pins smartconnect_0/aresetn] [get_bd_pins smartconnect_1/aresetn] [get_bd_pins xadc_wiz_0/s_axi_aresetn]
+  connect_bd_net -net processing_system7_0_FCLK_CLK0 [get_bd_ports pl_clk0] [get_bd_pins proc_sys_reset_0/slowest_sync_clk] [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins processing_system7_0/S_AXI_HP0_ACLK] [get_bd_pins smartconnect_0/aclk] [get_bd_pins smartconnect_1/aclk] [get_bd_pins xadc_wiz_0/s_axi_aclk]
   connect_bd_net -net processing_system7_0_FCLK_RESET0_N [get_bd_pins proc_sys_reset_0/ext_reset_in] [get_bd_pins processing_system7_0/FCLK_RESET0_N]
+  connect_bd_net -net xadc_wiz_0_temp_out [get_bd_ports pl_temp] [get_bd_pins xadc_wiz_0/temp_out]
 
   # Create address segments
   assign_bd_address -offset 0x43C00000 -range 0x00010000 -target_address_space [get_bd_addr_spaces processing_system7_0/Data] [get_bd_addr_segs m_axi/Reg] -force
+  assign_bd_address -offset 0x43C10000 -range 0x00010000 -target_address_space [get_bd_addr_spaces processing_system7_0/Data] [get_bd_addr_segs xadc_wiz_0/s_axi_lite/Reg] -force
   assign_bd_address -offset 0x00000000 -range 0x40000000 -target_address_space [get_bd_addr_spaces s_axi] [get_bd_addr_segs processing_system7_0/S_AXI_HP0/HP0_DDR_LOWOCM] -force
 
 

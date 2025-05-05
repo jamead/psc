@@ -92,9 +92,9 @@ generic(
     -- Programmable oscillator for EVR reference clock
     si570_sck               : inout std_logic;
     si570_sda               : inout std_logic;
-    
-    -- One wire interface
-    onewire_sck             : out std_logic;
+      
+    -- EEPROM for ip addr and mac & one wire interface
+    onewire_sck             : inout std_logic;
     onewire_sda             : inout std_logic;
     
     --MAC ID eeprom (11AA02E48T)
@@ -119,6 +119,14 @@ architecture behv of top is
    signal i2c0_sda_i            : std_logic;
    signal i2c0_sda_t            : std_logic;
    signal i2c0_sda_o            : std_logic;  
+   
+   signal i2c1_scl_i            : std_logic;
+   signal i2c1_scl_t            : std_logic;
+   signal i2c1_scl_o            : std_logic;
+   signal i2c1_sda_i            : std_logic;
+   signal i2c1_sda_t            : std_logic;
+   signal i2c1_sda_o            : std_logic;     
+   
    
    signal gtx_gige_refclk       : std_logic;
    signal gtx_evr_refclk        : std_logic;
@@ -154,7 +162,8 @@ architecture behv of top is
    signal accum_done            : std_logic_vector(3 downto 0);
    
    signal dac_cntrl             : t_dac_cntrl;
-   signal dac_stat              : t_dac_stat;   
+   signal dac_stat              : t_dac_stat;  
+   signal pl_temp               : std_logic_vector(11 downto 0); 
 
 
 
@@ -167,6 +176,7 @@ architecture behv of top is
    attribute mark_debug of pl_reset : signal is "true";
    attribute mark_debug of pl_resetn : signal is "true";
    attribute mark_debug of tenkhz_trig : signal is "true";
+   attribute mark_debug of pl_temp: signal is "true";
    --attribute mark_debug of evr_params : signal is "true";
    --attribute mark_debug of evr_trigs : signal is "true";
    --attribute mark_debug of m_axi4_m2s      : signal is "true";
@@ -410,8 +420,15 @@ sys: component system
     iic_0_sda_i => i2c0_sda_i, 
     iic_0_sda_o => i2c0_sda_o, 
     iic_0_sda_t => i2c0_sda_t,
+    iic_1_scl_i => i2c1_scl_i, 
+    iic_1_scl_o => i2c1_scl_o, 
+    iic_1_scl_t => i2c1_scl_t, 
+    iic_1_sda_i => i2c1_sda_i, 
+    iic_1_sda_o => i2c1_sda_o, 
+    iic_1_sda_t => i2c1_sda_t,   
     pl_clk0 => pl_clk0,
     pl_resetn => pl_resetn,  
+    pl_temp => pl_temp,
     m_axi_araddr => m_axi4_m2s.araddr, 
     m_axi_arprot => m_axi4_m2s.arprot,
     m_axi_arready => m_axi4_s2m.arready,
@@ -460,6 +477,7 @@ sys: component system
 i2c0_scl_buf : IOBUF port map (O=>i2c0_scl_i, IO=>si570_sck, I=>i2c0_scl_o, T=>i2c0_scl_t);
 i2c0_sda_buf : IOBUF port map (O=>i2c0_sda_i, IO=>si570_sda, I=>i2c0_sda_o, T=>i2c0_sda_t);
        
-    
+i2c1_scl_buf : IOBUF port map (O=>i2c1_scl_i, IO=>onewire_sck, I=>i2c1_scl_o, T=>i2c1_scl_t);
+i2c1_sda_buf : IOBUF port map (O=>i2c1_sda_i, IO=>onewire_sda, I=>i2c1_sda_o, T=>i2c1_sda_t);    
     
 end behv;

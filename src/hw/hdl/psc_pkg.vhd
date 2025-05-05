@@ -336,6 +336,12 @@ component system is
     iic_0_sda_i : in STD_LOGIC;
     iic_0_sda_o : out STD_LOGIC;
     iic_0_sda_t : out STD_LOGIC; 
+    iic_1_scl_i : in STD_LOGIC;
+    iic_1_scl_o : out STD_LOGIC;
+    iic_1_scl_t : out STD_LOGIC;
+    iic_1_sda_i : in STD_LOGIC;
+    iic_1_sda_o : out STD_LOGIC;
+    iic_1_sda_t : out STD_LOGIC; 
     m_axi_awaddr : out STD_LOGIC_VECTOR ( 31 downto 0 );
     m_axi_awprot : out STD_LOGIC_VECTOR ( 2 downto 0 );
     m_axi_awvalid : out STD_LOGIC;
@@ -372,16 +378,10 @@ component system is
     s_axi_wlast : in STD_LOGIC;
     s_axi_wready : out STD_LOGIC;
     s_axi_wstrb : in STD_LOGIC_VECTOR ( 3 downto 0 );
-    s_axi_wvalid : in STD_LOGIC;    
-  
-    
---    s_axis_s2mm_tdata : in STD_LOGIC_VECTOR ( 31 downto 0 );
---    s_axis_s2mm_tkeep : in STD_LOGIC_VECTOR ( 3 downto 0 );
---    s_axis_s2mm_tlast : in STD_LOGIC;
---    s_axis_s2mm_tready : out STD_LOGIC;
---    s_axis_s2mm_tvalid : in STD_LOGIC;    
+    s_axi_wvalid : in STD_LOGIC;      
     pl_clk0 : out STD_LOGIC;
-    pl_resetn : out STD_LOGIC_VECTOR(0 downto 0)
+    pl_resetn : out STD_LOGIC_VECTOR(0 downto 0);
+    pl_temp: out std_logic_vector(11 downto 0)
   );
   end component;
   
