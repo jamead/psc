@@ -313,6 +313,14 @@ void InitSettings() {
        Xil_Out32(base + FLT2_CNTLIM_REG, 2.0 * SAMPLERATE);
        Xil_Out32(base + FLT3_CNTLIM_REG, 3.0 * SAMPLERATE);
        Xil_Out32(base + ON_CNTLIM_REG, 3.0 * SAMPLERATE);
+       
+       Xil_Out32(base + FAULT_MASK_REG, 0x1DFF);
+       Xil_Out32(base + FAULT_CLEAR_REG, 0x1);
+       Xil_Out32(base + FAULT_CLEAR_REG, 0);
+       
+       
+       
+       
 
     }
 
