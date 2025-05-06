@@ -359,7 +359,7 @@ int main()
     
 	init_i2c();
 	XadcInit();
-	prog_si570();
+	//prog_si570();
     sleep(1);
 
 	// the mac address of the board. this should be unique per board

@@ -4,9 +4,10 @@ proc init {} {
   # set Source path
   # it defaults to src/, but for combined hw & sw projects, use
   # src/hw/ and src/sw/
-  set ::fwfwk::SrcPath ${::fwfwk::ProjectPath}/src/sw
+  fwfwk::printInfo "In init psc/tcl"
+  set ::fwfwk::SrcPath ${::fwfwk::ProjectPath}/src/sw_bnl
 
-  addSrcModule user_app ${::fwfwk::ProjectPath}/src/sw/tcl/main.tcl
+  addSrcModule user_app ${::fwfwk::ProjectPath}/src/sw_bnl/tcl/main.tcl
 }
 
 proc doOnCreate {} {
