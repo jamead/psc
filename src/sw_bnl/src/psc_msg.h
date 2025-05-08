@@ -59,6 +59,7 @@
 
 
 //global buffers
+
 #define MAX_RAMP_TABLE 400000 //num bytes for 10s of ramp table
 extern char ramp_buf[MAX_RAMP_TABLE];
 
@@ -269,6 +270,8 @@ typedef struct SysHealthMsg {
 #define SF_SPARE_MSG         316
 #define SF_REGULATOR_MSG     320
 #define SF_ERROR_MSG         324
+
+#define AVE_MODE_MSG         350
 
 
 

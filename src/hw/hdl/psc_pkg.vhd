@@ -55,10 +55,10 @@ type t_fault_params_onech is record
   ignd_cntlim     : std_logic_vector(15 downto 0);  -- GND current too large                    flt_reg(5)
   dcct_cntlim     : std_logic_vector(15 downto 0);  -- Digital DCCT (Bipolar) fault Check       flt_reg(6)
   flt1_cntlim     : std_logic_vector(15 downto 0);  -- Bipolar supply fault (David wants live)  flt_reg(7)    
-  flt2_cntlim     : std_logic_vector(15 downto 0);  -- flt2  ?                                  flt_reg(8) 
+  flt2_cntlim     : std_logic_vector(15 downto 0);  -- Bipolar heartbeat                        flt_reg(8) 
   flt3_cntlim     : std_logic_vector(15 downto 0);  -- external interlock fault                 flt_reg(9) 
   on_cntlim       : std_logic_vector(15 downto 0);  -- ac_on_out - ac_on_in fault               flt_reg(10)
-  heart_cntlim    : std_logic_vector(15 downto 0);  -- Bipolar Heartbeat fault                  flt_reg(11)
+  heart_cntlim    : std_logic_vector(15 downto 0);  -- spare                                    flt_reg(11)
 end record;
 
 type t_fault_params is record
@@ -112,7 +112,6 @@ end record;
 type t_dcct_adcs_onech is record 
   dcct0          : signed(19 downto 0);
   dcct1          : signed(19 downto 0);  
-  
 end record;
 
 type t_dcct_adcs is record
@@ -123,6 +122,7 @@ type t_dcct_adcs is record
 end record;
 
 type t_dcct_adcs_params_onech is record  
+  ave_mode        : std_logic_vector(1 downto 0);
   dcct0_gain      : signed(23 downto 0); --Q3.20 format
   dcct0_offset    : signed(19 downto 0);
   dcct1_gain      : signed(23 downto 0); --Q3.20 format
@@ -139,8 +139,8 @@ end record;
 
 
 type t_dcct_adcs_ave_onech is record
-  dcct0         : std_logic_vector(31 downto 0);
-  dcct1         : std_logic_vector(31 downto 0);
+  dcct0         : signed(31 downto 0);
+  dcct1         : signed(31 downto 0);
 end record;
 
 type t_dcct_adcs_ave is record
@@ -210,12 +210,12 @@ end record;
 
 
 type t_mon_adcs_ave_onech is record
-  dac_sp        : std_logic_vector(31 downto 0);
-  volt_mon      : std_logic_vector(31 downto 0);
-  gnd_mon       : std_logic_vector(31 downto 0);
-  spare_mon     : std_logic_vector(31 downto 0);
-  ps_reg        : std_logic_vector(31 downto 0);
-  ps_error      : std_logic_vector(31 downto 0);
+  dacmon        : signed(31 downto 0);
+  voltage       : signed(31 downto 0);
+  ignd          : signed(31 downto 0);
+  spare         : signed(31 downto 0);
+  ps_reg        : signed(31 downto 0);
+  ps_error      : signed(31 downto 0);
 end record;
 
 type t_mon_adcs_ave is record

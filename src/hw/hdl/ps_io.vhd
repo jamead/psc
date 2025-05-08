@@ -26,9 +26,9 @@ entity ps_io is
     m_axi4_m2s       : in t_pl_regs_m2s;
     m_axi4_s2m       : out t_pl_regs_s2m;   
     
-    dcct_adcs        : in t_dcct_adcs;
+    dcct_adcs        : in t_dcct_adcs_ave;
     dcct_params      : out t_dcct_adcs_params;
-    mon_adcs         : in t_mon_adcs;
+    mon_adcs         : in t_mon_adcs_ave;
     mon_params       : out t_mon_adcs_params;
     dac_cntrl        : out t_dac_cntrl;
 	dac_stat         : in t_dac_stat;
@@ -98,6 +98,7 @@ dac_cntrl.numbits_sel <= reg_o.resolution.val.data(0);
 
 
 -- PS1 Registers
+dcct_params.ps1.ave_mode <= reg_o.ps1_avemode.val.data;
 
 -- DCCT and Monitor ADC slow readbacks and gains & offsets
 reg_i.ps1_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps1.dcct0), 32));
@@ -186,6 +187,7 @@ reg_i.ps1_faults_lat.val.data <= fault_stat.ps1.lat;
 
 
 -- PS2 Registers
+dcct_params.ps2.ave_mode <= reg_o.ps2_avemode.val.data;
 
 -- DCCT and Monitor ADC slow readbacks and gains & offsets
 reg_i.ps2_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps2.dcct0), 32));
@@ -286,6 +288,7 @@ reg_i.ps2_faults_lat.val.data <= fault_stat.ps2.lat;
 
 
 -- PS3 Registers
+dcct_params.ps3.ave_mode <= reg_o.ps3_avemode.val.data;
 
 -- DCCT and Monitor ADC slow readbacks and gains & offsets
 reg_i.ps3_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps3.dcct0), 32));
@@ -344,18 +347,6 @@ reg_i.ps3_digin.val.data(2) <= dig_stat.ps3.flt2;
 reg_i.ps3_digin.val.data(3) <= dig_stat.ps3.spare;
 reg_i.ps3_digin.val.data(4) <= dig_stat.ps3.dcct_flt;
 
-
----- Digital Outputs
---rcom(8) <= reg_o.ps3_digout_on1.val.data(0);
---rcom(9) <= reg_o.ps3_digout_on2.val.data(0);
---rcom(10) <= reg_o.ps3_digout_reset.val.data(0);
---rcom(11) <= reg_o.ps3_digout_spare.val.data(0);
---rcom(18) <= reg_o.ps3_digout_park.val.data(0);
-
----- Digital Inputs
---reg_i.ps3_digin.val.data <= rsts(18) & rsts(11 downto 8);
-
-
 --Fault Threasholds and Counter Limits
 fault_params.ps3.clear <= reg_o.ps3_fault_clear.val.data(0);
 fault_params.ps3.enable <= reg_o.ps3_fault_mask.val.data;
@@ -389,6 +380,7 @@ reg_i.ps3_faults_lat.val.data <= fault_stat.ps3.lat;
 
 
 -- PS4 Registers
+dcct_params.ps4.ave_mode <= reg_o.ps4_avemode.val.data;
 
 -- DCCT and Monitor ADC slow readbacks and gains & offsets
 reg_i.ps4_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps4.dcct0), 32));

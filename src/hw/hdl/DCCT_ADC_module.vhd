@@ -34,6 +34,7 @@ architecture arch of dcct_adc_module is
    attribute mark_debug                 : string;
    attribute mark_debug of dcct_params  : signal is "true";
    attribute mark_debug of dcct_out     : signal is "true";
+   attribute mark_debug of dcct : signal is "true";
    attribute mark_debug of done : signal is "true";
    attribute mark_debug of conv_done: signal is "true";
    attribute mark_debug of state: signal is "true";

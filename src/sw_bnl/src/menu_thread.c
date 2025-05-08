@@ -78,6 +78,24 @@ void menu_get_ipaddr(u8 *octets)
 }
 
 
+u8 get_binary_input(void) {
+    char c;
+
+    c = inbyte();
+    xil_printf("%c",c);
+    if (c == '0') {
+        return 0;
+    } else if (c == '1') {
+        return 1;
+    } else {
+       printf("\r\nInvalid input. Please enter 0 or 1.\r\n");
+       return -1;
+    }
+
+}
+
+
+
 void dump_eeprom(void)
 {
   xil_printf("Reading EEPROM...\r\n");
@@ -95,7 +113,16 @@ void print_snapshot_stats(void)
 
 }
 
+void set_resolution(void)
+{
+  u8 val;
 
+  xil_printf("\r\nSet Resolution of PSC: 0=MS (18bit), 1=HS (20bit)");
+  if ((val = get_binary_input()) != -1) {
+     i2c_eeprom_writeBytes(48, &val, 1);
+     xil_printf("Reboot for settings to take effect\r\n");
+  }
+}
 
 
 void program_ip(void)
@@ -166,7 +193,18 @@ void exec_menu(const char *head, const menu_entry_t *m, size_t m_len)
 }
 
 
+void reboot() {
 
+	u8 val;
+
+	xil_printf("\r\nAre you sure you want to reboot?\r\n");
+	xil_printf("Press 1 to continue, any other key to not reboot\r\n");
+	if ((val = get_binary_input()) == 1) {
+      Xil_Out32(XPS_SYS_CTRL_BASEADDR | 0x008, 0xDF0D); // SLCR SLCR_UNLOCK
+      Xil_Out32(XPS_SYS_CTRL_BASEADDR | 0x200, 0x1); // SLCR PSS_RST_CTRL[SOFT_RST]
+	}
+
+}
 
 
 
@@ -179,11 +217,13 @@ void menu_thread()
     static const menu_entry_t menu[] = {
 	    {'A', "Dump EEPROM", dump_eeprom},
 		{'B', "Program IP Settings", program_ip},
-	    {'C', "Display Snapshot Stats", print_snapshot_stats}
+		{'C', "Set Resolution (HS or MS)", set_resolution},
+		{'D', "Reboot", reboot},
+	    {'E', "Display Snapshot Stats", print_snapshot_stats}
 	};
 	static const size_t menulen = sizeof(menu)/sizeof(menu_entry_t);
 
-	printf("Running PSC Menu (len = %ld)\r\n", menulen);
+	xil_printf("Running PSC Menu (len = %ld)\r\n", menulen);
 
 	exec_menu("Select an option:", menu, menulen);
 

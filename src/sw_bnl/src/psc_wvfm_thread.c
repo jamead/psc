@@ -35,6 +35,8 @@
 extern u32 UptimeCounter;
 extern ScaleFactorType scalefactors[4];
 
+extern float CONVDACBITSTOVOLTS;
+
 
 void Host2NetworkConvWvfm(char *inbuf, int len) {
 
@@ -245,9 +247,9 @@ void CopyDataChan(float **msg_ptr, u32 *buf_data, u32 numwords, int chan) {
                 (*msg_ptr)++;
                 **msg_ptr = buf_data[i+1];   //data pt. counter
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+2]) * CONV20BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT1
+                **msg_ptr = (float)(s32)(buf_data[i+2]) * CONVDACBITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT1
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+3]) * CONV20BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT2
+                **msg_ptr = (float)(s32)(buf_data[i+3]) * CONVDACBITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT2
                 (*msg_ptr)++;
                 **msg_ptr = (float)(s32)(buf_data[i+4]) * CONV16BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DAC Monitor
                 (*msg_ptr)++;
@@ -277,9 +279,9 @@ void CopyDataChan(float **msg_ptr, u32 *buf_data, u32 numwords, int chan) {
                 (*msg_ptr)++;
                 **msg_ptr = buf_data[i+1];   //data pt. counter
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+10]) * CONV20BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT1
+                **msg_ptr = (float)(s32)(buf_data[i+10]) * CONVDACBITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT1
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+11]) * CONV20BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT2
+                **msg_ptr = (float)(s32)(buf_data[i+11]) * CONVDACBITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT2
                 (*msg_ptr)++;
                 **msg_ptr = (float)(s32)(buf_data[i+12]) * CONV16BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DAC Monitor
                 (*msg_ptr)++;
@@ -302,9 +304,9 @@ void CopyDataChan(float **msg_ptr, u32 *buf_data, u32 numwords, int chan) {
                 (*msg_ptr)++;
                 **msg_ptr = buf_data[i+1];   //data pt. counter
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+18]) * CONV20BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT1
+                **msg_ptr = (float)(s32)(buf_data[i+18]) * CONVDACBITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT1
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+19]) * CONV20BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT2
+                **msg_ptr = (float)(s32)(buf_data[i+19]) * CONVDACBITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT2
                 (*msg_ptr)++;
                 **msg_ptr = (float)(s32)(buf_data[i+20]) * CONV16BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DAC Monitor
                 (*msg_ptr)++;
@@ -327,9 +329,9 @@ void CopyDataChan(float **msg_ptr, u32 *buf_data, u32 numwords, int chan) {
                 (*msg_ptr)++;
                 **msg_ptr = buf_data[i+1];   //data pt. counter
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+26]) * CONV20BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT1
+                **msg_ptr = (float)(s32)(buf_data[i+26]) * CONVDACBITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT1
                 (*msg_ptr)++;
-                **msg_ptr = (float)(s32)(buf_data[i+27]) * CONV20BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT2
+                **msg_ptr = (float)(s32)(buf_data[i+27]) * CONVDACBITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DCCT2
                 (*msg_ptr)++;
                 **msg_ptr = (float)(s32)(buf_data[i+28]) * CONV16BITSTOVOLTS * scalefactors[chan-1].dac_dccts;   //DAC Monitor
                 (*msg_ptr)++;

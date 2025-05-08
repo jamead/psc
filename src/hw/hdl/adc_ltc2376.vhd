@@ -69,7 +69,7 @@ architecture arch of adc_ltc2376 is
 
 begin
 
-
+--HS=0, MS=1
 num_bits <= 36 when resolution = '0' else 40;
 
 

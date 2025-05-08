@@ -1,21 +1,21 @@
 #define AXI_CIRBUFBASE 0x10000000
 
-#define CHBASEADDR      0x100
-#define CH1_BASE        0x100
-#define CH2_BASE        0x200
-#define CH3_BASE        0x300
-#define CH4_BASE        0x400
+#define CHBASEADDR      0x200
+//#define CH1_BASE        0x200
+//#define CH2_BASE        0x400
+//#define CH3_BASE        0x600
+//#define CH4_BASE        0x800
 
 
 // global registers
-#define FPGAVER_REG               0X0       // FPGA Version
-#define LEDS_REG                  0X4       // PS Leds
-#define RESOLUTION                0x8       // DCCT, DAC Number of Bits (0=18, 1=20)
-#define EVR_TS_S_REG              0X10      // EVR Timestamp (s)
-#define EVR_TS_NS_REG             0X14      // EVR Timestamp (ns)
-#define EVR_RESET_REG             0X18      // EVR Reset
-#define EVR_INJ_EVENTNUM_REG      0x20      // EVR Injection Event Code (for Shot-to-Shot)
-#define EVR_PM_EVENTNUM_REG       0x24      // EVR Post-Mortem Event Code
+#define FPGAVER_REG              0X0      // FPGA Version
+#define LEDS_REG                 0X4      // PS Leds
+#define RESOLUTION               0x8      // DCCT, DAC Number of Bits (0=18, 1=20)
+#define EVR_TS_S_REG             0X10     // EVR Timestamp (s)
+#define EVR_TS_NS_REG            0X14     // EVR Timestamp (ns)
+#define EVR_RESET_REG            0X18     // EVR Reset
+#define EVR_INJ_EVENTNUM_REG     0x20     // EVR Injection Event Code (for Shot-to-Shot)
+#define EVR_PM_EVENTNUM_REG      0x24     // EVR Post-Mortem Event Code
 
 // channel registers
 #define DCCT1_REG                0X00     // PS1 DCCT 0
@@ -82,72 +82,72 @@
 #define DIGIN_REG                0XF4      // PS1 Digital Inputs bit0=Acon, bit1=Flt1, bit2=Flt2, bit3=spare, bit4=DCCTflt
 #define FAULTS_LIVE_REG          0xF8      // Live Faults
 #define FAULTS_LAT_REG           0xFC      // Latched Faults
+#define AVEMODE_REG              0x100     // Average mode for 10Hz data
 
-#define SNAPSHOT_ADDRPTR      0X500     // Snapshot 20 sec circular buffer current address pointer
-#define SNAPSHOT_TOTALTRIGS   0X504     // Snapshot 20 sec circular buffer total data points written
-#define SOFTTRIG              0X508     // Soft Trig
-#define TESTTRIG              0X50C     // Test Trig - Test the 4-Fault, 4-Error and EVR Trigger
-
-#define USR1TRIG_BUFPTR       0X520     // Usr1 Trig Buffer Ptr.  Buffer Point latched value gets put here on User1 trigger
-#define USR1TRIG_TS_S         0X524     // Usr1 Trig Timestamp (s)
-#define USR1TRIG_TS_NS        0X528     // Usr1 Trig Timestamp (ns)
-#define USR2TRIG_BUFPTR       0X530     // Usr2 Trig Buffer Ptr.  Buffer Point latched value gets put here on User2 trigger
-#define USR2TRIG_TS_S         0X534     // Usr2 Trig Timestamp (s)
-#define USR2TRIG_TS_NS        0X538     // Usr2 Trig Timestamp (ns)
-#define USR3TRIG_BUFPTR       0X540     // Usr3 Trig Buffer Ptr.  Buffer Point latched value gets put here on User3 trigger
-#define USR3TRIG_TS_S         0X544     // Usr3 Trig Timestamp (s)
-#define USR3TRIG_TS_NS        0X548     // Usr3 Trig Timestamp (ns)
-#define USR4TRIG_BUFPTR       0X550     // Usr4 Trig Buffer Ptr.  Buffer Point latched value gets put here on User4 trigger
-#define USR4TRIG_TS_S         0X554     // Usr4 Trig Timestamp (s)
-#define USR4TRIG_TS_NS        0X558     // Usr4 Trig Timestamp (ns)
-#define FLT1TRIG_BUFPTR       0X560     // Fault1 Buffer Ptr.  Buffer Point latched value gets put here on Fault1 trigger
-#define FLT1TRIG_TS_S         0X564     // Fault1 Trig Timestamp (s)
-#define FLT1TRIG_TS_NS        0X568     // Fault1 Trig Timestamp (ns)
-#define FLT2TRIG_BUFPTR       0X570     // Fault2 Buffer Ptr.  Buffer Point latched value gets put here on Fault2 trigger
-#define FLT2TRIG_TS_S         0X574     // Fault2 Trig Timestamp (s)
-#define FLT2TRIG_TS_NS        0X578     // Fault2 Trig Timestamp (ns)
-#define FLT3TRIG_BUFPTR       0X580     // Fault3 Buffer Ptr.  Buffer Point latched value gets put here on Fault3 trigger
-#define FLT3TRIG_TS_S         0X584     // Fault3 Trig Timestamp (s)
-#define FLT3TRIG_TS_NS        0X588     // Fault3 Trig Timestamp (ns)
-#define FLT4TRIG_BUFPTR       0X590     // Fault4 Buffer Ptr.  Buffer Point latched value gets put here on Fault4 trigger
-#define FLT4TRIG_TS_S         0X594     // Fault4 Trig Timestamp (s)
-#define FLT4TRIG_TS_NS        0X598     // Fault4 Trig Timestamp (ns)
-#define ERR1TRIG_BUFPTR       0X5A0     // Err1 Buffer Ptr.  Buffer Point latched value gets put here on Err1 trigger
-#define ERR1TRIG_TS_S         0X5A4     // Err1 Trig Timestamp (s)
-#define ERR1TRIG_TS_NS        0X5A8     // Err1 Trig Timestamp (ns)
-#define ERR2TRIG_BUFPTR       0X5B0     // Err2 Buffer Ptr.  Buffer Point latched value gets put here on Err2 trigger
-#define ERR2TRIG_TS_S         0X5B4     // Err2 Trig Timestamp (s)
-#define ERR2TRIG_TS_NS        0X5B8     // Err2 Trig Timestamp (ns)
-#define ERR3TRIG_BUFPTR       0X5C0     // Err3 Buffer Ptr.  Buffer Point latched value gets put here on Err3 trigger
-#define ERR3TRIG_TS_S         0X5C4     // Err3 Trig Timestamp (s)
-#define ERR3TRIG_TS_NS        0X5C8     // Err3 Trig Timestamp (ns)
-#define ERR4TRIG_BUFPTR       0X5D0     // Err4 Buffer Ptr.  Buffer Point latched value gets put here on Err4 trigger
-#define ERR4TRIG_TS_S         0X5D4     // Err4 Trig Timestamp (s)
-#define ERR4TRIG_TS_NS        0X5D8     // Err4 Trig Timestamp (ns)
-#define INJ1TRIG_BUFPTR       0X5E0     // Inj1 Buffer Ptr.  Buffer Point latched value gets put here on Inj1 trigger
-#define INJ1TRIG_TS_S         0X5E4     // Inj1 Trig Timestamp (s)
-#define INJ1TRIG_TS_NS        0X5E8     // Inj1 Trig Timestamp (ns)
-#define INJ2TRIG_BUFPTR       0X5F0     // Inj2 Buffer Ptr.  Buffer Point latched value gets put here on Inj2 trigger
-#define INJ2TRIG_TS_S         0X5F4     // Inj2 Trig Timestamp (s)
-#define INJ2TRIG_TS_NS        0X5F8     // Inj2 Trig Timestamp (ns)
-#define INJ3TRIG_BUFPTR       0X600     // Inj3 Buffer Ptr.  Buffer Point latched value gets put here on Inj3 trigger
-#define INJ3TRIG_TS_S         0X604     // Inj3 Trig Timestamp (s)
-#define INJ3TRIG_TS_NS        0X608     // Inj3 Trig Timestamp (ns)
-#define INJ4TRIG_BUFPTR       0X610     // Inj4 Buffer Ptr.  Buffer Point latched value gets put here on Inj4 trigger
-#define INJ4TRIG_TS_S         0X614     // Inj4 Trig Timestamp (s)
-#define INJ4TRIG_TS_NS        0X618     // Inj4 Trig Timestamp (ns)
-#define EVRTRIG_BUFPTR        0X620     // EVR Buffer Ptr.  Buffer Point latched value gets put here on EVR trigger
-#define EVRTRIG_TS_S          0X624     // EVR Trig Timestamp (s)
-#define EVRTRIG_TS_NS         0X628     // EVR Trig Timestamp (ns)
-
+#define SNAPSHOT_ADDRPTR         0xA00     // Snapshot 20 sec circular buffer current address pointer
+#define SNAPSHOT_TOTALTRIGS      0xA04     // Snapshot 20 sec circular buffer total data points written
+#define SOFTTRIG                 0xA08     // Soft Trig
+#define TESTTRIG                 0xA0C     // Test Trig - Test the 4-Fault, 4-Error and EVR Trigger
+#define USR1TRIG_BUFPTR          0xA20     // Usr1 Trig Buffer Ptr.  Buffer Point latched value gets put here on User1 trigger
+#define USR1TRIG_TS_S            0xA24     // Usr1 Trig Timestamp (s)
+#define USR1TRIG_TS_NS           0xA28     // Usr1 Trig Timestamp (ns)
+#define USR2TRIG_BUFPTR          0xA30     // Usr2 Trig Buffer Ptr.  Buffer Point latched value gets put here on User2 trigger
+#define USR2TRIG_TS_S            0xA34     // Usr2 Trig Timestamp (s)
+#define USR2TRIG_TS_NS           0xA38     // Usr2 Trig Timestamp (ns)
+#define USR3TRIG_BUFPTR          0xA40     // Usr3 Trig Buffer Ptr.  Buffer Point latched value gets put here on User3 trigger
+#define USR3TRIG_TS_S            0xA44     // Usr3 Trig Timestamp (s)
+#define USR3TRIG_TS_NS           0xA48     // Usr3 Trig Timestamp (ns)
+#define USR4TRIG_BUFPTR          0xA50     // Usr4 Trig Buffer Ptr.  Buffer Point latched value gets put here on User4 trigger
+#define USR4TRIG_TS_S            0xA54     // Usr4 Trig Timestamp (s)
+#define USR4TRIG_TS_NS           0xA58     // Usr4 Trig Timestamp (ns)
+#define FLT1TRIG_BUFPTR          0xA60     // Fault1 Buffer Ptr.  Buffer Point latched value gets put here on Fault1 trigger
+#define FLT1TRIG_TS_S            0xA64     // Fault1 Trig Timestamp (s)
+#define FLT1TRIG_TS_NS           0xA68     // Fault1 Trig Timestamp (ns)
+#define FLT2TRIG_BUFPTR          0xA70     // Fault2 Buffer Ptr.  Buffer Point latched value gets put here on Fault2 trigger
+#define FLT2TRIG_TS_S            0xA74     // Fault2 Trig Timestamp (s)
+#define FLT2TRIG_TS_NS           0xA78     // Fault2 Trig Timestamp (ns)
+#define FLT3TRIG_BUFPTR          0xA80     // Fault3 Buffer Ptr.  Buffer Point latched value gets put here on Fault3 trigger
+#define FLT3TRIG_TS_S            0xA84     // Fault3 Trig Timestamp (s)
+#define FLT3TRIG_TS_NS           0xA88     // Fault3 Trig Timestamp (ns)
+#define FLT4TRIG_BUFPTR          0xA90     // Fault4 Buffer Ptr.  Buffer Point latched value gets put here on Fault4 trigger
+#define FLT4TRIG_TS_S            0xA94     // Fault4 Trig Timestamp (s)
+#define FLT4TRIG_TS_NS           0xA98     // Fault4 Trig Timestamp (ns)
+#define ERR1TRIG_BUFPTR          0xAA0     // Err1 Buffer Ptr.  Buffer Point latched value gets put here on Err1 trigger
+#define ERR1TRIG_TS_S            0xAA4     // Err1 Trig Timestamp (s)
+#define ERR1TRIG_TS_NS           0xAA8     // Err1 Trig Timestamp (ns)
+#define ERR2TRIG_BUFPTR          0xAB0     // Err2 Buffer Ptr.  Buffer Point latched value gets put here on Err2 trigger
+#define ERR2TRIG_TS_S            0xAB4     // Err2 Trig Timestamp (s)
+#define ERR2TRIG_TS_NS           0xAB8     // Err2 Trig Timestamp (ns)
+#define ERR3TRIG_BUFPTR          0xAC0     // Err3 Buffer Ptr.  Buffer Point latched value gets put here on Err3 trigger
+#define ERR3TRIG_TS_S            0xAC4     // Err3 Trig Timestamp (s)
+#define ERR3TRIG_TS_NS           0xAC8     // Err3 Trig Timestamp (ns)
+#define ERR4TRIG_BUFPTR          0xAD0     // Err4 Buffer Ptr.  Buffer Point latched value gets put here on Err4 trigger
+#define ERR4TRIG_TS_S            0xAD4     // Err4 Trig Timestamp (s)
+#define ERR4TRIG_TS_NS           0xAD8     // Err4 Trig Timestamp (ns)
+#define INJ1TRIG_BUFPTR          0xAE0     // Inj1 Buffer Ptr.  Buffer Point latched value gets put here on Inj1 trigger
+#define INJ1TRIG_TS_S            0xAE4     // Inj1 Trig Timestamp (s)
+#define INJ1TRIG_TS_NS           0xAE8     // Inj1 Trig Timestamp (ns)
+#define INJ2TRIG_BUFPTR          0xAF0     // Inj2 Buffer Ptr.  Buffer Point latched value gets put here on Inj2 trigger
+#define INJ2TRIG_TS_S            0xAF4     // Inj2 Trig Timestamp (s)
+#define INJ2TRIG_TS_NS           0xAF8     // Inj2 Trig Timestamp (ns)
+#define INJ3TRIG_BUFPTR          0XB00     // Inj3 Buffer Ptr.  Buffer Point latched value gets put here on Inj3 trigger
+#define INJ3TRIG_TS_S            0XB04     // Inj3 Trig Timestamp (s)
+#define INJ3TRIG_TS_NS           0XB08     // Inj3 Trig Timestamp (ns)
+#define INJ4TRIG_BUFPTR          0XB10     // Inj4 Buffer Ptr.  Buffer Point latched value gets put here on Inj4 trigger
+#define INJ4TRIG_TS_S            0XB14     // Inj4 Trig Timestamp (s)
+#define INJ4TRIG_TS_NS           0XB18     // Inj4 Trig Timestamp (ns)
+#define EVRTRIG_BUFPTR           0XB20     // EVR Buffer Ptr.  Buffer Point latched value gets put here on EVR trigger
+#define EVRTRIG_TS_S             0XB24     // EVR Trig Timestamp (s)
+#define EVRTRIG_TS_NS            0XB28     // EVR Trig Timestamp (ns)
 
 
-#define ID                    0X800     // Module Identification Number
-#define VERSION               0X804     // Module Version Number
-#define PRJ_ID                0X808     // Project Identification Number
-#define PRJ_VERSION           0X80C     // Project Version Number
-#define PRJ_SHASUM            0X810     // Project Repository check sum.
-#define PRJ_TIMESTAMP         0X814     // Project compilation timestamp
+
+#define ID                       0XC00     // Module Identification Number
+#define VERSION                  0XC04     // Module Version Number
+#define PRJ_ID                   0XC08     // Project Identification Number
+#define PRJ_VERSION              0XC0C     // Project Version Number
+#define PRJ_SHASUM               0XC10     // Project Repository check sum.
+#define PRJ_TIMESTAMP            0XC14     // Project compilation timestamp
 
 
 

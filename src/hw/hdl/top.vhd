@@ -158,7 +158,6 @@ architecture behv of top is
    signal dig_cntrl             : t_dig_cntrl;
    signal dig_stat              : t_dig_stat;
    
-   signal accum_mode            : std_logic_vector(7 downto 0);
    signal accum_done            : std_logic_vector(3 downto 0);
    
    signal dac_cntrl             : t_dac_cntrl;
@@ -289,15 +288,12 @@ fault_gen: entity work.fault_module
     
 --accumulator (not yet integrated)
 accum: entity work.adc_accumulator_top
-  generic map (
-    N_DCCT => 20,  
-	N_8CH  => 16 
-  )
   port map(
     clk => pl_clk0,
     reset => pl_reset,
-    start => adc_done,  
-    mode => accum_mode,
+    start => adc_done, 
+    dcct_params => dcct_params, 
+    mon_params => mon_params,
     dcct_adcs => dcct_adcs,
     mon_adcs => mon_adcs,
     dcct_adcs_ave => dcct_adcs_ave,
@@ -359,8 +355,8 @@ ps_regs: entity work.ps_io
     m_axi4_m2s => m_axi4_m2s, 
     m_axi4_s2m => m_axi4_s2m,
     dcct_params => dcct_params,
-    dcct_adcs => dcct_adcs,
-    mon_adcs => mon_adcs,
+    dcct_adcs => dcct_adcs_ave, --dcct_adcs,
+    mon_adcs => mon_adcs_ave,
     mon_params => mon_params,
     dac_cntrl => dac_cntrl,
     dac_stat => dac_stat,

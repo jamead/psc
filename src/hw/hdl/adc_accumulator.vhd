@@ -4,8 +4,6 @@ use ieee.numeric_std.all;
 
 
 entity ADC_accumulator is 
-generic(N_DCCT : integer := 18; 
-		N_8CH  : integer := 16); 
 port( 
         clk               :  in std_logic; 
         reset             :  in std_logic; 
@@ -15,26 +13,26 @@ port(
 		mode              :  in std_logic_vector(1 downto 0); 
 		
 		--DCCT raw inputs
-        DCCT1_in          :  in std_logic_vector(N_DCCT-1 downto 0); 
-        DCCT2_in          :  in std_logic_vector(N_DCCT-1 downto 0); 
+        DCCT1_in          :  in signed(19 downto 0); 
+        DCCT2_in          :  in signed(19 downto 0); 
 
 		--8 Channel raw ADC inputs
-		DAC_SP_in         :  in std_logic_vector(N_8CH-1 downto 0); 
-		VOLT_MON_in       :  in std_logic_vector(N_8CH-1 downto 0); 
-		GND_MON_in        :  in std_logic_vector(N_8CH-1 downto 0); 
-		SPARE_MON_in      :  in std_logic_vector(N_8CH-1 downto 0); 
-		PS_REG_OUTPUT_in  :  in std_logic_vector(N_8CH-1 downto 0); 
-		PS_ERROR_in       :  in std_logic_vector(N_8CH-1 downto 0); 
+		DAC_SP_in         :  in signed(15 downto 0); 
+		VOLT_MON_in       :  in signed(15 downto 0); 
+		GND_MON_in        :  in signed(15 downto 0); 
+		SPARE_MON_in      :  in signed(15 downto 0); 
+		PS_REG_OUTPUT_in  :  in signed(15 downto 0); 
+		PS_ERROR_in       :  in signed(15 downto 0); 
 		
 		--Outputs
-        DCCT1_out         :  out std_logic_vector(31 downto 0); 
-        DCCT2_out         :  out std_logic_vector(31 downto 0); 
-        DAC_SP_out        :  out std_logic_vector(31 downto 0); 
-        VOLT_MON_out      :  out std_logic_vector(31 downto 0); 
-        GND_MON_out       :  out std_logic_vector(31 downto 0); 
-        SPARE_MON_out     :  out std_logic_vector(31 downto 0); 
-        PS_REG_OUTPUT_out :  out std_logic_vector(31 downto 0); 
-        PS_ERROR_out      :  out std_logic_vector(31 downto 0); 
+        DCCT1_out         :  out signed(31 downto 0); 
+        DCCT2_out         :  out signed(31 downto 0); 
+        DAC_SP_out        :  out signed(31 downto 0); 
+        VOLT_MON_out      :  out signed(31 downto 0); 
+        GND_MON_out       :  out signed(31 downto 0); 
+        SPARE_MON_out     :  out signed(31 downto 0); 
+        PS_REG_OUTPUT_out :  out signed(31 downto 0); 
+        PS_ERROR_out      :  out signed(31 downto 0);
 
         done              :  out std_logic
 
@@ -49,7 +47,6 @@ begin
 --DCCT ACCUMULATORS
 --###################################################
 average_inst1 : entity work.average
-    generic map( N => N_DCCT)
     port map(
     clk             => clk, 
     reset           => reset, 
@@ -61,7 +58,6 @@ average_inst1 : entity work.average
     ); 
     
 average_inst2 : entity work.average
-    generic map( N => N_DCCT)
     port map(
     clk             => clk, 
     reset           => reset, 
@@ -77,72 +73,66 @@ average_inst2 : entity work.average
 --8 CHANNEL ADC ACCUMULATORS
 --###################################################
 average_inst3 : entity work.average
-    generic map( N => N_8CH)
     port map(
     clk             => clk, 
     reset           => reset, 
     start           => start, 
-    data_in         => DAC_SP_in, 
+    data_in         => resize(DAC_SP_in,20), 
     done            => open,  
     sel             => mode,
     avg_out         => DAC_SP_out 
     ); 
     
 average_inst4 : entity work.average
-    generic map( N => N_8CH)
     port map(
     clk             => clk, 
     reset           => reset, 
     start           => start, 
-    data_in         => VOLT_MON_in, 
+    data_in         => resize(VOLT_MON_in,20), 
     done            => open,  
     sel             => mode, 
     avg_out         => VOLT_MON_out 
     ); 
     
 average_inst5 : entity work.average
-    generic map( N => N_8CH)
     port map(
     clk             => clk, 
     reset           => reset, 
     start           => start, 
-    data_in         => GND_MON_in, 
+    data_in         => resize(GND_MON_in,20), 
     done            => open,  
     sel             => mode, 
     avg_out         => GND_MON_out 
     ); 
     
 average_inst6 : entity work.average
-    generic map( N => N_8CH)
     port map(
     clk             => clk, 
     reset           => reset, 
     start           => start, 
-    data_in         => SPARE_MON_in, 
+    data_in         => resize(SPARE_MON_in,20), 
     done            => open,  
     sel             => mode, 
     avg_out         => SPARE_MON_out 
     ); 
     
 average_inst7 : entity work.average
-    generic map( N => N_8CH)
     port map(
     clk             => clk, 
     reset           => reset, 
     start           => start, 
-    data_in         => PS_REG_OUTPUT_in, 
+    data_in         => resize(PS_REG_OUTPUT_in,20), 
     done            => open, 
     sel             => mode,  
     avg_out         => PS_REG_OUTPUT_out 
     ); 
     
 average_inst8 : entity work.average
-    generic map( N => N_8CH)
     port map(
     clk             => clk, 
     reset           => reset, 
     start           => start, 
-    data_in         => PS_ERROR_in, 
+    data_in         => resize(PS_ERROR_in,20), 
     done            => open, 
     sel             => mode,
     avg_out         => PS_ERROR_out 

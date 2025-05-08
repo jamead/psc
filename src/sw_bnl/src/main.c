@@ -1,52 +1,30 @@
 
 #include <sleep.h>
 #include "netif/xadapter.h"
-//#include "platform_config.h"
 #include "xil_printf.h"
 #include "lwip/init.h"
 #include "lwip/inet.h"
 #include "FreeRTOS.h"
-
 #include "xparameters.h"
-
 #include "xiicps.h"
 #include "xadcps.h"
 #include "xqspips.h"
-//#include "xsysmonps.h"
-
-#include "xstatus.h"       // For XStatus
+#include "xstatus.h"
+#include "xil_cache.h"
 
 /* Hardware support includes */
 #include "psc_defs.h"
 #include "pl_regs.h"
 #include "psc_msg.h"
 
-#include "xil_cache.h"
-
 
 #define PLATFORM_EMAC_BASEADDR XPAR_XEMACPS_0_BASEADDR
 #define SYSMON_DEVICE_ID XPAR_XSYSMONPSU_0_DEVICE_ID
-
-
 #define PLATFORM_ZYNQ
-
-//#define DEFAULT_IP_ADDRESS "10.0.142.43"
-//#define DEFAULT_IP_MASK "255.255.255.0"
-//#define DEFAULT_GW_ADDRESS "10.0.142.1"
-
-
-
-#define DELAY_100_MS            100UL
-#define DELAY_1_SECOND          (10*DELAY_100_MS)
-
-
-
-static sys_thread_t main_thread_handle;
-
-
 
 #define THREAD_STACKSIZE 2048
 
+static sys_thread_t main_thread_handle;
 struct netif server_netif;
 
 XAdcPs XAdcInstance;
@@ -55,6 +33,8 @@ XAdcPs XAdcInstance;
 struct SAdataMsg sadata;
 struct ScaleFactorType scalefactors[4];
 
+float CONVVOLTSTODACBITS;
+float CONVDACBITSTOVOLTS;
 
 //Ramping Buffer, 10s
 char ramp_buf[400000];
@@ -65,23 +45,7 @@ char msgStat10Hz_buf[MSGSTAT10HzLEN+MSGHDRLEN];
 char temp[1000];  //temp buffer, msgStat10Hz_buf was overwriting msgid51_buf sometimes
 
 
-
-// Waveform Buffers for Snapshots
-//char msgUsr_buf[4][MSGWFMLEN+MSGHDRLEN];
-//char msgFlt_buf[4][MSGWFMLEN+MSGHDRLEN];
-//char msgErr_buf[4][MSGWFMLEN+MSGHDRLEN];
-//char msgInj_buf[4][MSGWFMLEN+MSGHDRLEN];
-//char msgEvr_buf[4][MSGWFMLEN+MSGHDRLEN];
-
-
-//char msgWfmStats_buf[MSGWFMSTATSLEN+MSGHDRLEN];
-
-
-
-
 ip_t ip_settings;
-
-
 
 XIicPs IicPsInstance0;	    // Instance of the IIC Device
 XIicPs IicPsInstance1;
@@ -89,6 +53,10 @@ XIicPs IicPsInstance1;
 
 TimerHandle_t xUptimeTimer;  // Timer handle
 u32 UptimeCounter = 0;  // Uptime counter
+
+
+
+
 
 
 // Timer callback function
@@ -353,6 +321,8 @@ void XadcInit() {
 
 int main()
 {
+    u8 psc_resolution;
+
 
 	xil_printf("BNL Power Supply Controller ...\r\n");
     print_firmware_version();
@@ -377,8 +347,25 @@ int main()
 	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET_REG, 0);
     usleep(1000);
 
-    //Set Resolution
-	Xil_Out32(XPAR_M_AXI_BASEADDR + RESOLUTION, 1);
+    //Read Resolution from EEPROM (HS or MS)
+	xil_printf("Getting Unit Resolution\r\n");
+	i2c_eeprom_readBytes(48, &psc_resolution, 1);
+	Xil_Out32(XPAR_M_AXI_BASEADDR + RESOLUTION, psc_resolution);
+
+	xil_printf("Resolution: %u %u\r\n",psc_resolution);
+
+
+	if (psc_resolution == 1) {
+		xil_printf("This is a HS (20bit) PSC\r\n");
+	    CONVVOLTSTODACBITS = CONVVOLTSTO20BITS;
+	    CONVDACBITSTOVOLTS = CONV20BITSTOVOLTS;
+	}
+	else {
+		xil_printf("This is an MS (18bit) PSC\r\n");
+        CONVVOLTSTODACBITS = CONVVOLTSTO18BITS;
+        CONVDACBITSTOVOLTS = CONV18BITSTOVOLTS;
+	}
+
 
 
     InitSettings();

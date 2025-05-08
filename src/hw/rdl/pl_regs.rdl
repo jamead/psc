@@ -102,56 +102,56 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps1_dcct0 @0x100;  
+  } ps1_dcct0 @0x200;  
 
 reg {
     desc="PS1 DCCT 1";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps1_dcct1 @0x104;  
+  } ps1_dcct1 @0x204;  
 
 reg {
     desc="PS1 DAC Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps1_dacmon @0x108;  
+  } ps1_dacmon @0x208;  
 
 reg {
     desc="PS1 Voltage Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps1_volt @0x10C;  
+  } ps1_volt @0x20C;  
 
 reg {
     desc="PS1 GND Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps1_gnd @0x110; 
+  } ps1_gnd @0x210; 
 
 reg {
     desc="PS1 Spare Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps1_spare @0x114; 
+  } ps1_spare @0x214; 
 
 reg {
     desc="PS1 Regulator Output Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps1_reg @0x118; 
+  } ps1_reg @0x218; 
 
 reg {
     desc="PS1 Error Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps1_err @0x11C; 
+  } ps1_err @0x21C; 
 
 
 
@@ -162,14 +162,14 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_dac_setpt_offset @0x120;
+  } ps1_dac_setpt_offset @0x220;
 
 reg {
     desc="PS1 DAC Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_dac_setpt_gain @0x124;
+  } ps1_dac_setpt_gain @0x224;
 
 reg {
     desc="PS1 DAC SetPoint - when in jumpmode";
@@ -178,7 +178,7 @@ reg {
     default swacc=true;
     default swmod=true;    
     field {} val[20];
-  } ps1_dac_setpt @0x128;
+  } ps1_dac_setpt @0x228;
   
 reg {
     desc="PS1 DAC Mode 0=smooth ramp, 1=ramp table, 2=FOFB, 3=Jump Mode";
@@ -187,7 +187,7 @@ reg {
     default swacc=true;
     default swmod=true;    
     field {} val[2];
-  } ps1_dac_opmode @0x12C;  
+  } ps1_dac_opmode @0x22C;  
   
 
 reg {
@@ -195,14 +195,14 @@ reg {
     default sw = rw;
     default hw = r;   
     field {} val[8];
-  } ps1_dac_cntrl @0x130;
+  } ps1_dac_cntrl @0x230;
 
 reg {
     desc="PS1 DAC Reset";
     default sw = rw;
     default hw = r;    
     field {} val[1];
-  } ps1_dac_reset @0x134;
+  } ps1_dac_reset @0x234;
 
 
 reg {
@@ -210,7 +210,7 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_dac_ramplen @0x138; 
+  } ps1_dac_ramplen @0x238; 
 
 
 reg {
@@ -218,7 +218,7 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_dac_rampaddr @0x13C; 
+  } ps1_dac_rampaddr @0x23C; 
 
 reg {
     desc="PS1 DAC Ramp Table Data";
@@ -227,7 +227,7 @@ reg {
     default swacc=true;
     default swmod=true;   
     field {} val[20];
-  } ps1_dac_rampdata @0x140; 
+  } ps1_dac_rampdata @0x240; 
 
 reg {
     desc="PS1 DAC Run RampTable";
@@ -236,21 +236,21 @@ reg {
     default swacc=true;
     default swmod=true;    
     field {} val[1];
-  } ps1_dac_runramp @0x144;
+  } ps1_dac_runramp @0x244;
   
 reg {
     desc="PS1 DAC Ramptable Run Active";
     default sw = rw;
     default hw = w;
     field {} val[1];
-  } ps1_dac_rampactive @0x148;
+  } ps1_dac_rampactive @0x248;
 
   reg {
     desc="PS1 DAC Current SetPt ";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps1_dac_currsetpt @0x14C;
+  } ps1_dac_currsetpt @0x24C;
 
 
 /* Gain and Offset */
@@ -259,28 +259,28 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_dcct0_offset @0x150;
+  } ps1_dcct0_offset @0x250;
 
 reg {
     desc="PS1 DCCT 0 Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_dcct0_gain @0x154;
+  } ps1_dcct0_gain @0x254;
 
 reg {
     desc="PS1 DCCT 1 Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_dcct1_offset @0x158;
+  } ps1_dcct1_offset @0x258;
 
 reg {
     desc="PS1 DCCT 1 Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_dcct1_gain @0x15C;
+  } ps1_dcct1_gain @0x25C;
 
 
 reg {
@@ -288,133 +288,133 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_dacmon_offset @0x160;
+  } ps1_dacmon_offset @0x260;
 
 reg {
     desc="PS1 DAC Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_dacmon_gain @0x164;
+  } ps1_dacmon_gain @0x264;
 
 reg {
     desc="PS1 Voltage Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_volt_offset @0x168;
+  } ps1_volt_offset @0x268;
 
 reg {
     desc="PS1 Voltage Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_volt_gain @0x16C;
+  } ps1_volt_gain @0x26C;
 
 reg {
     desc="PS1 GND Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_gnd_offset @0x170;
+  } ps1_gnd_offset @0x270;
 
 reg {
     desc="PS1 GND Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_gnd_gain @0x174;
+  } ps1_gnd_gain @0x274;
  
 reg {
     desc="PS1 Spare Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_spare_offset @0x178;
+  } ps1_spare_offset @0x278;
 
 reg {
     desc="PS1 Spare Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_spare_gain @0x17C;
+  } ps1_spare_gain @0x27C;
  
 reg {
     desc="PS1 Regulator Output Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_reg_offset @0x180;
+  } ps1_reg_offset @0x280;
 
 reg {
     desc="PS1 Regulator Output Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_reg_gain @0x184;
+  } ps1_reg_gain @0x284;
  
 reg {
     desc="PS1 Error Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_err_offset @0x188;
+  } ps1_err_offset @0x288;
 
 reg {
     desc="PS1 Error Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps1_err_gain @0x18C;
+  } ps1_err_gain @0x28C;
  
 reg {
     desc="PS1 DCCT1 Over Current Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[20];
-  } ps1_ovc1_thresh @0x190;
+  } ps1_ovc1_thresh @0x290;
  
 reg {
     desc="PS1 DCCT2 Over Current Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[20];
-  } ps1_ovc2_thresh @0x194;
+  } ps1_ovc2_thresh @0x294;
  
 reg {
     desc="PS1 Over Voltage Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_ovv_thresh @0x198;
+  } ps1_ovv_thresh @0x298;
  
 reg {
     desc="PS1 PID Error1 Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_err1_thresh @0x19C;
+  } ps1_err1_thresh @0x29C;
 
 reg {
     desc="PS1 PID Error2 Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_err2_thresh @0x1A0;
+  } ps1_err2_thresh @0x2A0;
 
 reg {
     desc="PS1 Gnd Current Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_ignd_thresh @0x1A4;
+  } ps1_ignd_thresh @0x2A4;
 
 reg {
     desc="PS1 DCCT1 Over Current Fault Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_ovc1_cntlim @0x1A8;
+  } ps1_ovc1_cntlim @0x2A8;
  
 
 reg {
@@ -422,7 +422,7 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_ovc2_cntlim @0x1AC;
+  } ps1_ovc2_cntlim @0x2AC;
  
 
 reg {
@@ -430,84 +430,84 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_ovv_cntlim @0x1B0;
+  } ps1_ovv_cntlim @0x2B0;
  
 reg {
     desc="PS1 PID Error1 Fault Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_err1_cntlim @0x1B4;
+  } ps1_err1_cntlim @0x2B4;
 
 reg {
     desc="PS1 PID Error2 Fault Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_err2_cntlim @0x1B8;
+  } ps1_err2_cntlim @0x2B8;
 
 reg {
     desc="PS1 Gnd Current Fault Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_ignd_cntlim @0x1BC;
+  } ps1_ignd_cntlim @0x2BC;
 
 reg {
     desc="PS1 Digital DCCT Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_dcct_cntlim @0x1C0;
+  } ps1_dcct_cntlim @0x2C0;
 
 reg {
     desc="PS1 Fault1 Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_flt1_cntlim @0x1C4;
+  } ps1_flt1_cntlim @0x2C4;
 
 reg {
     desc="PS1 Fault2 Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_flt2_cntlim @0x1C8;
+  } ps1_flt2_cntlim @0x2C8;
 
 reg {
     desc="PS1 Fault3 Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_flt3_cntlim @0x1CC;
+  } ps1_flt3_cntlim @0x2CC;
 
 reg {
     desc="PS1 On Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_on_cntlim @0x1D0;
+  } ps1_on_cntlim @0x2D0;
 
 reg {
     desc="PS1 Fault Clear";
     default sw = rw;
     default hw = r;
     field {} val[1];
-  } ps1_fault_clear @0x1D4;
+  } ps1_fault_clear @0x2D4;
 
 reg {
     desc="PS1 Fault Mask";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_fault_mask @0x1D8;
+  } ps1_fault_mask @0x2D8;
 
 reg {
     desc="PS1 HeartBeat Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps1_heartbeat_cntlim @0x1DC;
+  } ps1_heartbeat_cntlim @0x2DC;
 
 
 reg {
@@ -515,35 +515,35 @@ reg {
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps1_digout_on1 @0x1E0; 
+  } ps1_digout_on1 @0x2E0; 
   
 reg {
     desc="PS1 Digital Outputs bit1=On2";
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps1_digout_on2 @0x1E4; 
+  } ps1_digout_on2 @0x2E4; 
   
 reg {
     desc="PS1 Digital Outputs bit2=Reset";
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps1_digout_reset @0x1E8; 
+  } ps1_digout_reset @0x2E8; 
       
 reg {
     desc="PS1 Digital Outputs bit3=spare";
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps1_digout_spare @0x1EC; 
+  } ps1_digout_spare @0x2EC; 
     
  reg {
     desc="PS1 Digital Outputs bit4=Park";
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps1_digout_park @0x1F0; 
+  } ps1_digout_park @0x2F0; 
    
    
 reg {
@@ -551,7 +551,7 @@ reg {
     default sw = rw;
     default hw = w; 
     field {} val[5];
-  } ps1_digin @0x1F4; 
+  } ps1_digin @0x2F4; 
 
 
 reg {
@@ -559,16 +559,21 @@ reg {
     default sw = rw;
     default hw = w; 
     field {} val[16];
-  } ps1_faults_live @0x1F8; 
+  } ps1_faults_live @0x2F8; 
 
 reg {
     desc="PS1 Active Faults (Latched)";
     default sw = rw;
     default hw = w; 
     field {} val[16];
-  } ps1_faults_lat @0x1FC; 
+  } ps1_faults_lat @0x2FC; 
 
-
+reg {
+    desc="PS1 10Hz Data AveMode 0=no ave, 1=167pt ave, 2=500pt ave";
+    default sw = rw;
+    default hw = r; 
+    field {} val[2];
+  } ps1_avemode @0x300; 
 
 
 
@@ -582,56 +587,56 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps2_dcct0 @0x200;  
+  } ps2_dcct0 @0x400;  
 
 reg {
     desc="PS2 DCCT 1";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps2_dcct1 @0x204;  
+  } ps2_dcct1 @0x404;  
 
 reg {
     desc="PS2 DAC Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps2_dacmon @0x208;  
+  } ps2_dacmon @0x408;  
 
 reg {
     desc="PS2 Voltage Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps2_volt @0x20C;  
+  } ps2_volt @0x40C;  
 
 reg {
     desc="PS2 GND Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps2_gnd @0x210; 
+  } ps2_gnd @0x410; 
 
 reg {
     desc="PS2 Spare Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps2_spare @0x214; 
+  } ps2_spare @0x414; 
 
 reg {
     desc="PS2 Regulator Output Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps2_reg @0x218; 
+  } ps2_reg @0x418; 
 
 reg {
     desc="PS2 Error Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps2_err @0x21C; 
+  } ps2_err @0x41C; 
 
 
 /* DAC */
@@ -640,14 +645,14 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_dac_setpt_offset @0x220;
+  } ps2_dac_setpt_offset @0x420;
 
 reg {
     desc="PS2 DAC Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_dac_setpt_gain @0x224;
+  } ps2_dac_setpt_gain @0x424;
 
 reg {
     desc="PS2 DAC SetPoint - when in jumpmode";
@@ -656,7 +661,7 @@ reg {
     default swacc=true;
     default swmod=true;     
     field {} val[20];
-  } ps2_dac_setpt @0x228;
+  } ps2_dac_setpt @0x428;
   
 reg {
     desc="PS2 DAC Mode 0=smooth ramp, 1=ramp table, 2=FOFB, 3=Jump Mode";
@@ -665,7 +670,7 @@ reg {
     default swacc=true;
     default swmod=true;    
     field {} val[2];
-  } ps2_dac_opmode @0x22C;  
+  } ps2_dac_opmode @0x42C;  
   
 
 reg {
@@ -673,14 +678,14 @@ reg {
     default sw = rw;
     default hw = r;   
     field {} val[8];
-  } ps2_dac_cntrl @0x230;
+  } ps2_dac_cntrl @0x430;
 
 reg {
     desc="PS2 DAC Reset";
     default sw = rw;
     default hw = r;    
     field {} val[1];
-  } ps2_dac_reset @0x234;
+  } ps2_dac_reset @0x434;
 
 
 reg {
@@ -688,7 +693,7 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_dac_ramplen @0x238; 
+  } ps2_dac_ramplen @0x438; 
 
 
 reg {
@@ -696,7 +701,7 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_dac_rampaddr @0x23C; 
+  } ps2_dac_rampaddr @0x43C; 
 
 reg {
     desc="PS2 DAC Ramp Table Data";
@@ -705,7 +710,7 @@ reg {
     default swacc=true;
     default swmod=true;   
     field {} val[20];
-  } ps2_dac_rampdata @0x240; 
+  } ps2_dac_rampdata @0x440; 
 
 reg {
     desc="PS2 DAC Run RampTable";
@@ -714,21 +719,21 @@ reg {
     default swacc=true;
     default swmod=true;    
     field {} val[1];
-  } ps2_dac_runramp @0x244;
+  } ps2_dac_runramp @0x444;
   
   reg {
     desc="PS2 DAC Ramptable Run Active";
     default sw = rw;
     default hw = w;
     field {} val[1];
-  } ps2_dac_rampactive @0x248;
+  } ps2_dac_rampactive @0x448;
 
   reg {
     desc="PS2 DAC Current SetPt ";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps2_dac_currsetpt @0x24C;
+  } ps2_dac_currsetpt @0x44C;
  
 
 
@@ -738,28 +743,28 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_dcct0_offset @0x250;
+  } ps2_dcct0_offset @0x450;
 
 reg {
     desc="PS2 DCCT 0 Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_dcct0_gain @0x254;
+  } ps2_dcct0_gain @0x454;
 
 reg {
     desc="PS2 DCCT 1 Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_dcct1_offset @0x258;
+  } ps2_dcct1_offset @0x458;
 
 reg {
     desc="PS2 DCCT 1 Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_dcct1_gain @0x25C;
+  } ps2_dcct1_gain @0x45C;
 
 
 reg {
@@ -767,84 +772,84 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_dacmon_offset @0x260;
+  } ps2_dacmon_offset @0x460;
 
 reg {
     desc="PS2 DAC Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_dacmon_gain @0x264;
+  } ps2_dacmon_gain @0x464;
 
 reg {
     desc="PS2 Voltage Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_volt_offset @0x268;
+  } ps2_volt_offset @0x468;
 
 reg {
     desc="PS2 Voltage Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_volt_gain @0x26C;
+  } ps2_volt_gain @0x46C;
 
 reg {
     desc="PS2 GND Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_gnd_offset @0x270;
+  } ps2_gnd_offset @0x470;
 
 reg {
     desc="PS2 GND Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_gnd_gain @0x274;
+  } ps2_gnd_gain @0x474;
  
 reg {
     desc="PS2 Spare Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_spare_offset @0x278;
+  } ps2_spare_offset @0x478;
 
 reg {
     desc="PS2 Spare Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_spare_gain @0x27C;
+  } ps2_spare_gain @0x47C;
  
 reg {
     desc="PS2 Regulator Output Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_reg_offset @0x280;
+  } ps2_reg_offset @0x480;
 
 reg {
     desc="PS2 Regulator Output Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_reg_gain @0x284;
+  } ps2_reg_gain @0x484;
  
 reg {
     desc="PS2 Error Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_err_offset @0x288;
+  } ps2_err_offset @0x488;
 
 reg {
     desc="PS2 Error Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps2_err_gain @0x28C;
+  } ps2_err_gain @0x48C;
  
 
 reg {
@@ -852,49 +857,49 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[20];
-  } ps2_ovc1_thresh @0x290;
+  } ps2_ovc1_thresh @0x490;
  
 reg {
     desc="PS2 DCCT2 Over Current Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[20];
-  } ps2_ovc2_thresh @0x294;
+  } ps2_ovc2_thresh @0x494;
  
 reg {
     desc="PS2 Over Voltage Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_ovv_thresh @0x298;
+  } ps2_ovv_thresh @0x498;
  
 reg {
     desc="PS2 PID Error1 Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_err1_thresh @0x29C;
+  } ps2_err1_thresh @0x49C;
 
 reg {
     desc="PS2 PID Error2 Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_err2_thresh @0x2A0;
+  } ps2_err2_thresh @0x4A0;
 
 reg {
     desc="PS2 Gnd Current Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_ignd_thresh @0x2A4;
+  } ps2_ignd_thresh @0x4A4;
 
 reg {
     desc="PS2 DCCT1 Over Current Fault Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_ovc1_cntlim @0x2A8;
+  } ps2_ovc1_cntlim @0x4A8;
  
 
 reg {
@@ -902,7 +907,7 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_ovc2_cntlim @0x2AC;
+  } ps2_ovc2_cntlim @0x4AC;
  
 
 reg {
@@ -910,84 +915,84 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_ovv_cntlim @0x2B0;
+  } ps2_ovv_cntlim @0x4B0;
  
 reg {
     desc="PS2 PID Error1 Fault Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_err1_cntlim @0x2B4;
+  } ps2_err1_cntlim @0x4B4;
 
 reg {
     desc="PS2 PID Error2 Fault Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_err2_cntlim @0x2B8;
+  } ps2_err2_cntlim @0x4B8;
 
 reg {
     desc="PS2 Gnd Current Fault Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_ignd_cntlim @0x2BC;
+  } ps2_ignd_cntlim @0x4BC;
 
 reg {
     desc="PS2 Digital DCCT Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_dcct_cntlim @0x2C0;
+  } ps2_dcct_cntlim @0x4C0;
 
 reg {
     desc="PS2 Fault1 Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_flt1_cntlim @0x2C4;
+  } ps2_flt1_cntlim @0x4C4;
 
 reg {
     desc="PS2 Fault2 Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_flt2_cntlim @0x2C8;
+  } ps2_flt2_cntlim @0x4C8;
 
 reg {
     desc="PS2 Fault3 Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_flt3_cntlim @0x2CC;
+  } ps2_flt3_cntlim @0x4CC;
 
 reg {
     desc="PS2 On Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_on_cntlim @0x2D0;
+  } ps2_on_cntlim @0x4D0;
 
 reg {
     desc="PS2 Fault Clear";
     default sw = rw;
     default hw = r;
     field {} val[1];
-  } ps2_fault_clear @0x2D4;
+  } ps2_fault_clear @0x4D4;
 
 reg {
     desc="PS2 Fault Mask";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_fault_mask @0x2D8;
+  } ps2_fault_mask @0x4D8;
 
 reg {
     desc="PS2 HeartBeat Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps2_heartbeat_cntlim @0x2DC;
+  } ps2_heartbeat_cntlim @0x4DC;
 
 
 reg {
@@ -995,35 +1000,35 @@ reg {
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps2_digout_on1 @0x2E0; 
+  } ps2_digout_on1 @0x4E0; 
   
 reg {
     desc="PS2 Digital Outputs bit1=On2";
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps2_digout_on2 @0x2E4; 
+  } ps2_digout_on2 @0x4E4; 
   
 reg {
     desc="PS2 Digital Outputs bit2=Reset";
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps2_digout_reset @0x2E8; 
+  } ps2_digout_reset @0x4E8; 
       
 reg {
     desc="PS2 Digital Outputs bit3=spare";
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps2_digout_spare @0x2EC; 
+  } ps2_digout_spare @0x4EC; 
     
  reg {
     desc="PS2 Digital Outputs bit4=Park";
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps2_digout_park @0x2F0; 
+  } ps2_digout_park @0x4F0; 
    
    
 reg {
@@ -1031,23 +1036,28 @@ reg {
     default sw = rw;
     default hw = w; 
     field {} val[5];
-  } ps2_digin @0x2F4; 
+  } ps2_digin @0x4F4; 
 
 reg {
     desc="PS2 Active Faults (Live)";
     default sw = rw;
     default hw = w; 
     field {} val[16];
-  } ps2_faults_live @0x2F8; 
+  } ps2_faults_live @0x4F8; 
 
 reg {
     desc="PS2 Active Faults (Latched)";
     default sw = rw;
     default hw = w; 
     field {} val[16];
-  } ps2_faults_lat @0x2FC; 
+  } ps2_faults_lat @0x4FC; 
 
-
+reg {
+    desc="PS2 10Hz Data AveMode 0=no ave, 1=167pt ave, 2=500pt ave";
+    default sw = rw;
+    default hw = r; 
+    field {} val[2];
+  } ps2_avemode @0x500; 
 
 
 
@@ -1062,56 +1072,56 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps3_dcct0 @0x300;  
+  } ps3_dcct0 @0x600;  
 
 reg {
     desc="PS3 DCCT 1";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps3_dcct1 @0x304;  
+  } ps3_dcct1 @0x604;  
 
 reg {
     desc="PS3 DAC Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps3_dacmon @0x308;  
+  } ps3_dacmon @0x608;  
 
 reg {
     desc="PS3 Voltage Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps3_volt @0x30C;  
+  } ps3_volt @0x60C;  
 
 reg {
     desc="PS3 GND Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps3_gnd @0x310; 
+  } ps3_gnd @0x610; 
 
 reg {
     desc="PS3 Spare Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps3_spare @0x314; 
+  } ps3_spare @0x614; 
 
 reg {
     desc="PS3 Regulator Output Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps3_reg @0x318; 
+  } ps3_reg @0x618; 
 
 reg {
     desc="PS3 Error Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps3_err @0x31C; 
+  } ps3_err @0x61C; 
 
 
 /* DAC */
@@ -1120,14 +1130,14 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_dac_setpt_offset @0x320;
+  } ps3_dac_setpt_offset @0x620;
 
 reg {
     desc="PS3 DAC Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_dac_setpt_gain @0x324;
+  } ps3_dac_setpt_gain @0x624;
 
 reg {
     desc="PS3 DAC SetPoint - when in jumpmode";
@@ -1136,7 +1146,7 @@ reg {
     default swacc=true;
     default swmod=true;     
     field {} val[20];
-  } ps3_dac_setpt @0x328;
+  } ps3_dac_setpt @0x628;
   
 reg {
     desc="PS3 DAC Mode 0=smooth ramp, 1=ramp table, 2=FOFB, 3=Jump Mode";
@@ -1145,7 +1155,7 @@ reg {
     default swacc=true;
     default swmod=true;    
     field {} val[2];
-  } ps3_dac_opmode @0x32C;  
+  } ps3_dac_opmode @0x62C;  
   
 
 reg {
@@ -1153,14 +1163,14 @@ reg {
     default sw = rw;
     default hw = r;   
     field {} val[8];
-  } ps3_dac_cntrl @0x330;
+  } ps3_dac_cntrl @0x630;
 
 reg {
     desc="PS3 DAC Reset";
     default sw = rw;
     default hw = r;    
     field {} val[1];
-  } ps3_dac_reset @0x334;
+  } ps3_dac_reset @0x634;
 
 
 reg {
@@ -1168,7 +1178,7 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_dac_ramplen @0x338; 
+  } ps3_dac_ramplen @0x638; 
 
 
 reg {
@@ -1176,7 +1186,7 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_dac_rampaddr @0x33C; 
+  } ps3_dac_rampaddr @0x63C; 
 
 reg {
     desc="PS3 DAC Ramp Table Data";
@@ -1185,7 +1195,7 @@ reg {
     default swacc=true;
     default swmod=true;   
     field {} val[20];
-  } ps3_dac_rampdata @0x340; 
+  } ps3_dac_rampdata @0x640; 
 
 reg {
     desc="PS3 DAC Run RampTable";
@@ -1194,21 +1204,21 @@ reg {
     default swacc=true;
     default swmod=true;    
     field {} val[1];
-  } ps3_dac_runramp @0x344;
+  } ps3_dac_runramp @0x644;
   
   reg {
     desc="PS3 DAC Ramptable Run Active";
     default sw = rw;
     default hw = w;
     field {} val[1];
-  } ps3_dac_rampactive @0x348;
+  } ps3_dac_rampactive @0x648;
 
  reg {
     desc="PS3 DAC Current SetPt ";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps3_dac_currsetpt @0x34C;
+  } ps3_dac_currsetpt @0x64C;
 
 
 /* Gain & Offset */
@@ -1217,28 +1227,28 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_dcct0_offset @0x350;
+  } ps3_dcct0_offset @0x650;
 
 reg {
     desc="PS3 DCCT 0 Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_dcct0_gain @0x354;
+  } ps3_dcct0_gain @0x654;
 
 reg {
     desc="PS3 DCCT 1 Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_dcct1_offset @0x358;
+  } ps3_dcct1_offset @0x658;
 
 reg {
     desc="PS3 DCCT 1 Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_dcct1_gain @0x35C;
+  } ps3_dcct1_gain @0x65C;
 
 
 reg {
@@ -1246,133 +1256,133 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_dacmon_offset @0x360;
+  } ps3_dacmon_offset @0x660;
 
 reg {
     desc="PS3 DAC Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_dacmon_gain @0x364;
+  } ps3_dacmon_gain @0x664;
 
 reg {
     desc="PS3 Voltage Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_volt_offset @0x368;
+  } ps3_volt_offset @0x668;
 
 reg {
     desc="PS3 Voltage Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_volt_gain @0x36C;
+  } ps3_volt_gain @0x66C;
 
 reg {
     desc="PS3 GND Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_gnd_offset @0x370;
+  } ps3_gnd_offset @0x670;
 
 reg {
     desc="PS3 GND Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_gnd_gain @0x374;
+  } ps3_gnd_gain @0x674;
  
 reg {
     desc="PS3 Spare Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_spare_offset @0x378;
+  } ps3_spare_offset @0x678;
 
 reg {
     desc="PS3 Spare Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_spare_gain @0x37C;
+  } ps3_spare_gain @0x67C;
  
 reg {
     desc="PS3 Regulator Output Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_reg_offset @0x380;
+  } ps3_reg_offset @0x680;
 
 reg {
     desc="PS3 Regulator Output Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_reg_gain @0x384;
+  } ps3_reg_gain @0x684;
  
 reg {
     desc="PS3 Error Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_err_offset @0x388;
+  } ps3_err_offset @0x688;
 
 reg {
     desc="PS3 Error Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps3_err_gain @0x38C;
+  } ps3_err_gain @0x68C;
  
 reg {
     desc="PS3 DCCT1 Over Current Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[20];
-  } ps3_ovc1_thresh @0x390;
+  } ps3_ovc1_thresh @0x690;
  
 reg {
     desc="PS3 DCCT2 Over Current Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[20];
-  } ps3_ovc2_thresh @0x394;
+  } ps3_ovc2_thresh @0x694;
  
 reg {
     desc="PS3 Over Voltage Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_ovv_thresh @0x398;
+  } ps3_ovv_thresh @0x698;
  
 reg {
     desc="PS3 PID Error1 Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_err1_thresh @0x39C;
+  } ps3_err1_thresh @0x69C;
 
 reg {
     desc="PS3 PID Error2 Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_err2_thresh @0x3A0;
+  } ps3_err2_thresh @0x6A0;
 
 reg {
     desc="PS3 Gnd Current Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_ignd_thresh @0x3A4;
+  } ps3_ignd_thresh @0x6A4;
 
 reg {
     desc="PS3 DCCT1 Over Current Fault Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_ovc1_cntlim @0x3A8;
+  } ps3_ovc1_cntlim @0x6A8;
  
 
 reg {
@@ -1380,7 +1390,7 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_ovc2_cntlim @0x3AC;
+  } ps3_ovc2_cntlim @0x6AC;
  
 
 reg {
@@ -1388,84 +1398,84 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_ovv_cntlim @0x3B0;
+  } ps3_ovv_cntlim @0x6B0;
  
 reg {
     desc="PS3 PID Error1 Fault Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_err1_cntlim @0x3B4;
+  } ps3_err1_cntlim @0x6B4;
 
 reg {
     desc="PS3 PID Error2 Fault Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_err2_cntlim @0x3B8;
+  } ps3_err2_cntlim @0x6B8;
 
 reg {
     desc="PS3 Gnd Current Fault Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_ignd_cntlim @0x3BC;
+  } ps3_ignd_cntlim @0x6BC;
 
 reg {
     desc="PS3 Digital DCCT Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_dcct_cntlim @0x3C0;
+  } ps3_dcct_cntlim @0x6C0;
 
 reg {
     desc="PS3 Fault1 Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_flt1_cntlim @0x3C4;
+  } ps3_flt1_cntlim @0x6C4;
 
 reg {
     desc="PS3 Fault2 Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_flt2_cntlim @0x3C8;
+  } ps3_flt2_cntlim @0x6C8;
 
 reg {
     desc="PS3 Fault3 Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_flt3_cntlim @0x3CC;
+  } ps3_flt3_cntlim @0x6CC;
 
 reg {
     desc="PS3 On Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_on_cntlim @0x3D0;
+  } ps3_on_cntlim @0x6D0;
 
 reg {
     desc="PS3 Fault Clear";
     default sw = rw;
     default hw = r;
     field {} val[1];
-  } ps3_fault_clear @0x3D4;
+  } ps3_fault_clear @0x6D4;
 
 reg {
     desc="PS3 Fault Mask";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_fault_mask @0x3D8;
+  } ps3_fault_mask @0x6D8;
 
 reg {
     desc="PS3 HeartBeat Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps3_heartbeat_cntlim @0x3DC;
+  } ps3_heartbeat_cntlim @0x6DC;
 
 
 reg {
@@ -1473,35 +1483,35 @@ reg {
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps3_digout_on1 @0x3E0; 
+  } ps3_digout_on1 @0x6E0; 
   
 reg {
     desc="PS3 Digital Outputs bit1=On2";
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps3_digout_on2 @0x3E4; 
+  } ps3_digout_on2 @0x6E4; 
   
 reg {
     desc="PS3 Digital Outputs bit2=Reset";
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps3_digout_reset @0x3E8; 
+  } ps3_digout_reset @0x6E8; 
       
 reg {
     desc="PS3 Digital Outputs bit3=spare";
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps3_digout_spare @0x3EC; 
+  } ps3_digout_spare @0x6EC; 
     
  reg {
     desc="PS3 Digital Outputs bit4=Park";
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps3_digout_park @0x3F0; 
+  } ps3_digout_park @0x6F0; 
    
    
 reg {
@@ -1509,7 +1519,7 @@ reg {
     default sw = rw;
     default hw = w; 
     field {} val[5];
-  } ps3_digin @0x3F4; 
+  } ps3_digin @0x6F4; 
 
 
 reg {
@@ -1517,17 +1527,22 @@ reg {
     default sw = rw;
     default hw = w; 
     field {} val[16];
-  } ps3_faults_live @0x3F8; 
+  } ps3_faults_live @0x6F8; 
 
 reg {
     desc="PS3 Active Faults (Latched)";
     default sw = rw;
     default hw = w; 
     field {} val[16];
-  } ps3_faults_lat @0x3FC; 
+  } ps3_faults_lat @0x6FC; 
 
 
-
+reg {
+    desc="PS3 10Hz Data AveMode 0=no ave, 1=167pt ave, 2=500pt ave";
+    default sw = rw;
+    default hw = r; 
+    field {} val[2];
+  } ps3_avemode @0x700; 
 
 
 
@@ -1541,56 +1556,56 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps4_dcct0 @0x400;  
+  } ps4_dcct0 @0x800;  
 
 reg {
     desc="PS3 DCCT 1";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps4_dcct1 @0x404;  
+  } ps4_dcct1 @0x804;  
 
 reg {
     desc="PS4 DAC Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps4_dacmon @0x408;  
+  } ps4_dacmon @0x808;  
 
 reg {
     desc="PS4 Voltage Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps4_volt @0x40C;  
+  } ps4_volt @0x80C;  
 
 reg {
     desc="PS4 GND Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps4_gnd @0x410; 
+  } ps4_gnd @0x810; 
 
 reg {
     desc="PS4 Spare Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps4_spare @0x414; 
+  } ps4_spare @0x814; 
 
 reg {
     desc="PS4 Regulator Output";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps4_reg @0x418; 
+  } ps4_reg @0x818; 
 
 reg {
     desc="PS4 Error Monitor";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps4_err @0x41C; 
+  } ps4_err @0x81C; 
 
 
 /* DAC */
@@ -1600,14 +1615,14 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_dac_setpt_offset @0x420;
+  } ps4_dac_setpt_offset @0x820;
 
 reg {
     desc="PS4 DAC Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_dac_setpt_gain @0x424;
+  } ps4_dac_setpt_gain @0x824;
 
 reg {
     desc="PS4 DAC SetPoint - when in jumpmode";
@@ -1616,7 +1631,7 @@ reg {
     default swacc=true;
     default swmod=true;     
     field {} val[20];
-  } ps4_dac_setpt @0x428;
+  } ps4_dac_setpt @0x828;
   
 reg {
     desc="PS4 DAC Mode 0=smooth ramp, 1=ramp table, 2=FOFB, 3=Jump Mode";
@@ -1625,7 +1640,7 @@ reg {
     default swacc=true;
     default swmod=true;    
     field {} val[2];
-  } ps4_dac_opmode @0x42C;  
+  } ps4_dac_opmode @0x82C;  
   
 
 reg {
@@ -1633,14 +1648,14 @@ reg {
     default sw = rw;
     default hw = r;   
     field {} val[8];
-  } ps4_dac_cntrl @0x430;
+  } ps4_dac_cntrl @0x830;
 
 reg {
     desc="PS4 DAC Reset";
     default sw = rw;
     default hw = r;    
     field {} val[1];
-  } ps4_dac_reset @0x434;
+  } ps4_dac_reset @0x834;
 
 
 reg {
@@ -1648,7 +1663,7 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_dac_ramplen @0x438; 
+  } ps4_dac_ramplen @0x838; 
 
 
 reg {
@@ -1656,7 +1671,7 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_dac_rampaddr @0x43C; 
+  } ps4_dac_rampaddr @0x83C; 
 
 reg {
     desc="PS4 DAC Ramp Table Data";
@@ -1665,7 +1680,7 @@ reg {
     default swacc=true;
     default swmod=true;   
     field {} val[20];
-  } ps4_dac_rampdata @0x440; 
+  } ps4_dac_rampdata @0x840; 
 
 reg {
     desc="PS4 DAC Run RampTable";
@@ -1674,14 +1689,14 @@ reg {
     default swacc=true;
     default swmod=true;    
     field {} val[1];
-  } ps4_dac_runramp @0x444;
+  } ps4_dac_runramp @0x844;
   
   reg {
     desc="PS4 DAC Ramptable Run Active";
     default sw = rw;
     default hw = w;
     field {} val[1];
-  } ps4_dac_rampactive @0x448;
+  } ps4_dac_rampactive @0x848;
 
 
  reg {
@@ -1689,7 +1704,7 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } ps4_dac_currsetpt @0x44C;
+  } ps4_dac_currsetpt @0x84C;
 
 
 
@@ -1699,28 +1714,28 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_dcct0_offset @0x450;
+  } ps4_dcct0_offset @0x850;
 
 reg {
     desc="PS4 DCCT 0 Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_dcct0_gain @0x454;
+  } ps4_dcct0_gain @0x854;
 
 reg {
     desc="PS4 DCCT 1 Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_dcct1_offset @0x458;
+  } ps4_dcct1_offset @0x858;
 
 reg {
     desc="PS4 DCCT 1 Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_dcct1_gain @0x45C;
+  } ps4_dcct1_gain @0x85C;
 
 
 reg {
@@ -1728,84 +1743,84 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_dacmon_offset @0x460;
+  } ps4_dacmon_offset @0x860;
 
 reg {
     desc="PS4 DAC Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_dacmon_gain @0x464;
+  } ps4_dacmon_gain @0x864;
 
 reg {
     desc="PS4 Voltage Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_volt_offset @0x468;
+  } ps4_volt_offset @0x868;
 
 reg {
     desc="PS4 Voltage Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_volt_gain @0x46C;
+  } ps4_volt_gain @0x86C;
 
 reg {
     desc="PS4 GND Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_gnd_offset @0x470;
+  } ps4_gnd_offset @0x870;
 
 reg {
     desc="PS4 GND Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_gnd_gain @0x474;
+  } ps4_gnd_gain @0x874;
  
 reg {
     desc="PS4 Spare Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_spare_offset @0x478;
+  } ps4_spare_offset @0x878;
 
 reg {
     desc="PS4 Spare Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_spare_gain @0x47C;
+  } ps4_spare_gain @0x87C;
  
 reg {
     desc="PS4 Regulator Output Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_reg_offset @0x480;
+  } ps4_reg_offset @0x880;
 
 reg {
     desc="PS4 Regulator Output Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_reg_gain @0x484;
+  } ps4_reg_gain @0x884;
  
 reg {
     desc="PS4 Error Monitor Offset";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_err_offset @0x488;
+  } ps4_err_offset @0x888;
 
 reg {
     desc="PS4 Error Monitor Gain";
     default sw = rw;
     default hw = r;
     field {} val[32];
-  } ps4_err_gain @0x48C;
+  } ps4_err_gain @0x88C;
  
 
 reg {
@@ -1813,49 +1828,49 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[20];
-  } ps4_ovc1_thresh @0x490;
+  } ps4_ovc1_thresh @0x890;
  
 reg {
     desc="PS4 DCCT2 Over Current Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[20];
-  } ps4_ovc2_thresh @0x494;
+  } ps4_ovc2_thresh @0x894;
  
 reg {
     desc="PS4 Over Voltage Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_ovv_thresh @0x498;
+  } ps4_ovv_thresh @0x898;
  
 reg {
     desc="PS4 PID Error1 Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_err1_thresh @0x49C;
+  } ps4_err1_thresh @0x89C;
 
 reg {
     desc="PS4 PID Error2 Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_err2_thresh @0x4A0;
+  } ps4_err2_thresh @0x8A0;
 
 reg {
     desc="PS4 Gnd Current Fault Threshold";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_ignd_thresh @0x4A4;
+  } ps4_ignd_thresh @0x8A4;
 
 reg {
     desc="PS4 DCCT1 Over Current Fault Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_ovc1_cntlim @0x4A8;
+  } ps4_ovc1_cntlim @0x8A8;
  
 
 reg {
@@ -1863,7 +1878,7 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_ovc2_cntlim @0x4AC;
+  } ps4_ovc2_cntlim @0x8AC;
  
 
 reg {
@@ -1871,84 +1886,84 @@ reg {
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_ovv_cntlim @0x4B0;
+  } ps4_ovv_cntlim @0x8B0;
  
 reg {
     desc="PS4 PID Error1 Fault Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_err1_cntlim @0x4B4;
+  } ps4_err1_cntlim @0x8B4;
 
 reg {
     desc="PS4 PID Error2 Fault Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_err2_cntlim @0x4B8;
+  } ps4_err2_cntlim @0x8B8;
 
 reg {
     desc="PS4 Gnd Current Fault Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_ignd_cntlim @0x4BC;
+  } ps4_ignd_cntlim @0x8BC;
 
 reg {
     desc="PS4 Digital DCCT Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_dcct_cntlim @0x4C0;
+  } ps4_dcct_cntlim @0x8C0;
 
 reg {
     desc="PS4 Fault1 Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_flt1_cntlim @0x4C4;
+  } ps4_flt1_cntlim @0x8C4;
 
 reg {
     desc="PS4 Fault2 Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_flt2_cntlim @0x4C8;
+  } ps4_flt2_cntlim @0x8C8;
 
 reg {
     desc="PS4 Fault3 Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_flt3_cntlim @0x4CC;
+  } ps4_flt3_cntlim @0x8CC;
 
 reg {
     desc="PS4 On Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_on_cntlim @0x4D0;
+  } ps4_on_cntlim @0x8D0;
 
 reg {
     desc="PS4 Fault Clear";
     default sw = rw;
     default hw = r;
     field {} val[1];
-  } ps4_fault_clear @0x4D4;
+  } ps4_fault_clear @0x8D4;
 
 reg {
     desc="PS4 Fault Mask";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_fault_mask @0x4D8;
+  } ps4_fault_mask @0x8D8;
 
 reg {
     desc="PS4 HeartBeat Counter Limit";
     default sw = rw;
     default hw = r;
     field {} val[16];
-  } ps4_heartbeat_cntlim @0x4DC;
+  } ps4_heartbeat_cntlim @0x8DC;
 
 
 reg {
@@ -1956,35 +1971,35 @@ reg {
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps4_digout_on1 @0x4E0; 
+  } ps4_digout_on1 @0x8E0; 
   
 reg {
     desc="PS4 Digital Outputs bit1=On2";
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps4_digout_on2 @0x4E4; 
+  } ps4_digout_on2 @0x8E4; 
   
 reg {
     desc="PS4 Digital Outputs bit2=Reset";
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps4_digout_reset @0x4E8; 
+  } ps4_digout_reset @0x8E8; 
       
 reg {
     desc="PS4 Digital Outputs bit3=spare";
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps4_digout_spare @0x4EC; 
+  } ps4_digout_spare @0x8EC; 
     
  reg {
     desc="PS4 Digital Outputs bit4=Park";
     default sw = rw;
     default hw = r; 
     field {} val[1];
-  } ps4_digout_park @0x4F0; 
+  } ps4_digout_park @0x8F0; 
    
    
 reg {
@@ -1992,24 +2007,28 @@ reg {
     default sw = rw;
     default hw = w; 
     field {} val[5];
-  } ps4_digin @0x4F4; 
+  } ps4_digin @0x8F4; 
 
 reg {
     desc="PS4 Active Faults (Live)";
     default sw = rw;
     default hw = w; 
     field {} val[16];
-  } ps4_faults_live @0x4F8; 
+  } ps4_faults_live @0x8F8; 
 
 reg {
     desc="PS4 Active Faults (Latched)";
     default sw = rw;
     default hw = w; 
     field {} val[16];
-  } ps4_faults_lat @0x4FC; 
+  } ps4_faults_lat @0x8FC; 
 
-
-
+reg {
+    desc="PS4 10Hz Data AveMode 0=no ave, 1=167pt ave, 2=500pt ave";
+    default sw = rw;
+    default hw = r; 
+    field {} val[2];
+  } ps4_avemode @0x900; 
 
 
 
@@ -2023,7 +2042,7 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } snapshot_addrptr @0x500;
+  } snapshot_addrptr @0xA00;
 
 
 reg {
@@ -2031,7 +2050,7 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } snapshot_totaltrigs @0x504;
+  } snapshot_totaltrigs @0xA04;
 
 
 
@@ -2042,7 +2061,7 @@ reg {
     default swacc=true;
     default swmod=true;          
     field {} val[8];
-  } softtrig @0x508; 
+  } softtrig @0xA08; 
  
  
 reg {
@@ -2052,7 +2071,7 @@ reg {
     default swacc=true;
     default swmod=true;          
     field {} val[16];
-  } testtrig @0x50C; 
+  } testtrig @0xA0C; 
   
  
   
@@ -2061,21 +2080,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } usr1trig_bufptr @0x520; 
+  } usr1trig_bufptr @0xA20; 
 
 reg {
     desc="Soft Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } usr1trig_ts_s @0x524; 
+  } usr1trig_ts_s @0xA24; 
 
 reg {
     desc="Soft Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } usr1trig_ts_ns @0x528; 
+  } usr1trig_ts_ns @0xA28; 
 
 
 
@@ -2084,42 +2103,42 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } usr2trig_bufptr @0x530; 
+  } usr2trig_bufptr @0xA30; 
 
 reg {
     desc="Soft Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } usr2trig_ts_s @0x534; 
+  } usr2trig_ts_s @0xA34; 
 
 reg {
     desc="Soft Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } usr2trig_ts_ns @0x538; 
+  } usr2trig_ts_ns @0xA38; 
 
 reg {
     desc="Soft Trig Buffer Ptr.  Buffer Point latched value gets put here on Usr3 trigger";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } usr3trig_bufptr @0x540; 
+  } usr3trig_bufptr @0xA40; 
 
 reg {
     desc="Soft Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } usr3trig_ts_s @0x544; 
+  } usr3trig_ts_s @0xA44; 
 
 reg {
     desc="Soft Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } usr3trig_ts_ns @0x548; 
+  } usr3trig_ts_ns @0xA48; 
 
 
 reg {
@@ -2127,21 +2146,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } usr4trig_bufptr @0x550; 
+  } usr4trig_bufptr @0xA50; 
 
 reg {
     desc="Soft Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } usr4trig_ts_s @0x554; 
+  } usr4trig_ts_s @0xA54; 
 
 reg {
     desc="Soft Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } usr4trig_ts_ns @0x558; 
+  } usr4trig_ts_ns @0xA58; 
 
 
 reg {
@@ -2149,21 +2168,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt1trig_bufptr @0x560; 
+  } flt1trig_bufptr @0xA60; 
 
 reg {
     desc="Fault1 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt1trig_ts_s @0x564; 
+  } flt1trig_ts_s @0xA64; 
 
 reg {
     desc="Fault1 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt1trig_ts_ns @0x568; 
+  } flt1trig_ts_ns @0xA68; 
 
 
 
@@ -2172,21 +2191,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt2trig_bufptr @0x570; 
+  } flt2trig_bufptr @0xA70; 
 
 reg {
     desc="Fault2 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt2trig_ts_s @0x574; 
+  } flt2trig_ts_s @0xA74; 
 
 reg {
     desc="Fault2 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt2trig_ts_ns @0x578; 
+  } flt2trig_ts_ns @0xA78; 
 
 
 reg {
@@ -2194,21 +2213,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt3trig_bufptr @0x580; 
+  } flt3trig_bufptr @0xA80; 
 
 reg {
     desc="Fault3 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt3trig_ts_s @0x584; 
+  } flt3trig_ts_s @0xA84; 
 
 reg {
     desc="Fault3 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt3trig_ts_ns @0x588; 
+  } flt3trig_ts_ns @0xA88; 
 
 
 reg {
@@ -2216,21 +2235,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt4trig_bufptr @0x590; 
+  } flt4trig_bufptr @0xA90; 
 
 reg {
     desc="Fault4 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt4trig_ts_s @0x594; 
+  } flt4trig_ts_s @0xA94; 
 
 reg {
     desc="Fault4 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } flt4trig_ts_ns @0x598; 
+  } flt4trig_ts_ns @0xA98; 
 
 
 reg {
@@ -2238,21 +2257,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err1trig_bufptr @0x5A0; 
+  } err1trig_bufptr @0xAA0; 
 
 reg {
     desc="Err1 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err1trig_ts_s @0x5A4; 
+  } err1trig_ts_s @0xAA4; 
 
 reg {
     desc="Err1 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err1trig_ts_ns @0x5A8; 
+  } err1trig_ts_ns @0xAA8; 
 
 
 reg {
@@ -2260,21 +2279,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err2trig_bufptr @0x5B0; 
+  } err2trig_bufptr @0xAB0; 
 
 reg {
     desc="Err2 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err2trig_ts_s @0x5B4; 
+  } err2trig_ts_s @0xAB4; 
 
 reg {
     desc="Err2 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err2trig_ts_ns @0x5B8; 
+  } err2trig_ts_ns @0xAB8; 
 
 
 reg {
@@ -2282,21 +2301,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err3trig_bufptr @0x5C0; 
+  } err3trig_bufptr @0xAC0; 
 
 reg {
     desc="Err3 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err3trig_ts_s @0x5C4; 
+  } err3trig_ts_s @0xAC4; 
 
 reg {
     desc="Err3 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err3trig_ts_ns @0x5C8; 
+  } err3trig_ts_ns @0xAC8; 
 
 
 reg {
@@ -2304,21 +2323,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err4trig_bufptr @0x5D0; 
+  } err4trig_bufptr @0xAD0; 
 
 reg {
     desc="Err4 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err4trig_ts_s @0x5D4; 
+  } err4trig_ts_s @0xAD4; 
 
 reg {
     desc="Err4 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } err4trig_ts_ns @0x5D8; 
+  } err4trig_ts_ns @0xAD8; 
 
 
 
@@ -2327,21 +2346,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj1trig_bufptr @0x5E0; 
+  } inj1trig_bufptr @0xAE0; 
 
 reg {
     desc="Inj1 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj1trig_ts_s @0x5E4; 
+  } inj1trig_ts_s @0xAE4; 
 
 reg {
     desc="Inj1 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj1trig_ts_ns @0x5E8; 
+  } inj1trig_ts_ns @0xAE8; 
 
 
 reg {
@@ -2349,21 +2368,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj2trig_bufptr @0x5F0; 
+  } inj2trig_bufptr @0xAF0; 
 
 reg {
     desc="Inj2 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj2trig_ts_s @0x5F4; 
+  } inj2trig_ts_s @0xAF4; 
 
 reg {
     desc="Inj2 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj2trig_ts_ns @0x5F8; 
+  } inj2trig_ts_ns @0xAF8; 
 
 
 reg {
@@ -2371,21 +2390,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj3trig_bufptr @0x600; 
+  } inj3trig_bufptr @0xB00; 
 
 reg {
     desc="Inj3 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj3trig_ts_s @0x604; 
+  } inj3trig_ts_s @0xB04; 
 
 reg {
     desc="Inj3 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj3trig_ts_ns @0x608; 
+  } inj3trig_ts_ns @0xB08; 
 
 
 reg {
@@ -2393,21 +2412,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj4trig_bufptr @0x610; 
+  } inj4trig_bufptr @0xB10; 
 
 reg {
     desc="Inj4 Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj4trig_ts_s @0x614; 
+  } inj4trig_ts_s @0xB14; 
 
 reg {
     desc="Inj4 Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } inj4trig_ts_ns @0x618; 
+  } inj4trig_ts_ns @0xB18; 
 
 
 reg {
@@ -2415,21 +2434,21 @@ reg {
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } evrtrig_bufptr @0x620; 
+  } evrtrig_bufptr @0xB20; 
 
 reg {
     desc="EVR Trig Timestamp (s)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } evrtrig_ts_s @0x624; 
+  } evrtrig_ts_s @0xB24; 
 
 reg {
     desc="EVR Trig Timestamp (ns)";
     default sw = rw;
     default hw = w;
     field {} val[32];
-  } evrtrig_ts_ns @0x628; 
+  } evrtrig_ts_ns @0xB28; 
 
 
 
@@ -2441,7 +2460,7 @@ reg {
     default sw = r;
     default hw = r;
     field {} data[32] = `C_ID;
-  } ID @0x800;
+  } ID @0xC00;
 
   reg {
     desc = "Module Version Number";
@@ -2451,14 +2470,14 @@ reg {
     field {} patch [8]   = (`C_VERSION & 0x0000FF00) >> 8;
     field {} minor [8]   = (`C_VERSION & 0x00FF0000) >> 16;
     field {} major [8]   = (`C_VERSION & 0xFF000000) >> 24;
-  } VERSION @0x804;
+  } VERSION @0xC04;
 
   reg {
     desc="Project Identification Number";
     default sw = r;
     default hw = r;
     field {} data[32] = `C_PRJ_ID;
-  } PRJ_ID @0x808;
+  } PRJ_ID @0xC08;
 
   reg {
     desc="Project Version Number";
@@ -2468,21 +2487,21 @@ reg {
     field {} patch [8]   = (`C_PRJ_VERSION & 0x0000FF00) >> 8;
     field {} minor [8]   = (`C_PRJ_VERSION & 0x00FF0000) >> 16;
     field {} major [8]   = (`C_PRJ_VERSION & 0xFF000000) >> 24;
-  } PRJ_VERSION @0x80C;
+  } PRJ_VERSION @0xC0C;
 
   reg {
     desc="Project Repository check sum.";
     default sw = r;
     default hw = r;
       field {} data[32] = `C_PRJ_SHASUM;
-  } PRJ_SHASUM @0x810;
+  } PRJ_SHASUM @0xC10;
 
   reg {
     desc="Project compilation timestamp";
     default sw = r;
     default hw = r;
     field {} data[32] = `C_PRJ_TIMESTAMP;
-  } PRJ_TIMESTAMP @0x814;
+  } PRJ_TIMESTAMP @0xC14;
 
 
 

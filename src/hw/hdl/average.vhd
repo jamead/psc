@@ -5,8 +5,7 @@
 --value is written to the filter, the updated average occurs on the next positive edge of the clock. The 
 --averaging is done using integer arithmetic. 
 
---Note right now this has a hard coded scale factor of 0.001,  ADDR must be 1000 or scale factor must change. 
---Need to make this modular in the future. Also there is no rounding in this program, the result is just truncated. 
+
 
 --------------------------------------------------------------------------------------------------------------
 
@@ -15,14 +14,13 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 use ieee.math_real.all;  
 
-entity average is 
-generic(N : integer := 18 );		
+entity average is 		
 port(
 		clk      : in std_logic; 
 		reset    : in std_logic;
 		start    : in std_logic;  
-		data_in  : in std_logic_vector(N-1 downto 0); 
-		avg_out  : out std_logic_vector(31 downto 0); 
+		data_in  : in signed(19 downto 0); 
+		avg_out  : out signed(31 downto 0); 
 		sel      : in std_logic_vector(1 downto 0); --select average mode
 		done     : out std_logic
 		); 
@@ -32,7 +30,8 @@ architecture arch of average is
 type state is (IDLE, WRITE_TO_RAM, ACCUMULATE, FINISHED); 
 signal present_state : state; 
 
-type ram_array is array (499 downto 0) of std_logic_vector(N-1 downto 0);	--RAM array 
+constant N : integer := 20;
+type ram_array is array (499 downto 0) of signed(N-1 downto 0);	--RAM array 
 
 constant M : integer := integer(ceil(log2(real((2**(N))*500))));	
 signal ram : ram_array := (others => (others => '0')); 			
@@ -110,7 +109,7 @@ end process;
 				    --Average completed, strobe done bit
 				    when FINISHED => 
 						--Multiplier output can be truncated to 18 bits because the scale factor is always less than 1
-						avg_out <= std_logic_vector(resize(accum,32));  
+						avg_out <= resize(accum,32);  
 						accum <= (others => '0'); 
 						done <= '1'; 
 						present_state <= IDLE; 

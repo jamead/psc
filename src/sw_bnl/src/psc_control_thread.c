@@ -30,6 +30,7 @@ typedef union {
 #define CNTRL_PACKET_SIZE 16
 
 extern ScaleFactorType scalefactors[4];
+extern float CONVVOLTSTODACBITS;
 
 
 
@@ -63,7 +64,7 @@ void Calc_WriteSmooth(u32 chan, s32 new_setpt) {
     cur_setpt = Xil_In32(XPAR_M_AXI_BASEADDR + DAC_CURRSETPT_REG + chan*CHBASEADDR);
 
 	//calculate the length of the smooth length using the ramp rate scale factor
-	ramp_rate = scalefactors[chan-1].ampspersec * scalefactors[chan-1].dac_dccts * CONVVOLTSTO20BITS;  // in bits/sec
+	ramp_rate = scalefactors[chan-1].ampspersec * scalefactors[chan-1].dac_dccts * CONVVOLTSTODACBITS;  // in bits/sec
 	smooth_len = (u32)(abs(new_setpt - cur_setpt) / ramp_rate * SAMPLERATE);
 	xil_printf("Smooth Length: %d\r\n",smooth_len);
 	if (smooth_len >= 50000) {
@@ -156,7 +157,7 @@ void Set_dac(u32 chan, float new_setpt_amps) {
 	}
 
 
-	new_setpt = (s32)(new_setpt_amps * CONVVOLTSTO20BITS / scalefactors[chan-1].dac_dccts);
+	new_setpt = (s32)(new_setpt_amps * CONVVOLTSTODACBITS / scalefactors[chan-1].dac_dccts);
 	printf("New DAC Setpt: %f    %d\r\n",new_setpt_amps, (int)new_setpt);
 
 
@@ -223,7 +224,7 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 	        break;
 
         case DAC_SETPT_MSG:
-        	scaled_val = data.f*CONVVOLTSTO20BITS / scalefactors[chan-1].dac_dccts;
+        	scaled_val = data.f*CONVVOLTSTODACBITS / scalefactors[chan-1].dac_dccts;
 	        printf("Setting DAC CH%d SetPoint:   Value=%f   Bits=%d\r\n", (int)chan, data.f, (int)scaled_val);
 	        Set_dac(chan, data.f);
 	        break;
@@ -245,7 +246,7 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 
         case DAC_SETPT_OFFSET_MSG:
 	        printf("Setting DAC SetPt CH%d Offset:   Value=%f\r\n",(int)chan,data.f);
-	        scaled_val = data.f * CONVVOLTSTO20BITS / scalefactors[chan-1].dac_dccts;
+	        scaled_val = data.f * CONVVOLTSTODACBITS / scalefactors[chan-1].dac_dccts;
 	        Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_SETPT_OFFSET_REG + chan*CHBASEADDR, scaled_val);
 	        break;
 
@@ -256,7 +257,7 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 
         case DCCT1_OFFSET_MSG:
  	        printf("Setting DCCT1 CH%d Offset:   Value=%f\r\n",(int)chan,data.f);
- 	        scaled_val = data.f*CONVVOLTSTO20BITS / scalefactors[chan-1].dac_dccts;
+ 	        scaled_val = data.f*CONVVOLTSTODACBITS / scalefactors[chan-1].dac_dccts;
  	        xil_printf("ScaledVal: %d\r\n",scaled_val);
  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT1_OFFSET_REG + chan*CHBASEADDR, scaled_val);
  	        break;
@@ -268,7 +269,7 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 
         case DCCT2_OFFSET_MSG:
   	        printf("Setting DCCT2 CH%d Offset:   Value=%f\r\n",(int)chan,data.f);
-  	        scaled_val = data.f*CONVVOLTSTO20BITS / scalefactors[chan-1].dac_dccts;
+  	        scaled_val = data.f*CONVVOLTSTODACBITS / scalefactors[chan-1].dac_dccts;
   	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT2_OFFSET_REG + chan*CHBASEADDR, scaled_val);
   	        break;
 
@@ -341,14 +342,14 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 
         case OVC1_THRESH_MSG:
    	        printf("Setting OVC1 Threshold CH%d :   Value=%f\r\n",(int)chan,data.f);
-   	        scaled_val = data.f*CONVVOLTSTO20BITS / scalefactors[chan-1].dac_dccts;
+   	        scaled_val = data.f*CONVVOLTSTODACBITS / scalefactors[chan-1].dac_dccts;
    	        xil_printf("ScaledVal: %d\r\n", scaled_val);
    	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVC1_THRESH_REG + chan*CHBASEADDR, scaled_val);
    	        break;
 
         case OVC2_THRESH_MSG:
    	        printf("Setting OVC2 Threshold CH%d :   Value=%f\r\n",(int)chan,data.f);
-   	        scaled_val = data.f*CONVVOLTSTO20BITS / scalefactors[chan-1].dac_dccts;
+   	        scaled_val = data.f*CONVVOLTSTODACBITS / scalefactors[chan-1].dac_dccts;
    	        Xil_Out32(XPAR_M_AXI_BASEADDR + OVC2_THRESH_REG + chan*CHBASEADDR, scaled_val);
    	        break;
 
@@ -519,7 +520,10 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
         	scalefactors[chan-1].error = data.f;
         	break;
 
-
+        case AVE_MODE_MSG:
+        	xil_printf("Setting 10Hz Average Mode CH%d : Value=%d\r\n",chan,data.u);
+        	Xil_Out32(XPAR_M_AXI_BASEADDR + AVEMODE_REG + chan*CHBASEADDR, data.u);
+        	break;
 
 
         default:
