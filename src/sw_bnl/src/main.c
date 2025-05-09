@@ -284,6 +284,7 @@ void InitSettings() {
        
        Xil_Out32(base + FAULT_MASK_REG, 0x1DFF);
        Xil_Out32(base + FAULT_CLEAR_REG, 0x1);
+       usleep(1000);
        Xil_Out32(base + FAULT_CLEAR_REG, 0);
        
        
@@ -329,7 +330,7 @@ int main()
     
 	init_i2c();
 	XadcInit();
-	//prog_si570();
+	prog_si570();
     sleep(1);
 
 	// the mac address of the board. this should be unique per board
