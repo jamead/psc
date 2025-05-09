@@ -116,21 +116,21 @@ process (clk)
  end process;
 
 
-	
-	--MUX for switching between different 10 kHz clocks 
-	process(clk)
-	begin 
-		if rising_edge(clk) then 
-			if disable_fldbck = '1' then        --disables the fold back to the internal clock
-				O <= external_10khz; 
-			else 
-				if sel = '0' then 
-					O <= external_10khz; --external 10 kHz clock either from FOFB or EVR
-				else 
-					O <= internal_10khz; --10 kHz clk generated internally
-				end if;  
-			end if; 
-		end if; 
-	end process; 
+O <= internal_10khz; --10 kHz clk generated internally	
+--	--MUX for switching between different 10 kHz clocks 
+--	process(clk)
+--	begin 
+--		if rising_edge(clk) then 
+--			if disable_fldbck = '1' then        --disables the fold back to the internal clock
+--				O <= external_10khz; 
+--			else 
+--				if sel = '0' then 
+--					O <= external_10khz; --external 10 kHz clock either from FOFB or EVR
+--				else 
+--					O <= internal_10khz; --10 kHz clk generated internally
+--				end if;  
+--			end if; 
+--		end if; 
+--	end process; 
 
 end architecture; 
