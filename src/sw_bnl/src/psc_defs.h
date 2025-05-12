@@ -1,3 +1,5 @@
+#include "xqspips.h"
+
 
 #define GAIN20BITFRACT 1048575.0
 #define GAIN16BITFRACT 65535.0
@@ -103,6 +105,13 @@ void write_lmk61e2();
 float L11_to_float(s32);
 
 void i2c_configure_ltc2991();
+
+void QspiFlashInit();
+void QspiFlashEraseSect(u32);
+void QspiFlashWrite(u32, u32, u8 *);
+void QspiFlashRead(u32, u32, u8 *);
+
+
 
 
 //void i2c_sfp_get_stats(struct *, u8);

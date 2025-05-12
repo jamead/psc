@@ -20,6 +20,7 @@
 
 #define PLATFORM_EMAC_BASEADDR XPAR_XEMACPS_0_BASEADDR
 #define SYSMON_DEVICE_ID XPAR_XSYSMONPSU_0_DEVICE_ID
+#define QSPI_DEVICE_ID		XPAR_XQSPIPS_0_DEVICE_ID
 #define PLATFORM_ZYNQ
 
 #define THREAD_STACKSIZE 2048
@@ -49,6 +50,7 @@ ip_t ip_settings;
 
 XIicPs IicPsInstance0;	    // Instance of the IIC Device
 XIicPs IicPsInstance1;
+XQspiPs QspiInstance;
 
 
 TimerHandle_t xUptimeTimer;  // Timer handle
@@ -320,9 +322,16 @@ void XadcInit() {
 
 
 
+
 int main()
 {
+
     u8 psc_resolution;
+    u8 WriteBuffer[256];
+    u8 ReadBuffer[256];
+
+	u32 Count;
+	
 
 
 	xil_printf("BNL Power Supply Controller ...\r\n");
@@ -330,7 +339,52 @@ int main()
     
 	init_i2c();
 	XadcInit();
-	prog_si570();
+	//prog_si570();
+	
+	QspiFlashInit();
+
+	//QspiFlashEraseSect0(&QspiInstance);
+	QspiFlashEraseSect(0);
+	QspiFlashEraseSect(1);
+	QspiFlashEraseSect(2);
+
+	// Test pattern to write
+	for (Count = 0;Count < 255;Count++)
+			WriteBuffer[Count] = 10;
+
+	QspiFlashWrite(0, 256, WriteBuffer);
+
+	QspiFlashRead(0, 256, ReadBuffer);
+
+	for (Count = 0; Count < 255; Count++)
+		xil_printf("ReadBuffer[%d] = %d\r\n",Count,ReadBuffer[Count]);
+
+
+	// Test pattern to write
+	for (Count = 0;Count < 255;Count++)
+			WriteBuffer[Count] = 12;
+				
+	QspiFlashWrite(0x10000, 256, WriteBuffer);
+
+	QspiFlashRead(0x10000, 256, ReadBuffer);
+
+	for (Count = 0; Count < 255; Count++)
+		xil_printf("ReadBuffer[%d] = %d\r\n",Count,ReadBuffer[Count]);
+
+	// Test pattern to write
+	for (Count = 0;Count < 255;Count++)
+			WriteBuffer[Count] = 14;
+
+	QspiFlashWrite(0x20000, 256, WriteBuffer);
+
+	QspiFlashRead(0x20000, 256, ReadBuffer);
+
+	for (Count = 0; Count < 255; Count++)
+		xil_printf("ReadBuffer[%d] = %d\r\n",Count,ReadBuffer[Count]);
+
+	
+
+
     sleep(1);
 
 	// the mac address of the board. this should be unique per board
