@@ -215,6 +215,7 @@ void GlobSetting(u32 addr, MsgUnion data) {
 void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
 
     s32 scaled_val;
+    u8 qspibuf[FLASH_PAGE_SIZE];
 
     switch(addr) {
 
@@ -528,6 +529,19 @@ void ChanSettings(u32 chan, u32 addr, MsgUnion data) {
         case AVE_MODE_MSG:
         	xil_printf("Setting 10Hz Average Mode CH%d : Value=%d\r\n",chan,data.u);
         	Xil_Out32(XPAR_M_AXI_BASEADDR + AVEMODE_REG + chan*CHBASEADDR, data.u);
+        	break;
+
+        case WRITE_QSPI_MSG:
+        	xil_printf("Write Qspi Message..\r\n");
+        	if (data.u == 1) {
+        	   xil_printf("Writing current values for CH%dto QSPI FLASH..\r\n",chan);
+           	   QspiFlashEraseSect(chan);
+        	   QspiGatherData(chan, qspibuf);
+        	   QspiFlashWrite(chan*FLASH_SECTOR_SIZE, FLASH_PAGE_SIZE, qspibuf);
+        	   //read it back out from qspi, just for kicks
+        	   QspiFlashRead(chan*FLASH_SECTOR_SIZE, FLASH_PAGE_SIZE, qspibuf);
+               QspiDisperseData(chan,qspibuf);
+        	}
         	break;
 
 

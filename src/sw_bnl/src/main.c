@@ -91,30 +91,30 @@ static void assign_ip_settings()
 	//IP address is stored in EEPROM locations 0,1,2,3
 	i2c_eeprom_readBytes(0, data, 4);
 	xil_printf("IP Addr: %u.%u.%u.%u\r\n",data[0],data[1],data[2],data[3]);
-	//data[0] = 10;
-	//data[1] = 0;
-	//data[2] = 142;
-	//data[3] = 43;
+	data[0] = 10;
+	data[1] = 0;
+	data[2] = 142;
+	data[3] = 43;
 	IP4_ADDR(&server_netif.ip_addr, data[0],data[1],data[2],data[3]);
 
 	xil_printf("Getting IP Netmask from EEPROM\r\n");
 	//IP netmask is stored in EEPROM locations 16,17,18,19
 	i2c_eeprom_readBytes(16, data, 4);
 	xil_printf("IP Netmask: %u.%u.%u.%u\r\n",data[0],data[1],data[2],data[3]);
-	//data[0] = 255;
-	//data[1] = 255;
-	//data[2] = 254;
-	//data[3] = 0;
+	data[0] = 255;
+	data[1] = 255;
+	data[2] = 254;
+	data[3] = 0;
 	IP4_ADDR(&server_netif.netmask, data[0],data[1],data[2],data[3]);
 
 	xil_printf("Getting IP Netmask from EEPROM\r\n");
 	i2c_eeprom_readBytes(32, data, 4);
 	//IP gw is stored in EEPROM locations 32,33,34,35
 	xil_printf("IP Gateway: %u.%u.%u.%u\r\n",data[0],data[1],data[2],data[3]);
-	//data[0] = 10;
-	//data[1] = 0;
-	//data[2] = 142;
-	//data[3] = 51;
+	data[0] = 10;
+	data[1] = 0;
+	data[2] = 142;
+	data[3] = 51;
 	IP4_ADDR(&server_netif.gw, data[0],data[1],data[2],data[3]);
 
 }
@@ -226,76 +226,22 @@ void main_thread(void *p)
 }
 
 
-void InitSettings() {
+void InitSettingsfromQspi() {
 
-    u32 base, chan;
+    u32 chan;
+    u8 readbuf[FLASH_PAGE_SIZE];
 
-    // global values
+    // global values - hardcode for now
     Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_INJ_EVENTNUM_REG, 10);
     Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_PM_EVENTNUM_REG, 10);
 
-    //channel values
-    for (chan=0; chan<4; chan++) {
-       base = XPAR_M_AXI_BASEADDR + (chan + 1) * CHBASEADDR;
-
-       scalefactors[chan].ampspersec = 1.0;
-       scalefactors[chan].dac_dccts = 1.0;
-       scalefactors[chan].vout = 1.0;
-       scalefactors[chan].ignd = 1.0;
-       scalefactors[chan].spare = 1.0;
-       scalefactors[chan].regulator = 1.0;
-       scalefactors[chan].error = 1.0;
-
-       Xil_Out32(base + DCCT1_OFFSET_REG, 0);
-       Xil_Out32(base + DCCT2_OFFSET_REG, 0);
-       Xil_Out32(base + DACMON_OFFSET_REG, 0);
-       Xil_Out32(base + VOLT_OFFSET_REG, 0);
-       Xil_Out32(base + GND_OFFSET_REG, 0);
-       Xil_Out32(base + SPARE_OFFSET_REG, 0);
-       Xil_Out32(base + REG_OFFSET_REG, 0);
-       Xil_Out32(base + ERR_OFFSET_REG, 0);
-       Xil_Out32(base + DAC_SETPT_OFFSET_REG, 0);
-       Xil_Out32(base + DCCT1_GAIN_REG, 1.0 * GAIN20BITFRACT);
-       Xil_Out32(base + DCCT2_GAIN_REG, 1.0 * GAIN20BITFRACT);
-       Xil_Out32(base + DACMON_GAIN_REG, 1.0 * GAIN20BITFRACT);
-       Xil_Out32(base + VOLT_GAIN_REG, 1.0 * GAIN20BITFRACT);
-       Xil_Out32(base + GND_GAIN_REG, 1.0 * GAIN20BITFRACT);
-       Xil_Out32(base + SPARE_GAIN_REG, 1.0 * GAIN20BITFRACT);
-       Xil_Out32(base + REG_GAIN_REG, 1.0 * GAIN20BITFRACT);
-       Xil_Out32(base + ERR_GAIN_REG, 1.0 * GAIN20BITFRACT);
-       Xil_Out32(base + DAC_SETPT_GAIN_REG, 1.0 * GAIN20BITFRACT);
-
-       Xil_Out32(base + OVC1_THRESH_REG, 5.0 * CONVVOLTSTODACBITS);
-       Xil_Out32(base + OVC2_THRESH_REG, 5.0 * CONVVOLTSTODACBITS);
-       Xil_Out32(base + OVV_THRESH_REG, 5.0 * CONVVOLTSTO16BITS);
-       Xil_Out32(base + ERR1_THRESH_REG, 5.0 * CONVVOLTSTO16BITS);
-       Xil_Out32(base + ERR2_THRESH_REG, 5.0 * CONVVOLTSTO16BITS);
-       Xil_Out32(base + IGND_THRESH_REG, 5.0 * CONVVOLTSTO16BITS);
-
-       Xil_Out32(base + OVC1_CNTLIM_REG, 0.005 * SAMPLERATE);
-       Xil_Out32(base + OVC2_CNTLIM_REG, 0.005 * SAMPLERATE);
-       Xil_Out32(base + OVV_CNTLIM_REG, 0.005 * SAMPLERATE);
-       Xil_Out32(base + ERR1_CNTLIM_REG, 0.1 * SAMPLERATE);
-       Xil_Out32(base + ERR2_CNTLIM_REG, 0.1 * SAMPLERATE);
-       Xil_Out32(base + IGND_CNTLIM_REG, 0.1 * SAMPLERATE);
-       Xil_Out32(base + DCCT_CNTLIM_REG, 1.0 * SAMPLERATE);
-       Xil_Out32(base + FLT1_CNTLIM_REG, 1.0 * SAMPLERATE);
-       Xil_Out32(base + FLT2_CNTLIM_REG, 2.0 * SAMPLERATE);
-       Xil_Out32(base + FLT3_CNTLIM_REG, 3.0 * SAMPLERATE);
-       Xil_Out32(base + ON_CNTLIM_REG, 3.0 * SAMPLERATE);
-       
-       Xil_Out32(base + FAULT_MASK_REG, 0x1DFF);
-       Xil_Out32(base + FAULT_CLEAR_REG, 0x1);
-       usleep(1000);
-       Xil_Out32(base + FAULT_CLEAR_REG, 0);
-       
-       
-       
-       
-
+    //channel values, readfromflash and write FPGA registers
+    for (chan=1; chan<=4; chan++) {
+       xil_printf("Channel : %d\r\n",chan);
+   	   QspiFlashRead(chan*FLASH_SECTOR_SIZE, FLASH_PAGE_SIZE, readbuf);
+       QspiDisperseData(chan,readbuf);
+       xil_printf("\r\n\r\n");
     }
-
-
 
 }
 
@@ -327,12 +273,6 @@ int main()
 {
 
     u8 psc_resolution;
-    u8 WriteBuffer[256];
-    u8 ReadBuffer[256];
-
-	u32 Count;
-	
-
 
 	xil_printf("BNL Power Supply Controller ...\r\n");
     print_firmware_version();
@@ -340,49 +280,30 @@ int main()
 	init_i2c();
 	XadcInit();
 	//prog_si570();
-	
+
 	QspiFlashInit();
 
-	//QspiFlashEraseSect0(&QspiInstance);
-	QspiFlashEraseSect(0);
-	QspiFlashEraseSect(1);
-	QspiFlashEraseSect(2);
+    //Read Resolution from EEPROM (HS or MS)
+	xil_printf("Getting Unit Resolution\r\n");
+	i2c_eeprom_readBytes(48, &psc_resolution, 1);
+	Xil_Out32(XPAR_M_AXI_BASEADDR + RESOLUTION, psc_resolution);
 
-	// Test pattern to write
-	for (Count = 0;Count < 255;Count++)
-			WriteBuffer[Count] = 10;
+	xil_printf("Resolution: %u %u\r\n",psc_resolution);
 
-	QspiFlashWrite(0, 256, WriteBuffer);
+	if (psc_resolution == 1) {
+		xil_printf("This is a HS (20bit) PSC\r\n");
+	    CONVVOLTSTODACBITS = CONVVOLTSTO20BITS;
+	    CONVDACBITSTOVOLTS = CONV20BITSTOVOLTS;
+	}
+	else {
+		xil_printf("This is an MS (18bit) PSC\r\n");
+        CONVVOLTSTODACBITS = CONVVOLTSTO18BITS;
+        CONVDACBITSTOVOLTS = CONV18BITSTOVOLTS;
+	}
 
-	QspiFlashRead(0, 256, ReadBuffer);
-
-	for (Count = 0; Count < 255; Count++)
-		xil_printf("ReadBuffer[%d] = %d\r\n",Count,ReadBuffer[Count]);
+    InitSettingsfromQspi();
 
 
-	// Test pattern to write
-	for (Count = 0;Count < 255;Count++)
-			WriteBuffer[Count] = 12;
-				
-	QspiFlashWrite(0x10000, 256, WriteBuffer);
-
-	QspiFlashRead(0x10000, 256, ReadBuffer);
-
-	for (Count = 0; Count < 255; Count++)
-		xil_printf("ReadBuffer[%d] = %d\r\n",Count,ReadBuffer[Count]);
-
-	// Test pattern to write
-	for (Count = 0;Count < 255;Count++)
-			WriteBuffer[Count] = 14;
-
-	QspiFlashWrite(0x20000, 256, WriteBuffer);
-
-	QspiFlashRead(0x20000, 256, ReadBuffer);
-
-	for (Count = 0; Count < 255; Count++)
-		xil_printf("ReadBuffer[%d] = %d\r\n",Count,ReadBuffer[Count]);
-
-	
 
 
     sleep(1);
@@ -402,28 +323,7 @@ int main()
 	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET_REG, 0);
     usleep(1000);
 
-    //Read Resolution from EEPROM (HS or MS)
-	xil_printf("Getting Unit Resolution\r\n");
-	i2c_eeprom_readBytes(48, &psc_resolution, 1);
-	Xil_Out32(XPAR_M_AXI_BASEADDR + RESOLUTION, psc_resolution);
 
-	xil_printf("Resolution: %u %u\r\n",psc_resolution);
-
-
-	if (psc_resolution == 1) {
-		xil_printf("This is a HS (20bit) PSC\r\n");
-	    CONVVOLTSTODACBITS = CONVVOLTSTO20BITS;
-	    CONVDACBITSTOVOLTS = CONV20BITSTOVOLTS;
-	}
-	else {
-		xil_printf("This is an MS (18bit) PSC\r\n");
-        CONVVOLTSTODACBITS = CONVVOLTSTO18BITS;
-        CONVDACBITSTOVOLTS = CONV18BITSTOVOLTS;
-	}
-
-
-
-    InitSettings();
     
 
 	main_thread_handle = sys_thread_new("main_thread", main_thread, 0, THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
