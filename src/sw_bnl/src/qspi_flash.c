@@ -281,7 +281,6 @@ void QspiDisperseData(u32 chan, u8 *readbuf)
     //copy the qspi buffer to the qspi data structure
     memcpy(&qspidata,readbuf,sizeof(qspidata));
 
-    QspiPrintData(&qspidata, chan);
 
     base = XPAR_M_AXI_BASEADDR + (chan) * CHBASEADDR;
 
@@ -334,6 +333,10 @@ void QspiDisperseData(u32 chan, u8 *readbuf)
     scalefactors[chan-1].spare = qspidata.sf_spare;
     scalefactors[chan-1].regulator = qspidata.sf_regulator;
     scalefactors[chan-1].error = qspidata.sf_error;
+
+    QspiPrintData(&qspidata, chan);
+
+
     //Xil_Out32(base + FAULT_CLEAR_REG, 0x1);
     //usleep(1000);
     //Xil_Out32(base + FAULT_CLEAR_REG, 0);
