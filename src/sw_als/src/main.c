@@ -84,7 +84,7 @@ void realmain(void *arg)
         .conn = client_event,
         .recv = client_msg,
     };
-
+    
     psc_run(&the_server, &conf);
     while(1) {
         fprintf(stderr, "ERROR: PSC server loop returns!\n");

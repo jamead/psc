@@ -91,7 +91,7 @@ void psc_run(psc_key **key, const psc_config *config)
         socklen_t clen = sizeof(caddr);
 
         int client = accept(PSC->listen_sock, (void*)&caddr, &clen);
-
+        //xil_printf("Client accepted...\r\n");
         {
             int val = 1; /* ms */
             if(setsockopt(client, IPPROTO_TCP, TCP_NODELAY, &val, sizeof(val))==-1)
@@ -136,6 +136,9 @@ void psc_run(psc_key **key, const psc_config *config)
                   !(C = calloc(1,sizeof(*C))) ||
                   !(Cbuf = malloc(PSC_MAX_RX_MSG_LEN)))
         {
+        	printf("Client Count = %d\n",PSC->client_count);
+        	printf("C = %d\n",(int)C);
+        	printf("Cbuf = %d\n",(int)Cbuf);
             printf("Dropping client %s:%d (%d connected)\n",
                    inet_ntoa(caddr.sin_addr.s_addr),
                    ntohs(caddr.sin_port),
@@ -174,15 +177,17 @@ static void handle_client(void *raw)
 {
     psc_client *C = raw;
 
+
     if(C->PSC->conf->conn)
         (*C->PSC->conf->conn)(C->PSC->conf->pvt, PSC_CONN, C);
 
     while(1) {
+    	printf("In handle_client...\n");
         uint16_t msgid;
         uint32_t msglen = PSC_MAX_RX_MSG_LEN;
         if(psc_recvmsg(C->sock, &msgid, C->rxbuf, &msglen, 0))
             break; /* read error */
-
+        xil_printf("Received MsgID: %d  MsgLen: %d\r\n",msgid, msglen);
         (*C->PSC->conf->recv)(C->PSC->conf->pvt, C, msgid, msglen, C->rxbuf);
     }
 
@@ -218,6 +223,7 @@ static void handle_client(void *raw)
 void psc_send(psc_key *PSC, uint16_t msgid, uint32_t msglen, const void *msg)
 {
     psc_client *C;
+    xil_printf("In psc_send...\r\n");
     if(!PSC)
         return;
     sys_mutex_lock(&PSC->sendguard);

@@ -64,12 +64,28 @@ proc doOnCreate {} {
   bsp config max_task_name_len "32"
   
   bsp setlib -name xilffs
+  bsp config enable_exfat true
   bsp config use_strfunc "1"
   bsp config set_fs_rpath "2"
+  # XilFFS overrides
+
+
   
   bsp setlib -name lwip211
   bsp config api_mode "SOCKET_API"
+  bsp config dhcp_does_arp_check true
   bsp config lwip_dhcp "true"
+  bsp config pbuf_pool_size 2048 
+  bsp config tick_rate 750
+  bsp config lwip_stats true 
+  # bsp config lwip_debug true
+  # bsp config pbuf_debug true 
+  
+  # HACK: inject extra lwipopts.h options the xilinx generator doesn't know about...
+  # Make available socket send()/recv() timeout sockopts.
+  bsp config udp_ttl "255\n#define LWIP_SO_RCVTIMEO 1\n#define LWIP_SO_SNDTIMEO 1"
+  
+  
   bsp write
   bsp reload
   bsp regenerate

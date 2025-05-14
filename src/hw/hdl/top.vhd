@@ -186,10 +186,10 @@ architecture behv of top is
 begin
 
 
-fp_leds(0) <= evr_trigs.inj_trig_stretch; 
+fp_leds(0) <= evr_trigs.sa_trig_stretch; 
 fp_leds(1) <= '0';
 fp_leds(2) <= '0';
-fp_leds(3) <= evr_trigs.rcvd_clk; 
+fp_leds(3) <= '0'; --evr_trigs.rcvd_clk; 
 fp_leds(7 downto 4) <= "0000";
 
 sfp_leds(3 downto 0) <= "0000";
