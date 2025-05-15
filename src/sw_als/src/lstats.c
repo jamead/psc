@@ -20,7 +20,7 @@ void lstats_push(void *unused)
     (void)unused;
 
     while(1) {
-        vTaskDelay(5000 / portTICK_PERIOD_MS);
+        vTaskDelay(pdMS_TO_TICKS(1000));
 
         struct {
             uint32_t uptime;  // 0
@@ -49,6 +49,7 @@ void lstats_push(void *unused)
             // for backwards compatibility, must only append new values.
         } msg = {};
 
+
         // uptime as float32
         msg.uptime = htonf((xTaskGetTickCount() * 1.0f) / configTICK_RATE_HZ);
         msg.nthread = htonl(uxTaskGetNumberOfTasks());
@@ -74,6 +75,7 @@ void lstats_push(void *unused)
 #endif
 #undef MV
 #endif // LWIP_STATS
+
 
         if(xmon.IsReady)
             msg.sensors.temp = htonf(XSysMon_RawToTemperature(XSysMon_GetAdcData(&xmon, XSM_CH_TEMP)));

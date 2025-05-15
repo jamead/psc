@@ -91,7 +91,6 @@ void psc_run(psc_key **key, const psc_config *config)
         socklen_t clen = sizeof(caddr);
 
         int client = accept(PSC->listen_sock, (void*)&caddr, &clen);
-        //xil_printf("Client accepted...\r\n");
         {
             int val = 1; /* ms */
             if(setsockopt(client, IPPROTO_TCP, TCP_NODELAY, &val, sizeof(val))==-1)
@@ -103,7 +102,7 @@ void psc_run(psc_key **key, const psc_config *config)
 #  if LWIP_SO_SNDRCVTIMEO_NONSTANDARD
             int val = 1000; /* ms */
 #  else
-            struct timeval val = {1, 0};
+            struct timeval val = {5, 0};
 #  endif
             if(setsockopt(client, SOL_SOCKET, SO_SNDTIMEO, &val, sizeof(val))==-1)
                 printf("Can't set TX timeout\n");
@@ -226,7 +225,6 @@ static void handle_client(void *raw)
 void psc_send(psc_key *PSC, uint16_t msgid, uint32_t msglen, const void *msg)
 {
     psc_client *C;
-    xil_printf("In psc_send...\r\n");
     if(!PSC)
         return;
     sys_mutex_lock(&PSC->sendguard);

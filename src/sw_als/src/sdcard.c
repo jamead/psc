@@ -153,8 +153,8 @@ void sdcard_sync_eeprom(FIL *fd, int eewrite)
 {
     uint8_t *ee = malloc(EE_SIZE);
     uint8_t *file = malloc(EE_SIZE);
-    if(!ee || !file || ee_read(0, ee, EE_SIZE))
-        goto done;
+    //if(!ee || !file || ee_read(0, ee, EE_SIZE))
+    //    goto done;
 
     UINT n = 0;
     if(MUST(f_read(fd, file, EE_SIZE, &n))) {
@@ -174,8 +174,8 @@ void sdcard_sync_eeprom(FIL *fd, int eewrite)
         if(n!=EE_SIZE) {
             fprintf(stderr, "Error EEPROM.NEW size must be %u bytes\n", EE_SIZE);
 
-        } else if(ee_write(0, file, n)) {
-            fprintf(stderr, "Error Unable to write EEPROM\n");
+        //} else if(ee_write(0, file, n)) {
+        //    fprintf(stderr, "Error Unable to write EEPROM\n");
 
         } else {
             printf("Wrote EEPROM\n");

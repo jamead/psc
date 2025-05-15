@@ -39,7 +39,6 @@ void set_fpleds(u32 msgVal)  {
 
 
 void soft_trig(u32 msgVal) {
-	xil_printf("MsgVal = %d\r\n",msgVal);
 	Xil_Out32(XPAR_M_AXI_BASEADDR + SOFTTRIG, msgVal);
 	Xil_Out32(XPAR_M_AXI_BASEADDR + SOFTTRIG, 0);
 
@@ -185,7 +184,7 @@ void glob_settings(void *msg) {
 	//xil_printf("Addr: %d    Data: %d\r\n",addr,data.u);
 
 
-    xil_printf("In Global Settings...\r\n");
+    //xil_printf("In Global Settings...\r\n");
     switch(addr) {
 		case SOFT_TRIG_MSG:
 			xil_printf("Soft Trigger Message:   Value=%d\r\n",data.u);

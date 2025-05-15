@@ -25,7 +25,16 @@ void net_setup(net_config *conf);
 void discover_setup(void);
 void tftp_setup(void);
 void lstats_setup(void);
+void sadata_setup(void);
+void snapshot_setup(void);
 void sdcard_handle(net_config *conf);
+void init_i2c(void);
+void i2c_get_mac_address();
+void i2c_eeprom_readBytes(u8, u8 *, u8);
+void i2c_eeprom_writeBytes(u8, u8 *, u8);
+void eeprom_dump();
+void menu_get_ipaddr();
+void prog_si570();
 
 
 /* registers from Controller.v by word offset

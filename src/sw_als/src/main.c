@@ -11,6 +11,7 @@
 #include <xparameters_ps.h>
 
 #include "xqspips.h"
+#include "xiicps.h"
 //#include <lwipopts.h>
 
 #include "local.h"
@@ -22,6 +23,9 @@ psc_key* the_server;
 
 struct ScaleFactorType scalefactors[4];
 XQspiPs QspiInstance;
+XIicPs IicPsInstance0;	    // si570
+XIicPs IicPsInstance1;      // eeprom, one-wire
+
 float CONVVOLTSTODACBITS;
 float CONVDACBITSTOVOLTS;
 
@@ -50,15 +54,7 @@ static
 void client_msg(void *pvt, psc_client *ckey, uint16_t msgid, uint32_t msglen, void *msg)
 {
     (void)pvt;
-    /*
-    int i;
-    u32 *words = (u32 *)msg;
-    xil_printf("message len = %d\r\n",msglen);
 
-    for (i=0;i<4;i++) {
-    	printf("%d: %d\n",i,htonl(words[i]));
-    }
-    */
     switch(msgid) {
         case 0:
         	glob_settings(msg);
@@ -73,26 +69,7 @@ void client_msg(void *pvt, psc_client *ckey, uint16_t msgid, uint32_t msglen, vo
 
     }
 
-    /*
-    //xil_printf("ClientMsg:   MsgID=%d\r\n",msgid);
-    if (msgid==0) {
-    	//xil_printf("Global Message\r\n");
-    }
-    else if (msgid==1) {
-        //xil_printf("CH1  Message Len=%d\r\n",msglen);
 
-    } else if(msgid==1024) {
-        // request CPU reset
-        Xil_Out32(XPS_SYS_CTRL_BASEADDR | 0x008, 0xDF0D); // SLCR SLCR_UNLOCK
-        Xil_Out32(XPS_SYS_CTRL_BASEADDR | 0x200, 0x1); // SLCR PSS_RST_CTRL[SOFT_RST]
-        // may be reached, but not for long...
-
-    } else {
-        // echo back unknown msgid
-    	xil_printf("Send One...   MsgID=%d\r\n",msgid);
-        psc_send_one(ckey, msgid | 0x8000, msglen, msg);
-    }
-    */
 
 }
 
@@ -102,6 +79,8 @@ void on_startup(void *pvt, psc_key *key)
     (void)pvt;
     (void)key;
     lstats_setup();
+    sadata_setup();
+    snapshot_setup();
 }
 
 static
@@ -118,7 +97,7 @@ void realmain(void *arg)
     }
 
     discover_setup();
-    tftp_setup();
+    //tftp_setup();
 
     const psc_config conf = {
         .port = 3000,
@@ -153,8 +132,49 @@ void print_firmware_version()
     xil_printf("Project Compilation Timestamp: %s\r\n", timebuf);
 }
 
+static
+void mshsSelect(void) {
 
+    u8 psc_resolution;
 
+   //Read Resolution from EEPROM (HS or MS)
+	xil_printf("Getting Unit Resolution\r\n");
+	i2c_eeprom_readBytes(48, &psc_resolution, 1);
+	Xil_Out32(XPAR_M_AXI_BASEADDR + RESOLUTION, psc_resolution);
+
+	xil_printf("Resolution: %u %u\r\n",psc_resolution);
+
+	if (psc_resolution == 1) {
+		xil_printf("This is a HS (20bit) PSC\r\n");
+	    CONVVOLTSTODACBITS = CONVVOLTSTO20BITS;
+	    CONVDACBITSTOVOLTS = CONV20BITSTOVOLTS;
+	}
+	else {
+		xil_printf("This is an MS (18bit) PSC\r\n");
+        CONVVOLTSTODACBITS = CONVVOLTSTO18BITS;
+        CONVDACBITSTOVOLTS = CONV18BITSTOVOLTS;
+	}
+
+}
+
+void InitSettingsfromQspi() {
+
+    u32 chan;
+    u8 readbuf[FLASH_PAGE_SIZE];
+
+    // global values - hardcode for now
+    Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_INJ_EVENTNUM_REG, 10);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_PM_EVENTNUM_REG, 10);
+
+    //channel values, readfromflash and write FPGA registers
+    for (chan=1; chan<=4; chan++) {
+       xil_printf("Channel : %d\r\n",chan);
+   	   QspiFlashRead(chan*FLASH_SECTOR_SIZE, FLASH_PAGE_SIZE, readbuf);
+       QspiDisperseData(chan,readbuf);
+       xil_printf("\r\n\r\n");
+    }
+
+}
 
 
 
@@ -169,8 +189,11 @@ int main(void) {
     xil_printf("Power Supply Controller\r\n");
     print_firmware_version();
 
+	init_i2c();
+	//prog_si570();
 	QspiFlashInit();
-
+    mshsSelect();
+    InitSettingsfromQspi();
 
     git_hash = Controller_read(GitHash);
     printf("---- Git ID: 0x%08lX\r\n", git_hash);
