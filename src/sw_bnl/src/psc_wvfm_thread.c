@@ -75,6 +75,7 @@ void ReadSnapShotStats(char *msg, TriggerTypes *trig) {
 
    snapstats.cur_bufaddr = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_ADDRPTR);
    snapstats.totalfacnt = Xil_In32(XPAR_M_AXI_BASEADDR + SNAPSHOT_TOTALTRIGS);
+   xil_printf("CurBuf = %x   TotalCnts = %d\r\n",snapstats.cur_bufaddr, snapstats.totalfacnt);
 
    for (i=0;i<4;i++) {
        snapstats.usr[i].lataddr = Xil_In32(XPAR_M_AXI_BASEADDR + USR1TRIG_BUFPTR + i*0x10);

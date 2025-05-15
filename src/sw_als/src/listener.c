@@ -177,17 +177,20 @@ static void handle_client(void *raw)
 {
     psc_client *C = raw;
 
+    printf("In handle_client...\n");
 
     if(C->PSC->conf->conn)
         (*C->PSC->conf->conn)(C->PSC->conf->pvt, PSC_CONN, C);
 
     while(1) {
-    	printf("In handle_client...\n");
+
         uint16_t msgid;
         uint32_t msglen = PSC_MAX_RX_MSG_LEN;
         if(psc_recvmsg(C->sock, &msgid, C->rxbuf, &msglen, 0))
             break; /* read error */
-        xil_printf("Received MsgID: %d  MsgLen: %d\r\n",msgid, msglen);
+
+
+        //function call to the recv function (which is client message)
         (*C->PSC->conf->recv)(C->PSC->conf->pvt, C, msgid, msglen, C->rxbuf);
     }
 

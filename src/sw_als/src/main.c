@@ -9,11 +9,22 @@
 #include <lwip/sys.h>
 #include <netif/xadapter.h>
 #include <xparameters_ps.h>
+
+#include "xqspips.h"
 //#include <lwipopts.h>
 
 #include "local.h"
+#include "control.h"
+#include "pl_regs.h"
+#include "qspi_flash.h"
 
 psc_key* the_server;
+
+struct ScaleFactorType scalefactors[4];
+XQspiPs QspiInstance;
+float CONVVOLTSTODACBITS;
+float CONVDACBITSTOVOLTS;
+
 
 uint32_t git_hash;
 
@@ -39,8 +50,36 @@ static
 void client_msg(void *pvt, psc_client *ckey, uint16_t msgid, uint32_t msglen, void *msg)
 {
     (void)pvt;
-    if(0) {
-        // TODO: placeholder for special handling of some message ID
+    /*
+    int i;
+    u32 *words = (u32 *)msg;
+    xil_printf("message len = %d\r\n",msglen);
+
+    for (i=0;i<4;i++) {
+    	printf("%d: %d\n",i,htonl(words[i]));
+    }
+    */
+    switch(msgid) {
+        case 0:
+        	glob_settings(msg);
+        	break;
+
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+         	chan_settings(msgid,msg);
+            break;
+
+    }
+
+    /*
+    //xil_printf("ClientMsg:   MsgID=%d\r\n",msgid);
+    if (msgid==0) {
+    	//xil_printf("Global Message\r\n");
+    }
+    else if (msgid==1) {
+        //xil_printf("CH1  Message Len=%d\r\n",msglen);
 
     } else if(msgid==1024) {
         // request CPU reset
@@ -50,8 +89,11 @@ void client_msg(void *pvt, psc_client *ckey, uint16_t msgid, uint32_t msglen, vo
 
     } else {
         // echo back unknown msgid
+    	xil_printf("Send One...   MsgID=%d\r\n",msgid);
         psc_send_one(ckey, msgid | 0x8000, msglen, msg);
     }
+    */
+
 }
 
 static
@@ -92,15 +134,43 @@ void realmain(void *arg)
     }
 }
 
+void print_firmware_version()
+{
+
+    time_t epoch_time;
+    struct tm *human_time;
+    char timebuf[80];
+
+    xil_printf("Module ID Number: %x\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + ID));
+    xil_printf("Module Version Number: %x\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + VERSION));
+    xil_printf("Project ID Number: %x\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + PRJ_ID));
+    xil_printf("Project Version Number: %x\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + PRJ_VERSION));
+    //compare to git commit with command: git rev-parse --short HEAD
+    xil_printf("Git Checksum: %x\r\n", Xil_In32(XPAR_M_AXI_BASEADDR + PRJ_SHASUM));
+    epoch_time = Xil_In32(XPAR_M_AXI_BASEADDR + PRJ_TIMESTAMP);
+    human_time = localtime(&epoch_time);
+    strftime(timebuf, sizeof(timebuf), "%Y-%m-%d %H:%M:%S", human_time);
+    xil_printf("Project Compilation Timestamp: %s\r\n", timebuf);
+}
+
+
+
+
+
+
 int main(void) {
     // entry point from FSBL via freertos init
 
     // crutch until lack of thread sync. sorted out...
-    Xil_L1DCacheDisable();
-    Xil_L2CacheDisable();
+    //Xil_L1DCacheDisable();
+    //Xil_L2CacheDisable();
 
     // show some signs of life...
-    printf("PSC Demo Application\n");
+    xil_printf("Power Supply Controller\r\n");
+    print_firmware_version();
+
+	QspiFlashInit();
+
 
     git_hash = Controller_read(GitHash);
     printf("---- Git ID: 0x%08lX\r\n", git_hash);
