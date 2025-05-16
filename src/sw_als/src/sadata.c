@@ -1,5 +1,5 @@
 
-// remote reporting of select LwIP statistics
+// Gather and Send 10Hz data
 
 #include <stdio.h>
 

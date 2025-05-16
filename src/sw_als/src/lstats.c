@@ -5,6 +5,7 @@
 
 #include <xsysmon.h>
 #include <xparameters.h>
+//#include "xadcps.h"
 
 #include <FreeRTOS.h>
 #include <lwip/sys.h>
@@ -13,6 +14,8 @@
 #include "local.h"
 
 static XSysMon xmon;
+
+
 
 static
 void lstats_push(void *unused)
@@ -39,12 +42,14 @@ void lstats_push(void *unused)
             struct {
                 uint32_t err; // 36
                 uint32_t avail; // 40
-                uint32_t used; // 48
-                uint32_t max; // 52
-                uint32_t illegal; // 56
+                uint32_t used; // 44
+                uint32_t max; // 48
+                uint32_t illegal; // 52
             } mem;
             struct {
-                uint32_t temp; // 60
+                uint32_t temp; // 56
+                uint32_t vccint; //60
+                uint32_t vccaux; //64
             } sensors;
             // for backwards compatibility, must only append new values.
         } msg = {};
@@ -77,9 +82,11 @@ void lstats_push(void *unused)
 #endif // LWIP_STATS
 
 
-        if(xmon.IsReady)
+        if(xmon.IsReady) {
             msg.sensors.temp = htonf(XSysMon_RawToTemperature(XSysMon_GetAdcData(&xmon, XSM_CH_TEMP)));
-
+            msg.sensors.vccint = htonf(XSysMon_RawToVoltage(XSysMon_GetAdcData(&xmon, XSM_CH_VCCINT)));
+            msg.sensors.vccaux = htonf(XSysMon_RawToVoltage(XSysMon_GetAdcData(&xmon, XSM_CH_VCCAUX)));
+        }
         psc_send(the_server, 101, sizeof(msg), &msg);
     }
 }
@@ -87,6 +94,7 @@ void lstats_push(void *unused)
 void lstats_setup(void)
 {
     printf("INFO: Starting stats daemon\n");
+
 
     {
         XSysMon_Config *conf = XSysMon_LookupConfig(XPAR_SYSMON_0_DEVICE_ID);
@@ -100,6 +108,7 @@ void lstats_setup(void)
             XSysMon_SetSequencerMode(&xmon, XSM_SEQ_MODE_CONTINPASS);
         }
     }
+
 
     sys_thread_new("lstats", lstats_push, NULL, THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
 }

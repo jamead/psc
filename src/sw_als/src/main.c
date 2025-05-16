@@ -81,6 +81,7 @@ void on_startup(void *pvt, psc_key *key)
     lstats_setup();
     sadata_setup();
     snapshot_setup();
+    //console_setup();
 }
 
 static
@@ -195,8 +196,11 @@ int main(void) {
     mshsSelect();
     InitSettingsfromQspi();
 
-    git_hash = Controller_read(GitHash);
-    printf("---- Git ID: 0x%08lX\r\n", git_hash);
+	//EVR reset
+    xil_printf("Resetting EVR GTX...\r\n");
+	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET_REG, 0xFF);
+	//Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET_REG, 0);
+
 
     sys_thread_new("main", realmain, NULL, THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
 

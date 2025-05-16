@@ -1,9 +1,7 @@
-
-// remote reporting of select LwIP statistics
+// Handles gathering and sending Snapshot (10KHz) data buffers from triggers
 
 #include <stdio.h>
 #include "xil_cache.h"
-
 
 #include <FreeRTOS.h>
 #include <lwip/sys.h>
@@ -95,7 +93,7 @@ void CopyDataChan(float **msg_ptr, u32 *buf_data, u32 numwords, int chan) {
     //buf_data[30000*40+2] = 0;
     //buf_data[30000*40+3] = 0;
     //xil_printf("Start CopyDataChan...\r\n");
-	//vTaskSuspendAll();
+	vTaskSuspendAll();
 
     switch (chan) {
         case 1:  // Copy elements 0-9
@@ -210,7 +208,7 @@ void CopyDataChan(float **msg_ptr, u32 *buf_data, u32 numwords, int chan) {
             break;
     }
     //xil_printf("Finish CopyDataChan...\r\n");
-    //xTaskResumeAll();
+    xTaskResumeAll();
 
 }
 
@@ -228,14 +226,10 @@ void ReadDMABuf(char *msg, TriggerInfo *trig) {
     float *msg_fltptr;
     u32 startaddr, stopaddr;
     u32 prefirstnumwords, presecnumwords, postfirstnumwords, postsecnumwords;
-    //u32 prefirstnumpts, presecnumpts, postfirstnumpts, postsecnumpts;
-
 
     //xil_printf("In ReadDMABuf Message ID: %d\r\n",trig->msgID);
 
     msg_fltptr = (float *)msg;
-
-	//xil_printf("Copying Snapshot Data from CircBuf to PSC Message...\r\n");
 
 	// Invalidate cache of entire circular buffer
 	Xil_DCacheInvalidateRange(0x10000000,16e6);
@@ -245,95 +239,45 @@ void ReadDMABuf(char *msg, TriggerInfo *trig) {
     //Each point is 160 bytes
     startaddr = trig->addr - trig->pretrigpts*BUFSTEPBYTES;
     stopaddr = trig->addr + trig->posttrigpts*BUFSTEPBYTES;
-    //xil_printf("LatAddr: 0x%x    StartAddr: 0x%x    StopAddr: 0x%x\r\n",trig->addr,startaddr,stopaddr);
     if (startaddr < 0x10000000) {
-	   //xil_printf("    Pretrigger wraps\r\n");
+       //pretrigger wrap
 	   presecnumwords = (trig->addr - BUFSTART) >> 2;
-	   //presecnumpts   = presecnumwords / WORDSPERSAMPLE;
 	   prefirstnumwords   = trig->pretrigpts*WORDSPERSAMPLE - presecnumwords;
-	   //prefirstnumpts = prefirstnumwords / BUFSTEPWORDS;
 	   startaddr = BUFSTART+BUFLEN - prefirstnumwords*4;
-	   //xil_printf("    Start Addr          : %9d   0x%x\r\n", startaddr,startaddr);
-	   //xil_printf("    Latch Addr          : %9d   0x%x\r\n", trig->addr, trig->addr);
-	   //xil_printf("    BUFSTART+BUFLEN     : %9d   0x%x\r\n", BUFSTART+BUFLEN,BUFSTART+BUFLEN);
-	   //xil_printf("    SecPreNumWords      : %9d   0x%x\r\n", presecnumwords, presecnumwords);
-	   //xil_printf("    SecPreNumPts        : %9d\r\n", presecnumpts);
-	   //xil_printf("    FirstPreLen         : %9d   0x%x\r\n", prefirstnumwords, prefirstnumwords);
-	   //xil_printf("    FirstPreNumPts      : %9d\r\n", prefirstnumpts);
-	   //xil_printf("    TotalPreLen         : %9d   0x%x\r\n", prefirstnumwords+presecnumwords, prefirstnumwords+presecnumwords);
-	   //xil_printf("    TotalPrePts         : %9d\r\n", prefirstnumpts+presecnumpts);
-	   //Now that we have all the lengths, copy to the message buffer
-
 	   //copy pre-trigger
-	   //xil_printf("    Copying 1st part of pre-trigger points\r\n");
 	   buf_data = (u32 *) startaddr;
 	   CopyDataChan(&msg_fltptr, buf_data, prefirstnumwords, trig->channum);
-
 	   //copy first postbuf
-	   //xil_printf("    Copying 2nd part of pre-trigger points\r\n");
 	   buf_data = (u32 *) BUFSTART;
-	   //xil_printf("Msg_u32ptr = %d\r\n",msg_u32ptr);
 	   CopyDataChan(&msg_fltptr, buf_data, presecnumwords, trig->channum);
-
 	   //copy second postbuf
-  	   //xil_printf("    Copying post-trigger points\r\n");
   	   buf_data = (u32 *) trig->addr;
 	   CopyDataChan(&msg_fltptr, buf_data, trig->posttrigpts*BUFSTEPWORDS, trig->channum);
 
-
     }
     else if (stopaddr > BUFSTART+BUFLEN) {
-	   //xil_printf("    Postrigger wraps\r\n");
-
+       //posttrigger wrap
 	   postfirstnumwords = (BUFSTART+BUFLEN - trig->addr) >> 2;
-	   //postfirstnumpts   = postfirstnumwords / WORDSPERSAMPLE;
 	   postsecnumwords   = trig->posttrigpts*WORDSPERSAMPLE - postfirstnumwords;
-	   //postsecnumpts = postsecnumwords / BUFSTEPWORDS;
-	   //xil_printf("    Latch Addr          : %9d   0x%x\r\n", trig->addr, trig->addr);
-	   //xil_printf("    BUFSTART+BUFLEN     : %9d   0x%x\r\n", BUFSTART+BUFLEN,BUFSTART+BUFLEN);
-	   //xil_printf("    FirstPostNumWords   : %9d   0x%x\r\n", postfirstnumwords, postfirstnumwords);
-	   //xil_printf("    FirstPostNumPts     : %9d\r\n", postfirstnumpts);
-	   //xil_printf("    SecPostLen          : %9d   0x%x\r\n", postsecnumwords, postsecnumwords);
-	   //xil_printf("    SecPostNumPts       : %9d\r\n", postsecnumpts);
-	   //xil_printf("    TotalPostLen        : %9d   0x%x\r\n", postfirstnumwords+postsecnumwords, postfirstnumwords+postsecnumwords);
-	   //xil_printf("    TotalPostPts        : %9d\r\n", postfirstnumpts+postsecnumpts);
-	   //Now that we have all the lengths, copy to the message buffer
-
 	   //copy pre-trigger
-	   //xil_printf("    Copying pre-trigger points\r\n");
 	   buf_data = (u32 *) startaddr;
 	   CopyDataChan(&msg_fltptr, buf_data, trig->pretrigpts*BUFSTEPWORDS, trig->channum);
-
 		//copy first postbuf
-	   //xil_printf("    Copying 1st part of post-trigger points\r\n");
 	   buf_data = (u32 *) trig->addr;
 	   CopyDataChan(&msg_fltptr, buf_data, postfirstnumwords, trig->channum);
-
   	   //copy second postbuf
-  	   //xil_printf("    Copying 2nd part of post-trigger points\r\n");
   	   buf_data = (u32 *) BUFSTART;
-	   //xil_printf("Msg_u32ptr = %d\r\n",msg_u32ptr);
 	   CopyDataChan(&msg_fltptr, buf_data, postsecnumwords, trig->channum);
-
     }
 
     else {
-       //xil_printf("    No Wraps\r\n");
-	   //xil_printf("    Copying Buffer\r\n");
+       //no wraps
 	   buf_data = (u32 *) startaddr;
 	   CopyDataChan(&msg_fltptr, buf_data, (trig->pretrigpts+trig->posttrigpts)*BUFSTEPWORDS, trig->channum);
     }
 
-	//xil_printf("Done Copying Snapshot Data from CircBuf to PSC Message...\r\n");
-
-
-
 
 }
-
-
-
-
 
 
 
@@ -341,47 +285,16 @@ void ReadDMABuf(char *msg, TriggerInfo *trig) {
 static
 s32 SendWfmData(char *msg, TriggerInfo *trig) {
 
-
-
-    xil_printf("In SendWfmData...\r\n");
     trig->sendbuf = 0;
     trig->active = 0;
 
-	xil_printf("Calling ReadDMABuf...\r\n");
 	ReadDMABuf(msg,trig);
-
-	/*
-
-    msg_fltptr = (float *)msg;
-    xil_printf("Header\r\n");
-    for(i=0;i<8;i++) {
-    	xil_printf("%d: %d\r\n",i,msg[i]);
-    }
-    xil_printf("Data\r\n");
-	for(i=2;i<22;i++) {
-	    printf("%d: %f\r\n",i,msg_fltptr[i]);
-	}
-    */
-    //write out Snapshot data (msg51)
-	xil_printf("Tx 10 sec of Snapshot Data\r\n");
-	/*
-	xil_printf("Checking Msg for Zeros\r\n");
-	msg_fltptr = (float *)msg;
-	for (i=2;i<100000*10;i++) {
-		if (msg_fltptr[i] == 0) {
-			printf("msg=%f    i=%d\r\n",msg_fltptr[i], i);
-		}
-	}
-	*/
-
 
 	hton_conv(msg,sizeof(msg));
     psc_send(the_server, trig->msgID, MSGWFMLEN, msg);
 
     return 0;
 }
-
-
 
 
 
@@ -393,8 +306,7 @@ void ProcessTrigger(TriggerInfo *trig, const char *trig_name) {
     if ((trig->addr != trig->addr_last) && (trig->active == 0)) {
         trig->active = 1;
         trig->addr_last = trig->addr; ;
-        xil_printf("Got %s Trigger...\r\n", trig_name);
-        xil_printf("Buffer Ptr at Trigger: %x\r\n", trig->addr);
+        xil_printf("Got %s Trigger...   BufPtr Addr: %x\r\n", trig_name, trig->addr);
         trig->postdlycnt = 0;
     }
 
@@ -572,33 +484,21 @@ void snapshot_push(void *unused)
 
 		CheckforTriggers(&trig);
 
-
-		//xil_printf("Wvfm: In main waveform loop...\r\n");
-
-		vTaskDelay(pdMS_TO_TICKS(100));
-
-		CheckforTriggers(&trig);
-
-
         // Scan through all the trigger types, send waveform if there was a trigger
 		for (int i = 0; i < 4; ++i) {
 		    if (trig.usr[i].sendbuf == 1)
 		        SendWfmData(msgUsr_buf[i], &trig.usr[i]);
-
 		    if (trig.flt[i].sendbuf == 1)
 		        SendWfmData(msgFlt_buf[i], &trig.flt[i]);
-
 		    if (trig.err[i].sendbuf == 1)
 		        SendWfmData(msgErr_buf[i], &trig.err[i]);
-
 		    if (trig.inj[i].sendbuf == 1)
 		        SendWfmData(msgInj_buf[i], &trig.inj[i]);
-
 		    if (trig.evr[i].sendbuf == 1)
 		        SendWfmData(msgEvr_buf[i], &trig.evr[i]);
 		}
 
-
+        // Send waveform trigger information
 		SendSnapShotStats(msgWfmStats_buf,&trig);
 
     }
