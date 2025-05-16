@@ -290,7 +290,7 @@ s32 SendWfmData(char *msg, TriggerInfo *trig) {
 
 	ReadDMABuf(msg,trig);
 
-	hton_conv(msg,sizeof(msg));
+	hton_conv(msg,MSGWFMLEN);
     psc_send(the_server, trig->msgID, MSGWFMLEN, msg);
 
     return 0;

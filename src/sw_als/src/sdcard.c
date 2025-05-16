@@ -90,9 +90,9 @@ void sdcard_netconf(net_config *conf, FIL *fd)
             while(line[0] && !lwip_isspace(line[0])) line++; // find space/nil after arg
             line[0] = '\0'; // chop out arg
         }
-
         if(strcmp(cmd, "dhcp")==0) {
             if(!arg || strcmp(arg, "yes")==0) {
+                printf("DHCP = yes\r\n");
                 conf->use_static = 0;
             } else if(strcmp(arg, "no")==0) {
                 conf->use_static = 1;
