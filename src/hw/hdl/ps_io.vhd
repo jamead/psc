@@ -92,6 +92,10 @@ reg_i.evr_ts_ns.val.data <= evr_trigs.ts_ns;
 evr_params.reset <= reg_o.evr_reset.val.data;
 evr_params.inj_eventno <= reg_o.evr_inj_eventno.val.data;
 evr_params.pm_eventno <= reg_o.evr_pm_eventno.val.data;
+evr_params.onehz_eventno <= reg_o.evr_1hz_eventno.val.data;
+evr_params.tenhz_eventno <= reg_o.evr_10hz_eventno.val.data;
+evr_params.tenkhz_eventno <= reg_o.evr_10khz_eventno.val.data;
+
 
 dcct_params.numbits_sel <= reg_o.resolution.val.data(0); 
 dac_cntrl.numbits_sel <= reg_o.resolution.val.data(0); 

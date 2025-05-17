@@ -89,7 +89,26 @@ reg {
     field {} val[8];
   } evr_pm_eventno @0x24;
 
+reg {
+    desc="EVR 1Hz Event Code";
+    default sw = rw;
+    default hw = r;
+    field {} val[8];
+  } evr_1hz_eventno @0x28;
 
+reg {
+    desc="EVR 10Hz Event Code";
+    default sw = rw;
+    default hw = r;
+    field {} val[8];
+  } evr_10hz_eventno @0x2C;
+
+reg {
+    desc="EVR 10KHz Event Code";
+    default sw = rw;
+    default hw = r;
+    field {} val[8];
+  } evr_10khz_eventno @0x30;
 
 
 

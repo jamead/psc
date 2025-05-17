@@ -12,6 +12,10 @@
 #define EVR_RESET_REG            0X18     // EVR Reset
 #define EVR_INJ_EVENTNUM_REG     0x20     // EVR Injection Event Code (for Shot-to-Shot)
 #define EVR_PM_EVENTNUM_REG      0x24     // EVR Post-Mortem Event Code
+#define EVR_1HZ_EVENTNUM_REG     0x28     // EVR 1Hz Event
+#define EVR_10HZ_EVENTNUM_REG    0x2C     // EVR 10Hz Event
+#define EVR_10KHZ_EVENTNUM_REG   0x30     // EVR 10KHz Event
+
 
 // channel registers
 #define DCCT1_REG                0X00     // DCCT 0

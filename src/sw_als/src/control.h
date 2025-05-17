@@ -10,11 +10,15 @@
 
 
 // Control Message Offsets
-#define SOFT_TRIG_MSG        0
-#define TEST_TRIG_MSG        4
-#define FP_LED_MSG           8
-#define EVR_INJ_EVENTNUM_MSG 20
-#define EVR_PM_EVENTNUM_MSG  24
+#define SOFT_TRIG_MSG          0
+#define TEST_TRIG_MSG          4
+#define FP_LED_MSG             8
+#define EVR_RESET_MSG          16
+#define EVR_INJ_EVENTNUM_MSG   20
+#define EVR_PM_EVENTNUM_MSG    24
+#define EVR_1HZ_EVENTNUM_MSG   28
+#define EVR_10HZ_EVENTNUM_MSG  32
+#define EVR_10KHZ_EVENTNUM_MSG 36
 
 #define DAC_OPMODE_MSG       100
 #define DAC_SETPT_MSG        104

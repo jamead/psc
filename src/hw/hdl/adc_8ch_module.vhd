@@ -51,7 +51,7 @@ use IEEE.numeric_std.all;
 use work.psc_pkg.all;
 
 
-entity ADC_8CH_module is
+entity adc_8ch_module is
 	port(
 		 clk           : in std_logic;
 		 reset         : in std_logic;
@@ -67,7 +67,7 @@ entity ADC_8CH_module is
 end entity;
 
 
-architecture arch of ADC_8CH_module is
+architecture arch of adc_8ch_module is
 signal ADC_8CH_ADC1     : std_logic_vector(127 downto 0);
 signal ADC_8CH_ADC2     : std_logic_vector(127 downto 0);
 signal ADC_8CH_ADC3     : std_logic_vector(127 downto 0);
@@ -94,7 +94,7 @@ begin
 
 
 
-adc1_8ch: entity work.ADC_ADS8568_intf
+adc1_8ch: entity work.adc_ads8568_intf
   generic map(DATA_BITS   => 128,	SPI_CLK_DIV => 5)
   port map(
 	clk => clk,
@@ -111,7 +111,7 @@ adc1_8ch: entity work.ADC_ADS8568_intf
 );
 
 
-adc2_8ch: entity work.ADC_ADS8568_intf
+adc2_8ch: entity work.adc_ads8568_intf
   generic map(DATA_BITS   => 128, SPI_CLK_DIV => 5)
     port map(
       clk => clk,
@@ -128,7 +128,7 @@ adc2_8ch: entity work.ADC_ADS8568_intf
 );
 
 
-adc3_8ch: entity work.ADC_ADS8568_intf
+adc3_8ch: entity work.adc_ads8568_intf
   generic map(DATA_BITS   => 128, SPI_CLK_DIV => 5)
   port map(
     clk       => clk,

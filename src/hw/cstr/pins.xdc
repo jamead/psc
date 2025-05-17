@@ -47,8 +47,11 @@ set_property IOSTANDARD LVCMOS18 [get_ports {dcct_adc_sdo[3]}]
 
 
 # 4 18-bit DAC Channels AD5781
-set_property PACKAGE_PIN A7 [get_ports stpt_dac_sync]
-set_property IOSTANDARD LVCMOS18 [get_ports stpt_dac_sync]
+set_property PACKAGE_PIN A7 [get_ports {stpt_dac_sync[0]}]
+set_property IOSTANDARD LVCMOS18 [get_ports {stpt_dac_sync[0]}]
+set_property PACKAGE_PIN A4 [get_ports {stpt_dac_sync[1]}]
+set_property IOSTANDARD LVCMOS18 [get_ports {stpt_dac_sync[1]}]
+
 set_property PACKAGE_PIN A6 [get_ports stpt_dac_sck]
 set_property IOSTANDARD LVCMOS18 [get_ports stpt_dac_sck]
 set_property PACKAGE_PIN G7 [get_ports {stpt_dac_sdo[0]}]

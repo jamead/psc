@@ -68,7 +68,7 @@ generic(
 
    -- 4 18-bit DAC Channels (4 - AD5781)
     stpt_dac_sck            : out std_logic;
-    stpt_dac_sync           : out std_logic;
+    stpt_dac_sync           : out std_logic_vector(1 downto 0);
     stpt_dac_sdo            : out std_logic_vector(3 downto 0);
      
     --sfp i2c
@@ -190,18 +190,18 @@ begin
 
 fan_ctrl <= '1';
 
-fp_leds(0) <= rcom(0); --evr_trigs.sa_trig_stretch; 
-fp_leds(1) <= rcom(4); --'0';
-fp_leds(2) <= rcom(8); --'0';
-fp_leds(3) <= rcom(12); --'0'; --evr_trigs.rcvd_clk; 
-fp_leds(4) <= evr_trigs.sa_trig_stretch;
+fp_leds(0) <= rcom(0);  
+fp_leds(2) <= rcom(4); 
+fp_leds(4) <= rcom(8); 
+fp_leds(6) <= rcom(12);  
+fp_leds(1) <= evr_trigs.onehz_trig_stretch;
+fp_leds(3) <= '0';
 fp_leds(5) <= '0';
-fp_leds(6) <= '0';
 fp_leds(7) <= '0';
 
 
 sfp_leds(3 downto 0) <= "0000";
-sfp_leds(4) <= evr_trigs.sa_trig_stretch;
+sfp_leds(4) <= evr_trigs.onehz_trig_stretch;
 sfp_leds(7 downto 5) <= "000";
 
 
@@ -272,8 +272,8 @@ write_dacs: entity work.dac_ctrlr
     tenkhz_trig => tenkhz_trig,
     dac_cntrl => dac_cntrl,
     dac_stat => dac_stat,  	
-    n_sync1234	=> stpt_dac_sync,  
-    sclk1234 => stpt_dac_sck, 
+    sync => stpt_dac_sync,  
+    sclk => stpt_dac_sck, 
     sdo => stpt_dac_sdo 	
 );
 

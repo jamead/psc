@@ -87,22 +87,27 @@ end record;
 
 
 type t_evr_params is record
-   reset         : std_logic_vector(7 downto 0);
-   inj_eventno   : std_logic_vector(7 downto 0);
-   pm_eventno    : std_logic_vector(7 downto 0);
+   reset          : std_logic_vector(7 downto 0);
+   inj_eventno    : std_logic_vector(7 downto 0);
+   pm_eventno     : std_logic_vector(7 downto 0);
+   onehz_eventno  : std_logic_vector(7 downto 0);
+   tenhz_eventno  : std_logic_vector(7 downto 0);
+   tenkhz_eventno : std_logic_vector(7 downto 0);
 end record;
 
 type t_evr_trigs is record
-   rcvd_clk        : std_logic;
-   tbt_trig        : std_logic; 
-   fa_trig         : std_logic;  
-   sa_trig         : std_logic; 
-   sa_trig_stretch : std_logic;
-   inj_trig        : std_logic;
-   inj_trig_stretch: std_logic;  
-   pm_trig         : std_logic;
-   ts_s            : std_logic_vector(31 downto 0);
-   ts_ns           : std_logic_vector(31 downto 0);
+   rcvd_clk           : std_logic;
+   tbt_trig           : std_logic; 
+   fa_trig            : std_logic;  
+   sa_trig            : std_logic; 
+   onehz_trig         : std_logic;
+   onehz_trig_stretch : std_logic;
+   sa_trig_stretch    : std_logic;
+   inj_trig           : std_logic;
+   inj_trig_stretch   : std_logic;  
+   pm_trig            : std_logic;
+   ts_s               : std_logic_vector(31 downto 0);
+   ts_ns              : std_logic_vector(31 downto 0);
 end record;  
 
 
@@ -263,6 +268,7 @@ end record;
 
 type t_dac_cntrl is record
   numbits_sel  : std_logic;   --0=18 bits, 1=20bits 
+  numchan_sel  : std_logic;   --0=2channel, 1=4channel
   ps1           : t_dac_cntrl_onech;
   ps2           : t_dac_cntrl_onech;
   ps3           : t_dac_cntrl_onech;

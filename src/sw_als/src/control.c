@@ -202,15 +202,37 @@ void glob_settings(void *msg) {
          	set_fpleds(data.u);
          	break;
 
+		case EVR_RESET_MSG:
+			xil_printf("Resetting EVR:   Value=%d\r\n",data.u);
+			if (data.u == 1) Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET_REG, 0xFF);
+			else Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET_REG, 0);
+            break;
+
 		case EVR_INJ_EVENTNUM_MSG:
 			xil_printf("Setting INJ Event Number:   Value=%d\r\n",data.u);
 			Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_INJ_EVENTNUM_REG, data.u);
-            break;
+			break;
 
 		case EVR_PM_EVENTNUM_MSG:
 			xil_printf("Setting Post Mortem Event Number:   Value=%d\r\n",data.u);
 			Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_PM_EVENTNUM_REG, data.u);
             break;
+
+		case EVR_1HZ_EVENTNUM_MSG:
+			xil_printf("Setting 1Hz Event Number:   Value=%d\r\n",data.u);
+			Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_1HZ_EVENTNUM_REG, data.u);
+            break;
+
+		case EVR_10HZ_EVENTNUM_MSG:
+			xil_printf("Setting 10Hz Event Number:   Value=%d\r\n",data.u);
+			Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_10HZ_EVENTNUM_REG, data.u);
+            break;
+
+		case EVR_10KHZ_EVENTNUM_MSG:
+			xil_printf("Setting 10KHz Event Number:   Value=%d\r\n",data.u);
+			Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_10KHZ_EVENTNUM_REG, data.u);
+            break;
+
 
 
 

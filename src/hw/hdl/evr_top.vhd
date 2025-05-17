@@ -62,7 +62,8 @@ architecture behv of evr_top is
    signal tbt_cnt           : std_logic_vector(2 downto 0);
    signal inj_trig          : std_logic;
    signal inj_trig_sync     : std_logic_vector(1 downto 0);
-   
+   signal onehz_trig        : std_logic;
+   signal onehz_trig_sync   : std_logic_vector(1 downto 0);   
    
 
 
@@ -79,7 +80,6 @@ architecture behv of evr_top is
 --   attribute mark_debug of eventclock: signal is "true";
 --   attribute mark_debug of prev_datastream: signal is "true";
 
-  
    attribute mark_debug of rxdata: signal is "true";
    attribute mark_debug of rxcharisk: signal is "true";
    --attribute mark_debug of gtx_reset: signal is "true";
@@ -110,6 +110,10 @@ rxoutclk_bufg0_i : BUFG
             inj_trig_sync(0) <= inj_trig;
             inj_trig_sync(1) <= inj_trig_sync(0); 
             evr_trigs.inj_trig <= inj_trig_sync(1);
+            onehz_trig_sync(0) <= onehz_trig;
+            onehz_trig_sync(1) <= onehz_trig_sync(0); 
+            evr_trigs.onehz_trig <= onehz_trig_sync(1);           
+            
         end if;
     end process;
 
@@ -204,6 +208,20 @@ event_pm : entity work.event_rcv_chan
 );
 
 
+-- 1 Hz 	
+event_1Hz : entity work.event_rcv_chan
+    port map(
+       clock => rxusr_clk,
+       reset => sys_rst,
+       eventstream => eventstream,
+       myevent => evr_params.onehz_eventno, 
+       mydelay => 32d"1",
+       mywidth => 32d"12",   -- //creates a pulse about 100ns long
+       mypolarity => ('0'),
+       trigger => onehz_trig 
+);
+
+
 
 -- 10 Hz 	
 event_10Hz : entity work.event_rcv_chan
@@ -211,9 +229,9 @@ event_10Hz : entity work.event_rcv_chan
        clock => rxusr_clk,
        reset => sys_rst,
        eventstream => eventstream,
-       myevent => (x"1E"),     -- 30d
-       mydelay => (x"00000001"),
-       mywidth => (x"00000175"),   -- //creates a pulse about 3us long
+       myevent => evr_params.tenhz_eventno, --(x"1E"),     -- 30d
+       mydelay => 32d"1",
+       mywidth => 32d"12",   -- //creates a pulse about 100ns long
        mypolarity => ('0'),
        trigger => evr_trigs.sa_trig
 );
@@ -227,9 +245,9 @@ event_10KHz : entity work.event_rcv_chan
        clock => rxusr_clk,
        reset => sys_rst,
        eventstream => eventstream,
-       myevent => (x"1F"),     -- 31d
-       mydelay => (x"00000001"),
-       mywidth => (x"00000175"),   -- //creates a pulse about 3us long
+       myevent => evr_params.tenkhz_eventno, --(x"1F"),     -- 31d
+       mydelay => 32d"1",
+       mywidth => 32d"12",   -- //creates a pulse about 100ns long
        mypolarity => ('0'),
        trigger => evr_trigs.fa_trig
 );
@@ -243,7 +261,7 @@ event_inj : entity work.event_rcv_chan
        eventstream => eventstream,
        myevent => evr_params.inj_eventno,
        mydelay => 32d"1",  --evr_params.trigdly, 
-       mywidth => (x"0000000B"),   -- //creates a pulse about 100ns long
+       mywidth => 32d"12",   -- //creates a pulse about 100ns long
        mypolarity => ('0'),
        trigger => inj_trig --evr_trigs.inj_trig
 );
@@ -259,7 +277,18 @@ sa_led : entity work.stretch
 	sig_in => evr_trigs.sa_trig, 
 	len => 3000000, -- ~25ms;
 	sig_out => evr_trigs.sa_trig_stretch
-);	  	
+);	  
+
+
+--stretch the sa_trig signal so can be seen on LED
+onehz_led : entity work.stretch
+  port map (
+	clk => sys_clk,
+	reset => sys_rst, 
+	sig_in => evr_trigs.onehz_trig, 
+	len => 3000000, -- ~25ms;
+	sig_out => evr_trigs.onehz_trig_stretch
+);	 
 
 
 --stretch the inj_trig signal so can be seen on LED

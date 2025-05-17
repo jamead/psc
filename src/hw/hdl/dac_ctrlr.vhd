@@ -28,8 +28,8 @@ entity dac_ctrlr is
     tenkhz_trig          : in std_logic;
     dac_cntrl            : in t_dac_cntrl;
     dac_stat             : out t_dac_stat;
-    n_sync1234		     : out std_logic; 
-    sclk1234   		     : out std_logic; 
+    sync    		     : out std_logic_vector(1 downto 0); 
+    sclk     		     : out std_logic; 
     sdo                  : out std_logic_vector(3 downto 0)	
     );
 end entity;
@@ -54,8 +54,8 @@ dac1: entity work.dac_chan
     dac_numbits_sel => dac_cntrl.numbits_sel,
     dac_cntrl => dac_cntrl.ps1,
     dac_stat => dac_stat.ps1,
-    n_sync1234 => n_sync1234,
-    sclk1234 => sclk1234,
+    n_sync1234 => sync(0),
+    sclk1234 => sclk,
     sdo => sdo(0)
   );
 
@@ -68,7 +68,7 @@ dac2: entity work.dac_chan
     dac_numbits_sel => dac_cntrl.numbits_sel,    
     dac_cntrl => dac_cntrl.ps2,
     dac_stat => dac_stat.ps2,
-    n_sync1234 => open, 
+    n_sync1234 => sync(1), 
     sclk1234 => open, 
     sdo => sdo(1)
   );
