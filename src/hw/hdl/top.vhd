@@ -101,7 +101,10 @@ generic(
     mac_id                  : inout std_logic;
    
     --  Front panel LED's
-    fp_leds                 : out std_logic_vector(7 downto 0)
+    fp_leds                 : out std_logic_vector(7 downto 0);
+    
+    -- Fan for picozed
+    fan_ctrl                : out std_logic
 
   );
 end top;
@@ -185,12 +188,17 @@ architecture behv of top is
 
 begin
 
+fan_ctrl <= '1';
 
-fp_leds(0) <= evr_trigs.sa_trig_stretch; 
-fp_leds(1) <= '0';
-fp_leds(2) <= '0';
-fp_leds(3) <= '0'; --evr_trigs.rcvd_clk; 
-fp_leds(7 downto 4) <= "0000";
+fp_leds(0) <= rcom(0); --evr_trigs.sa_trig_stretch; 
+fp_leds(1) <= rcom(4); --'0';
+fp_leds(2) <= rcom(8); --'0';
+fp_leds(3) <= rcom(12); --'0'; --evr_trigs.rcvd_clk; 
+fp_leds(4) <= evr_trigs.sa_trig_stretch;
+fp_leds(5) <= '0';
+fp_leds(6) <= '0';
+fp_leds(7) <= '0';
+
 
 sfp_leds(3 downto 0) <= "0000";
 sfp_leds(4) <= evr_trigs.sa_trig_stretch;

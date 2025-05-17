@@ -180,6 +180,8 @@ void InitSettingsfromQspi() {
 
 
 int main(void) {
+
+	u32 i, base;
     // entry point from FSBL via freertos init
 
     // crutch until lack of thread sync. sorted out...
@@ -202,8 +204,8 @@ int main(void) {
 	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET_REG, 0);
 
 	//Set Fault Enable Register - Move to gateware
-	for (i=0;i<4;i++) {
-	       base = XPAR_M_AXI_BASEADDR + (chan + 1) * CHBASEADDR
+	for (i=1;i<5;i++) {
+	       base = XPAR_M_AXI_BASEADDR + i * CHBASEADDR;
 	       Xil_Out32(base + FAULT_MASK_REG,0x1FEF);
 	}
 

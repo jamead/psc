@@ -374,8 +374,11 @@ set_property IOSTANDARD LVCMOS18 [get_ports onewire_sda]
 set_property PACKAGE_PIN V14 [get_ports mac_id]
 set_property IOSTANDARD LVCMOS33 [get_ports mac_id]
 
-
-
+#fan cntrl
+set_property PACKAGE_PIN AB19 [get_ports {fan_ctrl}]
+set_property IOSTANDARD LVCMOS33 [get_ports {fan_ctrl}]
+set_property DRIVE 12 [get_ports {fan_ctrl}]
+set_property SLEW SLOW [get_ports {fan_ctrl}]
 
 
 
