@@ -145,35 +145,75 @@ adc3_8ch: entity work.adc_ads8568_intf
 );
 
 
+process(clk) 
+  begin 
+	if rising_edge(clk) then 
+      if (mon_params.numchan_sel = '1') then  
+        -- 4 channel mapping
+        -- mapping from phyical to logical adc channels
+        mon_adcs_in.ps1.dacmon_raw <= signed(ADC_8CH_ADC1(127 downto 112));  -- A0-1
+        mon_adcs_in.ps3.dacmon_raw <= signed(ADC_8CH_ADC1(111 downto 96));   -- A1-1
+        mon_adcs_in.ps2.dacmon_raw <= signed(ADC_8CH_ADC1(95 downto 80));    -- B0-1
+        mon_adcs_in.ps4.dacmon_raw <= signed(ADC_8CH_ADC1(79 downto 64));    -- B1-1
+        mon_adcs_in.ps1.voltage_raw <= signed(ADC_8CH_ADC1(63 downto 48));   -- C0-1
+        mon_adcs_in.ps1.spare_raw <= signed(ADC_8CH_ADC1(47 downto 32));     -- C1-1
+        mon_adcs_in.ps1.ignd_raw <= signed(ADC_8CH_ADC1(31 downto 16));      -- D0-1
+        mon_adcs_in.ps2.voltage_raw <= signed(ADC_8CH_ADC1(15 downto 0));    -- D1-1
 
+        mon_adcs_in.ps2.ignd_raw <= signed(ADC_8CH_ADC2(127 downto 112));    -- A0-2
+        mon_adcs_in.ps3.voltage_raw <= signed(ADC_8CH_ADC2(111 downto 96));  -- A1-2
+        mon_adcs_in.ps2.spare_raw <= signed(ADC_8CH_ADC2(95 downto 80));     -- B0-2
+        mon_adcs_in.ps3.ignd_raw <= signed(ADC_8CH_ADC2(79 downto 64));      -- B1-2
+        mon_adcs_in.ps3.spare_raw <= signed(ADC_8CH_ADC2(63 downto 48));     -- C0-2
+        mon_adcs_in.ps4.ignd_raw <= signed(ADC_8CH_ADC2(47 downto 32));      -- C1-2
+        mon_adcs_in.ps4.voltage_raw <= signed(ADC_8CH_ADC2(31 downto 16));   -- D0-2
+        mon_adcs_in.ps4.spare_raw <= signed(ADC_8CH_ADC2(15 downto 0));      -- D1-2
 
--- mapping from phyical to logical adc channels
-mon_adcs_in.ps1.dacmon_raw <= signed(ADC_8CH_ADC1(127 downto 112));
-mon_adcs_in.ps3.dacmon_raw <= signed(ADC_8CH_ADC1(111 downto 96));
-mon_adcs_in.ps2.dacmon_raw <= signed(ADC_8CH_ADC1(95 downto 80));
-mon_adcs_in.ps4.dacmon_raw <= signed(ADC_8CH_ADC1(79 downto 64));
-mon_adcs_in.ps1.voltage_raw <= signed(ADC_8CH_ADC1(63 downto 48));
-mon_adcs_in.ps1.spare_raw <= signed(ADC_8CH_ADC1(47 downto 32));
-mon_adcs_in.ps1.ignd_raw <= signed(ADC_8CH_ADC1(31 downto 16));
-mon_adcs_in.ps2.voltage_raw <= signed(ADC_8CH_ADC1(15 downto 0));   
+        mon_adcs_in.ps1.ps_reg_raw <= signed(ADC_8CH_ADC3(127 downto 112));  -- A0-3
+        mon_adcs_in.ps2.ps_reg_raw <= signed(ADC_8CH_ADC3(111 downto 96));   -- A1-3
+        mon_adcs_in.ps1.ps_error_raw <= signed(ADC_8CH_ADC3(95 downto 80));  -- B0-3
+        mon_adcs_in.ps2.ps_error_raw <= signed(ADC_8CH_ADC3(79 downto 64));  -- B1-3
+        mon_adcs_in.ps3.ps_reg_raw <= signed(ADC_8CH_ADC3(63 downto 48));    -- C0-3
+        mon_adcs_in.ps4.ps_reg_raw <= signed(ADC_8CH_ADC3(47 downto 32));    -- C1-3
+        mon_adcs_in.ps3.ps_error_raw <= signed(ADC_8CH_ADC3(31 downto 16));  -- D0-3
+        mon_adcs_in.ps4.ps_error_raw <= signed(ADC_8CH_ADC3(15 downto 0));   -- D1-3
+    else
+         -- 2 channel mapping
+        -- mapping from phyical to logical adc channels
+        mon_adcs_in.ps1.dacmon_raw <= signed(ADC_8CH_ADC1(127 downto 112));  -- A0-1
+        mon_adcs_in.ps1.voltage_raw <= signed(ADC_8CH_ADC1(111 downto 96));  -- A1-1
+        mon_adcs_in.ps2.dacmon_raw <= signed(ADC_8CH_ADC1(95 downto 80));    -- B0-1
+        mon_adcs_in.ps1.ignd_raw <= signed(ADC_8CH_ADC1(79 downto 64));      -- B1-1
+        mon_adcs_in.ps1.spare_raw <= signed(ADC_8CH_ADC1(63 downto 48));     -- C0-1
+        mon_adcs_in.ps2.voltage_raw <= signed(ADC_8CH_ADC1(47 downto 32));   -- C1-1
 
-mon_adcs_in.ps2.ignd_raw <= signed(ADC_8CH_ADC2(127 downto 112));
-mon_adcs_in.ps3.voltage_raw <= signed(ADC_8CH_ADC2(111 downto 96));
-mon_adcs_in.ps2.spare_raw <= signed(ADC_8CH_ADC2(95 downto 80));
-mon_adcs_in.ps3.ignd_raw <= signed(ADC_8CH_ADC2(79 downto 64));
-mon_adcs_in.ps3.spare_raw <= signed(ADC_8CH_ADC2(63 downto 48));
-mon_adcs_in.ps4.ignd_raw <= signed(ADC_8CH_ADC2(47 downto 32));
-mon_adcs_in.ps4.voltage_raw <= signed(ADC_8CH_ADC2(31 downto 16));
-mon_adcs_in.ps4.spare_raw <= signed(ADC_8CH_ADC2(15 downto 0)); 
+        mon_adcs_in.ps2.ignd_raw <= signed(ADC_8CH_ADC2(127 downto 112));    -- A0-2
+        mon_adcs_in.ps1.ps_reg_raw <= signed(ADC_8CH_ADC2(111 downto 96));   -- A1-2
+        mon_adcs_in.ps2.spare_raw <= signed(ADC_8CH_ADC2(95 downto 80));     -- B0-2
+        mon_adcs_in.ps1.ps_error_raw <= signed(ADC_8CH_ADC2(79 downto 64));  -- B1-2
+        mon_adcs_in.ps2.ps_reg_raw <= signed(ADC_8CH_ADC2(63 downto 48));    -- C0-2
+        mon_adcs_in.ps2.ps_error_raw <= signed(ADC_8CH_ADC2(47 downto 32));  -- C1-2
+     
+        mon_adcs_in.ps3.dacmon_raw <= (others => '0');
+        mon_adcs_in.ps3.voltage_raw <= (others => '0');
+        mon_adcs_in.ps3.ignd_raw <= (others => '0');
+        mon_adcs_in.ps3.spare_raw <= (others => '0');       
+        mon_adcs_in.ps3.ps_reg_raw <= (others => '0');
+        mon_adcs_in.ps3.ps_error_raw <= (others => '0');  
+        
+        mon_adcs_in.ps4.dacmon_raw <= (others => '0');
+        mon_adcs_in.ps4.voltage_raw <= (others => '0');
+        mon_adcs_in.ps4.ignd_raw <= (others => '0');
+        mon_adcs_in.ps4.spare_raw <= (others => '0');       
+        mon_adcs_in.ps4.ps_reg_raw <= (others => '0');
+        mon_adcs_in.ps4.ps_error_raw <= (others => '0');               
+        
+    end if;
+  end if;
+end process;
+ 
+    
 
-mon_adcs_in.ps1.ps_reg_raw <= signed(ADC_8CH_ADC3(127 downto 112));
-mon_adcs_in.ps2.ps_reg_raw <= signed(ADC_8CH_ADC3(111 downto 96));
-mon_adcs_in.ps1.ps_error_raw <= signed(ADC_8CH_ADC3(95 downto 80));
-mon_adcs_in.ps2.ps_error_raw <= signed(ADC_8CH_ADC3(79 downto 64));
-mon_adcs_in.ps3.ps_reg_raw <= signed(ADC_8CH_ADC3(63 downto 48));
-mon_adcs_in.ps4.ps_reg_raw <= signed(ADC_8CH_ADC3(47 downto 32));
-mon_adcs_in.ps3.ps_error_raw <= signed(ADC_8CH_ADC3(31 downto 16));
-mon_adcs_in.ps4.ps_error_raw <= signed(ADC_8CH_ADC3(15 downto 0));         
 
 -- apply gains and offsets
 gainoff_ps1: entity work.mon_gainoffset

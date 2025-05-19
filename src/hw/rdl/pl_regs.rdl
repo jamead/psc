@@ -51,7 +51,12 @@ reg {
     field {} val[1];
   } resolution @0x8;
 
-
+reg {
+    desc="Number of Channels 0=2chan, 1=4chan";
+    default sw = rw;
+    default hw = r;
+    field {} val[1];
+  } num_chans @0xC;
 
 reg {
     desc="EVR Timestamp (s)";

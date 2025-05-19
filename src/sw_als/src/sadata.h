@@ -74,7 +74,7 @@ typedef struct SAdataChan {
 
 // PSC Message ID 31
 typedef struct SAdataMsg {
-	u32 count;                // PSC Offset 0
+	u32 numchans;             // PSC Offset 0
 	u32 evr_ts_ns;            // PSC Offset 4
 	u32 evr_ts_s;             // PSC Offset 8
 	u32 resolution;           // PSC Offset 12

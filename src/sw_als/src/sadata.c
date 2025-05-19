@@ -72,7 +72,7 @@ void sadata_push(void *unused)
     while(1) {
         vTaskDelay(pdMS_TO_TICKS(100));
 
-        sadata.count = 0;
+        sadata.numchans = Xil_In32(XPAR_M_AXI_BASEADDR + NUMCHANS_REG);;
         //read FPGA version (git checksum) from PL register
         sadata.git_shasum = Xil_In32(XPAR_M_AXI_BASEADDR + PRJ_SHASUM);
         //xil_printf("Git : %x\r\n",sadata.git_shasum);
@@ -80,7 +80,7 @@ void sadata_push(void *unused)
 
         sadata.evr_ts_s =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S_REG);
         sadata.evr_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS_REG);
-        sadata.resolution =  Xil_In32(XPAR_M_AXI_BASEADDR + RESOLUTION);
+        sadata.resolution =  Xil_In32(XPAR_M_AXI_BASEADDR + RESOLUTION_REG);
 
 
 

@@ -26,11 +26,8 @@ XQspiPs QspiInstance;
 XIicPs IicPsInstance0;	    // si570
 XIicPs IicPsInstance1;      // eeprom, one-wire
 
-float CONVVOLTSTODACBITS;
-float CONVDACBITSTOVOLTS;
-
-
 uint32_t git_hash;
+
 
 static
 void client_event(void *pvt, psc_event evt, psc_client *ckey)
@@ -94,7 +91,9 @@ void realmain(void *arg)
     {
         net_config conf = {};
         sdcard_handle(&conf);
+        InitSettingsfromQspi();
         net_setup(&conf);
+
     }
 
     discover_setup();
@@ -133,30 +132,7 @@ void print_firmware_version()
     xil_printf("Project Compilation Timestamp: %s\r\n", timebuf);
 }
 
-static
-void mshsSelect(void) {
 
-    u8 psc_resolution;
-
-   //Read Resolution from EEPROM (HS or MS)
-	xil_printf("Getting Unit Resolution\r\n");
-	i2c_eeprom_readBytes(48, &psc_resolution, 1);
-	Xil_Out32(XPAR_M_AXI_BASEADDR + RESOLUTION, psc_resolution);
-
-	xil_printf("Resolution: %u %u\r\n",psc_resolution);
-
-	if (psc_resolution == 1) {
-		xil_printf("This is a HS (20bit) PSC\r\n");
-	    CONVVOLTSTODACBITS = CONVVOLTSTO20BITS;
-	    CONVDACBITSTOVOLTS = CONV20BITSTOVOLTS;
-	}
-	else {
-		xil_printf("This is an MS (18bit) PSC\r\n");
-        CONVVOLTSTODACBITS = CONVVOLTSTO18BITS;
-        CONVDACBITSTOVOLTS = CONV18BITSTOVOLTS;
-	}
-
-}
 
 void InitSettingsfromQspi() {
 
@@ -195,8 +171,7 @@ int main(void) {
 	init_i2c();
 	//prog_si570();
 	QspiFlashInit();
-    mshsSelect();
-    InitSettingsfromQspi();
+    //InitSettingsfromQspi();
 
 	//EVR reset
     xil_printf("Resetting EVR GTX...\r\n");

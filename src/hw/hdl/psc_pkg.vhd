@@ -204,6 +204,7 @@ end record;
 
 
 type t_mon_adcs_params is record
+  numchan_sel   : std_logic;   --0=2channel, 1=4channel
   ps1           : t_mon_adcs_params_onech;
   ps2           : t_mon_adcs_params_onech;
   ps3           : t_mon_adcs_params_onech;

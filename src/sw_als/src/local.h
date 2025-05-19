@@ -21,6 +21,8 @@ typedef struct {
     uint8_t hwaddr[NETIF_MAX_HWADDR_LEN];
 } net_config;
 
+
+
 void net_setup(net_config *conf);
 void discover_setup(void);
 void tftp_setup(void);
