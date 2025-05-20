@@ -62,7 +62,7 @@ void Calc_WriteSmooth(u32 chan, s32 new_setpt) {
     cur_setpt = Xil_In32(XPAR_M_AXI_BASEADDR + DAC_CURRSETPT_REG + chan*CHBASEADDR);
 
 	//calculate the length of the smooth length using the ramp rate scale factor
-	ramp_rate = scalefactors[chan-1].ampspersec * scalefactors[chan-1].dac_dccts * CONVVOLTSTODACBITS;  // in bits/sec
+	ramp_rate = (scalefactors[chan-1].ampspersec / scalefactors[chan-1].dac_dccts) * CONVVOLTSTODACBITS;  // in bits/sec
 	smooth_len = (u32)(abs(new_setpt - cur_setpt) / ramp_rate * SAMPLERATE);
 	xil_printf("Smooth Length: %d\r\n",smooth_len);
 	if (smooth_len >= 50000) {
