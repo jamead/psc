@@ -96,6 +96,7 @@ evr_params.onehz_eventno <= reg_o.evr_1hz_eventno.val.data;
 evr_params.tenhz_eventno <= reg_o.evr_10hz_eventno.val.data;
 evr_params.tenkhz_eventno <= reg_o.evr_10khz_eventno.val.data;
 
+mon_params.numchan_sel <= reg_o.num_chans.val.data(0);
 
 dcct_params.numbits_sel <= reg_o.resolution.val.data(0); 
 dac_cntrl.numbits_sel <= reg_o.resolution.val.data(0); 
