@@ -160,28 +160,32 @@ void sdcard_netconf(net_config *conf, FIL *fd)
         } else if(strcmp(cmd, "hwaddr")==0) {
             uint8_t hwaddr[NETIF_MAX_HWADDR_LEN] = {};
             // expect arg: XX:XX:XX:XX:XX:XX
-            for(unsigned n=0; n<NETIF_MAX_HWADDR_LEN; n++) {
-                const char *part = &arg[n*3];
-                if(parse_hex(part[0], &hwaddr[n])) {
-                    fprintf(stderr, "Warning: truncated hwaddr %s\n", arg);
-                    break;
-                }
-                hwaddr[n] <<= 4;
-                if(parse_hex(part[1], &hwaddr[n])) {
-                    fprintf(stderr, "Warning: truncated hwaddr %s\n", arg);
-                    break;
-                }
-                if(n<NETIF_MAX_HWADDR_LEN-1 && part[2]==':') {
-                    continue;
-                } else if(n==NETIF_MAX_HWADDR_LEN-1 && !part[2]) {
-                    memcpy(conf->hwaddr, hwaddr, sizeof(hwaddr));
-                    break;
-                } else {
-                    fprintf(stderr, "Warning: invalid hwaddr %s\n", arg);
-                    break;
+            if (!arg || strcmp(arg, "EEPROM")==0) {
+        		printf("Get HW from EEPROM\n");
+        		i2c_get_mac_address(conf->hwaddr);
+            } else {
+                for(unsigned n=0; n<NETIF_MAX_HWADDR_LEN; n++) {
+                    const char *part = &arg[n*3];
+                    if(parse_hex(part[0], &hwaddr[n])) {
+                        fprintf(stderr, "Warning: truncated hwaddr %s\n", arg);
+                        break;
+                    }
+                    hwaddr[n] <<= 4;
+                    if(parse_hex(part[1], &hwaddr[n])) {
+                        fprintf(stderr, "Warning: truncated hwaddr %s\n", arg);
+                        break;
+                    }
+                    if(n<NETIF_MAX_HWADDR_LEN-1 && part[2]==':') {
+                        continue;
+                    } else if(n==NETIF_MAX_HWADDR_LEN-1 && !part[2]) {
+                        memcpy(conf->hwaddr, hwaddr, sizeof(hwaddr));
+                        break;
+                    } else {
+                        fprintf(stderr, "Warning: invalid hwaddr %s\n", arg);
+                        break;
+                    }
                 }
             }
-
         } else {
             fprintf(stderr, "Warning: unknown cmd %s\n", cmd);
         }

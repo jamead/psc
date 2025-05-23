@@ -38,6 +38,7 @@ void i2c_eeprom_writeBytes(u8, u8 *, u8);
 void eeprom_dump();
 void menu_get_ipaddr();
 void prog_si570();
+void InitSettingsfromQspi();
 
 
 /* registers from Controller.v by word offset
