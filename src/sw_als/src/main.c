@@ -52,6 +52,10 @@ void client_msg(void *pvt, psc_client *ckey, uint16_t msgid, uint32_t msglen, vo
 {
     (void)pvt;
 
+    //blink front panel LED
+    Xil_Out32(XPAR_M_AXI_BASEADDR + IOC_ACCESS_REG, 1);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + IOC_ACCESS_REG, 0);
+
     switch(msgid) {
         case 0:
         	glob_settings(msg);
@@ -169,7 +173,7 @@ int main(void) {
     print_firmware_version();
 
 	init_i2c();
-	//prog_si570();
+	prog_si570();
 	QspiFlashInit();
 
 

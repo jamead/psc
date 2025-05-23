@@ -132,6 +132,22 @@ reg {
   } evr_reset @0x48;
 
 
+reg {
+    desc="IOC Access";
+    default sw = rw;
+    default hw = r;
+    field {} val[1];
+  } ioc_access@0x50;
+
+
+reg {
+    desc="10Hz Data Send";
+    default sw = rw;
+    default hw = r;
+    field {} val[1];
+  } tenhz_datasend@0x54;
+
+
 
 
 /**** Channel 1 ****/

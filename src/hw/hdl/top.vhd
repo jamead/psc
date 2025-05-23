@@ -166,6 +166,9 @@ architecture behv of top is
    signal dac_cntrl             : t_dac_cntrl;
    signal dac_stat              : t_dac_stat;  
    signal pl_temp               : std_logic_vector(11 downto 0); 
+   
+   signal ioc_access_led        : std_logic;
+   signal tenhz_datasend_led    : std_logic;
 
 
 
@@ -190,11 +193,11 @@ begin
 
 fan_ctrl <= '1';
 
-fp_leds(0) <= rcom(0);  
-fp_leds(2) <= rcom(4); 
-fp_leds(4) <= rcom(8); 
-fp_leds(6) <= rcom(12);  
-fp_leds(1) <= evr_trigs.onehz_trig_stretch;
+fp_leds(0) <= tenhz_datasend_led;   
+fp_leds(2) <= ioc_access_led;  
+fp_leds(4) <= evr_trigs.onehz_trig_stretch; 
+fp_leds(6) <= rcom(0) or rcom(4) or rcom(8) or rcom(12);  
+fp_leds(1) <= '0';
 fp_leds(3) <= '0';
 fp_leds(5) <= '0';
 fp_leds(7) <= '0';
@@ -363,7 +366,7 @@ ps_regs: entity work.ps_io
     m_axi4_m2s => m_axi4_m2s, 
     m_axi4_s2m => m_axi4_s2m,
     dcct_params => dcct_params,
-    dcct_adcs => dcct_adcs_ave, --dcct_adcs,
+    dcct_adcs => dcct_adcs_ave, 
     mon_adcs => mon_adcs_ave,
     mon_params => mon_params,
     dac_cntrl => dac_cntrl,
@@ -373,10 +376,10 @@ ps_regs: entity work.ps_io
     evr_trigs => evr_trigs,
     dig_cntrl => dig_cntrl,
     dig_stat => dig_stat,
-    --rcom => rcom,
-    --rsts => rsts,
     fault_params => fault_params,
-    fault_stat => fault_stat               
+    fault_stat => fault_stat,
+    ioc_access_led => ioc_access_led,
+    tenhz_datasend_led => tenhz_datasend_led               
   );
 
     

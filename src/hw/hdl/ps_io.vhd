@@ -20,27 +20,27 @@ entity ps_io is
     FPGA_VERSION        : in integer := 01
   );
   port (  
-    pl_clock         : in std_logic;
-    pl_reset         : in std_logic;
+    pl_clock           : in std_logic;
+    pl_reset           : in std_logic;
    
-    m_axi4_m2s       : in t_pl_regs_m2s;
-    m_axi4_s2m       : out t_pl_regs_s2m;   
+    m_axi4_m2s         : in t_pl_regs_m2s;
+    m_axi4_s2m         : out t_pl_regs_s2m;   
     
-    dcct_adcs        : in t_dcct_adcs_ave;
-    dcct_params      : out t_dcct_adcs_params;
-    mon_adcs         : in t_mon_adcs_ave;
-    mon_params       : out t_mon_adcs_params;
-    dac_cntrl        : out t_dac_cntrl;
-	dac_stat         : in t_dac_stat;
-	ss_buf_stat      : in t_snapshot_stat;
-	evr_params       : out t_evr_params;
-	evr_trigs        : in t_evr_trigs;  
-	dig_cntrl        : out t_dig_cntrl;
-	dig_stat         : in t_dig_stat;
-	--rcom             : out std_logic_vector(19 downto 0);
-	--rsts             : in std_logic_vector(19 downto 0);
-	fault_stat       : in t_fault_stat;
-	fault_params     : out t_fault_params
+    dcct_adcs          : in t_dcct_adcs_ave;
+    dcct_params        : out t_dcct_adcs_params;
+    mon_adcs           : in t_mon_adcs_ave;
+    mon_params         : out t_mon_adcs_params;
+    dac_cntrl          : out t_dac_cntrl;
+	dac_stat           : in t_dac_stat;
+	ss_buf_stat        : in t_snapshot_stat;
+	evr_params         : out t_evr_params;
+	evr_trigs          : in t_evr_trigs;  
+	dig_cntrl          : out t_dig_cntrl;
+	dig_stat           : in t_dig_stat;
+	fault_stat         : in t_fault_stat;
+	fault_params       : out t_fault_params;
+	ioc_access_led     : out std_logic;
+	tenhz_datasend_led : out std_logic
      
   );
 end ps_io;
@@ -66,6 +66,9 @@ architecture behv of ps_io is
   signal err_trig_prev   : std_logic_vector(3 downto 0);
   signal inj_trig_prev   : std_logic_vector(3 downto 0);  
   signal evr_trig_prev   : std_logic;
+  
+  signal ioc_access      : std_logic;
+  signal tenhz_datasend  : std_logic;
 
   
   attribute mark_debug     : string;
@@ -100,6 +103,10 @@ mon_params.numchan_sel <= reg_o.num_chans.val.data(0);
 
 dcct_params.numbits_sel <= reg_o.resolution.val.data(0); 
 dac_cntrl.numbits_sel <= reg_o.resolution.val.data(0); 
+
+ioc_access <= reg_o.ioc_access.val.data(0);
+tenhz_datasend <= reg_o.tenhz_datasend.val.data(0);
+
 
 
 -- PS1 Registers
@@ -652,7 +659,26 @@ regs: pl_regs
   );
 
 
+--stretch the signal so can be seen on LED
+iocaccess_stretch : entity work.stretch
+  port map (
+	clk => pl_clock,
+	reset => pl_reset, 
+	sig_in => ioc_access, 
+	len => 3000000, -- ~25ms;
+	sig_out => ioc_access_led
+);	 
 
+
+--stretch the signal so can be seen on LED
+tenhz_datasend_stretch : entity work.stretch
+  port map (
+	clk => pl_clock,
+	reset => pl_reset, 
+	sig_in => tenhz_datasend, 
+	len => 3000000, -- ~25ms;
+	sig_out => tenhz_datasend_led
+);	
 
 
 end behv;

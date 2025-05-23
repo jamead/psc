@@ -18,6 +18,9 @@
 #define EVR_TS_S_REG             0X40     // EVR Timestamp (s)
 #define EVR_TS_NS_REG            0X44     // EVR Timestamp (ns)
 #define EVR_RESET_REG            0X48     // EVR Reset
+#define IOC_ACCESS_REG           0x50     // IOC control word sent to psc (blinks fp led)
+#define TENHZ_DATASEND_REG       0x54     // 10Hz Data transmitted to IOC (blinks fp led)
+
 
 // channel registers
 #define DCCT1_REG                0X00     // DCCT 0

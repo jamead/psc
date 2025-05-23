@@ -72,6 +72,10 @@ void sadata_push(void *unused)
     while(1) {
         vTaskDelay(pdMS_TO_TICKS(100));
 
+        //blink front panel LED
+        Xil_Out32(XPAR_M_AXI_BASEADDR + TENHZ_DATASEND_REG, 1);
+        Xil_Out32(XPAR_M_AXI_BASEADDR + TENHZ_DATASEND_REG, 0);
+
         sadata.resolution =  Xil_In32(XPAR_M_AXI_BASEADDR + RESOLUTION_REG);
         sadata.numchans = Xil_In32(XPAR_M_AXI_BASEADDR + NUMCHANS_REG);
         sadata.polarity = Xil_In32(XPAR_M_AXI_BASEADDR + POLARITY_REG);
