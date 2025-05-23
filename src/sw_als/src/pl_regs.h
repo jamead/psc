@@ -8,15 +8,16 @@
 #define LEDS_REG                 0X4      // PS Leds
 #define RESOLUTION_REG           0x8      // DCCT, DAC Number of Bits (0=18, 1=20)
 #define NUMCHANS_REG             0xC      // Number of Channels (0=2chan, 1=4chan)
-#define EVR_TS_S_REG             0X10     // EVR Timestamp (s)
-#define EVR_TS_NS_REG            0X14     // EVR Timestamp (ns)
-#define EVR_RESET_REG            0X18     // EVR Reset
+#define BANDWIDTH_REG            0x10     // Bandwidth (0=Fast, 1=Medium)
+#define POLARITY_REG             0x14     // Polarity (0=Bipolar, 1=Unipolar)
 #define EVR_INJ_EVENTNUM_REG     0x20     // EVR Injection Event Code (for Shot-to-Shot)
 #define EVR_PM_EVENTNUM_REG      0x24     // EVR Post-Mortem Event Code
 #define EVR_1HZ_EVENTNUM_REG     0x28     // EVR 1Hz Event
 #define EVR_10HZ_EVENTNUM_REG    0x2C     // EVR 10Hz Event
 #define EVR_10KHZ_EVENTNUM_REG   0x30     // EVR 10KHz Event
-
+#define EVR_TS_S_REG             0X40     // EVR Timestamp (s)
+#define EVR_TS_NS_REG            0X44     // EVR Timestamp (ns)
+#define EVR_RESET_REG            0X48     // EVR Reset
 
 // channel registers
 #define DCCT1_REG                0X00     // DCCT 0

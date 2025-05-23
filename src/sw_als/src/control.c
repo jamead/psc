@@ -584,6 +584,15 @@ void chan_settings(u32 chan, void *msg) {
         	}
         	break;
 
+        case READ_QSPI_MSG:
+        	xil_printf("Read Qspi Message..\r\n");
+        	if (data.u == 1) {
+        	   xil_printf("Reading current values for CH%d from QSPI FLASH..\r\n",chan);
+        	   QspiFlashRead(chan*FLASH_SECTOR_SIZE, FLASH_PAGE_SIZE, qspibuf);
+               QspiDisperseData(chan,qspibuf);
+        	}
+        	break;
+
 
         default:
         	xil_printf("Unsupported Message\r\n");

@@ -80,6 +80,7 @@
 
 #define AVE_MODE_MSG         350
 #define WRITE_QSPI_MSG       400
+#define READ_QSPI_MSG        404
 
 
 void glob_settings(void *);

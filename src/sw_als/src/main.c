@@ -169,9 +169,9 @@ int main(void) {
     print_firmware_version();
 
 	init_i2c();
-	prog_si570();
+	//prog_si570();
 	QspiFlashInit();
-    //InitSettingsfromQspi();
+
 
 	//EVR reset
     xil_printf("Resetting EVR GTX...\r\n");

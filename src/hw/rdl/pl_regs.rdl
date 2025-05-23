@@ -59,25 +59,19 @@ reg {
   } num_chans @0xC;
 
 reg {
-    desc="EVR Timestamp (s)";
-    default sw = rw;
-    default hw = w;
-    field {} val[32];
-  } evr_ts_s @0x10; 
-
-reg {
-    desc="EVR Timestamp (ns)";
-    default sw = rw;
-    default hw = w;
-    field {} val[32];
-  } evr_ts_ns @0x14; 
-  
-reg {
-    desc="EVR Reset";
+    desc="Bandwidth 0=Fast, 1=Medium";
     default sw = rw;
     default hw = r;
-    field {} val[8];
-  } evr_reset @0x18;
+    field {} val[1];
+  } bandwidth @0x10;
+
+reg {
+    desc="Polarity 0=Bipolar, 1=Unipolar";
+    default sw = rw;
+    default hw = r;
+    field {} val[1];
+  } polarity @0x14;
+
 
 
 reg {
@@ -114,6 +108,28 @@ reg {
     default hw = r;
     field {} val[8];
   } evr_10khz_eventno @0x30;
+
+
+reg {
+    desc="EVR Timestamp (s)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } evr_ts_s @0x40; 
+
+reg {
+    desc="EVR Timestamp (ns)";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } evr_ts_ns @0x44; 
+  
+reg {
+    desc="EVR Reset";
+    default sw = rw;
+    default hw = r;
+    field {} val[8];
+  } evr_reset @0x48;
 
 
 

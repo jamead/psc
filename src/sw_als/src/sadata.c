@@ -72,7 +72,11 @@ void sadata_push(void *unused)
     while(1) {
         vTaskDelay(pdMS_TO_TICKS(100));
 
-        sadata.numchans = Xil_In32(XPAR_M_AXI_BASEADDR + NUMCHANS_REG);;
+        sadata.resolution =  Xil_In32(XPAR_M_AXI_BASEADDR + RESOLUTION_REG);
+        sadata.numchans = Xil_In32(XPAR_M_AXI_BASEADDR + NUMCHANS_REG);
+        sadata.polarity = Xil_In32(XPAR_M_AXI_BASEADDR + POLARITY_REG);
+        sadata.bandwidth = Xil_In32(XPAR_M_AXI_BASEADDR + BANDWIDTH_REG);
+
         //read FPGA version (git checksum) from PL register
         sadata.git_shasum = Xil_In32(XPAR_M_AXI_BASEADDR + PRJ_SHASUM);
         //xil_printf("Git : %x\r\n",sadata.git_shasum);
@@ -80,9 +84,6 @@ void sadata_push(void *unused)
 
         sadata.evr_ts_s =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S_REG);
         sadata.evr_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS_REG);
-        sadata.resolution =  Xil_In32(XPAR_M_AXI_BASEADDR + RESOLUTION_REG);
-
-
 
         for (chan=0; chan<4; chan++) {
            base = XPAR_M_AXI_BASEADDR + (chan + 1) * CHBASEADDR;
@@ -115,6 +116,8 @@ void sadata_push(void *unused)
 
            //DAC
            sadata.ps[chan].dac_setpt = (s32)Xil_In32(base + DAC_CURRSETPT_REG) * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts;
+           sadata.ps[chan].dac_setpt_raw = (s32)Xil_In32(base + DAC_CURRSETPT_REG);
+
            sadata.ps[chan].dac_setpt_offset = (s32)Xil_In32(base + DAC_SETPT_OFFSET_REG) * CONVDACBITSTOVOLTS;
            sadata.ps[chan].dac_setpt_gain = (s32)Xil_In32(base + DAC_SETPT_GAIN_REG) / GAIN20BITFRACT;
            sadata.ps[chan].dac_rampactive = Xil_In32(base + DAC_RAMPACTIVE_REG);

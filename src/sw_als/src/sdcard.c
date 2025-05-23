@@ -146,6 +146,27 @@ void sdcard_netconf(net_config *conf, FIL *fd)
         		fprintf(stderr, "Warning: unknown %s %s\n", cmd, arg ? arg : "");
         	}
 
+        } else if(strcmp(cmd, "bandwidth")==0) {
+        	if (!arg || strcmp(arg, "fast")==0) {
+        		printf("This is a Fast Bandwidth PSC\n");
+        		Xil_Out32(XPAR_M_AXI_BASEADDR + BANDWIDTH_REG, 0);
+        	} else if (strcmp(arg,"slow")==0) {
+        		printf("This is a Medium Bandwidth PSC\n");
+        		Xil_Out32(XPAR_M_AXI_BASEADDR + BANDWIDTH_REG, 1);
+        	} else {
+        		fprintf(stderr, "Warning: unknown %s %s\n", cmd, arg ? arg : "");
+        	}
+
+        } else if(strcmp(cmd, "polarity")==0) {
+         	if (!arg || strcmp(arg, "bipolar")==0) {
+         		printf("This is a Bipolar PSC\n");
+         		Xil_Out32(XPAR_M_AXI_BASEADDR + POLARITY_REG, 0);
+         	} else if (strcmp(arg,"unipolar")==0) {
+         		printf("This is a Unipolar PSC\n");
+         		Xil_Out32(XPAR_M_AXI_BASEADDR + POLARITY_REG, 1);
+         	} else {
+         		fprintf(stderr, "Warning: unknown %s %s\n", cmd, arg ? arg : "");
+         	}
 
         } else if(strcmp(cmd, "addr")==0) {
             sdcard_parse_inet(cmd, arg, &conf->addr);
@@ -160,8 +181,9 @@ void sdcard_netconf(net_config *conf, FIL *fd)
         } else if(strcmp(cmd, "hwaddr")==0) {
             uint8_t hwaddr[NETIF_MAX_HWADDR_LEN] = {};
             // expect arg: XX:XX:XX:XX:XX:XX
-            if (!arg || strcmp(arg, "EEPROM")==0) {
-        		printf("Get HW from EEPROM\n");
+            printf("cmd=hwaddr  Arg= %s\n", arg);
+            if (!arg || strcmp(arg, "eeprom")==0) {
+        		printf("Getting HW addr from EEPROM\n");
         		i2c_get_mac_address(conf->hwaddr);
             } else {
                 for(unsigned n=0; n<NETIF_MAX_HWADDR_LEN; n++) {
