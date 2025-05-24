@@ -93,7 +93,44 @@ void CopyDataChan(float **msg_ptr, u32 *buf_data, u32 numwords, int chan) {
     //buf_data[30000*40+2] = 0;
     //buf_data[30000*40+3] = 0;
     //xil_printf("Start CopyDataChan...\r\n");
-	vTaskSuspendAll();
+	taskENTER_CRITICAL(); // disables context switches but not interrupts
+	//vTaskSuspendAll();
+	//portENTER_CRITICAL(); // disables context switches and interrupts
+
+	/*
+	int offsets[] = {0, 10, 18, 26};  // Channel-specific offsets
+	if (chan < 1 || chan > 4) {
+	    xil_printf("Error: Invalid chan value: %d\n", chan);
+	    return;
+	}
+
+	int base_offset = offsets[chan - 1];
+
+	for (i = 0; i < numwords; i += 40) {
+	    **msg_ptr = buf_data[i + 0];   // header
+	    (*msg_ptr)++;
+	    **msg_ptr = buf_data[i + 1];   // data pt. counter
+	    (*msg_ptr)++;
+
+	    **msg_ptr = (float)(s32)(buf_data[i + base_offset + 0]) * CONVDACBITSTOVOLTS * scalefactors[chan - 1].dac_dccts;   // DCCT1
+	    (*msg_ptr)++;
+	    **msg_ptr = (float)(s32)(buf_data[i + base_offset + 1]) * CONVDACBITSTOVOLTS * scalefactors[chan - 1].dac_dccts;   // DCCT2
+	    (*msg_ptr)++;
+	    **msg_ptr = (float)(s32)(buf_data[i + base_offset + 2]) * CONV16BITSTOVOLTS * scalefactors[chan - 1].dac_dccts;    // DAC Monitor
+	    (*msg_ptr)++;
+	    **msg_ptr = (float)(s32)(buf_data[i + base_offset + 3]) * CONV16BITSTOVOLTS * scalefactors[chan - 1].vout;         // Voltage Monitor
+	    (*msg_ptr)++;
+	    **msg_ptr = (float)(s32)(buf_data[i + base_offset + 4]) * CONV16BITSTOVOLTS * scalefactors[chan - 1].ignd;         // iGND Monitor
+	    (*msg_ptr)++;
+	    **msg_ptr = (float)(s32)(buf_data[i + base_offset + 5]) * CONV16BITSTOVOLTS * scalefactors[chan - 1].spare;        // Spare Monitor
+	    (*msg_ptr)++;
+	    **msg_ptr = (float)(s32)(buf_data[i + base_offset + 6]) * CONV16BITSTOVOLTS * scalefactors[chan - 1].regulator;    // Regulator
+	    (*msg_ptr)++;
+	    **msg_ptr = (float)(s32)(buf_data[i + base_offset + 7]) * CONV16BITSTOVOLTS * scalefactors[chan - 1].error;        // Error
+	    (*msg_ptr)++;
+	}
+	*/
+
 
     switch (chan) {
         case 1:  // Copy elements 0-9
@@ -208,7 +245,9 @@ void CopyDataChan(float **msg_ptr, u32 *buf_data, u32 numwords, int chan) {
             break;
     }
     //xil_printf("Finish CopyDataChan...\r\n");
-    xTaskResumeAll();
+    //xTaskResumeAll();
+    taskEXIT_CRITICAL();
+    //portEXIT_CRITICAL();
 
 }
 

@@ -8,6 +8,7 @@
 #include <string.h>
 #include <sleep.h>
 #include "xiicps.h"
+#include "xuartps_hw.h"
 
 
 #include "lwip/sockets.h"
@@ -149,7 +150,6 @@ void program_ip(void)
 
 
 
-
 void exec_menu(const char *head, const menu_entry_t *m, size_t m_len)
 {
   const char *defaultHead = "Select:";
@@ -164,6 +164,9 @@ void exec_menu(const char *head, const menu_entry_t *m, size_t m_len)
 
   while (!exit_flag)
   {
+	//play nice, don't use all the cpu resources.
+	vTaskDelay(pdMS_TO_TICKS(100));
+
     printf("\r\n%s\r\n", head);
     for (i = 0; i < m_len; i++)
     {
@@ -171,7 +174,12 @@ void exec_menu(const char *head, const menu_entry_t *m, size_t m_len)
     }
     printf("  Q:  quit\r\n");
 
+    // inbyte() is rtos unaware and blocks
+    // switch this to FreeRTOS UART Input with Queue
+    // For now, make thread a lower priority, so others can preempt it.
     choice = inbyte();
+
+
     if (isalpha(choice))
       choice = toupper(choice);
     printf("%c\r\n\r\n", choice);
@@ -211,7 +219,6 @@ void console_menu()
 
   while (1) {
 
-    vTaskDelay(pdMS_TO_TICKS(100));
 
     static const menu_entry_t menu[] = {
 	    {'A', "Dump EEPROM", dump_eeprom},
@@ -237,6 +244,6 @@ void console_setup(void)
 {
     printf("INFO: Starting console daemon\n");
 
-    sys_thread_new("console", console_menu, NULL, THREAD_STACKSIZE, 1);
+    sys_thread_new("console", console_menu, NULL, THREAD_STACKSIZE, CONSOLE_THREAD_PRIO);
 }
 

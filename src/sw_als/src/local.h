@@ -14,6 +14,7 @@
 
 #define THREAD_STACKSIZE 1024
 
+
 // parsed from NET.CNF
 typedef struct {
     ip_addr_t addr, mask, gw;

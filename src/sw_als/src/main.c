@@ -82,7 +82,7 @@ void on_startup(void *pvt, psc_key *key)
     lstats_setup();
     sadata_setup();
     snapshot_setup();
-    //console_setup();
+    console_setup();
 }
 
 static
