@@ -6,8 +6,8 @@
 #include <netinet/in.h>
 #include <errno.h>
 
-#define IP_ADDRESS "10.0.142.43"
-#define PORT 17
+#define IP_ADDRESS "10.0.142.115"
+#define PORT 3000 
 
 char packet[400000];
 

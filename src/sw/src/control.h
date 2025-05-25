@@ -82,8 +82,10 @@
 #define WRITE_QSPI_MSG       400
 #define READ_QSPI_MSG        404
 
+#define WRITE_RAMPTABLE      1000
+
 
 void glob_settings(void *);
-void chan_settings(u32, void *);
+void chan_settings(u32, void *, u32);
 
 

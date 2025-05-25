@@ -65,7 +65,7 @@ void client_msg(void *pvt, psc_client *ckey, uint16_t msgid, uint32_t msglen, vo
         case 2:
         case 3:
         case 4:
-         	chan_settings(msgid,msg);
+         	chan_settings(msgid,msg,msglen);
             break;
 
     }

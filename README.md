@@ -21,11 +21,7 @@ make env
 make cfg=hw project
 make cfg=hw build
 
-For BNL Branch
-make cfg=sw_bnl project
-make cfg=sw_bnl build
+make cfg=sw project
+make cfg=sw build
 
-For ALS-U Branch
-make cfg=sw_als project
-make cfg=sw_als build
 ```

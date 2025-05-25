@@ -45,6 +45,43 @@ void soft_trig(u32 msgVal) {
 }
 
 
+
+// Writes Ramptable to Fabric, currently using DPRAM for storage
+// Will switch to DDR in future to support longer tables
+void write_ramptable(u32 chan, u32 ramp_len, u32 ramp_table[])
+{
+  u32 i,dpram_addr, dpram_data;
+
+  // set dac to ramp mode
+  //Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_JUMPMODE, 1);
+
+  if (ramp_len > 50000) {
+	  xil_printf("Max Ramp Table is 50,000 pts\r\n");
+	  return;
+  }
+
+
+  dpram_addr = DAC_RAMPADDR_REG + chan*CHBASEADDR;
+  dpram_data = DAC_RAMPDATA_REG + chan*CHBASEADDR;
+  Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RAMPLEN_REG + chan*CHBASEADDR, ramp_len);
+
+
+  for (i=0;i<ramp_len;i++) {
+	if (i < 10)
+      xil_printf("%d: %d\r\n",i,ntohl(ramp_table[i]));
+	Xil_Out32(XPAR_M_AXI_BASEADDR + dpram_addr, i);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + dpram_data, ntohl(ramp_table[i]));
+  }
+
+	//update dac setpt with last value from ramp, so whenever we switch
+	// back to FOFB or JumpMode there is no change
+	//Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RAMPLEN + chan*CHBASEADDR, (s32)val);
+
+}
+
+
+
+
 void set_eventno(u32 msgVal) {
 	//Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_TRIGNUM_REG, msgVal);
 }
@@ -241,18 +278,18 @@ void glob_settings(void *msg) {
 }
 
 
-void chan_settings(u32 chan, void *msg) {
+void chan_settings(u32 chan, void *msg, u32 msglen) {
 
     s32 scaled_val;
     u8 qspibuf[FLASH_PAGE_SIZE];
 
 	u32 *msgptr = (u32 *)msg;
-	u32 addr;
+	u32 i,addr;
 	MsgUnion data;
 
 	addr = htonl(msgptr[0]);
 	data.u = htonl(msgptr[1]);
-	//xil_printf("Addr: %d    Data: %d\r\n",addr,data.u);
+	xil_printf("MsgLen: %d  Addr: %d    Data: %d\r\n",msglen,addr,data.u);
 
 
 
@@ -593,6 +630,11 @@ void chan_settings(u32 chan, void *msg) {
         	}
         	break;
 
+        case WRITE_RAMPTABLE:
+        	xil_printf("Writing Ramp Table...\r\n");
+        	for (i=0;i<msglen/4;i++)
+        		xil_printf("%d: %d\r\n",i,htonl(msgptr[i]));
+        	break;
 
         default:
         	xil_printf("Unsupported Message\r\n");
