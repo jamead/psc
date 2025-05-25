@@ -82,7 +82,7 @@ void on_startup(void *pvt, psc_key *key)
     lstats_setup();
     sadata_setup();
     snapshot_setup();
-    console_setup();
+    //console_setup();
 }
 
 static
@@ -173,7 +173,7 @@ int main(void) {
     print_firmware_version();
 
 	init_i2c();
-	prog_si570();
+	//prog_si570();
 	QspiFlashInit();
 
 

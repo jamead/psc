@@ -13,7 +13,49 @@
 
 #include "local.h"
 
+#define MAX_TASKS 16
+
 static XSysMon xmon;
+
+static
+void printTaskStats(void)
+{
+    TaskStatus_t taskStatusArray[MAX_TASKS];
+    UBaseType_t taskCount;
+    uint32_t totalRunTime;
+
+    taskCount = uxTaskGetSystemState(taskStatusArray, MAX_TASKS, &totalRunTime);
+
+    printf("\n%-16s %-6s %-5s %-12s %-12s %-8s\n",
+           "Task", "State", "Prio", "Stack Free", "Runtime", "%%CPU");
+
+    for (UBaseType_t i = 0; i < taskCount; i++) {
+        char stateChar;
+        switch (taskStatusArray[i].eCurrentState) {
+            case eRunning:    stateChar = 'R'; break;
+            case eReady:      stateChar = 'Y'; break;
+            case eBlocked:    stateChar = 'B'; break;
+            case eSuspended:  stateChar = 'S'; break;
+            case eDeleted:    stateChar = 'D'; break;
+            default:          stateChar = '?'; break;
+        }
+
+        float cpuPercent = totalRunTime > 0
+                           ? (taskStatusArray[i].ulRunTimeCounter * 100.0f) / totalRunTime
+                           : 0.0f;
+
+        printf("%-16s %-6c %-5lu %-12u %-12lu %6.2f%%\n",
+               taskStatusArray[i].pcTaskName,
+               stateChar,
+               (unsigned long)taskStatusArray[i].uxCurrentPriority,
+               taskStatusArray[i].usStackHighWaterMark,
+               (unsigned long)taskStatusArray[i].ulRunTimeCounter,
+               cpuPercent);
+    }
+}
+
+
+
 
 
 
@@ -81,6 +123,15 @@ void lstats_push(void *unused)
 #undef MV
 #endif // LWIP_STATS
 
+        //char buffer[512];
+        //vTaskList(buffer);
+        //printf("%s\n",buffer);
+
+        //char buffer[512];
+        //vTaskGetRunTimeStats(buffer);
+        //printf("%s\n", buffer);
+
+        //printTaskStats();
 
         if(xmon.IsReady) {
             msg.sensors.temp = htonf(XSysMon_RawToTemperature(XSysMon_GetAdcData(&xmon, XSM_CH_TEMP)));

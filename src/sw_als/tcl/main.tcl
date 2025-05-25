@@ -62,6 +62,7 @@ proc doOnCreate {} {
   bsp config total_heap_size "1048576"
   bsp config minimal_stack_size "1024"
   bsp config max_task_name_len "32"
+  bsp config generate_runtime_stats "1"
   
   bsp setlib -name xilffs
   bsp config enable_exfat true

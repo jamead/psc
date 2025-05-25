@@ -152,7 +152,7 @@ void psc_run(psc_key **key, const psc_config *config)
             C->peeraddr = caddr;
 
             // LwIP does not allow thread creation to fail
-            sys_thread_new("psc", handle_client, C, THREAD_STACKSIZE, config->client_prio);
+            sys_thread_new("handle client", handle_client, C, THREAD_STACKSIZE, config->client_prio);
 
             sys_mutex_lock(&PSC->sendguard);
             C->next = PSC->client_head;

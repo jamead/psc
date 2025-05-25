@@ -244,6 +244,6 @@ void console_setup(void)
 {
     printf("INFO: Starting console daemon\n");
 
-    sys_thread_new("console", console_menu, NULL, THREAD_STACKSIZE, CONSOLE_THREAD_PRIO);
+    sys_thread_new("console", console_menu, NULL, THREAD_STACKSIZE, DEFAULT_THREAD_PRIO-1);
 }
 
