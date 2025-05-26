@@ -13,6 +13,7 @@
 #include "pscserver.h"
 
 #define THREAD_STACKSIZE 1024
+#define MAX_TASKS 16
 
 
 // parsed from NET.CNF
@@ -21,6 +22,13 @@ typedef struct {
     uint8_t use_static;
     uint8_t hwaddr[NETIF_MAX_HWADDR_LEN];
 } net_config;
+
+
+typedef union {
+    u32 u;
+    float f;
+    s32 i;
+} MsgUnion;
 
 
 
@@ -40,6 +48,8 @@ void eeprom_dump();
 void menu_get_ipaddr();
 void prog_si570();
 void InitSettingsfromQspi();
+void chan_settings(u32, void *, u32);
+float ReadAccumSA(u32, u32);
 
 
 /* registers from Controller.v by word offset
@@ -90,7 +100,7 @@ uint32_t htonf(float f) {
 #define GAIN16BITFRACT 65535.0
 
 #define CONVVOLTSTO16BITS  3276.8   // 2^16/20.0
-#define CONV16BITSTOVOLTS  1/CONVVOLTSTO16BITS
+#define CONV16BITSTOVOLTS  (1.0/CONVVOLTSTO16BITS)
 
 #define CONVVOLTSTO18BITS  13107.2  // 2^20/20.0
 #define CONV18BITSTOVOLTS  1/CONVVOLTSTO18BITS

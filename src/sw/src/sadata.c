@@ -39,7 +39,7 @@ void hton_conv(char *inbuf, int len) {
 
 
 
-static
+
 float ReadAccumSA(u32 reg_addr, u32 ave_mode) {
 
 	s32 raw;

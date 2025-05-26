@@ -82,7 +82,7 @@ void on_startup(void *pvt, psc_key *key)
     lstats_setup();
     sadata_setup();
     snapshot_setup();
-    //console_setup();
+    console_setup();
 }
 
 static
@@ -162,18 +162,13 @@ void InitSettingsfromQspi() {
 int main(void) {
 
 	u32 i, base;
-    // entry point from FSBL via freertos init
-
-    // crutch until lack of thread sync. sorted out...
-    //Xil_L1DCacheDisable();
-    //Xil_L2CacheDisable();
 
 
     xil_printf("Power Supply Controller\r\n");
     print_firmware_version();
 
 	init_i2c();
-	//prog_si570();
+	prog_si570();
 	QspiFlashInit();
 
 

@@ -20,16 +20,12 @@
 #include "qspi_flash.h"
 
 
-typedef union {
-    u32 u;
-    float f;
-    s32 i;
-} MsgUnion;
 
 
 
 extern ScaleFactorType scalefactors[4];
 extern float CONVVOLTSTODACBITS;
+extern float CONVDACBITSTOVOLTS;
 
 
 
@@ -43,6 +39,29 @@ void soft_trig(u32 msgVal) {
 	Xil_Out32(XPAR_M_AXI_BASEADDR + SOFTTRIG, 0);
 
 }
+
+void dump_adcs(u32 chan) {
+
+   u32 base, ave_mode;
+
+   base = XPAR_M_AXI_BASEADDR + (chan + 1) * CHBASEADDR;
+   ave_mode = Xil_In32(base + AVEMODE_REG);
+
+   printf("DCCT1    : %f\n", ReadAccumSA(base + DCCT1_REG, ave_mode) * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts);
+   printf("DCCT2    : %f\n", ReadAccumSA(base + DCCT2_REG, ave_mode) * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts);
+   printf("DAC      : %f\n", ReadAccumSA(base + DACMON_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan].dac_dccts);
+   printf("Vout     : %f\n", ReadAccumSA(base + VOLT_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan].vout);
+   printf("iGND     : %f\n", ReadAccumSA(base + GND_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan].ignd);
+   printf("Spare    : %f\n", ReadAccumSA(base + SPARE_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan].spare);
+   printf("Reg      : %f\n", ReadAccumSA(base + REG_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan].regulator);
+   printf("Error    : %f\n", ReadAccumSA(base + ERR_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan].error);
+   printf("DAC Setpt: %f\n", (s32)Xil_In32(base + DAC_CURRSETPT_REG) * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts);
+
+
+}
+
+
+
 
 
 
@@ -289,7 +308,7 @@ void chan_settings(u32 chan, void *msg, u32 msglen) {
 
 	addr = htonl(msgptr[0]);
 	data.u = htonl(msgptr[1]);
-	xil_printf("MsgLen: %d  Addr: %d    Data: %d\r\n",msglen,addr,data.u);
+	printf("Chan: %d Addr: %d   Data(i): %d   Data(f): %f\r\n",(int)chan,(int)addr,(int)data.u,data.f);
 
 
 
@@ -630,11 +649,17 @@ void chan_settings(u32 chan, void *msg, u32 msglen) {
         	}
         	break;
 
-        case WRITE_RAMPTABLE:
+        case DUMP_ADCS_MSG:
+        	dump_adcs(chan);
+        	break;
+
+        case WRITE_RAMPTABLE_MSG:
         	xil_printf("Writing Ramp Table...\r\n");
         	for (i=0;i<msglen/4;i++)
         		xil_printf("%d: %d\r\n",i,htonl(msgptr[i]));
         	break;
+
+
 
         default:
         	xil_printf("Unsupported Message\r\n");

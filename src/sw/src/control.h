@@ -82,7 +82,9 @@
 #define WRITE_QSPI_MSG       400
 #define READ_QSPI_MSG        404
 
-#define WRITE_RAMPTABLE      1000
+#define DUMP_ADCS_MSG        500
+
+#define WRITE_RAMPTABLE_MSG  1000
 
 
 void glob_settings(void *);

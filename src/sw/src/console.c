@@ -22,12 +22,14 @@
 #include "pl_regs.h"
 #include "local.h"
 
+#define MAX_INPUT_LEN      64
 
 typedef struct {
   u8 ipaddr[4];
   u8 ipmask[4];
   u8 ipgw[4];
 } ip_t;
+
 
 
 static ip_t ip_settings;
@@ -148,6 +150,75 @@ void program_ip(void)
 
 }
 
+// Read a line (blocking) from UART into buffer
+void uart_read_line(char *buffer, int max_len) {
+    int idx = 0;
+    char c;
+
+    while (idx < max_len - 1) {
+        // Wait for data from UART
+        while (!XUartPs_IsReceiveData(XPAR_XUARTPS_0_BASEADDR)) {
+            vTaskDelay(pdMS_TO_TICKS(1)); // Yield to other tasks
+        }
+
+        c = XUartPs_ReadReg(XPAR_XUARTPS_0_BASEADDR, XUARTPS_FIFO_OFFSET) & 0xFF;
+
+        // Echo the character back if needed
+        XUartPs_SendByte(XPAR_XUARTPS_0_BASEADDR, c);
+
+        if (c == '\r' || c == '\n') {
+            break;  // End of line
+        }
+
+        buffer[idx++] = c;
+    }
+
+    buffer[idx] = '\0';  // Null-terminate
+
+    // Optionally send newline
+    xil_printf("\r\n");
+}
+
+
+
+// This function reads channel, address, and value (int or float) from console
+static
+void receive_console_cmd(void) {
+    char input[100];
+    u32 chan;
+    u32 addr;
+    MsgUnion data;
+    MsgUnion msg_buf[2];  // [0] = addr, [1] = data
+    char val_str[32];
+
+    printf("Enter:  <channel> <command> <value> \n");
+    uart_read_line(input, MAX_INPUT_LEN);
+
+    if (sscanf(input, "%u %u %31s", (unsigned int *)&chan, (unsigned int *)&addr, val_str) != 3) {
+        printf("Invalid input.\n");
+        return;
+    }
+
+
+    // Try float conversion if value contains '.'
+    if (strchr(val_str, '.')) {
+        data.f = strtof(val_str, NULL);
+    } else {
+        data.u = strtoul(val_str, NULL, 10);
+    }
+
+    msg_buf[0].u = htonl(addr);      // network byte order
+    msg_buf[1].u = htonl(data.u);    // send raw bits of float/int
+
+    // Call your handler
+    chan_settings(chan, msg_buf, sizeof(msg_buf));
+
+}
+
+
+
+
+
 
 
 void exec_menu(const char *head, const menu_entry_t *m, size_t m_len)
@@ -174,10 +245,11 @@ void exec_menu(const char *head, const menu_entry_t *m, size_t m_len)
     }
     printf("  Q:  quit\r\n");
 
-    // inbyte() is rtos unaware and blocks
-    // switch this to FreeRTOS UART Input with Queue
-    // For now, make thread a lower priority, so others can preempt it.
-    choice = inbyte();
+
+    while (!XUartPs_IsReceiveData(XPAR_XUARTPS_0_BASEADDR)) {
+        vTaskDelay(pdMS_TO_TICKS(10)); // Yield to other tasks
+    }
+    choice = XUartPs_ReadReg(XPAR_XUARTPS_0_BASEADDR, XUARTPS_FIFO_OFFSET) & 0xFF;
 
 
     if (isalpha(choice))
@@ -213,19 +285,66 @@ void reboot() {
 }
 
 
+static
+void printTaskStats(void)
+{
+    TaskStatus_t taskStatusArray[MAX_TASKS];
+    UBaseType_t taskCount;
+    uint32_t totalRunTime;
+
+    taskCount = uxTaskGetSystemState(taskStatusArray, MAX_TASKS, &totalRunTime);
+
+    printf("\n%-16s %-6s %-5s %-12s %-12s %-8s\n",
+           "Task", "State", "Prio", "Stack Free", "Runtime", "%%CPU");
+
+    for (UBaseType_t i = 0; i < taskCount; i++) {
+        char stateChar;
+        switch (taskStatusArray[i].eCurrentState) {
+            case eRunning:    stateChar = 'R'; break;
+            case eReady:      stateChar = 'Y'; break;
+            case eBlocked:    stateChar = 'B'; break;
+            case eSuspended:  stateChar = 'S'; break;
+            case eDeleted:    stateChar = 'D'; break;
+            default:          stateChar = '?'; break;
+        }
+
+        float cpuPercent = totalRunTime > 0
+                           ? (taskStatusArray[i].ulRunTimeCounter * 100.0f) / totalRunTime
+                           : 0.0f;
+
+        printf("%-16s %-6c %-5lu %-12lu %-12lu %6.2f%%\n",
+               taskStatusArray[i].pcTaskName,
+               stateChar,
+               (unsigned long)taskStatusArray[i].uxCurrentPriority,
+               taskStatusArray[i].usStackHighWaterMark,
+               (unsigned long)taskStatusArray[i].ulRunTimeCounter,
+               cpuPercent);
+    }
+}
+
+
+
+
+
+
+
+
 
 void console_menu()
 {
 
   while (1) {
 
+    vTaskDelay(pdMS_TO_TICKS(10));
 
     static const menu_entry_t menu[] = {
 	    {'A', "Dump EEPROM", dump_eeprom},
 		{'B', "Program IP Settings", program_ip},
 		{'C', "Set Resolution (HS or MS)", set_resolution},
 		{'D', "Reboot", reboot},
-	    {'E', "Display Snapshot Stats", print_snapshot_stats}
+	    {'E', "Display Snapshot Stats", print_snapshot_stats},
+	    {'F', "Print FreeRTOS Stats",  printTaskStats},
+	    {'G', "Dave Bergman Calibration Mode", receive_console_cmd}
 	};
 	static const size_t menulen = sizeof(menu)/sizeof(menu_entry_t);
 

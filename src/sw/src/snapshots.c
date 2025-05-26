@@ -241,7 +241,7 @@ void CopyDataChan(float **msg_ptr, u32 *buf_data, u32 numwords, int chan) {
             break;
 
         default:
-            xil_printf("Error: Invalid chan value: %d\n", chan);
+            //xil_printf("Error: Invalid chan value: %d\n", chan);
             break;
     }
     //xil_printf("Finish CopyDataChan...\r\n");
@@ -345,7 +345,7 @@ void ProcessTrigger(TriggerInfo *trig, const char *trig_name) {
     if ((trig->addr != trig->addr_last) && (trig->active == 0)) {
         trig->active = 1;
         trig->addr_last = trig->addr; ;
-        xil_printf("Got %s Trigger...   BufPtr Addr: %x\r\n", trig_name, trig->addr);
+        //xil_printf("Got %s Trigger...   BufPtr Addr: %x\r\n", trig_name, trig->addr);
         trig->postdlycnt = 0;
     }
 
