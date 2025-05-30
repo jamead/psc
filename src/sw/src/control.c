@@ -44,18 +44,19 @@ void dump_adcs(u32 chan) {
 
    u32 base, ave_mode;
 
-   base = XPAR_M_AXI_BASEADDR + (chan + 1) * CHBASEADDR;
+   base = XPAR_M_AXI_BASEADDR + (chan) * CHBASEADDR;
    ave_mode = Xil_In32(base + AVEMODE_REG);
 
-   printf("DCCT1    : %f\n", ReadAccumSA(base + DCCT1_REG, ave_mode) * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts);
-   printf("DCCT2    : %f\n", ReadAccumSA(base + DCCT2_REG, ave_mode) * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts);
-   printf("DAC      : %f\n", ReadAccumSA(base + DACMON_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan].dac_dccts);
-   printf("Vout     : %f\n", ReadAccumSA(base + VOLT_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan].vout);
-   printf("iGND     : %f\n", ReadAccumSA(base + GND_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan].ignd);
-   printf("Spare    : %f\n", ReadAccumSA(base + SPARE_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan].spare);
-   printf("Reg      : %f\n", ReadAccumSA(base + REG_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan].regulator);
-   printf("Error    : %f\n", ReadAccumSA(base + ERR_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan].error);
-   printf("DAC Setpt: %f\n", (s32)Xil_In32(base + DAC_CURRSETPT_REG) * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts);
+   printf("DCCT1 (A)     : %f\n", ReadAccumSA(base + DCCT1_REG, ave_mode) * CONVDACBITSTOVOLTS * scalefactors[chan-1].dac_dccts);
+   printf("DCCT2 (A)     : %f\n", ReadAccumSA(base + DCCT2_REG, ave_mode) * CONVDACBITSTOVOLTS * scalefactors[chan-1].dac_dccts);
+   printf("DAC (A)       : %f\n", ReadAccumSA(base + DACMON_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan-1].dac_dccts);
+   printf("Vout (V)      : %f\n", ReadAccumSA(base + VOLT_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan-1].vout);
+   printf("iGND (mA)     : %f\n", ReadAccumSA(base + GND_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan-1].ignd);
+   printf("Spare (V)     : %f\n", ReadAccumSA(base + SPARE_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan-1].spare);
+   printf("Reg (A)       : %f\n", ReadAccumSA(base + REG_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan-1].regulator);
+   printf("Error (V)     : %f\n", ReadAccumSA(base + ERR_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan-1].error);
+   printf("DAC Setpt Raw : %d\n", (s32)Xil_In32(base + DAC_CURRSETPT_REG));
+   printf("DAC Setpt (A) : %f\n", (s32)Xil_In32(base + DAC_CURRSETPT_REG) * CONVDACBITSTOVOLTS * scalefactors[chan-1].dac_dccts);
 
 
 }
