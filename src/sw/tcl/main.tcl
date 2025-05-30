@@ -77,6 +77,7 @@ proc doOnCreate {} {
   bsp config dhcp_does_arp_check true
   bsp config lwip_dhcp "true"
   bsp config pbuf_pool_size 2048 
+  bsp config mem_size 16777216
   bsp config tick_rate 750
   bsp config lwip_stats true 
   # bsp config lwip_debug true
