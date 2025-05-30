@@ -16,7 +16,7 @@
 #include "local.h"
 
 
-static char static_rxbufs[PSC_MAX_CLIENTS][PSC_MAX_RX_MSG_LEN];
+//static char static_rxbufs[PSC_MAX_CLIENTS][PSC_MAX_RX_MSG_LEN];
 
 struct psc_client {
     struct psc_client *prev;
@@ -89,7 +89,7 @@ void psc_run(psc_key **key, const psc_config *config)
     printf("Server ready on port %d\n", config->port);
     while(1) {
         psc_client *C = NULL;
-        static char *Cbuf = NULL;
+        char *Cbuf = NULL;
         struct sockaddr_in caddr;
         socklen_t clen = sizeof(caddr);
 
@@ -135,8 +135,8 @@ void psc_run(psc_key **key, const psc_config *config)
             sys_msleep(1000);
 
         } else if(PSC->client_count>=PSC_MAX_CLIENTS ||
-                  !(C = calloc(1,sizeof(*C))))   //||
-                  //!(Cbuf = malloc(PSC_MAX_RX_MSG_LEN)))
+                  !(C = calloc(1,sizeof(*C)))   ||
+                  !(Cbuf = malloc(PSC_MAX_RX_MSG_LEN)))
         {
         	printf("Client Count = %d\n",PSC->client_count);
         	printf("C = %d\n",(int)C);
@@ -151,8 +151,8 @@ void psc_run(psc_key **key, const psc_config *config)
         } else {
         	printf("PSC Client Count: %d\n",PSC->client_count);
             C->PSC = PSC;
-        	C->rxbuf = static_rxbufs[PSC->client_count];
-            //C->rxbuf = Cbuf;
+        	//C->rxbuf = static_rxbufs[PSC->client_count];
+            C->rxbuf = Cbuf;
             C->sock = client;
             C->peeraddr = caddr;
 

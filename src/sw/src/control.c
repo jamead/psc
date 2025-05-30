@@ -296,6 +296,24 @@ void glob_settings(void *msg) {
 
 }
 
+void load_ramptable(u32 chan, void *msg, u32 msglen) {
+
+	int i;
+	MsgUnion data;
+
+	u32 *msgptr = (u32 *)msg;
+
+	xil_printf("Writing Ramp Table... MsgLen=%d\r\n",msglen);
+	for (i=0;i<msglen/4;i++) {
+		data.u = htonl(msgptr[i]);
+		printf("%d: %f\r\n",i,data.f);
+	}
+
+}
+
+
+
+
 
 void chan_settings(u32 chan, void *msg, u32 msglen) {
 
@@ -303,11 +321,12 @@ void chan_settings(u32 chan, void *msg, u32 msglen) {
     u8 qspibuf[FLASH_PAGE_SIZE];
 
 	u32 *msgptr = (u32 *)msg;
-	u32 i,addr;
+	u32 addr;
 	MsgUnion data;
 
 	addr = htonl(msgptr[0]);
 	data.u = htonl(msgptr[1]);
+	xil_printf("MsgLen=%d\r\n",msglen);
 	printf("Chan: %d Addr: %d   Data(i): %d   Data(f): %f\r\n",(int)chan,(int)addr,(int)data.u,data.f);
 
 
@@ -653,11 +672,7 @@ void chan_settings(u32 chan, void *msg, u32 msglen) {
         	dump_adcs(chan);
         	break;
 
-        case WRITE_RAMPTABLE_MSG:
-        	xil_printf("Writing Ramp Table...\r\n");
-        	for (i=0;i<msglen/4;i++)
-        		xil_printf("%d: %d\r\n",i,htonl(msgptr[i]));
-        	break;
+
 
 
 

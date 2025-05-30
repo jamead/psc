@@ -59,7 +59,7 @@ proc doOnCreate {} {
 
   #domain active {app_domain}
   #bsp setlib xilpm 
-  bsp config total_heap_size "1048576"
+  bsp config total_heap_size "16777216"
   bsp config minimal_stack_size "1024"
   bsp config max_task_name_len "32"
   bsp config generate_runtime_stats "1"

@@ -52,6 +52,9 @@ void client_msg(void *pvt, psc_client *ckey, uint16_t msgid, uint32_t msglen, vo
 {
     (void)pvt;
 
+	xil_printf("In Client_Msg:  MsgID=%d   MsgLen=%d\r\n",msgid,msglen);
+
+
     //blink front panel LED
     Xil_Out32(XPAR_M_AXI_BASEADDR + IOC_ACCESS_REG, 1);
     Xil_Out32(XPAR_M_AXI_BASEADDR + IOC_ACCESS_REG, 0);
@@ -67,6 +70,11 @@ void client_msg(void *pvt, psc_client *ckey, uint16_t msgid, uint32_t msglen, vo
         case 4:
          	chan_settings(msgid,msg,msglen);
             break;
+        case 101:
+        	load_ramptable(1,msg,msglen);
+        case 102:
+        case 103:
+        case 104:
 
     }
 

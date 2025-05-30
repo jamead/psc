@@ -5,6 +5,6 @@
 #define PSC_MAX_CLIENTS 4
 
 /* Largest message which can be received w/o truncation */
-#define PSC_MAX_RX_MSG_LEN 50000
+#define PSC_MAX_RX_MSG_LEN 2048
 
 #endif // PSCOPTS_H
