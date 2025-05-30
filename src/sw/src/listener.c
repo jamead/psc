@@ -16,7 +16,11 @@
 #include "local.h"
 
 
-//static char static_rxbufs[PSC_MAX_CLIENTS][PSC_MAX_RX_MSG_LEN];
+
+// Static buffers + usage bitmap
+static char static_rxbufs[PSC_MAX_CLIENTS][PSC_MAX_RX_MSG_LEN];
+static uint8_t static_rxbufs_in_use[PSC_MAX_CLIENTS] = {0};
+
 
 struct psc_client {
     struct psc_client *prev;
@@ -29,6 +33,7 @@ struct psc_client {
     psc_key *PSC;
 
     char *rxbuf;
+    int buf_index;
 };
 
 struct psc_key {
@@ -87,9 +92,12 @@ void psc_run(psc_key **key, const psc_config *config)
         (*config->start)(config->pvt, PSC);
 
     printf("Server ready on port %d\n", config->port);
+
+
+
     while(1) {
         psc_client *C = NULL;
-        char *Cbuf = NULL;
+        //char *Cbuf = NULL;
         struct sockaddr_in caddr;
         socklen_t clen = sizeof(caddr);
 
@@ -135,26 +143,50 @@ void psc_run(psc_key **key, const psc_config *config)
             sys_msleep(1000);
 
         } else if(PSC->client_count>=PSC_MAX_CLIENTS ||
-                  !(C = calloc(1,sizeof(*C)))   ||
-                  !(Cbuf = malloc(PSC_MAX_RX_MSG_LEN)))
+                  !(C = calloc(1,sizeof(*C)))) //   ||
+                  //!(Cbuf = malloc(PSC_MAX_RX_MSG_LEN)))
         {
         	printf("Client Count = %d\n",PSC->client_count);
-        	printf("C = %d\n",(int)C);
-        	printf("Cbuf = %d\n",(int)Cbuf);
+        	//printf("C = %d\n",(int)C);
+        	//printf("Cbuf = %d\n",(int)Cbuf);
             printf("Dropping client %s:%d (%d connected)\n",
                    inet_ntoa(caddr.sin_addr.s_addr),
                    ntohs(caddr.sin_port),
                    PSC->client_count);
             close(client);
             free(C);
-            free(Cbuf);
+            //free(Cbuf);
         } else {
+            // 🔎 Find the first available static buffer slot
+             int buf_index = -1;
+             for (int i = 0; i < PSC_MAX_CLIENTS; i++) {
+                 if (!static_rxbufs_in_use[i]) {
+                     buf_index = i;
+                     static_rxbufs_in_use[i] = 1;
+                     break;
+                 }
+             }
+
+             if (buf_index == -1) {
+                 // Shouldn't happen because of client count check
+                 printf("No static RX buffer available! Dropping client.\n");
+                 close(client);
+                 free(C);
+                 continue;
+             }
+
+             printf("PSC Client Count: %d (using buffer index %d)\n", PSC->client_count, buf_index);
+
+
+
         	printf("PSC Client Count: %d\n",PSC->client_count);
             C->PSC = PSC;
-        	//C->rxbuf = static_rxbufs[PSC->client_count];
-            C->rxbuf = Cbuf;
+        	C->rxbuf = static_rxbufs[buf_index];
+            //C->rxbuf = Cbuf;
             C->sock = client;
             C->peeraddr = caddr;
+            C->buf_index = buf_index; // Save index for freeing later
+
 
             // LwIP does not allow thread creation to fail
             sys_thread_new("handle client", handle_client, C, THREAD_STACKSIZE, DEFAULT_THREAD_PRIO); //config->client_prio);
@@ -198,7 +230,7 @@ static void handle_client(void *raw)
         (*C->PSC->conf->recv)(C->PSC->conf->pvt, C, msgid, msglen, C->rxbuf);
     }
 
-    /* patch outselves out of the client list */
+    /* patch ourselves out of the client list */
     sys_mutex_lock(&C->PSC->sendguard);
     if(C->next)
         C->next->prev = C->prev;
@@ -207,6 +239,13 @@ static void handle_client(void *raw)
     else
         C->PSC->client_head = C->next;
     C->PSC->client_count--;
+
+    // Release the static buffer
+      if (C->buf_index >= 0 && C->buf_index < PSC_MAX_CLIENTS) {
+          printf("Releasing static buffer index %d\n", C->buf_index);
+          static_rxbufs_in_use[C->buf_index] = 0;
+      }
+
     sys_mutex_unlock(&C->PSC->sendguard);
 
     if(C->PSC->conf->conn)
@@ -221,7 +260,7 @@ static void handle_client(void *raw)
     close(C->sock);
     sys_mutex_unlock(&C->PSC->sendguard);
 
-    free(C->rxbuf);
+    //free(C->rxbuf);
     free(C);
     vTaskDelete(NULL);
 }
