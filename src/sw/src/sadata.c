@@ -2,6 +2,7 @@
 // Gather and Send 10Hz data
 
 #include <stdio.h>
+#include <math.h>
 
 #include <xsysmon.h>
 #include <xparameters.h>
@@ -53,6 +54,8 @@ float ReadAccumSA(u32 reg_addr, u32 ave_mode) {
  	   averaged = raw / 167.0;
     else if (ave_mode == 2)
  	   averaged = raw / 500.0;
+    else
+       averaged = NAN;
 
    // printf("Raw: %d    Ave%f  \r\n",(int)raw, averaged);
     return averaged;
