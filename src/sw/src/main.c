@@ -72,10 +72,11 @@ void client_msg(void *pvt, psc_client *ckey, uint16_t msgid, uint32_t msglen, vo
             break;
         case 101:
         	write_ramptable(1,msg,msglen);
+            break;
         case 102:
         case 103:
         case 104:
-
+            break;
     }
 
 
