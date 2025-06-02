@@ -50,6 +50,7 @@ void prog_si570();
 void InitSettingsfromQspi();
 void chan_settings(u32, void *, u32);
 float ReadAccumSA(u32, u32);
+void write_ramptable(u32, void *, u32);
 
 
 /* registers from Controller.v by word offset

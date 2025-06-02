@@ -71,7 +71,7 @@ void client_msg(void *pvt, psc_client *ckey, uint16_t msgid, uint32_t msglen, vo
          	chan_settings(msgid,msg,msglen);
             break;
         case 101:
-        	load_ramptable(1,msg,msglen);
+        	write_ramptable(1,msg,msglen);
         case 102:
         case 103:
         case 104:
@@ -176,7 +176,7 @@ int main(void) {
     print_firmware_version();
 
 	init_i2c();
-	prog_si570();
+	//prog_si570();
 	QspiFlashInit();
 
 

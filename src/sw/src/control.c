@@ -55,25 +55,50 @@ void dump_adcs(u32 chan) {
    printf("Spare (V)     : %f\n", ReadAccumSA(base + SPARE_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan-1].spare);
    printf("Reg (A)       : %f\n", ReadAccumSA(base + REG_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan-1].regulator);
    printf("Error (V)     : %f\n", ReadAccumSA(base + ERR_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan-1].error);
-   printf("DAC Setpt Raw : %d\n", (s32)Xil_In32(base + DAC_CURRSETPT_REG));
+   printf("DAC Setpt Raw : %d\n", (int)Xil_In32(base + DAC_CURRSETPT_REG));
    printf("DAC Setpt (A) : %f\n", (s32)Xil_In32(base + DAC_CURRSETPT_REG) * CONVDACBITSTOVOLTS * scalefactors[chan-1].dac_dccts);
 
 
 }
 
 
+void load_ramptable(u32 chan, void *msg, u32 msglen) {
+
+	int i;
+	MsgUnion data;
+
+	u32 *msgptr = (u32 *)msg;
+
+	xil_printf("Writing Ramp Table... MsgLen=%d\r\n",msglen);
+	for (i=0;i<msglen/4;i++) {
+		data.u = htonl(msgptr[i]);
+		printf("%d: %f\r\n",i,data.f);
+	}
+
+}
 
 
 
 
-// Writes Ramptable to Fabric, currently using DPRAM for storage
-// Will switch to DDR in future to support longer tables
-void write_ramptable(u32 chan, u32 ramp_len, u32 ramp_table[])
+// Writes Ramptable to Fabric, using DPRAM for storage
+void write_ramptable(u32 chan, void *msg, u32 msglen)
 {
-  u32 i,dpram_addr, dpram_data;
 
-  // set dac to ramp mode
-  //Xil_Out32(XPAR_M_AXI_BASEADDR + PS1_DAC_JUMPMODE, 1);
+
+  MsgUnion data;
+  int i;
+  u32 dpram_addr, dpram_data, ramp_len;
+  u32 *msgptr = (u32 *)msg;
+  s32 scaled_val;
+  u32 psc_resolution;
+
+  ramp_len = msglen / 4;
+  xil_printf("Writing %d point Ramptable for Channel %d...\r\n",ramp_len, chan);
+
+	for (i=0;i<20;i++) {
+		data.u = htonl(msgptr[i]);
+		printf("%d: %f\r\n",i,data.f);
+	}
 
   if (ramp_len > 50000) {
 	  xil_printf("Max Ramp Table is 50,000 pts\r\n");
@@ -85,12 +110,25 @@ void write_ramptable(u32 chan, u32 ramp_len, u32 ramp_table[])
   dpram_data = DAC_RAMPDATA_REG + chan*CHBASEADDR;
   Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RAMPLEN_REG + chan*CHBASEADDR, ramp_len);
 
+  //Read FPGA register for saturation checking 0=MS, 1=HS
+  psc_resolution = Xil_In32(XPAR_M_AXI_BASEADDR + RESOLUTION_REG);
+
+  printf("ScaleFactor = %f\n",scalefactors[chan-1].dac_dccts);
+  printf("CONVVOLTSTODACBITS = %f\n",CONVVOLTSTODACBITS);
 
   for (i=0;i<ramp_len;i++) {
-	if (i < 10)
-      xil_printf("%d: %d\r\n",i,ntohl(ramp_table[i]));
+	data.u = htonl(msgptr[i]);
+	scaled_val = data.f*CONVVOLTSTODACBITS / scalefactors[chan-1].dac_dccts;
+	if ((psc_resolution == 1) && (abs(scaled_val) > (1 << 20))) {
+	    scaled_val = (scaled_val > 0) ? ((1 << 20) - 1) : -(1 << 20);
+	} else if ((psc_resolution == 0) && (abs(scaled_val) > (1 << 18))) {
+	    scaled_val = (scaled_val > 0) ? ((1 << 18) - 1) : -(1 << 18);
+	}
+
+	if (i<20)
+       printf("%d: %f  %d\r\n",i,data.f, (int)scaled_val);
 	Xil_Out32(XPAR_M_AXI_BASEADDR + dpram_addr, i);
-    Xil_Out32(XPAR_M_AXI_BASEADDR + dpram_data, ntohl(ramp_table[i]));
+    Xil_Out32(XPAR_M_AXI_BASEADDR + dpram_data, scaled_val);
   }
 
 	//update dac setpt with last value from ramp, so whenever we switch
@@ -297,20 +335,6 @@ void glob_settings(void *msg) {
 
 }
 
-void load_ramptable(u32 chan, void *msg, u32 msglen) {
-
-	int i;
-	MsgUnion data;
-
-	u32 *msgptr = (u32 *)msg;
-
-	xil_printf("Writing Ramp Table... MsgLen=%d\r\n",msglen);
-	for (i=0;i<msglen/4;i++) {
-		data.u = htonl(msgptr[i]);
-		printf("%d: %f\r\n",i,data.f);
-	}
-
-}
 
 
 
