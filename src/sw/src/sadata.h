@@ -69,7 +69,7 @@ typedef struct SAdataChan {
     float sf_regulator;
     float sf_error;
     s32 dac_setpt_raw;
-    u32 rsvd[12];
+    u32 rsvd[11];
 } SAdataChan;
 
 
