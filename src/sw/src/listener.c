@@ -15,25 +15,19 @@
 #include "pscmsg.h"
 #include "local.h"
 
-
-
-// Static buffers + usage bitmap
-static char static_rxbufs[PSC_MAX_CLIENTS][PSC_MAX_RX_MSG_LEN];
-static uint8_t static_rxbufs_in_use[PSC_MAX_CLIENTS] = {0};
-
+#if PSC_MAX_CLIENTS > 32
+#  error PSC_MAX_CLIENTS too large
+#endif
 
 struct psc_client {
-    struct psc_client *prev;
-    struct psc_client *next;
-    int active;
+    unsigned index; // ... in psc_key::clients
 
-    int sock;
+    int sock; // set to -1 on send error
     struct sockaddr_in peeraddr;
 
     psc_key *PSC;
 
-    char *rxbuf;
-    int buf_index;
+    char rxbuf[8+PSC_MAX_RX_MSG_LEN];
 };
 
 struct psc_key {
@@ -42,8 +36,8 @@ struct psc_key {
 
     int listen_sock;
 
-    unsigned client_count;
-    psc_client *client_head;
+    uint32_t clients_used;
+    struct psc_client clients[PSC_MAX_CLIENTS];
 };
 
 static void handle_client(void *raw);
@@ -58,6 +52,43 @@ static void handle_client(void *raw);
     printf("Error: %s:%d %s (errno=%d): " fmt "\n", __FILE__, __LINE__, __FUNCTION__, errno, ##__VA_ARGS__); return; \
     }}while(0)
 
+static
+struct psc_client* psc_client_alloc(struct psc_key *key)
+{
+    psc_client* ret = NULL;
+    sys_mutex_lock(&key->sendguard);
+
+    for(unsigned i=0; i<PSC_MAX_CLIENTS; i++) {
+        if(key->clients_used & (1u<<i))
+            continue;
+
+        key->clients_used |= (1u<<i);
+
+        ret = &key->clients[i];
+        memset(ret, 0, sizeof(*ret));
+        ret->index = i;
+        ret->PSC = key;
+        break;
+    }
+
+    sys_mutex_unlock(&key->sendguard);
+    return ret;
+}
+
+static
+void psc_client_free(struct psc_client* cli)
+{
+    struct psc_key *key = cli->PSC;
+    sys_mutex_lock(&key->sendguard);
+
+    key->clients_used &= ~(1u<<cli->index);
+    // spoil
+    memset(cli, 0, sizeof(*cli));
+    cli->PSC = NULL;
+
+    sys_mutex_unlock(&key->sendguard);
+}
+
 void psc_run(psc_key **key, const psc_config *config)
 {
     struct sockaddr_in laddr;
@@ -71,8 +102,8 @@ void psc_run(psc_key **key, const psc_config *config)
 
     ERROR(key && *key, "key already set");
 
-    PSC = calloc(1, sizeof(*PSC));
-    ERROR(!PSC, "Allocation");
+    PSC = mem_calloc(1, sizeof(*PSC));
+    ERROR(!PSC, "Unable to allocate %zu bytes for PSC", sizeof(*PSC));
     PSC->conf = config;
 
     PERROR(sys_mutex_new(&PSC->sendguard)!=ERR_OK, "sendguard");
@@ -92,12 +123,8 @@ void psc_run(psc_key **key, const psc_config *config)
         (*config->start)(config->pvt, PSC);
 
     printf("Server ready on port %d\n", config->port);
-
-
-
     while(1) {
         psc_client *C = NULL;
-        //char *Cbuf = NULL;
         struct sockaddr_in caddr;
         socklen_t clen = sizeof(caddr);
 
@@ -142,66 +169,24 @@ void psc_run(psc_key **key, const psc_config *config)
             printf("accept error %d for port %d\n", errno, config->port);
             sys_msleep(1000);
 
-        } else if(PSC->client_count>=PSC_MAX_CLIENTS ||
-                  !(C = calloc(1,sizeof(*C)))) //   ||
-                  //!(Cbuf = malloc(PSC_MAX_RX_MSG_LEN)))
-        {
-        	printf("Client Count = %d\n",PSC->client_count);
-        	//printf("C = %d\n",(int)C);
-        	//printf("Cbuf = %d\n",(int)Cbuf);
-            printf("Dropping client %s:%d (%d connected)\n",
+        } else if(!(C = psc_client_alloc(PSC))) {
+            printf("Dropping client %s:%d (0x%x connected)\n",
                    inet_ntoa(caddr.sin_addr.s_addr),
                    ntohs(caddr.sin_port),
-                   PSC->client_count);
+                   (unsigned)PSC->clients_used);
             close(client);
-            free(C);
-            //free(Cbuf);
+
         } else {
-            // 🔎 Find the first available static buffer slot
-             int buf_index = -1;
-             for (int i = 0; i < PSC_MAX_CLIENTS; i++) {
-                 if (!static_rxbufs_in_use[i]) {
-                     buf_index = i;
-                     static_rxbufs_in_use[i] = 1;
-                     break;
-                 }
-             }
-
-             if (buf_index == -1) {
-                 // Shouldn't happen because of client count check
-                 printf("No static RX buffer available! Dropping client.\n");
-                 close(client);
-                 free(C);
-                 continue;
-             }
-
-             printf("PSC Client Count: %d (using buffer index %d)\n", PSC->client_count, buf_index);
-
-
-
-        	printf("PSC Client Count: %d\n",PSC->client_count);
-            C->PSC = PSC;
-        	C->rxbuf = static_rxbufs[buf_index];
-            //C->rxbuf = Cbuf;
             C->sock = client;
             C->peeraddr = caddr;
-            C->buf_index = buf_index; // Save index for freeing later
-
 
             // LwIP does not allow thread creation to fail
             sys_thread_new("handle client", handle_client, C, THREAD_STACKSIZE, DEFAULT_THREAD_PRIO); //config->client_prio);
 
-            sys_mutex_lock(&PSC->sendguard);
-            C->next = PSC->client_head;
-            PSC->client_head = C;
-            PSC->client_count++;
-            C->active = 1;
-            sys_mutex_unlock(&PSC->sendguard);
-
-            printf("New client %s:%d (%d connected)\n",
+            printf("New client %s:%d (0x%x connected)\n",
                    inet_ntoa(caddr.sin_addr.s_addr),
                    ntohs(caddr.sin_port),
-                   PSC->client_count);
+                   (unsigned)PSC->clients_used);
         }
     }
 
@@ -212,76 +197,59 @@ void psc_run(psc_key **key, const psc_config *config)
 static void handle_client(void *raw)
 {
     psc_client *C = raw;
+    struct psc_key* PSC = C->PSC;
+    int sock = C->sock;
 
     printf("In handle_client...\n");
 
-    if(C->PSC->conf->conn)
-        (*C->PSC->conf->conn)(C->PSC->conf->pvt, PSC_CONN, C);
+    if(PSC->conf->conn)
+        (*PSC->conf->conn)(PSC->conf->pvt, PSC_CONN, C);
 
     while(1) {
-
         uint16_t msgid;
-        uint32_t msglen = PSC_MAX_RX_MSG_LEN;
-        if(psc_recvmsg(C->sock, &msgid, C->rxbuf, &msglen, 0))
+        uint32_t msglen = sizeof(C->rxbuf);
+        if(psc_recvmsg(sock, &msgid, C->rxbuf, &msglen, 0))
             break; /* read error */
 
-
         //function call to the recv function (which is client message)
-        (*C->PSC->conf->recv)(C->PSC->conf->pvt, C, msgid, msglen, C->rxbuf);
+        (*PSC->conf->recv)(PSC->conf->pvt, C, msgid, msglen, C->rxbuf);
     }
 
-    /* patch ourselves out of the client list */
-    sys_mutex_lock(&C->PSC->sendguard);
-    if(C->next)
-        C->next->prev = C->prev;
-    if(C->prev)
-        C->prev->next = C->next;
-    else
-        C->PSC->client_head = C->next;
-    C->PSC->client_count--;
+    if(PSC->conf->conn)
+        (*PSC->conf->conn)(PSC->conf->pvt, PSC_DIS, C);
 
-    // Release the static buffer
-      if (C->buf_index >= 0 && C->buf_index < PSC_MAX_CLIENTS) {
-          printf("Releasing static buffer index %d\n", C->buf_index);
-          static_rxbufs_in_use[C->buf_index] = 0;
-      }
-
-    sys_mutex_unlock(&C->PSC->sendguard);
-
-    if(C->PSC->conf->conn)
-        (*C->PSC->conf->conn)(C->PSC->conf->pvt, PSC_DIS, C);
-
-    printf("client disconnect %s:%d (%d connected)\n",
+    printf("client disconnect %s:%d (0x%x connected)\n",
            inet_ntoa(C->peeraddr.sin_addr.s_addr),
            ntohs(C->peeraddr.sin_port),
-           C->PSC->client_count);
+           (unsigned)PSC->clients_used);
 
-    sys_mutex_lock(&C->PSC->sendguard);
-    close(C->sock);
-    sys_mutex_unlock(&C->PSC->sendguard);
+    psc_client_free(C);
+    sys_mutex_lock(&PSC->sendguard);
+    close(sock);
+    sys_mutex_unlock(&PSC->sendguard);
 
-    //free(C->rxbuf);
-    free(C);
     vTaskDelete(NULL);
 }
 
 
 void psc_send(psc_key *PSC, uint16_t msgid, uint32_t msglen, const void *msg)
 {
-    psc_client *C;
     if(!PSC)
         return;
     sys_mutex_lock(&PSC->sendguard);
-    for(C=PSC->client_head; C; C=C->next) {
+    for(unsigned idx=0; idx<PSC_MAX_CLIENTS; idx++) {
         int ret;
-        if(!C->active)
+        psc_client *C = &PSC->clients[idx];
+
+        if(!(PSC->clients_used & (1u<<idx)) || C->sock == -1)
             continue;
+
         ret = psc_sendmsg(C->sock, msgid, msg, msglen, 0);
         if(ret) {
             printf("%s senderror errno=%d\n", __FUNCTION__, errno);
             /* client error */
-            C->active = 0;
             close(C->sock); /* will wake up RX thread */
+            C->sock = -1;
         }
     }
     sys_mutex_unlock(&PSC->sendguard);
@@ -290,12 +258,14 @@ void psc_send(psc_key *PSC, uint16_t msgid, uint32_t msglen, const void *msg)
 void psc_send_one(psc_client *C, uint16_t msgid, uint32_t msglen, const void *msg)
 {
     sys_mutex_lock(&C->PSC->sendguard);
-    int ret = psc_sendmsg(C->sock, msgid, msg, msglen, 0);
-    if(ret) {
-        printf("%s senderror errno=%d\n", __FUNCTION__, errno);
-        /* client error */
-        C->active = 0;
-        close(C->sock); /* will wake up RX thread */
+    if(C->sock != -1) {
+        int ret = psc_sendmsg(C->sock, msgid, msg, msglen, 0);
+        if(ret) {
+            printf("%s senderror errno=%d\n", __FUNCTION__, errno);
+            /* client error */
+            close(C->sock); /* will wake up RX thread */
+            C->sock = -1;
+        }
     }
     sys_mutex_unlock(&C->PSC->sendguard);
 }

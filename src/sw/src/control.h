@@ -1,4 +1,7 @@
+#ifndef CONTROL_H_INC
+#define CONTROL_H_INC
 
+#include <xil_types.h>
 
 
 //DAC modes
@@ -90,4 +93,4 @@
 void glob_settings(void *);
 void chan_settings(u32, void *, u32);
 
-
+#endif

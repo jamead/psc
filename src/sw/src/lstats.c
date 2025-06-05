@@ -54,6 +54,12 @@ void lstats_push(void *unused)
                 uint32_t vccint; //60
                 uint32_t vccaux; //64
             } sensors;
+            struct {
+                uint32_t avail; // 68
+                uint32_t avail_largest_block; // 72
+                uint32_t avail_lowest; // 76
+                uint32_t nactive; // 80
+            } os_mem;
             // for backwards compatibility, must only append new values.
         } msg = {};
 
@@ -83,6 +89,15 @@ void lstats_push(void *unused)
 #endif
 #undef MV
 #endif // LWIP_STATS
+
+        {
+            HeapStats_t stats;
+            vPortGetHeapStats(&stats);
+            msg.os_mem.avail = htonl(stats.xAvailableHeapSpaceInBytes);
+            msg.os_mem.avail_lowest = htonl(stats.xMinimumEverFreeBytesRemaining);
+            msg.os_mem.avail_largest_block = htonl(stats.xSizeOfLargestFreeBlockInBytes);
+            msg.os_mem.nactive = htonl(stats.xNumberOfSuccessfulAllocations - stats.xNumberOfSuccessfulFrees);
+        }
 
         //char buffer[512];
         //vTaskList(buffer);

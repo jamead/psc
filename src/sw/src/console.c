@@ -119,7 +119,7 @@ void set_resolution(void)
   u8 val;
 
   xil_printf("\r\nSet Resolution of PSC: 0=MS (18bit), 1=HS (20bit)");
-  if ((val = get_binary_input()) != -1) {
+  if ((val = get_binary_input()) != (u8)-1) {
      i2c_eeprom_writeBytes(48, &val, 1);
      xil_printf("Reboot for settings to take effect\r\n");
   }
@@ -252,8 +252,8 @@ void exec_menu(const char *head, const menu_entry_t *m, size_t m_len)
     choice = XUartPs_ReadReg(XPAR_XUARTPS_0_BASEADDR, XUARTPS_FIFO_OFFSET) & 0xFF;
 
 
-    if (isalpha(choice))
-      choice = toupper(choice);
+    if (isalpha((int)choice))
+      choice = toupper((int)choice);
     printf("%c\r\n\r\n", choice);
 
     for (i = 0; i < m_len; i++) {

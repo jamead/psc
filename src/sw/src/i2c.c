@@ -87,7 +87,7 @@ s32 i2c0_read(u8 *buf, u8 len, u8 addr) {
 
 	s32 status;
 
-	while (XIicPs_BusIsBusy(&IicPsInstance0));
+    while (XIicPs_BusIsBusy(&IicPsInstance0)) {};
     status = XIicPs_MasterRecvPolled(&IicPsInstance0, buf, len, addr);
     return status;
 }
@@ -106,7 +106,7 @@ s32 i2c1_read(u8 *buf, u8 len, u8 addr) {
 
 	s32 status;
 
-	while (XIicPs_BusIsBusy(&IicPsInstance1));
+    while (XIicPs_BusIsBusy(&IicPsInstance1)) {};
     status = XIicPs_MasterRecvPolled(&IicPsInstance1, buf, len, addr);
     return status;
 }
