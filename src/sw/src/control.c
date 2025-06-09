@@ -95,7 +95,7 @@ void write_ramptable(u32 chan, void *msg, u32 msglen)
   ramp_len = msglen / 4;
   xil_printf("Writing %d point Ramptable for Channel %d...\r\n",ramp_len, chan);
 
-	for (i=0;i<20;i++) {
+	for (i=0;i<20&&i<ramp_len;i++) {
 		data.u = htonl(msgptr[i]);
 		printf("%d: %f\r\n",i,data.f);
 	}

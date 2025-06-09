@@ -52,7 +52,7 @@ void client_msg(void *pvt, psc_client *ckey, uint16_t msgid, uint32_t msglen, vo
 {
     (void)pvt;
 
-	//xil_printf("In Client_Msg:  MsgID=%d   MsgLen=%d\r\n",msgid,msglen);
+	xil_printf("In Client_Msg:  MsgID=%d   MsgLen=%d\r\n",msgid,msglen);
 
 
     //blink front panel LED
@@ -72,10 +72,11 @@ void client_msg(void *pvt, psc_client *ckey, uint16_t msgid, uint32_t msglen, vo
             break;
         case 101:
         	write_ramptable(1,msg,msglen);
+            break;
         case 102:
         case 103:
         case 104:
-
+            break;
     }
 
 
