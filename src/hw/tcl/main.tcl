@@ -33,7 +33,11 @@ proc setSources {} {
   lappend Sources {"../hdl/dac_ctrlr.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/dac_chan.vhd" "VHDL 2008"}  
   lappend Sources {"../hdl/dac_ad5781.vhd" "VHDL 2008"}  
-  lappend Sources {"../hdl/dac_gainoffset.vhd" "VHDL 2008"}    
+  lappend Sources {"../hdl/dac_gainoffset.vhd" "VHDL 2008"}  
+  lappend Sources {"../hdl/smooth_ramp.vhd" "VHDL 2008"}  
+  lappend Sources {"../hdl/smooth_ramp_tb.vhd" "VHDL 2008"}  
+  lappend Sources {"../hdl/cordic_sine_tb.vhd" "VHDL 2008"}
+  
   
   lappend Sources {"../hdl/fault_module.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/fault_block.vhd" "VHDL 2008"}  
@@ -91,6 +95,7 @@ proc doOnCreate {} {
   source ${TclPath}/system.tcl
   source ${TclPath}/dac_dpram.tcl
   source ${TclPath}/evr_gtx.tcl
+  source ${TclPath}/cordic_sine.tcl
 
 
   addSources "Sources" 
@@ -99,7 +104,15 @@ proc doOnCreate {} {
   ::fwfwk::printCBM "SrcPath = ${::fwfwk::SrcPath}"
   
   set_property used_in_synthesis false [get_files ${::fwfwk::SrcPath}/hw/hdl/top_tb.sv] 
-  set_property used_in_implementation false [get_files ${::fwfwk::SrcPath}/hw/hdl/top_tb.sv] 
+  set_property used_in_simulation true [get_files ${::fwfwk::SrcPath}/hw/hdl/top_tb.sv] 
+  
+  set_property used_in_synthesis false [get_files ${::fwfwk::SrcPath}/hw/hdl/cordic_sine_tb.vhd] 
+  set_property used_in_simulation true [get_files ${::fwfwk::SrcPath}/hw/hdl/cordic_sine_tb.vhd]  
+  
+  set_property used_in_synthesis false [get_files ${::fwfwk::SrcPath}/hw/hdl/smooth_ramp_tb.vhd] 
+  set_property used_in_simulation true [get_files ${::fwfwk::SrcPath}/hw/hdl/smooth_ramp_tb.vhd] 
+  
+
   
   #get error message, open manually in tcl window for now.
   #open_wave_config "${::fwfwk::SrcPath}/hw/sim/top_tb_behav.wcfg"

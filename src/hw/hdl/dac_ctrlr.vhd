@@ -36,10 +36,12 @@ end entity;
 
 architecture arch of dac_ctrlr is
 
-
+   signal rampout       : signed(19 downto 0);
 
    --debug signals (connect to ila)
-   attribute mark_debug: string;   attribute mark_debug of tenkhz_trig: signal is "true";
+   attribute mark_debug: string;   
+   attribute mark_debug of tenkhz_trig: signal is "true";
+   attribute mark_debug of rampout: signal is "true";
 
 
 
@@ -99,6 +101,19 @@ dac4: entity work.dac_chan
     sdo => sdo(3)
   );
 
+
+ramptest: entity work.smooth_ramp
+  port map (
+    clk => clk,
+    reset => reset,
+    tenkhz_trig => tenkhz_trig,
+    trig => dac_cntrl.ps4.ramprun,
+    old_setpt => 20d"0",
+    new_setpt => 20d"10000",
+    phase_inc => 32d"45000",
+    rampout => rampout
+);
+    
 
 
 

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="tb_smooth_ramp_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="tb_smooth_ramp" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000000000 ms"></ZoomStartTime>
+      <ZoomEndTime time="202.000000001 ms"></ZoomEndTime>
+      <Cursor1Time time="115.546360000 ms"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="239"></NameColumnWidth>
+      <ValueColumnWidth column_width="108"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="19" />
+   <wvobject type="logic" fp_name="/tb_smooth_ramp/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_smooth_ramp/reset">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_smooth_ramp/tenkhz_trig">
+      <obj_property name="ElementShortName">tenkhz_trig</obj_property>
+      <obj_property name="ObjectShortName">tenkhz_trig</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_smooth_ramp/trig">
+      <obj_property name="ElementShortName">trig</obj_property>
+      <obj_property name="ObjectShortName">trig</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_smooth_ramp/new_setpt">
+      <obj_property name="ElementShortName">new_setpt[19:0]</obj_property>
+      <obj_property name="ObjectShortName">new_setpt[19:0]</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/tb_smooth_ramp/uut/state">
+      <obj_property name="ElementShortName">state</obj_property>
+      <obj_property name="ObjectShortName">state</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/tb_smooth_ramp/clk_period">
+      <obj_property name="ElementShortName">clk_period</obj_property>
+      <obj_property name="ObjectShortName">clk_period</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_smooth_ramp/uut/phase">
+      <obj_property name="ElementShortName">phase[31:0]</obj_property>
+      <obj_property name="ObjectShortName">phase[31:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_smooth_ramp/uut/phase_out">
+      <obj_property name="ElementShortName">phase_out[23:0]</obj_property>
+      <obj_property name="ObjectShortName">phase_out[23:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_smooth_ramp/uut/cnt">
+      <obj_property name="ElementShortName">cnt[19:0]</obj_property>
+      <obj_property name="ObjectShortName">cnt[19:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_smooth_ramp/uut/old_setpt">
+      <obj_property name="ElementShortName">old_setpt[19:0]</obj_property>
+      <obj_property name="ObjectShortName">old_setpt[19:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">19</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_smooth_ramp/uut/new_setpt">
+      <obj_property name="ElementShortName">new_setpt[19:0]</obj_property>
+      <obj_property name="ObjectShortName">new_setpt[19:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">19</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/tb_smooth_ramp/uut/last_point">
+      <obj_property name="ElementShortName">last_point</obj_property>
+      <obj_property name="ObjectShortName">last_point</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_smooth_ramp/uut/diff_setpt">
+      <obj_property name="ElementShortName">diff_setpt[23:0]</obj_property>
+      <obj_property name="ObjectShortName">diff_setpt[23:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_smooth_ramp/uut/cos">
+      <obj_property name="ElementShortName">cos[23:0]</obj_property>
+      <obj_property name="ObjectShortName">cos[23:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">30</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+      <obj_property name="AnalogYRangeMin">-1.56171e+06</obj_property>
+      <obj_property name="AnalogYRRangeMax">-736234</obj_property>
+      <obj_property name="CellHeight">100</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_smooth_ramp/uut/raised_cos">
+      <obj_property name="ElementShortName">raised_cos[23:0]</obj_property>
+      <obj_property name="ObjectShortName">raised_cos[23:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">30</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+      <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
+      <obj_property name="CellHeight">100</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_smooth_ramp/uut/rampout_wdiff">
+      <obj_property name="ElementShortName">rampout_wdiff[47:0]</obj_property>
+      <obj_property name="ObjectShortName">rampout_wdiff[47:0]</obj_property>
+      <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
+      <obj_property name="CellHeight">100</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="AnalogYRangeMin">-1.68201e+13</obj_property>
+      <obj_property name="AnalogYRRangeMax">1.23244e+13</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_smooth_ramp/uut/rampout_fp">
+      <obj_property name="ElementShortName">rampout_fp[23:0]</obj_property>
+      <obj_property name="ObjectShortName">rampout_fp[23:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
+      <obj_property name="CellHeight">100</obj_property>
+      <obj_property name="AnalogYRangeMin">-2.18731e+06</obj_property>
+      <obj_property name="AnalogYRRangeMax">5.5956e+06</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/tb_smooth_ramp/uut/rampout">
+      <obj_property name="ElementShortName">rampout[19:0]</obj_property>
+      <obj_property name="ObjectShortName">rampout[19:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="WaveformStyle">STYLE_ANALOG</obj_property>
+      <obj_property name="CellHeight">100</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">18</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+      <obj_property name="AnalogYRangeMin">-2.22656e+07</obj_property>
+      <obj_property name="AnalogYRRangeMax">8.86608e+06</obj_property>
+   </wvobject>
+</wave_config>
