@@ -146,44 +146,44 @@ void set_eventno(u32 msgVal) {
 
 void Calc_WriteSmooth(u32 chan, s32 new_setpt) {
 
+
 	s32 cur_setpt;
-	u32 dpram_addr, dpram_data;
-	u32 i;
-	u32 smooth_len;
-	float ramp_rate;
-	float val;
-	float PI = 3.14;
+	u32 smooth_len, num_samples;
+	float phase_inc;
+	float ramp_rate, ramp_duration;
+
+	//Cordic Starts at -PI and goes to 0
+	//cordic phase is 1.2.31 format  3.14/4 * 2^31
+	const u32 CORDIC_INIT_PHASE = 421657300U;
+
 
     cur_setpt = Xil_In32(XPAR_M_AXI_BASEADDR + DAC_CURRSETPT_REG + chan*CHBASEADDR);
 
 	//calculate the length of the smooth length using the ramp rate scale factor
 	ramp_rate = (scalefactors[chan-1].ampspersec / scalefactors[chan-1].dac_dccts) * CONVVOLTSTODACBITS;  // in bits/sec
+	printf("Ramp Rate: %f (Amps/Sec) \r\n",ramp_rate);
+
+	ramp_duration = abs(new_setpt - cur_setpt) / ramp_rate;
+	printf("Ramp Duration: %f (sec)\r\n",ramp_duration);
+	num_samples = ramp_duration * SAMPLERATE;
+	xil_printf("Ramp Duration: %d (samples)\r\n", num_samples);
+
+
 	smooth_len = (u32)(abs(new_setpt - cur_setpt) / ramp_rate * SAMPLERATE);
 	xil_printf("Smooth Length: %d\r\n",smooth_len);
-	if (smooth_len >= 50000) {
-		xil_printf("C'mon Smooth Length too long... Ignoring Request...\r\n");
-		return;
-	}
 
-    //Set up DPRAM
-	dpram_addr = DAC_RAMPADDR_REG + chan*CHBASEADDR;
-	dpram_data = DAC_RAMPDATA_REG + chan*CHBASEADDR;
+	//calculate phase increment for CORDIC
+	//Cordic Starts at -PI (
+	//cordic phase is 1.2.31 format  3.14/4 * 2^31 = 421657428
+	phase_inc = CORDIC_INIT_PHASE / num_samples;
+	printf("CORDIC Phase Inc = %f\r\n",phase_inc);
 
-    //update ramping table with smooth ramp
-	//s1 + ((s2 - s1) * 0.5 * (1.0 - cos(ramp_step * M_PI / T)));
-	for (i=0;i<smooth_len;i++) {
-		val = cur_setpt + ((new_setpt - cur_setpt) * 0.5 * (1.0 - cosf(i*PI/smooth_len)));
-	    //printf("%d: %f    %d\r\n",i,val,(s32)val);
+	//write the phase inc
+	Xil_Out32(XPAR_M_AXI_BASEADDR + SMOOTH_PHASEINC_REG + chan*CHBASEADDR, phase_inc);
 
-		Xil_Out32(XPAR_M_AXI_BASEADDR + dpram_addr, i);
-	    Xil_Out32(XPAR_M_AXI_BASEADDR + dpram_data, (s32)val);
-	    //xil_printf("Addr: %d   Data: %d   Active: %d\r\n",dpram_addr,(s32)val,Xil_In32(XPAR_M_AXI_BASEADDR + PS1_DAC_RAMPACTIVE));
+	//write the new setpoint to kick it off
+	Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_SETPT_REG  + chan*CHBASEADDR, new_setpt);
 
-	}
-
-    // Run it
-    Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RAMPLEN_REG + chan*CHBASEADDR, smooth_len);
-	Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_RUNRAMP_REG + chan*CHBASEADDR, 1);
 
 }
 
@@ -370,29 +370,6 @@ void chan_settings(u32 chan, void *msg, u32 msglen) {
 	        printf("Setting DAC CH%d SetPoint:   Value=%f   Bits=%d\r\n", (int)chan, data.f, (int)scaled_val);
 	        Set_dac(chan, data.f);
 	        break;
-
-
-        case SMOOTH_NEWDACSETPT_MSG:
-        	scaled_val = data.f*CONVVOLTSTODACBITS; // / scalefactors[chan-1].dac_dccts;
-	        printf("Setting Smooth DAC CH%d SetPoint:   Value=%f   Bits=%d\r\n", (int)chan, data.f, (int)scaled_val);
-	        Xil_Out32(XPAR_M_AXI_BASEADDR + SMOOTH_NEWSETPT_REG + chan*CHBASEADDR, scaled_val);
-	        break;
-
-        case SMOOTH_OLDDACSETPT_MSG:
-         	scaled_val = data.f*CONVVOLTSTODACBITS; // / scalefactors[chan-1].dac_dccts;
- 	        printf("Setting Smooth DAC CH%d SetPoint:   Value=%f   Bits=%d\r\n", (int)chan, data.f, (int)scaled_val);
-	        Xil_Out32(XPAR_M_AXI_BASEADDR + SMOOTH_OLDSETPT_REG + chan*CHBASEADDR, scaled_val);
- 	        break;
-
-        case SMOOTH_PHASEINC_MSG:
-  	        xil_printf("Setting Smooth DAC CH%d Length:   Value=%d\r\n",chan,data.i);
-  	        Xil_Out32(XPAR_M_AXI_BASEADDR + SMOOTH_PHASEINC_REG + chan*CHBASEADDR, data.i);
-  	        sleep(0.1);
-  	        scaled_val = Xil_In32(XPAR_M_AXI_BASEADDR + SMOOTH_PHASEINC_REG + chan*CHBASEADDR);
-  	        printf("Readback: %d\r\n",scaled_val);
-  	        break;
-
-
 
         case DAC_RAMPLEN_MSG:
  	        xil_printf("Setting DAC CH%d RampTable Length:   Value=%d\r\n",chan,data.u);

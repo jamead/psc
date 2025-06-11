@@ -89,9 +89,6 @@
 
 #define WRITE_RAMPTABLE_MSG  1000
 
-#define SMOOTH_NEWDACSETPT_MSG  410
-#define SMOOTH_OLDDACSETPT_MSG  414
-#define SMOOTH_PHASEINC_MSG     418
 
 
 void glob_settings(void *);

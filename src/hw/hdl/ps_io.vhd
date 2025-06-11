@@ -72,8 +72,8 @@ architecture behv of ps_io is
 
   
   attribute mark_debug     : string;
-  attribute mark_debug of dac_cntrl: signal is "true";
-  attribute mark_debug of inj_trig: signal is "true";
+  --attribute mark_debug of dac_cntrl: signal is "true";
+  --attribute mark_debug of inj_trig: signal is "true";
 --  attribute mark_debug of soft_trig_prev: signal is "true";  
 --  attribute mark_debug of reg_i: signal is "true";
 --  attribute mark_debug of ss_buf_stat: signal is "true";
@@ -154,6 +154,8 @@ dac_cntrl.ps1.ramprun <= reg_o.ps1_dac_runramp.val.swacc or evr_trigs.inj_trig; 
 
 reg_i.ps1_dac_rampactive.val.data(0) <= dac_stat.ps1.active;
 reg_i.ps1_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps1.dac_setpt),32));
+
+dac_cntrl.ps1.smooth_phaseinc <= signed(reg_o.ps1_dac_smooth_phaseinc.val.data);
 
 
 -- Digital Outputs
@@ -244,6 +246,8 @@ dac_cntrl.ps2.ramprun <= reg_o.ps2_dac_runramp.val.swacc; --data(0);
 reg_i.ps2_dac_rampactive.val.data(0) <= dac_stat.ps2.active;
 reg_i.ps2_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps2.dac_setpt),32));
 
+dac_cntrl.ps2.smooth_phaseinc <= signed(reg_o.ps2_dac_smooth_phaseinc.val.data);
+
 
 -- Digital Outputs
 dig_cntrl.ps2.on1 <= reg_o.ps2_digout_on1.val.data(0);
@@ -258,16 +262,6 @@ reg_i.ps2_digin.val.data(1) <= dig_stat.ps2.flt1;
 reg_i.ps2_digin.val.data(2) <= dig_stat.ps2.flt2;
 reg_i.ps2_digin.val.data(3) <= dig_stat.ps2.spare;
 reg_i.ps2_digin.val.data(4) <= dig_stat.ps2.dcct_flt;
-
----- Digital Outputs
---rcom(4) <= reg_o.ps2_digout_on1.val.data(0);
---rcom(5) <= reg_o.ps2_digout_on2.val.data(0);
---rcom(6) <= reg_o.ps2_digout_reset.val.data(0);
---rcom(7) <= reg_o.ps2_digout_spare.val.data(0);
---rcom(17) <= reg_o.ps2_digout_park.val.data(0);
-
----- Digital Inputs
---reg_i.ps2_digin.val.data <= rsts(17) & rsts(7 downto 4);
 
 
 --Fault Threasholds and Counter Limits
@@ -344,6 +338,8 @@ dac_cntrl.ps3.ramprun <= reg_o.ps3_dac_runramp.val.swacc; --data(0);
 
 reg_i.ps3_dac_rampactive.val.data(0) <= dac_stat.ps3.active;
 reg_i.ps3_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps3.dac_setpt),32));
+
+dac_cntrl.ps3.smooth_phaseinc <= signed(reg_o.ps3_dac_smooth_phaseinc.val.data);
 
 -- Digital Outputs
 dig_cntrl.ps3.on1 <= reg_o.ps3_digout_on1.val.data(0);
@@ -437,8 +433,6 @@ dac_cntrl.ps4.ramprun <= reg_o.ps4_dac_runramp.val.swacc; --data(0);
 reg_i.ps4_dac_rampactive.val.data(0) <= dac_stat.ps4.active;
 reg_i.ps4_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps4.dac_setpt),32));
 
-dac_cntrl.ps4.smooth_newsetpt <= signed(reg_o.ps4_dac_smooth_newsetpt.val.data);
-dac_cntrl.ps4.smooth_oldsetpt <= signed(reg_o.ps4_dac_smooth_oldsetpt.val.data);
 dac_cntrl.ps4.smooth_phaseinc <= signed(reg_o.ps4_dac_smooth_phaseinc.val.data);
 
 
@@ -507,10 +501,10 @@ reg_i.snapshot_totaltrigs.val.data <= ss_buf_stat.tenkhzcnt;
 
 
 -- user issues a soft trigger, latch the current snapshot buffer address
-usr_trig(0) <= reg_o.softtrig.val.data(0) or dac_cntrl.ps1.ramprun or reg_o.ps4_dac_setpt.val.swacc;
-usr_trig(1) <= reg_o.softtrig.val.data(1) or dac_cntrl.ps2.ramprun or reg_o.ps4_dac_setpt.val.swacc;
-usr_trig(2) <= reg_o.softtrig.val.data(2) or dac_cntrl.ps3.ramprun or reg_o.ps4_dac_setpt.val.swacc;
-usr_trig(3) <= reg_o.softtrig.val.data(3) or dac_cntrl.ps4.ramprun or reg_o.ps4_dac_setpt.val.swacc;
+usr_trig(0) <= reg_o.softtrig.val.data(0) or dac_cntrl.ps1.ramprun;
+usr_trig(1) <= reg_o.softtrig.val.data(1) or dac_cntrl.ps2.ramprun;
+usr_trig(2) <= reg_o.softtrig.val.data(2) or dac_cntrl.ps3.ramprun;
+usr_trig(3) <= reg_o.softtrig.val.data(3) or dac_cntrl.ps4.ramprun;
 flt_trig(0) <= reg_o.testtrig.val.data(0) or fault_stat.ps1.flt_trig;
 flt_trig(1) <= reg_o.testtrig.val.data(1) or fault_stat.ps2.flt_trig;
 flt_trig(2) <= reg_o.testtrig.val.data(2) or fault_stat.ps3.flt_trig;
@@ -519,10 +513,10 @@ err_trig(0) <= reg_o.testtrig.val.data(4) or fault_stat.ps1.err_trig;
 err_trig(1) <= reg_o.testtrig.val.data(5) or fault_stat.ps2.err_trig;
 err_trig(2) <= reg_o.testtrig.val.data(6) or fault_stat.ps3.err_trig;
 err_trig(3) <= reg_o.testtrig.val.data(7) or fault_stat.ps4.err_trig;
-inj_trig(0) <= reg_o.testtrig.val.data(8) or evr_trigs.inj_trig; --or fault_stat.ps1.err_trig;
-inj_trig(1) <= reg_o.testtrig.val.data(9); --or fault_stat.ps2.err_trig;
-inj_trig(2) <= reg_o.testtrig.val.data(10); --or fault_stat.ps3.err_trig;
-inj_trig(3) <= reg_o.testtrig.val.data(11); --or fault_stat.ps4.err_trig;
+inj_trig(0) <= '1' when (reg_o.testtrig.val.data(8) = '1')  or ((evr_trigs.inj_trig = '1') and (dac_cntrl.ps1.mode = "01")) else '0';
+inj_trig(1) <= '1' when (reg_o.testtrig.val.data(9) = '1')  or ((evr_trigs.inj_trig = '1') and (dac_cntrl.ps2.mode = "01")) else '0';
+inj_trig(2) <= '1' when (reg_o.testtrig.val.data(10) = '1') or ((evr_trigs.inj_trig = '1') and (dac_cntrl.ps3.mode = "01")) else '0';
+inj_trig(3) <= '1' when (reg_o.testtrig.val.data(11) = '1') or ((evr_trigs.inj_trig = '1') and (dac_cntrl.ps4.mode = "01")) else '0';
 evr_trig    <= reg_o.testtrig.val.data(12);
 
 

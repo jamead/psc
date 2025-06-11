@@ -255,8 +255,6 @@ type t_dac_cntrl_onech is record
   ramplen             : std_logic_vector(15 downto 0);
   gain                : signed(23 downto 0);  --Q3.20 format
   offset              : signed(19 downto 0);
-  smooth_oldsetpt     : signed(19 downto 0);
-  smooth_newsetpt     : signed(19 downto 0);
   smooth_phaseinc     : signed(31 downto 0);
   --Control Register Bits 
   cntrl               : std_logic_vector(7 downto 0); 

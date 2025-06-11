@@ -42,16 +42,19 @@ type state_type is (IDLE, RUN_RAMP, UPDATE_DAC);
 
 
  
-  signal dac_data        : std_logic_vector(19 downto 0);
-  signal dac_rdaddr      : std_logic_vector(15 downto 0);
-  signal dac_rddata      : std_logic_vector(19 downto 0);
-  signal dac_rden        : std_logic;
-  signal ramp_dac_setpt  : signed(19 downto 0);
-  signal dac_setpt_raw   : signed(19 downto 0);
-  signal dac_setpt       : signed(19 downto 0);
-  signal ramp_active     : std_logic;
-  signal dac_trig        : std_logic;
-  signal gainoff_done    : std_logic;
+  signal dac_data         : std_logic_vector(19 downto 0);
+  signal dac_rdaddr       : std_logic_vector(15 downto 0);
+  signal dac_rddata       : std_logic_vector(19 downto 0);
+  signal dac_rden         : std_logic;
+  signal ramp_dac_setpt   : signed(19 downto 0);
+  signal smooth_dac_setpt : signed(19 downto 0);
+  signal fofb_dac_setpt   : signed(19 downto 0);
+  signal dac_setpt_raw    : signed(19 downto 0);
+  signal dac_setpt        : signed(19 downto 0);
+  signal ramp_active      : std_logic;
+  signal smooth_active    : std_logic;
+  signal dac_trig         : std_logic;
+  signal gainoff_done     : std_logic;
   
   signal state : state_type;
 
@@ -60,35 +63,18 @@ type state_type is (IDLE, RUN_RAMP, UPDATE_DAC);
    --debug signals (connect to ila)
    attribute mark_debug                 : string;
    attribute mark_debug of dac_data: signal is "true";
-   attribute mark_debug of dac_rdaddr: signal is "true";
-   attribute mark_debug of dac_rddata: signal is "true";
-   attribute mark_debug of dac_rden: signal is "true"; 
    attribute mark_debug of ramp_dac_setpt: signal is "true";
+   attribute mark_debug of smooth_dac_setpt: signal is "true";
    attribute mark_debug of dac_setpt: signal is "true";
-   attribute mark_debug of ramp_active: signal is "true";     
-   attribute mark_debug of dac_cntrl: signal is "true";    
-   attribute mark_debug of state: signal is "true"; 
-   attribute mark_debug of dac_stat: signal is "true";
+   attribute mark_debug of ramp_active: signal is "true";  
+   attribute mark_debug of smooth_active: signal is "true";   
+
 
 begin
 
-
+--status readbacks
 dac_stat.dac_setpt <= dac_setpt;
-dac_stat.active <= ramp_active;
-
-
-
-gainoff_dac : entity work.dac_gainoffset
-  port map (
-    clk => clk,
-    reset => reset,
-    tenkhz_trig => tenkhz_trig,
-    numbits_sel => dac_numbits_sel,
-    dac_setpt_raw => dac_setpt_raw,
-    dac_cntrl => dac_cntrl,
-    dac_setpt => dac_setpt,
-    done => gainoff_done
-);
+dac_stat.active <= ramp_active or smooth_active;
 
 
 
@@ -102,98 +88,80 @@ begin
       if (reset = '1') then
         dac_setpt_raw <= (others => '0');
       else
-        if (tenkhz_trig = '1') then   
-          if (dac_cntrl.mode = "00" or dac_cntrl.mode = "01" ) then
-            dac_setpt_raw <= ramp_dac_setpt;
-          else
-            dac_setpt_raw <= dac_cntrl.setpoint;    
-          end if;
+        if (tenkhz_trig = '1') then 
+          case dac_cntrl.mode is 
+            when "00" =>  
+               dac_setpt_raw <= smooth_dac_setpt;
+            when "01" =>
+               dac_setpt_raw <= ramp_dac_setpt;
+            when "10" =>
+               dac_setpt_raw <= fofb_dac_setpt;
+            when "11" =>
+               dac_setpt_raw <= dac_cntrl.setpoint; 
+          end case;   
         end if;
       end if;
     end if; 
 end process; 
 
 
-
-
-
-
-dac0_table: dac_dpram
+-- In rampmode, DAC setpoint comes from table in block ram
+rampmode: entity work.ramptable_ramp
   port map (
-    clka => clk,  
-    wea => dac_cntrl.dpram_we,
-    addra => dac_cntrl.dpram_addr,
-    dina => dac_cntrl.dpram_data,
-    clkb => clk,
-    enb => dac_rden,
-    addrb => dac_rdaddr,
-    doutb => dac_rddata
-  );
+    clk => clk,  
+    reset => reset,  
+    tenkhz_trig => tenkhz_trig, 
+    dac_cntrl => dac_cntrl, 
+    ramp_active => ramp_active,
+    ramp_dac_setpt => ramp_dac_setpt
+    );
 
 
---state machine to write out the ramp table from dpram
-process(clk) 
-begin 
-  if rising_edge(clk) then 
-    if reset = '1' then 
-      state <= IDLE; 
-      dac_rdaddr <= 16d"0";
-      dac_rden <= '0';
-      ramp_active <= '0';
-      ramp_dac_setpt <= (others => '0');
-    else 
-      case(state) is 
-        when IDLE => 
-          ramp_active <= '0';
-          if dac_cntrl.ramprun = '1' then 
-            state <= run_ramp;
-            dac_rdaddr <= 16d"0";
-            dac_rden <= '1';
-            ramp_active <= '0';         
-          end if;                 
-
-        when RUN_RAMP => 
-            if (tenkhz_trig = '1') then
-               ramp_active <= '1';
-               dac_rden <= '1';
-               state <= update_dac;
-            end if;
-            
-        when UPDATE_DAC =>
-            dac_rden <= '1';
-            if (unsigned(dac_rdaddr) + 1 > unsigned(dac_cntrl.ramplen)) then
-               dac_rden <= '0';
-               state <= idle;
-            else
-              dac_rdaddr <= std_logic_vector(unsigned(dac_rdaddr) + 1);
-              ramp_dac_setpt <= signed(dac_rddata);
-              ramp_active <= '1';
-              state <= run_ramp;
-            end if;  
-      end case;
-    end if;
-  end if;
- end process;           
+-- In smoothmode, DAC setpoint comes from raised cosine calculation done in fabric
+smoothmode: entity work.smooth_ramp
+  port map (
+    clk => clk,
+    reset => reset,
+    tenkhz_trig => tenkhz_trig,
+    cur_setpt => dac_setpt, --dac_cntrl.smooth_oldsetpt, --20d"0",
+    new_setpt => dac_cntrl.setpoint, --dac_cntrl.smooth_newsetpt, --20d"10000",
+    phase_inc => dac_cntrl.smooth_phaseinc, 
+    smooth_active => smooth_active,
+    rampout => smooth_dac_setpt
+);
+ 
+  
+  
+ 
+-- apply gain and offsets 
+gainoff_dac : entity work.dac_gainoffset
+  port map (
+    clk => clk,
+    reset => reset,
+    tenkhz_trig => tenkhz_trig,
+    numbits_sel => dac_numbits_sel,
+    dac_setpt_raw => dac_setpt_raw,
+    dac_cntrl => dac_cntrl,
+    dac_setpt => dac_setpt,
+    done => gainoff_done
+);
+  
   
 
---select 18 bit or 20 bit, put hard limits on dac
-
+-- select 18 bit or 20 bit, put hard limits on dac
 dac_data <= std_logic_vector(dac_setpt) when dac_numbits_sel = '1' else std_logic_vector((dac_setpt(17 downto 0) & "00"));
 
 
-
+-- write the SPI DAC
 spi_dac:  entity work.dac_ad5781 
   generic map
     (SPI_CLK_DIV => 5) --10MHz sclk
   port map(
-	--Control inputs
     clk => clk,
     reset => dac_cntrl.reset, 
-	start => gainoff_done, --tenkhz_trig,  
-    --DAC Inputs         
-    dac_data => dac_data, --std_logic_vector(dac_setpt(17 downto 0)),
-    dac_ctrl_bits => dac_cntrl.cntrl(4 downto 0),
-	--DAC Outputs        
+	start => gainoff_done,       
+    dac_data => dac_data, 
+    dac_ctrl_bits => dac_cntrl.cntrl(4 downto 0),       
     n_sync => n_sync1234, 
     sclk => sclk1234,
     sdo => sdo, 

@@ -11,17 +11,17 @@ use work.psc_pkg.ALL;
 
 
 entity fault_module is 
-	port(
-		clk                    : in std_logic; 
-		reset                  : in std_logic; 
-		tenkhz_trig            : in std_logic; 		
-        fault_params           : in t_fault_params; 
-        dcct_adcs              : in t_dcct_adcs; 
-        mon_adcs               : in t_mon_adcs; 
-        dac_stat               : in t_dac_stat;
-        rcom                   : in std_logic_vector(19 downto 0);
-        rsts                   : in std_logic_vector(19 downto 0); 
-        fault_stat             : out t_fault_stat 
+  port(
+    clk             : in std_logic; 
+    reset           : in std_logic; 
+    tenkhz_trig     : in std_logic; 		
+    fault_params    : in t_fault_params; 
+    dcct_adcs       : in t_dcct_adcs; 
+    mon_adcs        : in t_mon_adcs; 
+    dac_stat        : in t_dac_stat;
+    rcom            : in std_logic_vector(19 downto 0);
+    rsts            : in std_logic_vector(19 downto 0); 
+    fault_stat      : out t_fault_stat 
 );	
 end fault_module;
 

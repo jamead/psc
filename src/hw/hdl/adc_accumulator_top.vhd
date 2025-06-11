@@ -29,8 +29,8 @@ architecture arch of ADC_accumulator_top is
    --debug signals (connect to ila)
    attribute mark_debug                 : string;
    --attribute mark_debug of mode : signal is "true";
-   attribute mark_debug of dcct_adcs : signal is "true";
-   attribute mark_debug of dcct_adcs_ave: signal is "true";
+   --attribute mark_debug of dcct_adcs : signal is "true";
+   --attribute mark_debug of dcct_adcs_ave: signal is "true";
 
 
 

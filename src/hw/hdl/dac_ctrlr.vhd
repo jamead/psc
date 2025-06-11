@@ -102,17 +102,7 @@ dac4: entity work.dac_chan
   );
 
 
-ramptest: entity work.smooth_ramp
-  port map (
-    clk => clk,
-    reset => reset,
-    tenkhz_trig => tenkhz_trig,
-    trig => dac_cntrl.ps4.ramprun,
-    old_setpt => dac_cntrl.ps4.smooth_oldsetpt, --20d"0",
-    new_setpt => dac_cntrl.ps4.smooth_newsetpt, --20d"10000",
-    phase_inc => dac_cntrl.ps4.smooth_phaseinc, 
-    rampout => rampout
-);
+
     
 
 
