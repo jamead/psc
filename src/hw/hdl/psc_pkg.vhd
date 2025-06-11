@@ -250,11 +250,14 @@ end record;
 
 type t_dac_cntrl_onech is record 
   --DAC controls 
-  setpoint            : std_logic_vector(19 downto 0); 
+  setpoint            : signed(19 downto 0); 
   ramprun             : std_logic; 
   ramplen             : std_logic_vector(15 downto 0);
   gain                : signed(23 downto 0);  --Q3.20 format
   offset              : signed(19 downto 0);
+  smooth_oldsetpt     : signed(19 downto 0);
+  smooth_newsetpt     : signed(19 downto 0);
+  smooth_phaseinc     : signed(31 downto 0);
   --Control Register Bits 
   cntrl               : std_logic_vector(7 downto 0); 
   -- DPRAM for table

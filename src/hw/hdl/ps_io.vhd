@@ -142,7 +142,7 @@ mon_params.ps1.ps_error_gain <= signed(reg_o.ps1_err_gain.val.data(23 downto 0))
 -- DAC control and Ramp Tables and status
 dac_cntrl.ps1.offset <= signed(reg_o.ps1_dac_setpt_offset.val.data(19 downto 0)); 
 dac_cntrl.ps1.gain <= signed(reg_o.ps1_dac_setpt_gain.val.data(23 downto 0)); 
-dac_cntrl.ps1.setpoint <= reg_o.ps1_dac_setpt.val.data;
+dac_cntrl.ps1.setpoint <= signed(reg_o.ps1_dac_setpt.val.data);
 dac_cntrl.ps1.mode <= reg_o.ps1_dac_opmode.val.data;
 dac_cntrl.ps1.cntrl <= reg_o.ps1_dac_cntrl.val.data;
 dac_cntrl.ps1.reset <= reg_o.ps1_dac_reset.val.data(0);
@@ -231,7 +231,7 @@ mon_params.ps2.ps_error_gain <= signed(reg_o.ps2_err_gain.val.data(23 downto 0))
 -- DAC control and Ramp Tables and status
 dac_cntrl.ps2.offset <= signed(reg_o.ps2_dac_setpt_offset.val.data(19 downto 0)); 
 dac_cntrl.ps2.gain <= signed(reg_o.ps2_dac_setpt_gain.val.data(23 downto 0)); 
-dac_cntrl.ps2.setpoint <= reg_o.ps2_dac_setpt.val.data;
+dac_cntrl.ps2.setpoint <= signed(reg_o.ps2_dac_setpt.val.data);
 dac_cntrl.ps2.mode <= reg_o.ps2_dac_opmode.val.data;
 dac_cntrl.ps2.cntrl <= reg_o.ps2_dac_cntrl.val.data;
 dac_cntrl.ps2.reset <= reg_o.ps2_dac_reset.val.data(0);
@@ -332,7 +332,7 @@ mon_params.ps3.ps_error_gain <= signed(reg_o.ps3_err_gain.val.data(23 downto 0))
 -- DAC control and Ramp Tables and status
 dac_cntrl.ps3.offset <= signed(reg_o.ps3_dac_setpt_offset.val.data(19 downto 0)); 
 dac_cntrl.ps3.gain <= signed(reg_o.ps3_dac_setpt_gain.val.data(23 downto 0)); 
-dac_cntrl.ps3.setpoint <= reg_o.ps3_dac_setpt.val.data;
+dac_cntrl.ps3.setpoint <= signed(reg_o.ps3_dac_setpt.val.data);
 dac_cntrl.ps3.mode <= reg_o.ps3_dac_opmode.val.data;
 dac_cntrl.ps3.cntrl <= reg_o.ps3_dac_cntrl.val.data;
 dac_cntrl.ps3.reset <= reg_o.ps3_dac_reset.val.data(0);
@@ -424,7 +424,7 @@ mon_params.ps4.ps_error_gain <= signed(reg_o.ps4_err_gain.val.data(23 downto 0))
 -- DAC control and Ramp Tables and status
 dac_cntrl.ps4.offset <= signed(reg_o.ps4_dac_setpt_offset.val.data(19 downto 0)); 
 dac_cntrl.ps4.gain <= signed(reg_o.ps4_dac_setpt_gain.val.data(23 downto 0)); 
-dac_cntrl.ps4.setpoint <= reg_o.ps4_dac_setpt.val.data;
+dac_cntrl.ps4.setpoint <= signed(reg_o.ps4_dac_setpt.val.data);
 dac_cntrl.ps4.mode <= reg_o.ps4_dac_opmode.val.data;
 dac_cntrl.ps4.cntrl <= reg_o.ps4_dac_cntrl.val.data;
 dac_cntrl.ps4.reset <= reg_o.ps4_dac_reset.val.data(0);
@@ -436,6 +436,11 @@ dac_cntrl.ps4.ramprun <= reg_o.ps4_dac_runramp.val.swacc; --data(0);
 
 reg_i.ps4_dac_rampactive.val.data(0) <= dac_stat.ps4.active;
 reg_i.ps4_dac_currsetpt.val.data <= std_logic_vector(resize(signed(dac_stat.ps4.dac_setpt),32));
+
+dac_cntrl.ps4.smooth_newsetpt <= signed(reg_o.ps4_dac_smooth_newsetpt.val.data);
+dac_cntrl.ps4.smooth_oldsetpt <= signed(reg_o.ps4_dac_smooth_oldsetpt.val.data);
+dac_cntrl.ps4.smooth_phaseinc <= signed(reg_o.ps4_dac_smooth_phaseinc.val.data);
+
 
 -- Digital Outputs
 dig_cntrl.ps4.on1 <= reg_o.ps4_digout_on1.val.data(0);

@@ -64,6 +64,20 @@ architecture behv of smooth_ramp is
 
   
 
+   --debug signals (connect to ila)
+   attribute mark_debug: string;   
+   attribute mark_debug of trig: signal is "true";
+   attribute mark_debug of tenkhz_trig: signal is "true";  
+   attribute mark_debug of old_setpt: signal is "true";   
+   attribute mark_debug of new_setpt: signal is "true";  
+   attribute mark_debug of phase_inc: signal is "true";   
+   attribute mark_debug of cos: signal is "true";
+   attribute mark_debug of phase: signal is "true";             
+   attribute mark_debug of state: signal is "true";   
+   attribute mark_debug of last_point: signal is "true";  
+   attribute mark_debug of cnt: signal is "true";    
+
+
 begin
 
 -- Instantiate UUT

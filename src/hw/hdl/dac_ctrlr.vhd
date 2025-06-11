@@ -108,9 +108,9 @@ ramptest: entity work.smooth_ramp
     reset => reset,
     tenkhz_trig => tenkhz_trig,
     trig => dac_cntrl.ps4.ramprun,
-    old_setpt => 20d"0",
-    new_setpt => 20d"10000",
-    phase_inc => 32d"45000",
+    old_setpt => dac_cntrl.ps4.smooth_oldsetpt, --20d"0",
+    new_setpt => dac_cntrl.ps4.smooth_newsetpt, --20d"10000",
+    phase_inc => dac_cntrl.ps4.smooth_phaseinc, 
     rampout => rampout
 );
     

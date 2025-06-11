@@ -46,8 +46,8 @@ type state_type is (IDLE, RUN_RAMP, UPDATE_DAC);
   signal dac_rdaddr      : std_logic_vector(15 downto 0);
   signal dac_rddata      : std_logic_vector(19 downto 0);
   signal dac_rden        : std_logic;
-  signal ramp_dac_setpt  : std_logic_vector(19 downto 0);
-  signal dac_setpt_raw   : std_logic_vector(19 downto 0);
+  signal ramp_dac_setpt  : signed(19 downto 0);
+  signal dac_setpt_raw   : signed(19 downto 0);
   signal dac_setpt       : signed(19 downto 0);
   signal ramp_active     : std_logic;
   signal dac_trig        : std_logic;
@@ -84,7 +84,7 @@ gainoff_dac : entity work.dac_gainoffset
     reset => reset,
     tenkhz_trig => tenkhz_trig,
     numbits_sel => dac_numbits_sel,
-    dac_setpt_raw => signed(dac_setpt_raw),
+    dac_setpt_raw => dac_setpt_raw,
     dac_cntrl => dac_cntrl,
     dac_setpt => dac_setpt,
     done => gainoff_done
@@ -166,7 +166,7 @@ begin
                state <= idle;
             else
               dac_rdaddr <= std_logic_vector(unsigned(dac_rdaddr) + 1);
-              ramp_dac_setpt <= dac_rddata;
+              ramp_dac_setpt <= signed(dac_rddata);
               ramp_active <= '1';
               state <= run_ramp;
             end if;  

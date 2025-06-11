@@ -2087,6 +2087,33 @@ reg {
   } ps4_avemode @0x900; 
 
 
+reg {
+    desc="PS4 DAC SetPoint - when in smooth";
+    default sw = rw;
+    default hw = r;
+    default swacc=true;
+    default swmod=true;    
+    field {} val[20];
+  } ps4_dac_smooth_newsetpt @0x904;
+
+reg {
+    desc="PS4 DAC SetPoint - when in smooth";
+    default sw = rw;
+    default hw = r;
+    default swacc=true;
+    default swmod=true;    
+    field {} val[20];
+  } ps4_dac_smooth_oldsetpt @0x908;
+
+reg {
+    desc="PS4 DAC Phase Increment";
+    default sw = rw;
+    default hw = r;
+    default swacc=true;
+    default swmod=true;    
+    field {} val[32];
+  } ps4_dac_smooth_phaseinc @0x90C;
+
 
 
 

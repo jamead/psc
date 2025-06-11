@@ -349,6 +349,7 @@ void chan_settings(u32 chan, void *msg, u32 msglen) {
 	u32 addr;
 	MsgUnion data;
 
+
 	addr = htonl(msgptr[0]);
 	data.u = htonl(msgptr[1]);
 	xil_printf("MsgLen=%d\r\n",msglen);
@@ -369,6 +370,29 @@ void chan_settings(u32 chan, void *msg, u32 msglen) {
 	        printf("Setting DAC CH%d SetPoint:   Value=%f   Bits=%d\r\n", (int)chan, data.f, (int)scaled_val);
 	        Set_dac(chan, data.f);
 	        break;
+
+
+        case SMOOTH_NEWDACSETPT_MSG:
+        	scaled_val = data.f*CONVVOLTSTODACBITS; // / scalefactors[chan-1].dac_dccts;
+	        printf("Setting Smooth DAC CH%d SetPoint:   Value=%f   Bits=%d\r\n", (int)chan, data.f, (int)scaled_val);
+	        Xil_Out32(XPAR_M_AXI_BASEADDR + SMOOTH_NEWSETPT_REG + chan*CHBASEADDR, scaled_val);
+	        break;
+
+        case SMOOTH_OLDDACSETPT_MSG:
+         	scaled_val = data.f*CONVVOLTSTODACBITS; // / scalefactors[chan-1].dac_dccts;
+ 	        printf("Setting Smooth DAC CH%d SetPoint:   Value=%f   Bits=%d\r\n", (int)chan, data.f, (int)scaled_val);
+	        Xil_Out32(XPAR_M_AXI_BASEADDR + SMOOTH_OLDSETPT_REG + chan*CHBASEADDR, scaled_val);
+ 	        break;
+
+        case SMOOTH_PHASEINC_MSG:
+  	        xil_printf("Setting Smooth DAC CH%d Length:   Value=%d\r\n",chan,data.i);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + SMOOTH_PHASEINC_REG + chan*CHBASEADDR, data.i);
+  	        sleep(0.1);
+  	        scaled_val = Xil_In32(XPAR_M_AXI_BASEADDR + SMOOTH_PHASEINC_REG + chan*CHBASEADDR);
+  	        printf("Readback: %d\r\n",scaled_val);
+  	        break;
+
+
 
         case DAC_RAMPLEN_MSG:
  	        xil_printf("Setting DAC CH%d RampTable Length:   Value=%d\r\n",chan,data.u);
