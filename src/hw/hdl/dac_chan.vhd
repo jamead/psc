@@ -123,8 +123,8 @@ smoothmode: entity work.smooth_ramp
     clk => clk,
     reset => reset,
     tenkhz_trig => tenkhz_trig,
-    cur_setpt => dac_setpt, --dac_cntrl.smooth_oldsetpt, --20d"0",
-    new_setpt => dac_cntrl.setpoint, --dac_cntrl.smooth_newsetpt, --20d"10000",
+    cur_setpt => dac_setpt, 
+    new_setpt => dac_cntrl.setpoint, 
     phase_inc => dac_cntrl.smooth_phaseinc, 
     smooth_active => smooth_active,
     rampout => smooth_dac_setpt

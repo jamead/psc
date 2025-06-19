@@ -88,9 +88,7 @@
 #define FAULTS_LIVE_REG          0xF8      // Live Faults
 #define FAULTS_LAT_REG           0xFC      // Latched Faults
 #define AVEMODE_REG              0x100     // Average mode for 10Hz data
-#define SMOOTH_NEWSETPT_REG      0x104
-#define SMOOTH_OLDSETPT_REG      0x108
-#define SMOOTH_PHASEINC_REG      0x10C
+#define SMOOTH_PHASEINC_REG      0x104
 
 
 
