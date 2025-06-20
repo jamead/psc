@@ -128,9 +128,9 @@ end record;
 
 type t_dcct_adcs_params_onech is record  
   ave_mode        : std_logic_vector(1 downto 0);
-  dcct0_gain      : signed(23 downto 0); --Q3.20 format
+  dcct0_gain      : std_logic_vector(31 downto 0); --IEEE754 float
   dcct0_offset    : signed(19 downto 0);
-  dcct1_gain      : signed(23 downto 0); --Q3.20 format
+  dcct1_gain      : std_logic_vector(31 downto 0); --IEEE754 float
   dcct1_offset    : signed(19 downto 0);  
 end record;
 

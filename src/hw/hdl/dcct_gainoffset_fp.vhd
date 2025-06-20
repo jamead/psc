@@ -26,59 +26,18 @@ architecture arch of dcct_gainoffset_fp is
 
 
   type  state_type is (IDLE, APPLY_OFFSETS, APPLY_GAINS, MULT_DLY);  
-  signal state :  state_type;
-  signal conv_done_last : std_logic;
-  signal multdlycnt : std_logic_vector(3 downto 0);
-  signal dcct0_oc   : signed(19 downto 0);
-  signal dcct1_oc   : signed(19 downto 0);
-
-
-
-
-
--- Multiplies two signed vectors and returns result shifted down by 'fraction_bits'
-function fixed_mul(
-    signal a           : signed;
-    signal b           : signed;
-    constant fraction_bits : natural
-) return signed is
-    variable product : signed(a'length + b'length - 1 downto 0);
-    variable shifted : signed(a'length - 1 downto 0);
-begin
-    -- This multiplication works because VHDL automatically infers result size
-    product := a * b;
-
-    -- Extract most significant bits after shifting right by fraction_bits
-    shifted := product(product'high - fraction_bits downto product'high - fraction_bits - (a'length - 1));
-
-    return shifted;
-end function;
-
-
-
--- Multiplies two signed vectors with rounding and returns result shifted down by 'fraction_bits'
--- adds rounding bit,
-function fixed_mul_round(
-    signal a           : signed;
-    signal b           : signed;
-    constant fraction_bits : natural
-) return signed is
-    variable product : signed(a'length + b'length - 1 downto 0);
-    variable rounded_product : signed(a'length + b'length - 1 downto 0);
-    variable shifted : signed(a'length - 1 downto 0);
-    constant rounding_bit : integer := fraction_bits - 1;
-begin
-    -- Multiply inputs
-    product := a * b;
-
-    -- Add rounding offset (2^(fraction_bits - 1))
-    rounded_product := product + to_signed(2 ** rounding_bit, product'length);
-
-    -- Extract most significant bits after rounding and shifting
-    shifted := rounded_product(rounded_product'high - fraction_bits downto rounded_product'high - fraction_bits - (a'length - 1));
-
-    return shifted;
-end function;
+  signal state           :  state_type;
+  signal conv_done_last  : std_logic;
+  signal multdlycnt      : std_logic_vector(4 downto 0);
+  signal dcct0_oc        : signed(19 downto 0);
+  signal dcct1_oc        : signed(19 downto 0);
+  
+  signal dcct0_raw_f     : std_logic_vector(31 downto 0);
+  signal dcct1_raw_f     : std_logic_vector(31 downto 0);
+  signal dcct0_wgain_f   : std_logic_vector(31 downto 0);
+  signal dcct1_wgain_f   : std_logic_vector(31 downto 0);
+  signal dcct0_corr      : std_logic_vector(31 downto 0);
+  signal dcct1_corr      : std_logic_vector(31 downto 0);
 
 
 
@@ -86,6 +45,78 @@ end function;
 
 
 begin
+
+dcct_out.dcct0 <= signed(dcct0_corr(31 downto 12)); 
+dcct_out.dcct1 <= signed(dcct1_corr(31 downto 12)); 
+
+
+
+--fixed to float conversion for dcct0
+dcct0_conv : entity work.fix20_to_float
+  PORT MAP (
+    aclk => clk,
+    s_axis_a_tvalid => '1',
+    s_axis_a_tdata => std_logic_vector(resize(dcct0_oc,24)),
+    m_axis_result_tvalid => open,
+    m_axis_result_tdata => dcct0_raw_f
+  );
+
+--fixed to float conversion for dcct1
+dcct1_conv : entity work.fix20_to_float
+  PORT MAP (
+    aclk => clk,
+    s_axis_a_tvalid => '1',
+    s_axis_a_tdata => std_logic_vector(resize(dcct1_oc,24)),
+    m_axis_result_tvalid => open,
+    m_axis_result_tdata => dcct1_raw_f
+  );
+
+
+-- dcct0 gain mult
+dcct0_gain: entity work.fp_mult
+  port map (
+    aclk  => clk,
+    s_axis_a_tvalid => '1', 
+    s_axis_a_tdata => dcct0_raw_f,
+    s_axis_b_tvalid => '1',
+    s_axis_b_tdata => dcct_params.dcct0_gain,
+    m_axis_result_tvalid => open,
+    m_axis_result_tdata => dcct0_wgain_f
+ );
+
+dcct1_gain: entity work.fp_mult
+  port map (
+    aclk  => clk,
+    s_axis_a_tvalid => '1', 
+    s_axis_a_tdata => dcct1_raw_f,
+    s_axis_b_tvalid => '1',
+    s_axis_b_tdata => dcct_params.dcct1_gain,
+    m_axis_result_tvalid => open,
+    m_axis_result_tdata => dcct1_wgain_f
+ );
+
+
+-- Convert to Fixed20 and Output 
+dcct0_out : entity work.float_to_fix32
+  PORT MAP (
+    aclk => clk,
+    s_axis_a_tvalid => '1',
+    s_axis_a_tdata => dcct0_wgain_f,
+    m_axis_result_tvalid => open,
+    m_axis_result_tdata => dcct0_corr
+  );
+
+-- Convert to Fixed20 and Output 
+dcct1_out : entity work.float_to_fix32
+  PORT MAP (
+    aclk => clk,
+    s_axis_a_tvalid => '1',
+    s_axis_a_tdata => dcct1_wgain_f,
+    m_axis_result_tvalid => open,
+    m_axis_result_tdata => dcct1_corr
+  );
+
+
 
 
 process(clk) 
@@ -109,15 +140,11 @@ process(clk)
 
            
          when APPLY_GAINS =>
-           --dcct adc format is Q0.19 format (1sign, 0 integer, 19 fractional bits) range -1 to 0.99999
-           --gain is Q3.20 format (1sign, 3 integer, 20 fractional bits) range -8 to 7.99999
-           dcct_out.dcct0 <= fixed_mul(dcct0_oc, dcct_params.dcct0_gain, 4);
-           dcct_out.dcct1 <= fixed_mul(dcct1_oc, dcct_params.dcct1_gain, 4);
            state <= mult_dly;
-           multdlycnt <= 4d"0";
+           multdlycnt <= 5d"0";
            
          when MULT_DLY =>
-           if (multdlycnt = 4d"6") then
+           if (multdlycnt = 5d"20") then
              state <= idle;
              done <= '1';
            else

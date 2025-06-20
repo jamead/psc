@@ -62,7 +62,7 @@ dcct_adc1: entity work.adc_ltc2376
 	data_rdy => conv_done
 );
 			
-gainoff_adc1: entity work.dcct_gainoffset
+gainoff_adc1: entity work.dcct_gainoffset_fp
   port map(
     clk => clk,
     reset => reset,
@@ -92,7 +92,7 @@ dcct_adc2: entity work.adc_ltc2376
 	data_rdy => open
 );
 			
-gainoff_adc2: entity work.dcct_gainoffset
+gainoff_adc2: entity work.dcct_gainoffset_fp
   port map(
     clk => clk,
     reset => reset,
@@ -123,7 +123,7 @@ dcct_adc3: entity work.adc_ltc2376
 	data_rdy => open
 );
 	
-gainoff_adc3: entity work.dcct_gainoffset
+gainoff_adc3: entity work.dcct_gainoffset_fp
   port map(
     clk => clk,
     reset => reset,
@@ -153,7 +153,7 @@ dcct_adc4: entity work.adc_ltc2376
 	data_rdy => open
 );
 			
-gainoff_adc4: entity work.dcct_gainoffset
+gainoff_adc4: entity work.dcct_gainoffset_fp
   port map(
     clk => clk,
     reset => reset,

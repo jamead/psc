@@ -26,7 +26,7 @@ proc setSources {} {
 
   lappend Sources {"../hdl/dcct_adc_module.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/adc_ltc2376.vhd"  "VHDL 2008"}
-  lappend Sources {"../hdl/dcct_gainoffset.vhd" "VHDL 2008"}   
+  lappend Sources {"../hdl/dcct_gainoffset_fp.vhd" "VHDL 2008"}   
    
   lappend Sources {"../hdl/adc_8ch_module.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/adc_ads8568_intf.vhd" "VHDL 2008"} 
@@ -38,10 +38,8 @@ proc setSources {} {
   lappend Sources {"../hdl/dac_gainoffset.vhd" "VHDL 2008"}  
   lappend Sources {"../hdl/smooth_ramp.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/ramptable_ramp.vhd" "VHDL 2008"}   
-  lappend Sources {"../hdl/smooth_ramp_tb.vhd" "VHDL 2008"}  
-  lappend Sources {"../hdl/cordic_sine_tb.vhd" "VHDL 2008"}
-  
-  
+
+
   lappend Sources {"../hdl/fault_module.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/fault_block.vhd" "VHDL 2008"}  
   
@@ -100,6 +98,9 @@ proc doOnCreate {} {
   source ${TclPath}/evr_gtx.tcl
   source ${TclPath}/cordic_sine.tcl
   source ${TclPath}/gige_pcs_pma.tcl
+  source ${TclPath}/fix20_to_float.tcl  
+  source ${TclPath}/fp_mult.tcl
+  source ${TclPath}/float_to_fix32.tcl  
 
   addSources "Sources" 
   
@@ -109,12 +110,7 @@ proc doOnCreate {} {
   set_property used_in_synthesis false [get_files ${::fwfwk::SrcPath}/hw/hdl/top_tb.sv] 
   set_property used_in_simulation true [get_files ${::fwfwk::SrcPath}/hw/hdl/top_tb.sv] 
   
-  set_property used_in_synthesis false [get_files ${::fwfwk::SrcPath}/hw/hdl/cordic_sine_tb.vhd] 
-  set_property used_in_simulation true [get_files ${::fwfwk::SrcPath}/hw/hdl/cordic_sine_tb.vhd]  
-  
-  set_property used_in_synthesis false [get_files ${::fwfwk::SrcPath}/hw/hdl/smooth_ramp_tb.vhd] 
-  set_property used_in_simulation true [get_files ${::fwfwk::SrcPath}/hw/hdl/smooth_ramp_tb.vhd] 
-  
+
 
   
   #get error message, open manually in tcl window for now.

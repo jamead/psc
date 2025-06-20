@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="dcct_gainoffset_fp_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="dcct_gainoffset_fp_tb" />
+            <top_module name="glbl" />
+            <top_module name="psc_pkg" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="1,000.001 ns"></ZoomEndTime>
+      <Cursor1Time time="95.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="282"></NameColumnWidth>
+      <ValueColumnWidth column_width="137"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="16" />
+   <wvobject type="logic" fp_name="/dcct_gainoffset_fp_tb/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/dcct_gainoffset_fp_tb/reset">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/dcct_gainoffset_fp_tb/conv_done">
+      <obj_property name="ElementShortName">conv_done</obj_property>
+      <obj_property name="ObjectShortName">conv_done</obj_property>
+   </wvobject>
+   <wvobject type="other" fp_name="/dcct_gainoffset_fp_tb/uut/state">
+      <obj_property name="ElementShortName">state</obj_property>
+      <obj_property name="ObjectShortName">state</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/dcct0_raw">
+      <obj_property name="ElementShortName">dcct0_raw[19:0]</obj_property>
+      <obj_property name="ObjectShortName">dcct0_raw[19:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">19</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/dcct1_raw">
+      <obj_property name="ElementShortName">dcct1_raw[19:0]</obj_property>
+      <obj_property name="ObjectShortName">dcct1_raw[19:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="radix_realType">SIGNEDFIXEDPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">19</obj_property>
+      <obj_property name="radix_otherWidth">0</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/uut/dcct0_oc">
+      <obj_property name="ElementShortName">dcct0_oc[19:0]</obj_property>
+      <obj_property name="ObjectShortName">dcct0_oc[19:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/uut/dcct1_oc">
+      <obj_property name="ElementShortName">dcct1_oc[19:0]</obj_property>
+      <obj_property name="ObjectShortName">dcct1_oc[19:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/dcct_params">
+      <obj_property name="ElementShortName">dcct_params</obj_property>
+      <obj_property name="ObjectShortName">dcct_params</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/dcct_params.ave_mode">
+         <obj_property name="ElementShortName">.ave_mode[1:0]</obj_property>
+         <obj_property name="ObjectShortName">.ave_mode[1:0]</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/dcct_params.dcct0_gain">
+         <obj_property name="ElementShortName">.dcct0_gain[31:0]</obj_property>
+         <obj_property name="ObjectShortName">.dcct0_gain[31:0]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">FLOATINGPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">24</obj_property>
+         <obj_property name="radix_otherWidth">8</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/dcct_params.dcct0_offset">
+         <obj_property name="ElementShortName">.dcct0_offset[19:0]</obj_property>
+         <obj_property name="ObjectShortName">.dcct0_offset[19:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/dcct_params.dcct1_gain">
+         <obj_property name="ElementShortName">.dcct1_gain[31:0]</obj_property>
+         <obj_property name="ObjectShortName">.dcct1_gain[31:0]</obj_property>
+         <obj_property name="Radix">REALRADIX</obj_property>
+         <obj_property name="radix_realType">FLOATINGPOINTRADIX</obj_property>
+         <obj_property name="radix_fractionWidth">24</obj_property>
+         <obj_property name="radix_otherWidth">8</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/dcct_params.dcct1_offset">
+         <obj_property name="ElementShortName">.dcct1_offset[19:0]</obj_property>
+         <obj_property name="ObjectShortName">.dcct1_offset[19:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/dcct_out">
+      <obj_property name="ElementShortName">dcct_out</obj_property>
+      <obj_property name="ObjectShortName">dcct_out</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/dcct_gainoffset_fp_tb/done">
+      <obj_property name="ElementShortName">done</obj_property>
+      <obj_property name="ObjectShortName">done</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/uut/dcct0_raw_f">
+      <obj_property name="ElementShortName">dcct0_raw_f[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dcct0_raw_f[31:0]</obj_property>
+      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="radix_realType">FLOATINGPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">24</obj_property>
+      <obj_property name="radix_otherWidth">8</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/uut/dcct0_wgain_f">
+      <obj_property name="ElementShortName">dcct0_wgain_f[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dcct0_wgain_f[31:0]</obj_property>
+      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="radix_realType">FLOATINGPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">24</obj_property>
+      <obj_property name="radix_otherWidth">8</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/uut/dcct1_raw_f">
+      <obj_property name="ElementShortName">dcct1_raw_f[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dcct1_raw_f[31:0]</obj_property>
+      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="radix_realType">FLOATINGPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">24</obj_property>
+      <obj_property name="radix_otherWidth">8</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/uut/dcct1_wgain_f">
+      <obj_property name="ElementShortName">dcct1_wgain_f[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dcct1_wgain_f[31:0]</obj_property>
+      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="radix_realType">FLOATINGPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">24</obj_property>
+      <obj_property name="radix_otherWidth">8</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/dcct_out">
+      <obj_property name="ElementShortName">dcct_out</obj_property>
+      <obj_property name="ObjectShortName">dcct_out</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/dcct_out.dcct0">
+         <obj_property name="ElementShortName">.dcct0[19:0]</obj_property>
+         <obj_property name="ObjectShortName">.dcct0[19:0]</obj_property>
+         <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject type="array" fp_name="/dcct_gainoffset_fp_tb/dcct_out.dcct1">
+         <obj_property name="ElementShortName">.dcct1[19:0]</obj_property>
+         <obj_property name="ObjectShortName">.dcct1[19:0]</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

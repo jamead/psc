@@ -123,9 +123,9 @@ reg_i.ps1_reg.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.ps_reg), 3
 reg_i.ps1_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.ps_error), 32));
 
 dcct_params.ps1.dcct0_offset <= signed(reg_o.ps1_dcct0_offset.val.data(19 downto 0)); 
-dcct_params.ps1.dcct0_gain <= signed(reg_o.ps1_dcct0_gain.val.data(23 downto 0)); 
+dcct_params.ps1.dcct0_gain <= reg_o.ps1_dcct0_gain.val.data;  
 dcct_params.ps1.dcct1_offset <= signed(reg_o.ps1_dcct1_offset.val.data(19 downto 0)); 
-dcct_params.ps1.dcct1_gain <= signed(reg_o.ps1_dcct1_gain.val.data(23 downto 0)); 
+dcct_params.ps1.dcct1_gain <= reg_o.ps1_dcct1_gain.val.data; 
 mon_params.ps1.dacmon_offset <= signed(reg_o.ps1_dacmon_offset.val.data(15 downto 0)); 
 mon_params.ps1.dacmon_gain <= signed(reg_o.ps1_dacmon_gain.val.data(23 downto 0)); 
 mon_params.ps1.voltage_offset <= signed(reg_o.ps1_volt_offset.val.data(15 downto 0)); 
@@ -214,9 +214,9 @@ reg_i.ps2_reg.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.ps_reg), 3
 reg_i.ps2_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps2.ps_error), 32));
 
 dcct_params.ps2.dcct0_offset <= signed(reg_o.ps2_dcct0_offset.val.data(19 downto 0)); 
-dcct_params.ps2.dcct0_gain <= signed(reg_o.ps2_dcct0_gain.val.data(23 downto 0)); 
+dcct_params.ps2.dcct0_gain <= reg_o.ps2_dcct0_gain.val.data; 
 dcct_params.ps2.dcct1_offset <= signed(reg_o.ps2_dcct1_offset.val.data(19 downto 0)); 
-dcct_params.ps2.dcct1_gain <= signed(reg_o.ps2_dcct1_gain.val.data(23 downto 0)); 
+dcct_params.ps2.dcct1_gain <= reg_o.ps2_dcct1_gain.val.data; 
 mon_params.ps2.dacmon_offset <= signed(reg_o.ps2_dacmon_offset.val.data(15 downto 0)); 
 mon_params.ps2.dacmon_gain <= signed(reg_o.ps2_dacmon_gain.val.data(23 downto 0)); 
 mon_params.ps2.voltage_offset <= signed(reg_o.ps2_volt_offset.val.data(15 downto 0)); 
@@ -307,9 +307,9 @@ reg_i.ps3_reg.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.ps_reg), 3
 reg_i.ps3_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps3.ps_error), 32));
 
 dcct_params.ps3.dcct0_offset <= signed(reg_o.ps3_dcct0_offset.val.data(19 downto 0)); 
-dcct_params.ps3.dcct0_gain <= signed(reg_o.ps3_dcct0_gain.val.data(23 downto 0)); 
+dcct_params.ps3.dcct0_gain <= reg_o.ps3_dcct0_gain.val.data; 
 dcct_params.ps3.dcct1_offset <= signed(reg_o.ps3_dcct1_offset.val.data(19 downto 0)); 
-dcct_params.ps3.dcct1_gain <= signed(reg_o.ps3_dcct1_gain.val.data(23 downto 0)); 
+dcct_params.ps3.dcct1_gain <= reg_o.ps3_dcct1_gain.val.data; 
 mon_params.ps3.dacmon_offset <= signed(reg_o.ps3_dacmon_offset.val.data(15 downto 0)); 
 mon_params.ps3.dacmon_gain <= signed(reg_o.ps3_dacmon_gain.val.data(23 downto 0)); 
 mon_params.ps3.voltage_offset <= signed(reg_o.ps3_volt_offset.val.data(15 downto 0)); 
@@ -401,9 +401,9 @@ reg_i.ps4_reg.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.ps_reg), 3
 reg_i.ps4_err.val.data <= std_logic_vector(resize(signed(mon_adcs.ps4.ps_error), 32));
 
 dcct_params.ps4.dcct0_offset <= signed(reg_o.ps4_dcct0_offset.val.data(19 downto 0)); 
-dcct_params.ps4.dcct0_gain <= signed(reg_o.ps4_dcct0_gain.val.data(23 downto 0)); 
+dcct_params.ps4.dcct0_gain <= reg_o.ps4_dcct0_gain.val.data; 
 dcct_params.ps4.dcct1_offset <= signed(reg_o.ps4_dcct1_offset.val.data(19 downto 0)); 
-dcct_params.ps4.dcct1_gain <= signed(reg_o.ps4_dcct1_gain.val.data(23 downto 0)); 
+dcct_params.ps4.dcct1_gain <= reg_o.ps4_dcct1_gain.val.data; 
 mon_params.ps4.dacmon_offset <= signed(reg_o.ps4_dacmon_offset.val.data(15 downto 0)); 
 mon_params.ps4.dacmon_gain <= signed(reg_o.ps4_dacmon_gain.val.data(23 downto 0)); 
 mon_params.ps4.voltage_offset <= signed(reg_o.ps4_volt_offset.val.data(15 downto 0)); 
