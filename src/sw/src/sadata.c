@@ -98,10 +98,12 @@ void sadata_push(void *unused)
 
            sadata.ps[chan].dcct1 = ReadAccumSA(base+DCCT1_REG, ave_mode) * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts;
            sadata.ps[chan].dcct1_offset = (s32)Xil_In32(base + DCCT1_OFFSET_REG) * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts;
-           sadata.ps[chan].dcct1_gain = (s32)Xil_In32(base + DCCT1_GAIN_REG) / GAIN20BITFRACT;
+           //sadata.ps[chan].dcct1_gain = (s32)Xil_In32(base + DCCT1_GAIN_REG) / GAIN20BITFRACT;
+           sadata.ps[chan].dcct1_gain = ((MsgUnion){ .u = Xil_In32(base + DCCT1_GAIN_REG) }).f;
            sadata.ps[chan].dcct2 = ReadAccumSA(base + DCCT2_REG, ave_mode) * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts;
            sadata.ps[chan].dcct2_offset = (s32)Xil_In32(base + DCCT2_OFFSET_REG) * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts;
-           sadata.ps[chan].dcct2_gain = (s32)Xil_In32(base + DCCT2_GAIN_REG) / GAIN20BITFRACT;
+           //sadata.ps[chan].dcct2_gain = (s32)Xil_In32(base + DCCT2_GAIN_REG) / GAIN20BITFRACT;
+           sadata.ps[chan].dcct2_gain = ((MsgUnion){ .u = Xil_In32(base + DCCT2_GAIN_REG) }).f;
            sadata.ps[chan].dacmon = ReadAccumSA(base + DACMON_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan].dac_dccts;
            sadata.ps[chan].dacmon_offset = (s32)Xil_In32(base + DACMON_OFFSET_REG) * CONV16BITSTOVOLTS * scalefactors[chan].dac_dccts;
            sadata.ps[chan].dacmon_gain = (s32)Xil_In32(base + DACMON_GAIN_REG) / GAIN20BITFRACT;

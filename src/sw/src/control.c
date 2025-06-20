@@ -394,7 +394,8 @@ void chan_settings(u32 chan, void *msg, u32 msglen) {
 
         case DCCT1_GAIN_MSG:
  	        printf("Setting DAC CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
- 	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT1_GAIN_REG + chan*CHBASEADDR, data.f*GAIN20BITFRACT);
+ 	        //Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT1_GAIN_REG + chan*CHBASEADDR, data.f*GAIN20BITFRACT);
+ 	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT1_GAIN_REG + chan*CHBASEADDR, data.u);
  	        break;
 
         case DCCT1_OFFSET_MSG:
@@ -406,7 +407,8 @@ void chan_settings(u32 chan, void *msg, u32 msglen) {
 
         case DCCT2_GAIN_MSG:
   	        printf("Setting DCCT1 CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
-  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT2_GAIN_REG + chan*CHBASEADDR, data.f*GAIN20BITFRACT);
+  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT2_GAIN_REG + chan*CHBASEADDR, data.u);
+  	        //Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT2_GAIN_REG + chan*CHBASEADDR, data.f*GAIN20BITFRACT);
   	        break;
 
         case DCCT2_OFFSET_MSG:
