@@ -90,6 +90,9 @@ end component;
 
   signal mmcm_locked_out      : std_logic;
   signal pma_reset_out         : std_logic;
+  
+  signal rx_udp_pkt_out        : t_udp_pkt;
+  signal udp_rx_done           : std_logic;
 
   attribute mark_debug : string;  
   attribute mark_debug of gmii_rxd: signal is "true";
@@ -158,6 +161,22 @@ phy_i :  gige_pcs_pma
     gt0_qplloutclk_out => open,
     gt0_qplloutrefclk_out => open
 ); 
+
+
+
+--FOFB recieve fsm 
+fofb_rcv : entity work.udp_rx
+  port map(  
+    clk => userclk2,         
+    reset => reset,	
+    rx_data_in => gmii_rxd, 
+    rx_dv => gmii_rx_dv,                                   	                         
+    udp_pkt_rx => rx_udp_pkt_out,
+    rx_done => udp_rx_done
+	 );
+
+
+
 
 
 

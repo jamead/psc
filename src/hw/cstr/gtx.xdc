@@ -56,3 +56,4 @@ set_property LOC GTXE2_CHANNEL_X0Y0 [get_cells fofb/phy_i/U0/pcs_pma_block_i/tra
 
 
 
+

@@ -312,6 +312,54 @@ type t_pl_snapshot_axi4_s2m is record
 end record;
 
 
+type t_udp_pkt is record                	              
+  mac_src_addr        : std_logic_vector(47 downto 0);
+  mac_dest_addr       : std_logic_vector(47 downto 0);
+  mac_len_type        : std_logic_vector(15 downto 0);
+  ip_ver              : std_logic_vector(3 downto 0);
+  ip_ihl              : std_logic_vector(3 downto 0);
+  ip_tos              : std_logic_vector(7 downto 0);
+  ip_ident            : std_logic_vector(15 downto 0);
+  ip_ttl              : std_logic_vector(7 downto 0); 
+  ip_protocol         : std_logic_vector(7 downto 0);
+  ip_flags            : std_logic_vector(2 downto 0);
+  ip_fragoffset       : std_logic_vector(12 downto 0);                                                                     
+  udp_src_port        : std_logic_vector(15 downto 0);
+  udp_dest_port       : std_logic_vector(15 downto 0);
+  header_checksum     : std_logic_vector(15 downto 0);
+  total_len           : std_logic_vector(15 downto 0);
+  ip_src_addr         : std_logic_vector(31 downto 0);
+  ip_dest_addr        : std_logic_vector(31 downto 0);
+  udp_len             : std_logic_vector(15 downto 0);
+  udp_checksum        : std_logic_vector(15 downto 0);
+  ps_ctrl_bits        : std_logic_vector(31 downto 0);
+  fast_ps_id          : std_logic_vector(15 downto 0);
+  readback_cmd        : std_logic_vector(15 downto 0); 
+  nonce               : std_logic_vector(63 downto 0); 
+  fast_addr1          : std_logic_vector(15 downto 0); 
+  setpoint            : std_logic_vector(31 downto 0); 
+  readback            : std_logic_vector(31 downto 0); 
+  setpoint1           : std_logic_vector(31 downto 0); 
+  readback1           : std_logic_vector(31 downto 0); 
+  fast_addr2          : std_logic_vector(15 downto 0); 
+  setpoint2           : std_logic_vector(31 downto 0);  
+  readback2           : std_logic_vector(31 downto 0); 
+  fast_addr3          : std_logic_vector(15 downto 0); 
+  setpoint3           : std_logic_vector(31 downto 0); 
+  readback3           : std_logic_vector(31 downto 0); 
+  fast_addr4          : std_logic_vector(15 downto 0); 
+  setpoint4           : std_logic_vector(31 downto 0); 	
+  readback4           : std_logic_vector(31 downto 0);     
+  data_rdy            : std_logic;
+  transmit            : std_logic; 
+	end record;
+
+
+
+
+
+
+
 --########################################################################
 --                         Components
 --########################################################################
