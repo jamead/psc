@@ -39,8 +39,11 @@ architecture arch of dcct_gainoffset_fp is
   signal dcct0_corr      : std_logic_vector(31 downto 0);
   signal dcct1_corr      : std_logic_vector(31 downto 0);
 
-
-
+   attribute mark_debug                 : string;
+   attribute mark_debug of dcct0_oc: signal is "true";
+   attribute mark_debug of dcct0_raw_f : signal is "true";
+   attribute mark_debug of dcct0_wgain_f: signal is "true";
+   
 
 
 
@@ -48,6 +51,10 @@ begin
 
 dcct_out.dcct0 <= signed(dcct0_corr(31 downto 12)); 
 dcct_out.dcct1 <= signed(dcct1_corr(31 downto 12)); 
+
+dcct_out.dcct0_fp <= dcct0_wgain_f;
+dcct_out.dcct0_raw <= dcct0_raw;
+
 
 
 

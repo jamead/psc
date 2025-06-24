@@ -67,7 +67,7 @@ gainoff_adc1: entity work.dcct_gainoffset_fp
     clk => clk,
     reset => reset,
     conv_done => conv_done,
- 	dcct0_raw => dcct(0),
+ 	dcct0_raw => dcct_params.ps1.dcct1_offset, --dcct(0),
 	dcct1_raw => dcct(1), 
     dcct_params => dcct_params.ps1,
     dcct_out => dcct_out.ps1,

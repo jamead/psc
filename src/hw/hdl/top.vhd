@@ -386,7 +386,7 @@ ps_regs: entity work.ps_io
     m_axi4_m2s => m_axi4_m2s, 
     m_axi4_s2m => m_axi4_s2m,
     dcct_params => dcct_params,
-    dcct_adcs => dcct_adcs_ave, 
+    dcct_adcs => dcct_adcs, --dcct_adcs_ave, 
     mon_adcs => mon_adcs_ave,
     mon_params => mon_params,
     dac_cntrl => dac_cntrl,

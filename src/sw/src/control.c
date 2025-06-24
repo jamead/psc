@@ -348,6 +348,7 @@ void chan_settings(u32 chan, void *msg, u32 msglen) {
 	u32 *msgptr = (u32 *)msg;
 	u32 addr;
 	MsgUnion data;
+	float val;
 
 
 	addr = htonl(msgptr[0]);
@@ -393,9 +394,29 @@ void chan_settings(u32 chan, void *msg, u32 msglen) {
 	        break;
 
         case DCCT1_GAIN_MSG:
- 	        printf("Setting DAC CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
+ 	        printf("Setting DCCT1 CH%d Gain:   Value=%f\r\n",(int)chan,data.f);
  	        //Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT1_GAIN_REG + chan*CHBASEADDR, data.f*GAIN20BITFRACT);
  	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT1_GAIN_REG + chan*CHBASEADDR, data.u);
+
+ 	        // DCCT2 is the raw input to the gain / offset block
+ 	        scaled_val = (s32)Xil_In32(XPAR_M_AXI_BASEADDR + DCCT2_REG + chan*CHBASEADDR); // * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts;
+ 	        val = scaled_val * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts;
+ 	        printf("DCCT1 Raw Input   :  %10f\r\n",val);
+
+ 	        // Read back the gain
+	        val =  ((MsgUnion){ .u = Xil_In32(XPAR_M_AXI_BASEADDR + DCCT1_GAIN_REG + chan*CHBASEADDR) }).f;
+	        printf("DCCT1 Gain        :  %10f\r\n",val);
+
+	        // Output Fixed Point
+	        scaled_val = (s32)Xil_In32(XPAR_M_AXI_BASEADDR + DCCT1_REG + chan*CHBASEADDR); // * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts;
+ 	        val = scaled_val * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts;
+ 	        printf("DCCT1 Fixed Result:  %10f\r\n",(int)scaled_val,val);
+
+	        // Output floating point result
+	        val =  ((MsgUnion){ .u = Xil_In32(XPAR_M_AXI_BASEADDR + DACMON_REG + chan*CHBASEADDR) }).f;
+	        printf("DCCT1 Float Result:  %10f\r\n",val*10);
+
+
  	        break;
 
         case DCCT1_OFFSET_MSG:
@@ -415,6 +436,7 @@ void chan_settings(u32 chan, void *msg, u32 msglen) {
   	        printf("Setting DCCT2 CH%d Offset:   Value=%f\r\n",(int)chan,data.f);
   	        scaled_val = data.f*CONVVOLTSTODACBITS / scalefactors[chan-1].dac_dccts;
   	        Xil_Out32(XPAR_M_AXI_BASEADDR + DCCT2_OFFSET_REG + chan*CHBASEADDR, scaled_val);
+  	        xil_printf("        DCCT2 CH%d Offset:   Value=%d\r\n",chan,scaled_val);
   	        break;
 
         case DACMON_GAIN_MSG:

@@ -26,7 +26,8 @@ entity ps_io is
     m_axi4_m2s         : in t_pl_regs_m2s;
     m_axi4_s2m         : out t_pl_regs_s2m;   
     
-    dcct_adcs          : in t_dcct_adcs_ave;
+    --dcct_adcs          : in t_dcct_adcs_ave;
+    dcct_adcs          : in t_dcct_adcs;    
     dcct_params        : out t_dcct_adcs_params;
     mon_adcs           : in t_mon_adcs_ave;
     mon_params         : out t_mon_adcs_params;
@@ -72,6 +73,8 @@ architecture behv of ps_io is
 
   
   attribute mark_debug     : string;
+  attribute mark_debug of dcct_adcs: signal is "true";
+  attribute mark_debug of dcct_params: signal is "true";
   --attribute mark_debug of dac_cntrl: signal is "true";
   --attribute mark_debug of inj_trig: signal is "true";
 --  attribute mark_debug of soft_trig_prev: signal is "true";  
@@ -114,9 +117,14 @@ dcct_params.ps1.ave_mode <= reg_o.ps1_avemode.val.data;
 
 -- DCCT and Monitor ADC slow readbacks and gains & offsets
 reg_i.ps1_dcct0.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps1.dcct0), 32));
-reg_i.ps1_dcct1.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps1.dcct1), 32));
-reg_i.ps1_dacmon.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.dacmon), 32));
-reg_i.ps1_volt.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.voltage), 32));
+
+reg_i.ps1_dcct1.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps1.dcct0_raw), 32));
+reg_i.ps1_dacmon.val.data <= dcct_adcs.ps1.dcct0_fp; --std_logic_vector(resize(signed(mon_adcs.ps1.dacmon), 32));
+
+--reg_i.ps1_dcct1.val.data <= std_logic_vector(resize(signed(dcct_adcs.ps1.dcct1), 32));
+--reg_i.ps1_dacmon.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.dacmon), 32));
+--reg_i.ps1_volt.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.voltage), 32));
+
 reg_i.ps1_gnd.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.ignd), 32));
 reg_i.ps1_spare.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.spare), 32));
 reg_i.ps1_reg.val.data <= std_logic_vector(resize(signed(mon_adcs.ps1.ps_reg), 32));

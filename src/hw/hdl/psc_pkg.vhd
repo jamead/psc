@@ -115,7 +115,9 @@ end record;
 
 -- DCCT ADC record types
 type t_dcct_adcs_onech is record 
-  dcct0          : signed(19 downto 0);
+  dcct0_raw      : signed(19 downto 0); -- raw input before offset/gain
+  dcct0          : signed(19 downto 0); -- 20bit fixed point offset/gain result
+  dcct0_fp       : std_logic_vector(31 downto 0); --32bit floating point offset/gain result  
   dcct1          : signed(19 downto 0);  
 end record;
 
@@ -144,7 +146,9 @@ end record;
 
 
 type t_dcct_adcs_ave_onech is record
-  dcct0         : signed(31 downto 0);
+ 
+  dcct0         : signed(31 downto 0); -- 20 bit offset/gain corrected value
+
   dcct1         : signed(31 downto 0);
 end record;
 
