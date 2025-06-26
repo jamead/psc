@@ -177,7 +177,7 @@ int main(void) {
     print_firmware_version();
 
 	init_i2c();
-	//prog_si570();
+	prog_si570();
 	QspiFlashInit();
 
 
@@ -185,6 +185,10 @@ int main(void) {
     xil_printf("Resetting EVR GTX...\r\n");
 	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET_REG, 0xFF);
 	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET_REG, 0);
+
+	// Set FOFB IP Address
+    xil_printf("Setting FOFB IP Address to 10.0.142.100...\r\n");
+	Xil_Out32(XPAR_M_AXI_BASEADDR + FOFB_IPADDR_REG, 0x0A008E64);
 
 	//Set Fault Enable Register - Move to gateware
 	for (i=1;i<5;i++) {

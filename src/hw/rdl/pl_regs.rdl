@@ -150,6 +150,38 @@ reg {
 
 
 
+reg {
+    desc="FOFB IP Address";
+    default sw = rw;
+    default hw = r; 
+    field {} val[32];
+  } fofb_ipaddr @0x60; 
+
+
+reg {
+    desc="FOFB Packets Received";
+    default sw = rw;
+    default hw = w; 
+    field {} val[32];
+  } fofb_packetsrcvd @0x64; 
+  
+ reg {
+    desc="FOFB Command";
+    default sw = rw;
+    default hw = w; 
+    field {} val[32];
+  } fofb_command @0x68;  
+
+ reg {
+    desc="FOFB nonce";
+    default sw = rw;
+    default hw = w; 
+    field {} val[32];
+  } fofb_nonce @0x6C;  
+
+
+
+
 /**** Channel 1 ****/
 
 /* 10Hz Data */
@@ -639,6 +671,23 @@ reg {
     default swmod=true;    
     field {} val[32];
   } ps1_dac_smooth_phaseinc @0x304;
+
+
+reg {
+    desc="PS1 FOFB Address";
+    default sw = rw;
+    default hw = r;    
+    field {} val[16];
+  } ps1_fofb_addr @0x320;
+  
+  
+reg {
+    desc="PS1 FOFB Set Point";
+    default sw = rw;
+    default hw = w;    
+    field {} val[32];
+  } ps1_fofb_setpt @0x324;  
+  
 
 
 
@@ -1132,6 +1181,19 @@ reg {
     field {} val[32];
   } ps2_dac_smooth_phaseinc @0x504;
 
+reg {
+    desc="PS2 FOFB Address";
+    default sw = rw;
+    default hw = r;    
+    field {} val[16];
+  } ps2_fofb_addr @0x520;
+
+reg {
+    desc="PS2 FOFB Set Point";
+    default sw = rw;
+    default hw = w;    
+    field {} val[32];
+  } ps2_fofb_setpt @0x524; 
 
 
 /**** Channel 3 *****/
@@ -1624,6 +1686,24 @@ reg {
     default swmod=true;    
     field {} val[32];
   } ps3_dac_smooth_phaseinc @0x704;
+
+
+reg {
+    desc="PS3 FOFB Address";
+    default sw = rw;
+    default hw = r;    
+    field {} val[16];
+  } ps3_fofb_addr @0x720;
+
+
+reg {
+    desc="PS3 FOFB Set Point";
+    default sw = rw;
+    default hw = w;    
+    field {} val[32];
+  } ps3_fofb_setpt @0x724; 
+
+
 
 
 
@@ -2120,6 +2200,21 @@ reg {
     field {} val[32];
   } ps4_dac_smooth_phaseinc @0x904;
 
+
+
+reg {
+    desc="PS4 FOFB Address";
+    default sw = rw;
+    default hw = r;    
+    field {} val[16];
+  } ps4_fofb_addr @0x920;
+
+reg {
+    desc="PS4 FOFB Set Point";
+    default sw = rw;
+    default hw = w;    
+    field {} val[32];
+  } ps4_fofb_setpt @0x924; 
 
 
 

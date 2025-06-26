@@ -278,6 +278,28 @@ type t_dac_cntrl is record
 end record;
 
 
+type t_fofb_params is record
+  ipaddr               : std_logic_vector(31 downto 0);
+  ps1_addr             : std_logic_vector(15 downto 0);
+  ps2_addr             : std_logic_vector(15 downto 0);
+  ps3_addr             : std_logic_vector(15 downto 0);
+  ps4_addr             : std_logic_vector(15 downto 0);   
+end record;
+
+
+type t_fofb_stat is record
+  packets_rcvd         : std_logic_vector(31 downto 0);
+  command              : std_logic_vector(31 downto 0);
+  nonce                : std_logic_vector(31 downto 0); 
+  ps1_setpt            : std_logic_vector(31 downto 0);
+  ps2_setpt            : std_logic_vector(31 downto 0);
+  ps3_setpt            : std_logic_vector(31 downto 0);
+  ps4_setpt            : std_logic_vector(31 downto 0);
+end record;
+
+
+
+
 -- snapshot data (circular buffer) types
 type t_snapshot_stat is record
   addr_ptr  : std_logic_vector(31 downto 0);
@@ -310,6 +332,8 @@ type t_pl_snapshot_axi4_s2m is record
   bresp : std_logic_vector(1 downto 0);
   bvalid : std_logic;
 end record;
+
+
 
 
 type t_udp_pkt is record                	              
@@ -551,16 +575,47 @@ port
 end component;  
   
   
+component gige_pcs_pma is
+generic (
+    EXAMPLE_SIMULATION        : in integer := 01
+          );
+  port (
+    gtrefclk_p : in  std_logic;                         
+    gtrefclk_n : in  std_logic;                         
+    gtrefclk_out : out std_logic;                         
+    gtrefclk_bufg_out : out std_logic; 
+    txp : out std_logic;                    -- Differential +ve of serial transmission from PMA to PMD.
+    txn : out std_logic;                    -- Differential -ve of serial transmission from PMA to PMD.
+    rxp : in std_logic;                     -- Differential +ve for serial reception from PMD to PMA.
+    rxn : in std_logic;                     -- Differential -ve for serial reception from PMD to PMA.
+    userclk_out : out std_logic;                        
+    userclk2_out : out std_logic;                        
+    rxuserclk_out : out std_logic;                        
+    rxuserclk2_out : out std_logic;                        
+    pma_reset_out : out std_logic;                           -- transceiver PMA reset signal
+    mmcm_locked_out : out std_logic;                           -- MMCM Locked
+    resetdone : out std_logic;
+    independent_clock_bufg : in std_logic;                 
+    gmii_txd : in std_logic_vector(7 downto 0);  -- Transmit data from client MAC.
+    gmii_tx_en : in std_logic;                     -- Transmit control signal from client MAC.
+    gmii_tx_er : in std_logic;                     -- Transmit control signal from client MAC.
+    gmii_rxd : out std_logic_vector(7 downto 0); -- Received Data to client MAC.
+    gmii_rx_dv : out std_logic;                    -- Received control signal to client MAC.
+    gmii_rx_er : out std_logic;                    -- Received control signal to client MAC.
+    gmii_isolate : out std_logic;                    -- Tristate control to electrically isolate GMII.
+    configuration_vector : in std_logic_vector(4 downto 0);  -- Alternative to MDIO interface.
+    an_interrupt : out std_logic;                    -- Interrupt to processor to signal that Auto-Negotiation has completed
+    an_adv_config_vector : in std_logic_vector(15 downto 0); -- Alternate interface to program REG4 (AN ADV)
+    an_restart_config : in std_logic;                     -- Alternate signal to modify AN restart bit in REG0
+    status_vector : out std_logic_vector(15 downto 0); -- Core status.
+    reset : in std_logic;                     -- Asynchronous reset for entire core.
+    signal_detect : in std_logic;                      -- Input from PMD to indicate presence of optical input.
+    gt0_qplloutclk_out : out std_logic;
+    gt0_qplloutrefclk_out : out std_logic
+   );
+end component;  
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
   
 
 component dac_dpram IS

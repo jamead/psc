@@ -8,60 +8,19 @@ use work.psc_pkg.all;
 entity fofb_top is
   port (
     clk          : in  std_logic;
-    reset        : in  std_logic;
+    reset        : in  std_logic;   
     gtrefclk_p   : in  std_logic;
     gtrefclk_n   : in  std_logic;
     rxp          : in  std_logic;
     rxn          : in  std_logic;
     txp          : out std_logic;
-    txn          : out std_logic
+    txn          : out std_logic;
+    fofb_params  : in t_fofb_params; 
+	fofb_stat    : out t_fofb_stat
   );
 end entity fofb_top;
 
 architecture behv of fofb_top is
-
-
-component gige_pcs_pma is
-generic (
-    EXAMPLE_SIMULATION        : in integer := 01
-          );
-  port (
-    gtrefclk_p : in  std_logic;                         
-    gtrefclk_n : in  std_logic;                         
-    gtrefclk_out : out std_logic;                         
-    gtrefclk_bufg_out : out std_logic; 
-    txp : out std_logic;                    -- Differential +ve of serial transmission from PMA to PMD.
-    txn : out std_logic;                    -- Differential -ve of serial transmission from PMA to PMD.
-    rxp : in std_logic;                     -- Differential +ve for serial reception from PMD to PMA.
-    rxn : in std_logic;                     -- Differential -ve for serial reception from PMD to PMA.
-    userclk_out : out std_logic;                        
-    userclk2_out : out std_logic;                        
-    rxuserclk_out : out std_logic;                        
-    rxuserclk2_out : out std_logic;                        
-    pma_reset_out : out std_logic;                           -- transceiver PMA reset signal
-    mmcm_locked_out : out std_logic;                           -- MMCM Locked
-    resetdone : out std_logic;
-    independent_clock_bufg : in std_logic;                 
-    gmii_txd : in std_logic_vector(7 downto 0);  -- Transmit data from client MAC.
-    gmii_tx_en : in std_logic;                     -- Transmit control signal from client MAC.
-    gmii_tx_er : in std_logic;                     -- Transmit control signal from client MAC.
-    gmii_rxd : out std_logic_vector(7 downto 0); -- Received Data to client MAC.
-    gmii_rx_dv : out std_logic;                    -- Received control signal to client MAC.
-    gmii_rx_er : out std_logic;                    -- Received control signal to client MAC.
-    gmii_isolate : out std_logic;                    -- Tristate control to electrically isolate GMII.
-    configuration_vector : in std_logic_vector(4 downto 0);  -- Alternative to MDIO interface.
-    an_interrupt : out std_logic;                    -- Interrupt to processor to signal that Auto-Negotiation has completed
-    an_adv_config_vector : in std_logic_vector(15 downto 0); -- Alternate interface to program REG4 (AN ADV)
-    an_restart_config : in std_logic;                     -- Alternate signal to modify AN restart bit in REG0
-    status_vector : out std_logic_vector(15 downto 0); -- Core status.
-    reset : in std_logic;                     -- Asynchronous reset for entire core.
-    signal_detect : in std_logic;                      -- Input from PMD to indicate presence of optical input.
-    gt0_qplloutclk_out : out std_logic;
-    gt0_qplloutrefclk_out : out std_logic
-   );
-end component;
-
-
 
 
   signal gtrefclk_bufg_out     : std_logic;
@@ -93,6 +52,7 @@ end component;
   
   signal rx_udp_pkt_out        : t_udp_pkt;
   signal udp_rx_done           : std_logic;
+  signal got_fofb_pkt          : std_logic;
 
   attribute mark_debug : string;  
   attribute mark_debug of gmii_rxd: signal is "true";
@@ -106,6 +66,8 @@ end component;
   attribute mark_debug of status_vector: signal is "true";
   attribute mark_debug of an_interrupt: signal is "true";
   attribute mark_debug of resetdone: signal is "true";  
+  attribute mark_debug of fofb_params: signal is "true";
+  attribute mark_debug of got_fofb_pkt: signal is "true";
 
 
 
@@ -175,6 +137,20 @@ fofb_rcv : entity work.udp_rx
     rx_done => udp_rx_done
 	 );
 
+process (userclk2)
+begin 
+  if (rising_edge(userclk2)) then
+    if (reset = '1') then
+       got_fofb_pkt <= '0';
+    else
+       if ((udp_rx_done = '1') and (rx_udp_pkt_out.ip_dest_addr = fofb_params.ipaddr)) then
+         got_fofb_pkt <= '1';
+       else
+         got_fofb_pkt <= '0';
+       end if;
+     end if;
+   end if;
+end process;   
 
 
 

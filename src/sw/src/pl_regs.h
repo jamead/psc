@@ -20,6 +20,10 @@
 #define EVR_RESET_REG            0X48     // EVR Reset
 #define IOC_ACCESS_REG           0x50     // IOC control word sent to psc (blinks fp led)
 #define TENHZ_DATASEND_REG       0x54     // 10Hz Data transmitted to IOC (blinks fp led)
+#define FOFB_IPADDR_REG          0x60     // Destination IP Address of FOFB Packet to Decode
+#define FOFB_PACKETS_RCVD_REG    0x64     // Number of valid FOFB packets
+#define FOFB_COMMAND_REG         0x68     // Readback of Command Register of FOFB packet
+#define FOFB_NONCE_REG           0x6C     // Readback of NONCE Register in FOFB packet
 
 
 // channel registers
@@ -88,8 +92,9 @@
 #define FAULTS_LIVE_REG          0xF8      // Live Faults
 #define FAULTS_LAT_REG           0xFC      // Latched Faults
 #define AVEMODE_REG              0x100     // Average mode for 10Hz data
-#define SMOOTH_PHASEINC_REG      0x104
-
+#define SMOOTH_PHASEINC_REG      0x104     // Phase Increment for Infinity Smooth Ramp
+#define FOFB_ADDR_REG            0x120     // FOFB Address
+#define FOFB_SETPT_REG           0x124     // Read back of Set Point received from FOFB link
 
 
 

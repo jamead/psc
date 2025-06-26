@@ -165,6 +165,9 @@ architecture behv of top is
    signal dig_cntrl             : t_dig_cntrl;
    signal dig_stat              : t_dig_stat;
    
+   signal fofb_params           : t_fofb_params;
+   signal fofb_stat             : t_fofb_stat;
+   
    signal accum_done            : std_logic_vector(3 downto 0);
    
    signal dac_cntrl             : t_dac_cntrl;
@@ -226,15 +229,7 @@ evr_refclk : IBUFDS_GTE2
     IB => gtx_evr_refclk_n
 );
 
-----gtx refclk for gigE
---fofb_refclk : IBUFDS_GTE2  
---  port map (
---    O => gtx_gige_refclk, 
---    ODIV2 => open,
---    CEB => 	'0',
---    I => gtx_gige_refclk_p,
---    IB => gtx_gige_refclk_n
---);
+
 
 
 
@@ -243,17 +238,15 @@ fofb: entity work.fofb_top
     clk => pl_clk0,
     reset => pl_reset,
     gtrefclk_p => gtx_gige_refclk_p,
-    gtrefclk_n => gtx_gige_refclk_n,
+    gtrefclk_n => gtx_gige_refclk_n,   
     rxp => gtx_gige_rx_p,
     rxn => gtx_gige_rx_n,
     txp => gtx_gige_tx_p,
-    txn => gtx_gige_tx_n
+    txn => gtx_gige_tx_n,
+    fofb_params => fofb_params,
+	fofb_stat => fofb_stat 
 );
-
-
-
-
-	  
+  
 
 -- reads 8 channels of DCCT ADC's
 read_dcct_adcs: entity work.DCCT_ADC_module
@@ -398,6 +391,8 @@ ps_regs: entity work.ps_io
     dig_stat => dig_stat,
     fault_params => fault_params,
     fault_stat => fault_stat,
+    fofb_params => fofb_params,
+	fofb_stat => fofb_stat,
     ioc_access_led => ioc_access_led,
     tenhz_datasend_led => tenhz_datasend_led               
   );

@@ -39,6 +39,8 @@ entity ps_io is
 	dig_stat           : in t_dig_stat;
 	fault_stat         : in t_fault_stat;
 	fault_params       : out t_fault_params;
+	fofb_params        : out t_fofb_params;
+	fofb_stat          : in t_fofb_stat;
 	ioc_access_led     : out std_logic;
 	tenhz_datasend_led : out std_logic
      
@@ -107,6 +109,17 @@ dac_cntrl.numbits_sel <= reg_o.resolution.val.data(0);
 ioc_access <= reg_o.ioc_access.val.data(0);
 tenhz_datasend <= reg_o.tenhz_datasend.val.data(0);
 
+fofb_params.ipaddr <= reg_o.fofb_ipaddr.val.data;
+fofb_params.ps1_addr <= reg_o.ps1_fofb_addr.val.data;
+fofb_params.ps2_addr <= reg_o.ps2_fofb_addr.val.data;
+fofb_params.ps3_addr <= reg_o.ps3_fofb_addr.val.data;
+fofb_params.ps4_addr <= reg_o.ps4_fofb_addr.val.data;
+
+reg_i.fofb_packetsrcvd.val.data <= fofb_stat.packets_rcvd;
+reg_i.fofb_command.val.data <= fofb_stat.command;
+reg_i.fofb_nonce.val.data <= fofb_stat.nonce;
+
+
 
 
 -- PS1 Registers
@@ -172,8 +185,6 @@ reg_i.ps1_digin.val.data(2) <= dig_stat.ps1.flt2;
 reg_i.ps1_digin.val.data(3) <= dig_stat.ps1.spare;
 reg_i.ps1_digin.val.data(4) <= dig_stat.ps1.dcct_flt;
 
-
-
 --Fault Threasholds and Counter Limits
 fault_params.ps1.clear <= reg_o.ps1_fault_clear.val.data(0);
 fault_params.ps1.enable <= reg_o.ps1_fault_mask.val.data;
@@ -197,6 +208,13 @@ fault_params.ps1.heart_cntlim <= reg_o.ps1_heartbeat_cntlim.val.data;
 
 reg_i.ps1_faults_live.val.data <= fault_stat.ps1.live;
 reg_i.ps1_faults_lat.val.data <= fault_stat.ps1.lat;
+
+--FOFB
+fofb_params.ps1_addr <= reg_o.ps1_fofb_addr.val.data;
+reg_i.ps1_fofb_setpt.val.data <= fofb_stat.ps1_setpt;
+
+
+
 
 
 
@@ -288,7 +306,9 @@ fault_params.ps2.heart_cntlim <= reg_o.ps2_heartbeat_cntlim.val.data;
 reg_i.ps2_faults_live.val.data <= fault_stat.ps2.live;
 reg_i.ps2_faults_lat.val.data <= fault_stat.ps2.lat;
 
-
+--FOFB
+fofb_params.ps2_addr <= reg_o.ps2_fofb_addr.val.data;
+reg_i.ps2_fofb_setpt.val.data <= fofb_stat.ps2_setpt;
 
 
 
@@ -379,7 +399,9 @@ fault_params.ps3.heart_cntlim <= reg_o.ps3_heartbeat_cntlim.val.data;
 reg_i.ps3_faults_live.val.data <= fault_stat.ps3.live;
 reg_i.ps3_faults_lat.val.data <= fault_stat.ps3.lat;
 
-
+--FOFB
+fofb_params.ps3_addr <= reg_o.ps3_fofb_addr.val.data;
+reg_i.ps3_fofb_setpt.val.data <= fofb_stat.ps3_setpt;
 
 
 
@@ -451,17 +473,6 @@ reg_i.ps4_digin.val.data(3) <= dig_stat.ps4.spare;
 reg_i.ps4_digin.val.data(4) <= dig_stat.ps4.dcct_flt;
 
 
----- Digital Outputs
---rcom(12) <= reg_o.ps4_digout_on1.val.data(0);
---rcom(13) <= reg_o.ps4_digout_on2.val.data(0);
---rcom(14) <= reg_o.ps4_digout_reset.val.data(0);
---rcom(15) <= reg_o.ps4_digout_spare.val.data(0);
---rcom(19) <= reg_o.ps4_digout_park.val.data(0);
-
----- Digital Inputs
---reg_i.ps4_digin.val.data <= rsts(19) & rsts(15 downto 12);
-
-
 --Fault Threasholds and Counter Limits
 fault_params.ps4.clear <= reg_o.ps4_fault_clear.val.data(0);
 fault_params.ps4.enable <= reg_o.ps4_fault_mask.val.data;
@@ -487,7 +498,9 @@ reg_i.ps4_faults_live.val.data <= fault_stat.ps4.live;
 reg_i.ps4_faults_lat.val.data <= fault_stat.ps4.lat;
 
 
-
+--FOFB
+fofb_params.ps4_addr <= reg_o.ps4_fofb_addr.val.data;
+reg_i.ps4_fofb_setpt.val.data <= fofb_stat.ps4_setpt;
 
 
 
