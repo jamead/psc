@@ -82,13 +82,13 @@ generic(
     gtx_evr_rx_p            : in std_logic;
     gtx_evr_rx_n            : in std_logic;
     
-    --gigE interface
+    --FOFB gigE interface
     gtx_gige_refclk_p       : in std_logic;
     gtx_gige_refclk_n       : in std_logic;
-    gtx_gige_rx_p           : in std_logic;
-    gtx_gige_rx_n           : in std_logic;
-    gtx_gige_tx_p           : out std_logic;
-    gtx_gige_tx_n           : out std_logic;
+    gtx_gige_rx_p           : in std_logic_vector(1 downto 0);
+    gtx_gige_rx_n           : in std_logic_vector(1 downto 0);
+    gtx_gige_tx_p           : out std_logic_vector(1 downto 0);
+    gtx_gige_tx_n           : out std_logic_vector(1 downto 0);
     
     --Trigger inputs
     trig                    : in std_logic_vector(3 downto 0);

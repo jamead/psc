@@ -21,10 +21,9 @@ set_property PACKAGE_PIN V9 [get_ports gtx_gige_refclk_n]
 
 set_property LOC GTXE2_CHANNEL_X0Y2 [get_cells evr/evr_gtx_init_i/U0/evr_gtx_i/gt0_evr_gtx_i/gtxe2_i]
 
-set_property LOC GTXE2_CHANNEL_X0Y0 [get_cells fofb/phy_i/U0/pcs_pma_block_i/transceiver_inst/gtwizard_inst/U0/gtwizard_i/gt0_GTWIZARD_i/gtxe2_i]
-
-
-
+set_property LOC GTXE2_CHANNEL_X0Y1 [get_cells fofb/phy_sfp0_rx/U0/pcs_pma_block_i/transceiver_inst/gtwizard_inst/U0/gtwizard_i/gt0_GTWIZARD_i/gtxe2_i]
+set_property LOC GTXE2_CHANNEL_X0Y0 [get_cells fofb/phy_sfp1_tx/U0/transceiver_inst/gtwizard_inst/U0/gtwizard_i/gt0_GTWIZARD_i/gtxe2_i]
+                                      
 
 
 

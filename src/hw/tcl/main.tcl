@@ -100,7 +100,8 @@ proc doOnCreate {} {
   source ${TclPath}/dac_dpram.tcl
   source ${TclPath}/evr_gtx.tcl
   source ${TclPath}/cordic_sine.tcl
-  source ${TclPath}/gige_pcs_pma.tcl
+  source ${TclPath}/gige_pcs_pma_tx.tcl
+  source ${TclPath}/gige_pcs_pma_rx.tcl
 
   addSources "Sources" 
   
