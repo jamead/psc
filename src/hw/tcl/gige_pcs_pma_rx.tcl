@@ -65,6 +65,7 @@ set gige_pcs_pma_rx [create_ip -name gig_ethernet_pcs_pma -vendor xilinx.com -li
 # User Parameters
 set_property -dict [list \
   CONFIG.Auto_Negotiation {true} \
+  CONFIG.Management_Interface {false} \
   CONFIG.SupportLevel {Include_Shared_Logic_in_Core} \
 ] [get_ips gige_pcs_pma_rx]
 

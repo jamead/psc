@@ -155,9 +155,6 @@ phy_sfp0_rx :  gige_pcs_pma_rx
 
 
 phy_sfp1_tx : gige_pcs_pma_tx
---  generic map (
---    EXAMPLE_SIMULATION => 0
---  )
   port map (
     gtrefclk => gtrefclk,
     gtrefclk_bufg => gtrefclk_bufg_out,
@@ -177,9 +174,9 @@ phy_sfp1_tx : gige_pcs_pma_tx
     pma_reset => pma_reset,
     mmcm_locked => mmcm_locked,
     independent_clock_bufg => clk,
-    gmii_txd  => gmii_txd_sfp1,
-    gmii_tx_en => gmii_tx_en_sfp1,
-    gmii_tx_er => gmii_tx_er_sfp1,
+    gmii_txd  => gmii_rxd_sfp0,  --gmii_txd_sfp1,
+    gmii_tx_en => gmii_rx_dv_sfp0, --gmii_tx_en_sfp1,
+    gmii_tx_er => gmii_rx_er_sfp0, --gmii_tx_er_sfp1,
     gmii_rxd => gmii_rxd_sfp1, 
     gmii_rx_dv => gmii_rx_dv_sfp1,
     gmii_rx_er => gmii_rx_er_sfp1,
