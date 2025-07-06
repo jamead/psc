@@ -18,13 +18,14 @@ use work.psc_pkg.ALL;
 entity evr_top is
    port(
 
-    sys_clk        : in std_logic;
-    sys_rst        : in std_logic;   
-    gtx_refclk     : in std_logic;
-    rx_p           : in std_logic;
-    rx_n           : in std_logic; 
-    evr_params     : in t_evr_params;
-    evr_trigs      : out t_evr_trigs
+    sys_clk          : in std_logic;
+    sys_rst          : in std_logic; 
+    gtx_evr_refclk_p : in std_logic; 
+    gtx_evr_refclk_n : in std_logic;
+    rx_p             : in std_logic;
+    rx_n             : in std_logic; 
+    evr_params       : in t_evr_params;
+    evr_trigs        : out t_evr_trigs
    
 );
 end evr_top;
@@ -36,6 +37,8 @@ architecture behv of evr_top is
 
    type  state_type is (IDLE, ACTIVE);  
    signal state :  state_type;
+   
+   signal gtx_refclk        : std_logic;
 
    signal datastream        : std_logic_vector(7 downto 0);
    signal eventstream       : std_logic_vector(7 downto 0);
@@ -95,8 +98,20 @@ architecture behv of evr_top is
 begin
 
 evr_trigs.rcvd_clk <= rxusr_clk;
-
 evr_trigs.tbt_trig <= tbt_trig_stretch;
+
+
+
+--gtx refclk for EVR
+evr_refclk : IBUFDS_GTE2  
+  port map (
+    O => gtx_refclk, 
+    ODIV2 => open,
+    CEB => 	'0',
+    I => gtx_evr_refclk_p,
+    IB => gtx_evr_refclk_n
+);
+
 
 
 rxoutclk_bufg0_i : BUFG

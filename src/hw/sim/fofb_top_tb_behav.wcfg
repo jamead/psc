@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="fofb_top_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="fofb_top_tb" />
+            <top_module name="glbl" />
+            <top_module name="psc_pkg" />
+            <top_module name="vcomponents" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="707.563 ns"></ZoomEndTime>
+      <Cursor1Time time="1,000.000 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="192"></NameColumnWidth>
+      <ValueColumnWidth column_width="125"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="20" />
+   <wave_markers>
+      <marker label="" time="16554550" />
+   </wave_markers>
+   <wvobject type="logic" fp_name="/fofb_top_tb/clk">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/reset">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/gtrefclk_p">
+      <obj_property name="ElementShortName">gtrefclk_p</obj_property>
+      <obj_property name="ObjectShortName">gtrefclk_p</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/gtrefclk_n">
+      <obj_property name="ElementShortName">gtrefclk_n</obj_property>
+      <obj_property name="ObjectShortName">gtrefclk_n</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fofb_top_tb/rxp">
+      <obj_property name="ElementShortName">rxp[1:0]</obj_property>
+      <obj_property name="ObjectShortName">rxp[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fofb_top_tb/rxn">
+      <obj_property name="ElementShortName">rxn[1:0]</obj_property>
+      <obj_property name="ObjectShortName">rxn[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fofb_top_tb/txp">
+      <obj_property name="ElementShortName">txp[1:0]</obj_property>
+      <obj_property name="ObjectShortName">txp[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fofb_top_tb/txn">
+      <obj_property name="ElementShortName">txn[1:0]</obj_property>
+      <obj_property name="ObjectShortName">txn[1:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fofb_top_tb/fofb_params">
+      <obj_property name="ElementShortName">fofb_params</obj_property>
+      <obj_property name="ObjectShortName">fofb_params</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider37" type="divider">
+      <obj_property name="label">fofb_top</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/uut/fofb_clk">
+      <obj_property name="ElementShortName">fofb_clk</obj_property>
+      <obj_property name="ObjectShortName">fofb_clk</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fofb_top_tb/uut/fofb_rxd">
+      <obj_property name="ElementShortName">fofb_rxd[7:0]</obj_property>
+      <obj_property name="ObjectShortName">fofb_rxd[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/uut/fofb_rx_dv">
+      <obj_property name="ElementShortName">fofb_rx_dv</obj_property>
+      <obj_property name="ObjectShortName">fofb_rx_dv</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fofb_top_tb/uut/fofb_txd">
+      <obj_property name="ElementShortName">fofb_txd[7:0]</obj_property>
+      <obj_property name="ObjectShortName">fofb_txd[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/uut/fofb_tx_en">
+      <obj_property name="ElementShortName">fofb_tx_en</obj_property>
+      <obj_property name="ObjectShortName">fofb_tx_en</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fofb_top_tb/fofb_params.ipaddr">
+      <obj_property name="ElementShortName">.ipaddr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">.ipaddr[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider98" type="divider">
+      <obj_property name="label">udp_recv</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/uut/fofb_packet">
+      <obj_property name="ElementShortName">fofb_packet</obj_property>
+      <obj_property name="ObjectShortName">fofb_packet</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/uut/fofb_rx_dv_dly">
+      <obj_property name="ElementShortName">fofb_rx_dv_dly</obj_property>
+      <obj_property name="ObjectShortName">fofb_rx_dv_dly</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fofb_top_tb/uut/fofb_rxd_dly">
+      <obj_property name="ElementShortName">fofb_rxd_dly[7:0]</obj_property>
+      <obj_property name="ObjectShortName">fofb_rxd_dly[7:0]</obj_property>
+   </wvobject>
+</wave_config>

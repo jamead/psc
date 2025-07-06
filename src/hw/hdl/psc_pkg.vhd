@@ -287,7 +287,7 @@ type t_fofb_params is record
 end record;
 
 
-type t_fofb_stat is record
+type t_fofb_data is record
   packets_rcvd         : std_logic_vector(31 downto 0);
   command              : std_logic_vector(31 downto 0);
   nonce                : std_logic_vector(31 downto 0); 
@@ -693,6 +693,15 @@ component dac_dpram IS
     enb : IN STD_LOGIC;
     addrb : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
     doutb : OUT STD_LOGIC_VECTOR(19 DOWNTO 0)
+  );
+END component;
+
+
+component shift_ram IS
+  PORT (
+    D : IN STD_LOGIC_VECTOR(8 DOWNTO 0);
+    CLK : IN STD_LOGIC;
+    Q : OUT STD_LOGIC_VECTOR(8 DOWNTO 0)
   );
 END component;
 

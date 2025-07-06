@@ -22,7 +22,9 @@ proc setSources {} {
 
   lappend Sources {"../hdl/ps_io.vhd" "VHDL 2008"} 
   
+  lappend Sources {"../hdl/fofb_top_tb.vhd" "VHDL 2008"}
   lappend Sources {"../hdl/fofb_top.vhd" "VHDL 2008"} 
+  lappend Sources {"../hdl/fofb_phy.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/fofb_udp_rx.vhd" "VHDL 2008"} 
 
   lappend Sources {"../hdl/dcct_adc_module.vhd" "VHDL 2008"} 
@@ -102,6 +104,7 @@ proc doOnCreate {} {
   source ${TclPath}/cordic_sine.tcl
   source ${TclPath}/gige_pcs_pma_tx.tcl
   source ${TclPath}/gige_pcs_pma_rx.tcl
+  source ${TclPath}/shift_ram.tcl
 
   addSources "Sources" 
   
@@ -117,7 +120,8 @@ proc doOnCreate {} {
   set_property used_in_synthesis false [get_files ${::fwfwk::SrcPath}/hw/hdl/smooth_ramp_tb.vhd] 
   set_property used_in_simulation true [get_files ${::fwfwk::SrcPath}/hw/hdl/smooth_ramp_tb.vhd] 
   
-
+  set_property used_in_synthesis false [get_files ${::fwfwk::SrcPath}/hw/hdl/fofb_top_tb.vhd] 
+  set_property used_in_simulation true [get_files ${::fwfwk::SrcPath}/hw/hdl/fofb_top_tb.vhd] 
   
   #get error message, open manually in tcl window for now.
   #open_wave_config "${::fwfwk::SrcPath}/hw/sim/top_tb_behav.wcfg"

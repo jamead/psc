@@ -30,25 +30,29 @@ use work.psc_pkg.all;
 --  Entity Declaration
 
 entity udp_rx is
-	port
-	(
-	    clk         		: in  std_logic;           
-        reset			    : in  std_logic; 
-        rx_data_in	      	: in  std_logic_vector(7 downto 0); 
-        rx_dv			    : in  std_logic;                                      	              
-        udp_pkt_rx          : out t_udp_pkt;
-        rx_done             : out std_logic
-    );
+  port (
+    fofb_clk      		: in  std_logic;           
+    reset			    : in  std_logic;    
+    fofb_params         : in t_fofb_params;
+    rx_data_in	      	: in  std_logic_vector(7 downto 0); 
+    rx_dv			    : in  std_logic;                                      	              
+    rx_done             : out std_logic;
+    fofb_packet         : out std_logic;
+    fofb_data           : out t_fofb_data
+
+  );
 end udp_rx;
 
 
 --  Architecture Body
 
 architecture udp_rx_arch OF udp_rx is
-    type state_type is (IDLE, RX_PREAMBLE, RX_DATA, RX_FINISHED);
+    type state_type is (IDLE, RX_PREAMBLE, RX_HEADER, RX_ADDRHI, RX_ADDRLO, 
+                        RX_SETPT_BYTE3, RX_SETPT_BYTE2, RX_SETPT_BYTE1, RX_SETPT_BYTE0, 
+                        RX_DATA, CHECK_ADDR, RX_FINISHED);
     signal state: state_type;
 	 
-	 
+	 signal rx_dv_prev          : std_logic;
      signal framebytenum 		: INTEGER range 0 to 32767;
 	 signal databytenum 		: INTEGER RANGE 0 TO 127;
 	 
@@ -58,6 +62,9 @@ architecture udp_rx_arch OF udp_rx is
      signal rx_check            : std_logic; 
      signal udp_pkt_buf_rx      : t_udp_pkt; 
      signal pkt_length_int      : integer; 
+     
+     signal fast_addr           : std_logic_vector(15 downto 0);
+     signal setpt               : std_logic_vector(31 downto 0);
      
      
      attribute mark_debug : string;  
@@ -70,27 +77,51 @@ architecture udp_rx_arch OF udp_rx is
 
 begin
 
-udp_pkt_rx <= udp_pkt_buf_rx; 
 
 
-process(clk) 
+
+
+--process (fofb_clk)
+--begin 
+--  if (rising_edge(fofb_clk)) then
+--    if (reset = '1') then
+--       got_fofb_pkt_sfp0 <= '0';
+--    else
+--       if ((udp_rx_done_sfp0 = '1') and (rx_udp_pkt_out_sfp0.ip_dest_addr = fofb_params.ipaddr)) then
+--         got_fofb_pkt_sfp0 <= '1';
+--       else
+--         got_fofb_pkt_sfp0 <= '0';
+--       end if;
+--     end if;
+--   end if;
+--end process;   
+
+
+
+
+
+process(fofb_clk) 
   begin
-  if rising_edge(clk) then 
+  if rising_edge(fofb_clk) then 
      if reset = '1' then
-        state              		<= idle;
-		framebytenum            <= 0;
-		databytenum				<= 0;
-		rx_done                 <= '0'; 
+        state <= idle;
+		framebytenum <= 0;
+		databytenum <= 0;
+		rx_done <= '0'; 
+		rx_dv_prev <= '0';
+		fofb_data.ps1_setpt <= 32d"0";
+		fofb_data.ps2_setpt <= 32d"0";
+		fofb_data.ps3_setpt <= 32d"0";
+		fofb_data.ps4_setpt <= 32d"0";
+		fofb_packet <= '0';
+		
      else 
         case(state) is
           when IDLE =>
-				rx_done			<= '0';
-				--frame_good set high means that the FCS (frame check sequence) is correct i.e. ethernet packet
-				--is a valid ethernet packet
-				--The packet length is the packet length +4 (I assume the 4 comes from the 4 byte FCS) 
-				--The packet length is 78 +FCS = 82
-				--if frame_good = '1' and pkt_length_int = 82 then 
-                if (rx_dv = '1') then   --if (rx_sop = '1') and (rx_dval = '1')then           
+                fofb_packet <= '0';
+				rx_done <= '0';
+                rx_dv_prev <= rx_dv;
+                if (rx_dv = '1' and rx_dv_prev = '0') then              
                   state <= rx_preamble;	
                   framebytenum <= 0;
                   databytenum <= 0;
@@ -98,10 +129,10 @@ process(clk)
                 
            when RX_PREAMBLE =>
               if (rx_data_in = x"D5") then
-                 state <= rx_data;          
+                 state <= rx_header;          
               end if;
                
-           when RX_DATA =>
+           when RX_HEADER =>
   				framebytenum <= framebytenum + 1;
 				case framebytenum is 
 				    --- IP Header ---
@@ -115,7 +146,7 @@ process(clk)
 					when 7 =>      udp_pkt_buf_rx.mac_src_addr(39 downto 32)	<= rx_data_in;
 					when 8 =>      udp_pkt_buf_rx.mac_src_addr(31 downto 24)	<= rx_data_in;
 					when 9 =>      udp_pkt_buf_rx.mac_src_addr(23 downto 16)	<= rx_data_in;
-					when 10 =>      udp_pkt_buf_rx.mac_src_addr(15 downto 8)	    <= rx_data_in;
+					when 10 =>     udp_pkt_buf_rx.mac_src_addr(15 downto 8)	    <= rx_data_in;
 					when 11 =>     udp_pkt_buf_rx.mac_src_addr(7 downto 0)		<= rx_data_in;   
 					when 12 =>     udp_pkt_buf_rx.mac_len_type(15 downto 8)     <= rx_data_in;
 					when 13 =>     udp_pkt_buf_rx.mac_len_type(7 downto 0)      <= rx_data_in;
@@ -162,46 +193,68 @@ process(clk)
                     when 51 =>     udp_pkt_buf_rx.nonce(23 downto 16)           <= rx_data_in;  
                     when 52 =>     udp_pkt_buf_rx.nonce(15 downto 8)            <= rx_data_in; 
                     when 53 =>     udp_pkt_buf_rx.nonce(7 downto 0)             <= rx_data_in; 
-                    when 54 =>     udp_pkt_buf_rx.fast_addr1(15 downto 8)       <= rx_data_in; 
-                    when 55 =>     udp_pkt_buf_rx.fast_addr1(7 downto 0)        <= rx_data_in; 
-                    when 56 =>     udp_pkt_buf_rx.setpoint1(31 downto 24)       <= rx_data_in; 
-                    when 57 =>     udp_pkt_buf_rx.setpoint1(23 downto 16)       <= rx_data_in;
-                    when 58 =>     udp_pkt_buf_rx.setpoint1(15 downto 8)        <= rx_data_in; 
-                    when 59 =>     udp_pkt_buf_rx.setpoint1(7 downto 0)         <= rx_data_in;
-                    when 60 =>     udp_pkt_buf_rx.fast_addr2(15 downto 8)       <= rx_data_in;
-                    when 61 =>     udp_pkt_buf_rx.fast_addr2(7 downto 0)        <= rx_data_in; 
-                    when 62 =>     udp_pkt_buf_rx.setpoint2(31 downto 24)       <= rx_data_in; 
-                    when 63 =>     udp_pkt_buf_rx.setpoint2(23 downto 16)       <= rx_data_in; 
-                    when 64 =>     udp_pkt_buf_rx.setpoint2(15 downto 8)        <= rx_data_in; 
-                    when 65 =>     udp_pkt_buf_rx.setpoint2(7 downto 0)         <= rx_data_in; 
-                    when 66 =>     udp_pkt_buf_rx.fast_addr3(15 downto 8)       <= rx_data_in; 
-                    when 67 =>     udp_pkt_buf_rx.fast_addr3(7 downto 0)        <= rx_data_in; 
-					when 68 =>     udp_pkt_buf_rx.setpoint3(31 downto 24)       <= rx_data_in; 
-                    when 69 =>     udp_pkt_buf_rx.setpoint3(23 downto 16)       <= rx_data_in; 
-                    when 70 =>     udp_pkt_buf_rx.setpoint3(15 downto 8)        <= rx_data_in; 
-                    when 71 =>     udp_pkt_buf_rx.setpoint3(7 downto 0)         <= rx_data_in; 
-                    when 72 =>     udp_pkt_buf_rx.fast_addr4(15 downto 8)       <= rx_data_in; 
-                    when 73 =>     udp_pkt_buf_rx.fast_addr4(7 downto 0)        <= rx_data_in; 
-                    when 74 =>     udp_pkt_buf_rx.setpoint4(31 downto 24)       <= rx_data_in; 
-                    when 75 =>     udp_pkt_buf_rx.setpoint4(23 downto 16)       <= rx_data_in; 
-                    when 76 =>     udp_pkt_buf_rx.setpoint4(15 downto 8)        <= rx_data_in; 
-                    when 77 =>     udp_pkt_buf_rx.setpoint4(7 downto 0)         <= rx_data_in; 
-					when others => 
-								   framebytenum <= 78; 
-					end case;			
-							
-
-                  if (rx_dv = '0') then 
-                        framebytenum <= 0; 
-                        state <= RX_FINISHED;                     
-				  end if;
-				  
-			when RX_FINISHED => 
-			     rx_done <= '1'; 
-			     state <= IDLE; 
-						
-		    when others => 
-		    state <= IDLE;				
+                                   if (udp_pkt_buf_rx.ip_dest_addr = fofb_params.ipaddr) and 
+                                      (udp_pkt_buf_rx.fast_ps_id = x"7631") then
+                                      state <= rx_addrhi;
+                                      fofb_packet <= '1';
+                                   else 
+                                      state <= idle;
+                                   end if;
+                                   
+                    when others => null;               
+                end case;  
+            
+            when RX_ADDRHI =>  
+                    fofb_packet <= '0';  
+                    if (rx_dv = '0') then
+                      state <= idle;
+                      rx_done <= '1';
+                    else              
+                      state <= rx_addrhi;                              
+                      fast_addr(15 downto 8) <= rx_data_in;
+                      state <= rx_addrlo;
+                    end if;
+                    
+            when RX_ADDRLO =>
+                    fast_addr(7 downto 0) <= rx_data_in;
+                    state <= rx_setpt_byte3;
+                    
+            when RX_SETPT_BYTE3 =>
+                    setpt(31 downto 24) <= rx_data_in;
+                    state <= rx_setpt_byte2;
+                    
+             when RX_SETPT_BYTE2 =>
+                    setpt(23 downto 16) <= rx_data_in;
+                    state <= rx_setpt_byte1;                   
+                    
+             when RX_SETPT_BYTE1 =>
+                    setpt(15 downto 8) <= rx_data_in;
+                    state <= rx_setpt_byte0;                   
+                    
+             when RX_SETPT_BYTE0 =>
+                    setpt(7 downto 0) <= rx_data_in;
+                    if (fast_addr = fofb_params.ps1_addr) then
+                       fofb_data.ps1_setpt <= setpt(31 downto 8) & rx_data_in;
+                    end if;
+                    if (fast_addr = fofb_params.ps2_addr) then
+                       fofb_data.ps2_setpt <= setpt(31 downto 8) & rx_data_in;
+                    end if;     
+                    if (fast_addr = fofb_params.ps3_addr) then
+                       fofb_data.ps3_setpt <= setpt(31 downto 8) & rx_data_in;
+                    end if;                   
+                    if (fast_addr = fofb_params.ps4_addr) then
+                       fofb_data.ps4_setpt <= setpt(31 downto 8) & rx_data_in;
+                    end if;                    
+                                   
+                    if (rx_dv = '0') then
+                      state <= idle;
+                      rx_done <= '1';
+                    else              
+                      state <= rx_addrhi;
+                    end if; 
+                    				
+		     when others => 
+		       state <= idle;				
 					
         end case;
      end if;

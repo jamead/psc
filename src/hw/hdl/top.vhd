@@ -166,7 +166,7 @@ architecture behv of top is
    signal dig_stat              : t_dig_stat;
    
    signal fofb_params           : t_fofb_params;
-   signal fofb_stat             : t_fofb_stat;
+   signal fofb_data             : t_fofb_data;
    
    signal accum_done            : std_logic_vector(3 downto 0);
    
@@ -209,25 +209,12 @@ fp_leds(3) <= '0';
 fp_leds(5) <= '0';
 fp_leds(7) <= '0';
 
-
 sfp_leds(3 downto 0) <= "0000";
 sfp_leds(4) <= evr_trigs.onehz_trig_stretch;
 sfp_leds(7 downto 5) <= "000";
 
 
 pl_reset <= not pl_resetn(0); 
-
-
-
---gtx refclk for EVR
-evr_refclk : IBUFDS_GTE2  
-  port map (
-    O => gtx_evr_refclk, 
-    ODIV2 => open,
-    CEB => 	'0',
-    I => gtx_evr_refclk_p,
-    IB => gtx_evr_refclk_n
-);
 
 
 
@@ -244,7 +231,7 @@ fofb: entity work.fofb_top
     txp => gtx_gige_tx_p,
     txn => gtx_gige_tx_n,
     fofb_params => fofb_params,
-	fofb_stat => fofb_stat 
+	fofb_data => fofb_data 
 );
   
 
@@ -340,7 +327,8 @@ clk_src: entity work.tenkhz_mux
 	O => tenkhz_trig
     ); 
     
-
+    
+--PS digital inputs/outputs
 dig_io: entity work.digio_logic
   port map(
     clk => pl_clk0,
@@ -359,7 +347,8 @@ evr: entity work.evr_top
   port map(
     sys_clk => pl_clk0,
     sys_rst => pl_reset,
-    gtx_refclk => gtx_evr_refclk, 
+    gtx_evr_refclk_p => gtx_evr_refclk_p,
+    gtx_evr_refclk_n => gtx_evr_refclk_n,
     rx_p => gtx_evr_rx_p,
     rx_n => gtx_evr_rx_n,
     evr_params => evr_params,
@@ -367,8 +356,7 @@ evr: entity work.evr_top
 );	
 
 
-
-
+--registers from/to ARM
 ps_regs: entity work.ps_io
   generic map (
     FPGA_VERSION => FPGA_VERSION
@@ -392,13 +380,13 @@ ps_regs: entity work.ps_io
     fault_params => fault_params,
     fault_stat => fault_stat,
     fofb_params => fofb_params,
-	fofb_stat => fofb_stat,
+	fofb_data => fofb_data,
     ioc_access_led => ioc_access_led,
     tenhz_datasend_led => tenhz_datasend_led               
   );
 
     
- 
+--store snapshot data to DDR 
 adc2ddr : entity work.axi4_write_adc
   port map (
     clk => pl_clk0,
