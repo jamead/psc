@@ -31,8 +31,7 @@ architecture behv of fofb_top is
   signal fofb_rx_dv            : std_logic;
   signal fofb_rxd_dly          : std_logic_vector(7 downto 0);
   signal fofb_rx_dv_dly        : std_logic;  
-  signal fofb_txd              : std_logic_vector(7 downto 0);
-  signal fofb_tx_en            : std_logic;
+
   
   signal fofb_packet           : std_logic;
   signal udp_rx_done           : std_logic;
@@ -41,13 +40,17 @@ architecture behv of fofb_top is
 
   attribute mark_debug : string;  
   attribute mark_debug of fofb_params: signal is "true";
-
-
+  attribute mark_debug of fofb_data: signal is "true";
+  attribute mark_debug of fofb_rx_dv: signal is "true";
+  attribute mark_debug of fofb_rxd: signal is "true";
+  attribute mark_debug of fofb_packet: signal is "true";
+  attribute mark_debug of udp_rx_done: signal is "true";
+  attribute mark_debug of fofb_rx_dv_dly: signal is "true";
+  attribute mark_debug of fofb_rxd_dly: signal is "true";
 
 begin
 
-fofb_txd <= fofb_rxd;
-fofb_tx_en <= fofb_rx_dv;
+
 
 --phy instantiations
 fofb_phy : entity work.fofb_phy

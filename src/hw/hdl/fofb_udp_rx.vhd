@@ -113,6 +113,9 @@ process(fofb_clk)
 		fofb_data.ps2_setpt <= 32d"0";
 		fofb_data.ps3_setpt <= 32d"0";
 		fofb_data.ps4_setpt <= 32d"0";
+		fofb_data.packets_rcvd <= 32d"0";
+		fofb_data.command <= 32d"0";
+		fofb_data.nonce <= 32d"0";
 		fofb_packet <= '0';
 		
      else 
@@ -196,6 +199,9 @@ process(fofb_clk)
                                    if (udp_pkt_buf_rx.ip_dest_addr = fofb_params.ipaddr) and 
                                       (udp_pkt_buf_rx.fast_ps_id = x"7631") then
                                       state <= rx_addrhi;
+                                      fofb_data.nonce <= udp_pkt_buf_rx.nonce(31 downto 8) & rx_data_in;
+                                      fofb_data.command <= 16d"0" & udp_pkt_buf_rx.readback_cmd;
+                                      fofb_data.packets_rcvd <= std_logic_vector(unsigned(fofb_data.packets_rcvd) + 1);
                                       fofb_packet <= '1';
                                    else 
                                       state <= idle;

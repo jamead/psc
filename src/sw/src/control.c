@@ -328,6 +328,10 @@ void glob_settings(void *msg) {
 			Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_10KHZ_EVENTNUM_REG, data.u);
             break;
 
+		case FOFB_IPADDR_MSG:
+			xil_printf("Setting FOFB IP Address:   Value=%d\r\n",data.u);
+			Xil_Out32(XPAR_M_AXI_BASEADDR + FOFB_IPADDR_REG, data.u);
+            break;
 
 
 
@@ -666,6 +670,12 @@ void chan_settings(u32 chan, void *msg, u32 msglen) {
         	printf("Setting ScaleFactor Error CH%d :   Value=%f\r\n",(int)chan,data.f);
         	scalefactors[chan-1].error = data.f;
         	break;
+
+        case FOFB_FASTADDR_MSG:
+        	xil_printf("Setting FOFB Fast Address CH%d : Value=%d\r\n",chan,data.u);
+        	Xil_Out32(XPAR_M_AXI_BASEADDR + FOFB_FASTADDR_REG + chan*CHBASEADDR, data.u);
+        	break;
+
 
         case AVE_MODE_MSG:
         	xil_printf("Setting 10Hz Average Mode CH%d : Value=%d\r\n",chan,data.u);

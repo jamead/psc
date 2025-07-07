@@ -69,7 +69,8 @@ typedef struct SAdataChan {
     float sf_regulator;
     float sf_error;
     s32 dac_setpt_raw;
-    u32 rsvd[11];
+    float fofb_dacsetpt;
+    u32 rsvd[10];
 } SAdataChan;
 
 
@@ -85,6 +86,9 @@ typedef struct SAdataMsg {
 	float vccaux;             // PSC Offset 28
 	u32 bandwidth;            // PSC Offset 32
 	u32 polarity;             // PSC Offset 36
-	u32 rsvd[15];
+	u32 fofb_pktsrcvd;        // PSC Offset 40
+	u32 fofb_command;         // PSC Offset 44
+	u32 fofb_nonce;           // PSC Offset 48
+	u32 rsvd[12];
     struct SAdataChan ps[4];  // PSC Offset 100
 } SAdataMsg;

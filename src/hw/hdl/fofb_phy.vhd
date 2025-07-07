@@ -88,29 +88,29 @@ architecture behv of fofb_phy is
   signal gt0_qplloutclk        : std_logic;
   signal gt0_qplloutrefclk     : std_logic;
 
-  attribute mark_debug : string;  
-  attribute mark_debug of gmii_rxd_sfp0: signal is "true";
-  attribute mark_debug of gmii_rx_dv_sfp0: signal is "true";  
-  attribute mark_debug of gmii_rx_er_sfp0: signal is "true";
-  attribute mark_debug of gmii_txd_sfp0: signal is "true";
-  attribute mark_debug of gmii_tx_en_sfp0: signal is "true";  
-  attribute mark_debug of gmii_tx_er_sfp0: signal is "true"; 
+--  attribute mark_debug : string;  
+--  attribute mark_debug of gmii_rxd_sfp0: signal is "true";
+--  attribute mark_debug of gmii_rx_dv_sfp0: signal is "true";  
+--  attribute mark_debug of gmii_rx_er_sfp0: signal is "true";
+--  attribute mark_debug of gmii_txd_sfp0: signal is "true";
+--  attribute mark_debug of gmii_tx_en_sfp0: signal is "true";  
+--  attribute mark_debug of gmii_tx_er_sfp0: signal is "true"; 
   
-  attribute mark_debug of gmii_rxd_sfp1: signal is "true";
-  attribute mark_debug of gmii_rx_dv_sfp1: signal is "true";  
-  attribute mark_debug of gmii_rx_er_sfp1: signal is "true";
-  attribute mark_debug of gmii_txd_sfp1: signal is "true";
-  attribute mark_debug of gmii_tx_en_sfp1: signal is "true";  
-  attribute mark_debug of gmii_tx_er_sfp1: signal is "true";   
+--  attribute mark_debug of gmii_rxd_sfp1: signal is "true";
+--  attribute mark_debug of gmii_rx_dv_sfp1: signal is "true";  
+--  attribute mark_debug of gmii_rx_er_sfp1: signal is "true";
+--  attribute mark_debug of gmii_txd_sfp1: signal is "true";
+--  attribute mark_debug of gmii_tx_en_sfp1: signal is "true";  
+--  attribute mark_debug of gmii_tx_er_sfp1: signal is "true";   
   
   
-  attribute mark_debug of status_vector_sfp0: signal is "true";
-  attribute mark_debug of status_vector_sfp1: signal is "true"; 
-  attribute mark_debug of an_interrupt_sfp0: signal is "true";
-  attribute mark_debug of an_interrupt_sfp1: signal is "true";  
-  attribute mark_debug of resetdone: signal is "true";  
-  attribute mark_debug of got_fofb_pkt_sfp0: signal is "true";
-  attribute mark_debug of got_fofb_pkt_sfp1: signal is "true";
+--  attribute mark_debug of status_vector_sfp0: signal is "true";
+--  attribute mark_debug of status_vector_sfp1: signal is "true"; 
+--  attribute mark_debug of an_interrupt_sfp0: signal is "true";
+--  attribute mark_debug of an_interrupt_sfp1: signal is "true";  
+--  attribute mark_debug of resetdone: signal is "true";  
+--  attribute mark_debug of got_fofb_pkt_sfp0: signal is "true";
+--  attribute mark_debug of got_fofb_pkt_sfp1: signal is "true";
 
 
 -- Stimulus array: 78 bytes matching the case statement
@@ -221,9 +221,9 @@ phy_sfp0_rx :  gige_pcs_pma_rx
     independent_clock_bufg => clk,  
     pma_reset_out => pma_reset,
     resetdone => resetdone,  
-    gmii_txd => gmii_txd_sfp0,
-    gmii_tx_en => gmii_tx_en_sfp0,
-    gmii_tx_er => gmii_tx_er_sfp0,
+    gmii_txd => 8d"0", --gmii_txd_sfp0,
+    gmii_tx_en => '0', --gmii_tx_en_sfp0,
+    gmii_tx_er => '0', --gmii_tx_er_sfp0,
     gmii_rxd => gmii_rxd_sfp0_syn,
     gmii_rx_dv => gmii_rx_dv_sfp0_syn,
     gmii_rx_er => gmii_rx_er_sfp0_syn,

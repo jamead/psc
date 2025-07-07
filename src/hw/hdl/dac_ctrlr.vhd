@@ -26,6 +26,7 @@ entity dac_ctrlr is
     clk                  : in std_logic; 
     reset                : in std_logic; 
     tenkhz_trig          : in std_logic;
+    fofb_data            : in t_fofb_data;
     dac_cntrl            : in t_dac_cntrl;
     dac_stat             : out t_dac_stat;
     sync    		     : out std_logic_vector(1 downto 0); 

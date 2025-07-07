@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <arpa/inet.h>
 #include <unistd.h>
 
@@ -8,12 +9,12 @@
 #define PACKET_MAX_SIZE 1024
 
 typedef struct {
-    uint8_t address;
-    uint16_t setpoint;
+    uint16_t address;
+    float setpoint;
 } FastSetpoint;
 
-int send_fast_udp_packet(const char *ip, int port, uint8_t protocol_id, uint8_t command,
-                         uint16_t nonce, FastSetpoint *pairs, int pair_count) {
+int send_fast_udp_packet(const char *ip, int port, uint16_t protocol_id, uint16_t command,
+                         uint64_t nonce, FastSetpoint *pairs, int pair_count) {
     int sockfd;
     struct sockaddr_in server_addr;
     uint8_t buffer[PACKET_MAX_SIZE];
@@ -24,16 +25,37 @@ int send_fast_udp_packet(const char *ip, int port, uint8_t protocol_id, uint8_t 
         return -1;
     }
 
-    // Build packet
-    buffer[offset++] = protocol_id;
-    buffer[offset++] = command;
-    buffer[offset++] = (nonce >> 8) & 0xFF;
-    buffer[offset++] = nonce & 0xFF;
+    // Add protocol ID (2 bytes, big endian)
+    buffer[offset++] = (protocol_id >> 8) & 0xFF;
+    buffer[offset++] = protocol_id & 0xFF;
 
+    // Add command (2 bytes, big endian)
+    buffer[offset++] = (command >> 8) & 0xFF;
+    buffer[offset++] = command & 0xFF;
+
+    // Add 8-byte nonce (big endian)
+    for (int i = 7; i >= 0; --i) {
+        buffer[offset++] = (nonce >> (i * 8)) & 0xFF;
+    }
+
+    // Add each address/setpoint pair
     for (int i = 0; i < pair_count; ++i) {
-        buffer[offset++] = pairs[i].address;
-        buffer[offset++] = (pairs[i].setpoint >> 8) & 0xFF;  // MSB
-        buffer[offset++] = pairs[i].setpoint & 0xFF;         // LSB
+        // Address (2 bytes, big endian)
+        buffer[offset++] = (pairs[i].address >> 8) & 0xFF;
+        buffer[offset++] = pairs[i].address & 0xFF;
+
+        // Setpoint (4 bytes, IEEE-754 float)
+        union {
+            float f;
+            uint8_t bytes[4];
+        } float_conv;
+        float_conv.f = pairs[i].setpoint;
+
+        // Add float in big-endian
+        buffer[offset++] = float_conv.bytes[3];
+        buffer[offset++] = float_conv.bytes[2];
+        buffer[offset++] = float_conv.bytes[1];
+        buffer[offset++] = float_conv.bytes[0];
     }
 
     // Create UDP socket
@@ -65,13 +87,15 @@ int main() {
     const char *target_ip = "10.0.142.100";
     int target_port = 12345;
 
-    uint8_t protocol_id = 0x01;
-    uint8_t command = 0x10;
-    uint16_t nonce = 0xABCD;
+    uint16_t protocol_id = 0x7631;
+    uint16_t command = 0x0010;
+    uint64_t nonce = 0x00000000BA5EBA11ULL;
 
     FastSetpoint pairs[] = {
-        { .address = 0x01, .setpoint = 0x1234 },
-        { .address = 0x02, .setpoint = 0x5678 }
+        { .address = 0x0, .setpoint = 1.23451f },
+        { .address = 0x1, .setpoint = 5.67892f },
+        { .address = 0x2, .setpoint = 7.234567f },
+        { .address = 0x3, .setpoint = 8.678912f },    
     };
 
     int pair_count = sizeof(pairs) / sizeof(pairs[0]);
@@ -84,3 +108,4 @@ int main() {
 
     return 0;
 }
+

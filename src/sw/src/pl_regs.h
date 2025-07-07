@@ -93,8 +93,8 @@
 #define FAULTS_LAT_REG           0xFC      // Latched Faults
 #define AVEMODE_REG              0x100     // Average mode for 10Hz data
 #define SMOOTH_PHASEINC_REG      0x104     // Phase Increment for Infinity Smooth Ramp
-#define FOFB_ADDR_REG            0x120     // FOFB Address
-#define FOFB_SETPT_REG           0x124     // Read back of Set Point received from FOFB link
+#define FOFB_FASTADDR_REG        0x120     // FOFB Address
+#define FOFB_DACSETPT_REG        0x124     // Read back of Set Point received from FOFB link
 
 
 

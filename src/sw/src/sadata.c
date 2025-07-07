@@ -88,9 +88,13 @@ void sadata_push(void *unused)
         sadata.git_shasum = Xil_In32(XPAR_M_AXI_BASEADDR + PRJ_SHASUM);
         //xil_printf("Git : %x\r\n",sadata.git_shasum);
 
-
         sadata.evr_ts_s =  Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_S_REG);
         sadata.evr_ts_ns = Xil_In32(XPAR_M_AXI_BASEADDR + EVR_TS_NS_REG);
+
+        sadata.fofb_pktsrcvd = Xil_In32(XPAR_M_AXI_BASEADDR + FOFB_PACKETS_RCVD_REG);
+        sadata.fofb_command = Xil_In32(XPAR_M_AXI_BASEADDR + FOFB_COMMAND_REG);
+        sadata.fofb_nonce = Xil_In32(XPAR_M_AXI_BASEADDR + FOFB_NONCE_REG);
+
 
         for (chan=0; chan<4; chan++) {
            base = XPAR_M_AXI_BASEADDR + (chan + 1) * CHBASEADDR;
@@ -171,6 +175,7 @@ void sadata_push(void *unused)
            sadata.ps[chan].sf_regulator = scalefactors[chan].regulator;
            sadata.ps[chan].sf_error = scalefactors[chan].error;
 
+           sadata.ps[chan].fofb_dacsetpt = ((MsgUnion){ .u = Xil_In32(base + FOFB_DACSETPT_REG) }).f;
         }
 
 

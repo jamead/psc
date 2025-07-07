@@ -22,6 +22,8 @@
 #define EVR_1HZ_EVENTNUM_MSG   28
 #define EVR_10HZ_EVENTNUM_MSG  32
 #define EVR_10KHZ_EVENTNUM_MSG 36
+#define FOFB_IPADDR_MSG        50
+
 
 #define DAC_OPMODE_MSG       100
 #define DAC_SETPT_MSG        104
@@ -80,6 +82,10 @@
 #define SF_SPARE_MSG         316
 #define SF_REGULATOR_MSG     320
 #define SF_ERROR_MSG         324
+
+#define FOFB_FASTADDR_MSG    330
+
+
 
 #define AVE_MODE_MSG         350
 #define WRITE_QSPI_MSG       400

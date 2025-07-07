@@ -273,6 +273,7 @@ write_dacs: entity work.dac_ctrlr
     clk => pl_clk0,  
     reset => pl_reset, 
     tenkhz_trig => tenkhz_trig,
+    fofb_data => fofb_data,
     dac_cntrl => dac_cntrl,
     dac_stat => dac_stat,  	
     sync => stpt_dac_sync,  
