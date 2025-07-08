@@ -13,15 +13,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="707.563 ns"></ZoomEndTime>
-      <Cursor1Time time="1,000.000 ns"></Cursor1Time>
+      <ZoomStartTime time="8.098669 us"></ZoomStartTime>
+      <ZoomEndTime time="29.000990 us"></ZoomEndTime>
+      <Cursor1Time time="25.517269 us"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="192"></NameColumnWidth>
-      <ValueColumnWidth column_width="125"></ValueColumnWidth>
+      <ValueColumnWidth column_width="101"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="20" />
+   <WVObjectSize size="37" />
    <wave_markers>
       <marker label="" time="16554550" />
    </wave_markers>
@@ -77,14 +77,6 @@
       <obj_property name="ElementShortName">fofb_rx_dv</obj_property>
       <obj_property name="ObjectShortName">fofb_rx_dv</obj_property>
    </wvobject>
-   <wvobject type="array" fp_name="/fofb_top_tb/uut/fofb_txd">
-      <obj_property name="ElementShortName">fofb_txd[7:0]</obj_property>
-      <obj_property name="ObjectShortName">fofb_txd[7:0]</obj_property>
-   </wvobject>
-   <wvobject type="logic" fp_name="/fofb_top_tb/uut/fofb_tx_en">
-      <obj_property name="ElementShortName">fofb_tx_en</obj_property>
-      <obj_property name="ObjectShortName">fofb_tx_en</obj_property>
-   </wvobject>
    <wvobject type="array" fp_name="/fofb_top_tb/fofb_params.ipaddr">
       <obj_property name="ElementShortName">.ipaddr[31:0]</obj_property>
       <obj_property name="ObjectShortName">.ipaddr[31:0]</obj_property>
@@ -104,5 +96,96 @@
    <wvobject type="array" fp_name="/fofb_top_tb/uut/fofb_rxd_dly">
       <obj_property name="ElementShortName">fofb_rxd_dly[7:0]</obj_property>
       <obj_property name="ObjectShortName">fofb_rxd_dly[7:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fofb_top_tb/uut/fofb_stat">
+      <obj_property name="ElementShortName">fofb_stat</obj_property>
+      <obj_property name="ObjectShortName">fofb_stat</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fofb_top_tb/uut/fofb_data">
+      <obj_property name="ElementShortName">fofb_data</obj_property>
+      <obj_property name="ObjectShortName">fofb_data</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/uut/fofb_new">
+      <obj_property name="ElementShortName">fofb_new</obj_property>
+      <obj_property name="ObjectShortName">fofb_new</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider334" type="divider">
+      <obj_property name="label">clk cross</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/uut/pl_clk0">
+      <obj_property name="ElementShortName">pl_clk0</obj_property>
+      <obj_property name="ObjectShortName">pl_clk0</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/uut/fofb_clk">
+      <obj_property name="ElementShortName">fofb_clk</obj_property>
+      <obj_property name="ObjectShortName">fofb_clk</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/uut/ps1/fofb_new">
+      <obj_property name="ElementShortName">fofb_new</obj_property>
+      <obj_property name="ObjectShortName">fofb_new</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fofb_top_tb/uut/ps1/scale_factor">
+      <obj_property name="ElementShortName">scale_factor[31:0]</obj_property>
+      <obj_property name="ObjectShortName">scale_factor[31:0]</obj_property>
+      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="radix_realType">FLOATINGPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">24</obj_property>
+      <obj_property name="radix_otherWidth">8</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fofb_top_tb/uut/ps1/fofb_setpt_flt">
+      <obj_property name="ElementShortName">fofb_setpt_flt[31:0]</obj_property>
+      <obj_property name="ObjectShortName">fofb_setpt_flt[31:0]</obj_property>
+      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="radix_realType">FLOATINGPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">24</obj_property>
+      <obj_property name="radix_otherWidth">8</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fofb_top_tb/uut/ps1/setpt_scaled">
+      <obj_property name="ElementShortName">setpt_scaled[31:0]</obj_property>
+      <obj_property name="ObjectShortName">setpt_scaled[31:0]</obj_property>
+      <obj_property name="Radix">REALRADIX</obj_property>
+      <obj_property name="radix_realType">FLOATINGPOINTRADIX</obj_property>
+      <obj_property name="radix_fractionWidth">24</obj_property>
+      <obj_property name="radix_otherWidth">8</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fofb_top_tb/uut/ps1/setptout_fp">
+      <obj_property name="ElementShortName">setptout_fp[23:0]</obj_property>
+      <obj_property name="ObjectShortName">setptout_fp[23:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/uut/ps1/fofb_data_toggle">
+      <obj_property name="ElementShortName">fofb_data_toggle</obj_property>
+      <obj_property name="ObjectShortName">fofb_data_toggle</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/uut/ps1/data_toggle_meta">
+      <obj_property name="ElementShortName">data_toggle_meta</obj_property>
+      <obj_property name="ObjectShortName">data_toggle_meta</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/uut/ps1/data_toggle_sync1">
+      <obj_property name="ElementShortName">data_toggle_sync1</obj_property>
+      <obj_property name="ObjectShortName">data_toggle_sync1</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/uut/ps1/data_toggle_sync2">
+      <obj_property name="ElementShortName">data_toggle_sync2</obj_property>
+      <obj_property name="ObjectShortName">data_toggle_sync2</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/uut/ps1/data_toggle_prev">
+      <obj_property name="ElementShortName">data_toggle_prev</obj_property>
+      <obj_property name="ObjectShortName">data_toggle_prev</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fofb_top_tb/uut/ps1/setpt">
+      <obj_property name="ElementShortName">setpt[19:0]</obj_property>
+      <obj_property name="ObjectShortName">setpt[19:0]</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="/fofb_top_tb/uut/ps1/fofb_setpt">
+      <obj_property name="ElementShortName">fofb_setpt[19:0]</obj_property>
+      <obj_property name="ObjectShortName">fofb_setpt[19:0]</obj_property>
+   </wvobject>
+   <wvobject type="logic" fp_name="/fofb_top_tb/uut/ps1/data_rdy">
+      <obj_property name="ElementShortName">data_rdy</obj_property>
+      <obj_property name="ObjectShortName">data_rdy</obj_property>
    </wvobject>
 </wave_config>

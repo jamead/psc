@@ -137,9 +137,9 @@ architecture behv of fofb_phy is
     x"00", x"01",                                   -- readback_cmd
     x"01", x"02", x"03", x"04", x"05", x"06", x"07", x"08", -- nonce
     x"0A", x"0B",                                   -- fast_addr1
-    x"11", x"12", x"13", x"14",                     -- setpoint1
-    x"1A", x"1B",                                   -- fast_addr2
-    x"21", x"22", x"23", x"24",                     -- setpoint2
+    x"3F", x"00", x"00", x"00",                     -- setpoint1
+    x"0A", x"0B",                                   -- fast_addr2
+    x"40", x"a0", x"00", x"00",                     -- setpoint2
     x"2A", x"2B",                                   -- fast_addr3
     x"31", x"32", x"33", x"34",                     -- setpoint3
     x"3A", x"3B",                                   -- fast_addr4

@@ -283,20 +283,30 @@ type t_fofb_params is record
   ps1_addr             : std_logic_vector(15 downto 0);
   ps2_addr             : std_logic_vector(15 downto 0);
   ps3_addr             : std_logic_vector(15 downto 0);
-  ps4_addr             : std_logic_vector(15 downto 0);   
+  ps4_addr             : std_logic_vector(15 downto 0);
+  ps1_scalefactor      : std_logic_vector(31 downto 0);
+  ps2_scalefactor      : std_logic_vector(31 downto 0);  
+  ps3_scalefactor      : std_logic_vector(31 downto 0);
+  ps4_scalefactor      : std_logic_vector(31 downto 0);    
 end record;
 
 
-type t_fofb_data is record
+type t_fofb_stat is record
   packets_rcvd         : std_logic_vector(31 downto 0);
   command              : std_logic_vector(31 downto 0);
   nonce                : std_logic_vector(31 downto 0); 
-  ps1_setpt            : std_logic_vector(31 downto 0);
-  ps2_setpt            : std_logic_vector(31 downto 0);
-  ps3_setpt            : std_logic_vector(31 downto 0);
-  ps4_setpt            : std_logic_vector(31 downto 0);
+  ps1_setpt_flt        : std_logic_vector(31 downto 0);
+  ps2_setpt_flt        : std_logic_vector(31 downto 0);
+  ps3_setpt_flt        : std_logic_vector(31 downto 0);
+  ps4_setpt_flt        : std_logic_vector(31 downto 0); 
 end record;
 
+type t_fofb_data is record
+  ps1_setpt            : signed(19 downto 0);
+  ps2_setpt            : signed(19 downto 0);
+  ps3_setpt            : signed(19 downto 0);
+  ps4_setpt            : signed(19 downto 0);  
+end record;
 
 
 

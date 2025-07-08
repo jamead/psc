@@ -166,6 +166,7 @@ architecture behv of top is
    signal dig_stat              : t_dig_stat;
    
    signal fofb_params           : t_fofb_params;
+   signal fofb_stat             : t_fofb_stat;
    signal fofb_data             : t_fofb_data;
    
    signal accum_done            : std_logic_vector(3 downto 0);
@@ -218,11 +219,9 @@ pl_reset <= not pl_resetn(0);
 
 
 
-
-
 fofb: entity work.fofb_top
   port map(
-    clk => pl_clk0,
+    pl_clk0 => pl_clk0,
     reset => pl_reset,
     gtrefclk_p => gtx_gige_refclk_p,
     gtrefclk_n => gtx_gige_refclk_n,   
@@ -231,6 +230,7 @@ fofb: entity work.fofb_top
     txp => gtx_gige_tx_p,
     txn => gtx_gige_tx_n,
     fofb_params => fofb_params,
+    fofb_stat => fofb_stat,
 	fofb_data => fofb_data 
 );
   
@@ -381,7 +381,7 @@ ps_regs: entity work.ps_io
     fault_params => fault_params,
     fault_stat => fault_stat,
     fofb_params => fofb_params,
-	fofb_data => fofb_data,
+	fofb_stat => fofb_stat,
     ioc_access_led => ioc_access_led,
     tenhz_datasend_led => tenhz_datasend_led               
   );

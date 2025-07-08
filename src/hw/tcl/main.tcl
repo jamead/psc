@@ -25,6 +25,7 @@ proc setSources {} {
   lappend Sources {"../hdl/fofb_top_tb.vhd" "VHDL 2008"}
   lappend Sources {"../hdl/fofb_top.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/fofb_phy.vhd" "VHDL 2008"} 
+  lappend Sources {"../hdl/fofb_flt2fix.vhd" "VHDL 2008"}   
   lappend Sources {"../hdl/fofb_udp_rx.vhd" "VHDL 2008"} 
 
   lappend Sources {"../hdl/dcct_adc_module.vhd" "VHDL 2008"} 
@@ -105,6 +106,8 @@ proc doOnCreate {} {
   source ${TclPath}/gige_pcs_pma_tx.tcl
   source ${TclPath}/gige_pcs_pma_rx.tcl
   source ${TclPath}/shift_ram.tcl
+  source ${TclPath}/float_to_fix.tcl
+  source ${TclPath}/fp_mult.tcl
 
   addSources "Sources" 
   

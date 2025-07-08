@@ -1,33 +1,8 @@
-----------------------------------------------------------------------------------
--- Company: BNL
--- Engineer: Thomas Chiesa
--- 
--- Create Date: 
--- Design Name: 
--- Module Name: udp_rx
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: This is a state machine that handles the UDP reception.  It takes the bytes from the TEMAC
--- and registers each byte as it is received. 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library ieee;
 use ieee.std_logic_1164.all; 
 use ieee.numeric_std.all;
 use work.psc_pkg.all;
 
-
-
---  Entity Declaration
 
 entity udp_rx is
   port (
@@ -36,15 +11,13 @@ entity udp_rx is
     fofb_params         : in t_fofb_params;
     rx_data_in	      	: in  std_logic_vector(7 downto 0); 
     rx_dv			    : in  std_logic;                                      	              
-    rx_done             : out std_logic;
     fofb_packet         : out std_logic;
-    fofb_data           : out t_fofb_data
+    rx_done             : out std_logic := '0';
+    fofb_stat           : out t_fofb_stat
 
   );
 end udp_rx;
 
-
---  Architecture Body
 
 architecture udp_rx_arch OF udp_rx is
     type state_type is (IDLE, RX_PREAMBLE, RX_HEADER, RX_ADDRHI, RX_ADDRLO, 
@@ -70,33 +43,11 @@ architecture udp_rx_arch OF udp_rx is
      attribute mark_debug : string;  
      attribute mark_debug of framebytenum: signal is "true";
      attribute mark_debug of state: signal is "true";  
-     attribute mark_debug of rx_done: signal is "true";
      attribute mark_debug of udp_pkt_buf_rx: signal is "true";
      
      
 
 begin
-
-
-
-
-
---process (fofb_clk)
---begin 
---  if (rising_edge(fofb_clk)) then
---    if (reset = '1') then
---       got_fofb_pkt_sfp0 <= '0';
---    else
---       if ((udp_rx_done_sfp0 = '1') and (rx_udp_pkt_out_sfp0.ip_dest_addr = fofb_params.ipaddr)) then
---         got_fofb_pkt_sfp0 <= '1';
---       else
---         got_fofb_pkt_sfp0 <= '0';
---       end if;
---     end if;
---   end if;
---end process;   
-
-
 
 
 
@@ -109,13 +60,13 @@ process(fofb_clk)
 		databytenum <= 0;
 		rx_done <= '0'; 
 		rx_dv_prev <= '0';
-		fofb_data.ps1_setpt <= 32d"0";
-		fofb_data.ps2_setpt <= 32d"0";
-		fofb_data.ps3_setpt <= 32d"0";
-		fofb_data.ps4_setpt <= 32d"0";
-		fofb_data.packets_rcvd <= 32d"0";
-		fofb_data.command <= 32d"0";
-		fofb_data.nonce <= 32d"0";
+		fofb_stat.ps1_setpt_flt <= 32d"0";
+		fofb_stat.ps2_setpt_flt <= 32d"0";
+		fofb_stat.ps3_setpt_flt <= 32d"0";
+		fofb_stat.ps4_setpt_flt <= 32d"0";
+		fofb_stat.packets_rcvd <= 32d"0";
+		fofb_stat.command <= 32d"0";
+		fofb_stat.nonce <= 32d"0";
 		fofb_packet <= '0';
 		
      else 
@@ -199,9 +150,9 @@ process(fofb_clk)
                                    if (udp_pkt_buf_rx.ip_dest_addr = fofb_params.ipaddr) and 
                                       (udp_pkt_buf_rx.fast_ps_id = x"7631") then
                                       state <= rx_addrhi;
-                                      fofb_data.nonce <= udp_pkt_buf_rx.nonce(31 downto 8) & rx_data_in;
-                                      fofb_data.command <= 16d"0" & udp_pkt_buf_rx.readback_cmd;
-                                      fofb_data.packets_rcvd <= std_logic_vector(unsigned(fofb_data.packets_rcvd) + 1);
+                                      fofb_stat.nonce <= udp_pkt_buf_rx.nonce(31 downto 8) & rx_data_in;
+                                      fofb_stat.command <= 16d"0" & udp_pkt_buf_rx.readback_cmd;
+                                      fofb_stat.packets_rcvd <= std_logic_vector(unsigned(fofb_stat.packets_rcvd) + 1);
                                       fofb_packet <= '1';
                                    else 
                                       state <= idle;
@@ -240,16 +191,16 @@ process(fofb_clk)
              when RX_SETPT_BYTE0 =>
                     setpt(7 downto 0) <= rx_data_in;
                     if (fast_addr = fofb_params.ps1_addr) then
-                       fofb_data.ps1_setpt <= setpt(31 downto 8) & rx_data_in;
+                       fofb_stat.ps1_setpt_flt <= setpt(31 downto 8) & rx_data_in;
                     end if;
                     if (fast_addr = fofb_params.ps2_addr) then
-                       fofb_data.ps2_setpt <= setpt(31 downto 8) & rx_data_in;
+                       fofb_stat.ps2_setpt_flt <= setpt(31 downto 8) & rx_data_in;
                     end if;     
                     if (fast_addr = fofb_params.ps3_addr) then
-                       fofb_data.ps3_setpt <= setpt(31 downto 8) & rx_data_in;
+                       fofb_stat.ps3_setpt_flt <= setpt(31 downto 8) & rx_data_in;
                     end if;                   
                     if (fast_addr = fofb_params.ps4_addr) then
-                       fofb_data.ps4_setpt <= setpt(31 downto 8) & rx_data_in;
+                       fofb_stat.ps4_setpt_flt <= setpt(31 downto 8) & rx_data_in;
                     end if;                    
                                    
                     if (rx_dv = '0') then

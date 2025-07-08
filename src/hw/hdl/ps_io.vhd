@@ -40,7 +40,7 @@ entity ps_io is
 	fault_stat         : in t_fault_stat;
 	fault_params       : out t_fault_params;
 	fofb_params        : out t_fofb_params;
-	fofb_data          : in t_fofb_data;
+	fofb_stat          : in t_fofb_stat;
 	ioc_access_led     : out std_logic;
 	tenhz_datasend_led : out std_logic
      
@@ -115,9 +115,9 @@ fofb_params.ps2_addr <= reg_o.ps2_fofb_addr.val.data;
 fofb_params.ps3_addr <= reg_o.ps3_fofb_addr.val.data;
 fofb_params.ps4_addr <= reg_o.ps4_fofb_addr.val.data;
 
-reg_i.fofb_packetsrcvd.val.data <= fofb_data.packets_rcvd;
-reg_i.fofb_command.val.data <= fofb_data.command;
-reg_i.fofb_nonce.val.data <= fofb_data.nonce;
+reg_i.fofb_packetsrcvd.val.data <= fofb_stat.packets_rcvd;
+reg_i.fofb_command.val.data <= fofb_stat.command;
+reg_i.fofb_nonce.val.data <= fofb_stat.nonce;
 
 
 
@@ -212,7 +212,8 @@ reg_i.ps1_faults_lat.val.data <= fault_stat.ps1.lat;
 
 --FOFB
 fofb_params.ps1_addr <= reg_o.ps1_fofb_addr.val.data;
-reg_i.ps1_fofb_setpt.val.data <= fofb_data.ps1_setpt;
+fofb_params.ps1_scalefactor <= reg_o.ps1_fofb_scalefactor.val.data;
+reg_i.ps1_fofb_setpt.val.data <= fofb_stat.ps1_setpt_flt;
 
 
 
@@ -309,7 +310,8 @@ reg_i.ps2_faults_lat.val.data <= fault_stat.ps2.lat;
 
 --FOFB
 fofb_params.ps2_addr <= reg_o.ps2_fofb_addr.val.data;
-reg_i.ps2_fofb_setpt.val.data <= fofb_data.ps2_setpt;
+fofb_params.ps2_scalefactor <= reg_o.ps2_fofb_scalefactor.val.data;
+reg_i.ps2_fofb_setpt.val.data <= fofb_stat.ps2_setpt_flt;
 
 
 
@@ -402,7 +404,8 @@ reg_i.ps3_faults_lat.val.data <= fault_stat.ps3.lat;
 
 --FOFB
 fofb_params.ps3_addr <= reg_o.ps3_fofb_addr.val.data;
-reg_i.ps3_fofb_setpt.val.data <= fofb_data.ps3_setpt;
+fofb_params.ps3_scalefactor <= reg_o.ps3_fofb_scalefactor.val.data;
+reg_i.ps3_fofb_setpt.val.data <= fofb_stat.ps3_setpt_flt;
 
 
 
@@ -501,7 +504,8 @@ reg_i.ps4_faults_lat.val.data <= fault_stat.ps4.lat;
 
 --FOFB
 fofb_params.ps4_addr <= reg_o.ps4_fofb_addr.val.data;
-reg_i.ps4_fofb_setpt.val.data <= fofb_data.ps4_setpt;
+fofb_params.ps4_scalefactor <= reg_o.ps4_fofb_scalefactor.val.data;
+reg_i.ps4_fofb_setpt.val.data <= fofb_stat.ps4_setpt_flt;
 
 
 

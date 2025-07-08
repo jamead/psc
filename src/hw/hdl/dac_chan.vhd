@@ -26,6 +26,7 @@ entity dac_chan is
     clk                  : in std_logic; 
     reset                : in std_logic; 
     tenkhz_trig          : in std_logic;
+    fofb_dac_setpt       : in signed(19 downto 0);
     dac_numbits_sel      : in std_logic;
     dac_cntrl            : in t_dac_cntrl_onech;
     dac_stat             : out t_dac_stat_onech;
@@ -48,7 +49,7 @@ type state_type is (IDLE, RUN_RAMP, UPDATE_DAC);
   signal dac_rden         : std_logic;
   signal ramp_dac_setpt   : signed(19 downto 0);
   signal smooth_dac_setpt : signed(19 downto 0);
-  signal fofb_dac_setpt   : signed(19 downto 0);
+  --signal fofb_dac_setpt   : signed(19 downto 0);
   signal dac_setpt_raw    : signed(19 downto 0);
   signal dac_setpt        : signed(19 downto 0);
   signal ramp_active      : std_logic;

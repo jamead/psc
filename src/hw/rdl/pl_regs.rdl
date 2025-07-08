@@ -688,7 +688,12 @@ reg {
     field {} val[32];
   } ps1_fofb_setpt @0x324;  
   
-
+reg {
+    desc="PS1 FOFB Scalefactor";
+    default sw = rw;
+    default hw = r;    
+    field {} val[32];
+  } ps1_fofb_scalefactor @0x328;  
 
 
 /**** Channel 2 *****/
@@ -1194,6 +1199,15 @@ reg {
     default hw = w;    
     field {} val[32];
   } ps2_fofb_setpt @0x524; 
+
+reg {
+    desc="PS2 FOFB Scalefactor";
+    default sw = rw;
+    default hw = r;    
+    field {} val[32];
+  } ps2_fofb_scalefactor @0x528;
+
+
 
 
 /**** Channel 3 *****/
@@ -1703,7 +1717,12 @@ reg {
     field {} val[32];
   } ps3_fofb_setpt @0x724; 
 
-
+reg {
+    desc="PS3 FOFB Scalefactor";
+    default sw = rw;
+    default hw = r;    
+    field {} val[32];
+  } ps3_fofb_scalefactor @0x728;
 
 
 
@@ -2215,6 +2234,13 @@ reg {
     default hw = w;    
     field {} val[32];
   } ps4_fofb_setpt @0x924; 
+
+reg {
+    desc="PS4 FOFB Scalefactor";
+    default sw = rw;
+    default hw = r;    
+    field {} val[32];
+  } ps4_fofb_scalefactor @0x928;
 
 
 

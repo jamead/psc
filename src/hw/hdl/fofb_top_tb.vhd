@@ -1,7 +1,7 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
-use work.psc_pkg.all; -- assumes t_fofb_params and t_fofb_stat are defined here
+use work.psc_pkg.all; 
 
 entity fofb_top_tb is
 end entity;
@@ -17,7 +17,7 @@ architecture tb of fofb_top_tb is
   signal rxn         : std_logic_vector(1 downto 0);
   signal txp         : std_logic_vector(1 downto 0);
   signal txn         : std_logic_vector(1 downto 0);
-  signal fofb_params : t_fofb_params := (others => (others => '0')); -- adjust initialization as needed
+  signal fofb_params : t_fofb_params := (others => (others => '0')); 
   signal fofb_data   : t_fofb_data;
 
   signal configuration_vector  : std_logic_vector(4 downto 0);
@@ -42,6 +42,8 @@ architecture tb of fofb_top_tb is
   signal gmii_txd              : std_logic_vector(7 downto 0);  
   signal gmii_tx_en            : std_logic;                     
   signal gmii_tx_er            : std_logic;   
+  
+  signal scale_factor          : std_logic_vector(31 downto 0); 
 
 
 -- Stimulus array: 78 bytes matching the case statement
@@ -68,7 +70,7 @@ architecture tb of fofb_top_tb is
     x"BE", x"EF",                                   -- readback_cmd
     x"01", x"02", x"03", x"04", x"05", x"06", x"07", x"08", -- nonce
     x"0A", x"0B",                                   -- fast_addr1
-    x"11", x"12", x"13", x"14",                     -- setpoint1
+    x"3F", x"A0", x"00", x"00",                     -- setpoint1
     x"1A", x"1B",                                   -- fast_addr2
     x"21", x"22", x"23", x"24",                     -- setpoint2
     x"2A", x"2B",                                   -- fast_addr3
@@ -92,7 +94,11 @@ an_restart_config    <= '0';
 signal_detect <= '1';
 
 fofb_params.ipaddr <= x"10001202";
-fofb_params.ps1_addr <= x"2a2b";
+fofb_params.ps1_addr <= x"0a0b";
+
+--scale_factor <= x"474350cd";  --50000.8
+fofb_params.ps1_scalefactor <= x"474ccccd";  --52428.8
+--scale_factor <= x"3FA66666";  --1.3
 
 
 
@@ -195,7 +201,7 @@ end process;
       SIM_MODE => 1
     )
     port map (
-      clk         => clk,
+      pl_clk0     => clk,
       reset       => reset,
       gtrefclk_p  => gtrefclk_p,
       gtrefclk_n  => gtrefclk_n,
