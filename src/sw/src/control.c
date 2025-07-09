@@ -197,28 +197,43 @@ void Calc_WriteSmooth(u32 chan, s32 new_setpt) {
 //In Jump Mode the dac_setpt comes from the register
 void Set_dacOpmode(u32 chan, s32 new_opmode) {
 	u32 dac_mode;
+	MsgUnion data;
 
 	dac_mode = Xil_In32(XPAR_M_AXI_BASEADDR + DAC_OPMODE_REG + chan*CHBASEADDR);
 
 
-	//if changing from smooth/ramp to jump mode first ramp to 0
-	if (((dac_mode == SMOOTH) || (dac_mode == RAMP)) && new_opmode == JUMP) {
-		xil_printf("Switching from Smooth/Ramp to Jump Mode\r\n");
+	//if changing to jump mode first ramp to 0?
+	if (new_opmode == JUMP) {
+		xil_printf("Switching to Jump Mode\r\n");
 		//Set the DAC to 0
-		Calc_WriteSmooth(chan, 0);
-		//Set the Jump set point to 0 too
-		Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_SETPT_REG  + chan*CHBASEADDR, 0);
+		//Calc_WriteSmooth(chan, 0);
+		//Set the Jump set point to 0
+		//Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_SETPT_REG  + chan*CHBASEADDR, 0);
 		//Now safe to switch to jumpmode
 		Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_OPMODE_REG + chan*CHBASEADDR, JUMP);
 	}
 
+	//if changing to fofb mode first update the FOFB scalefactor register
+	if (new_opmode == FOFB) {
+		xil_printf("Switching to FOFB Mode\r\n");
+   	    data.f = scalefactors[chan-1].dac_dccts;
+   	    //update FOFB scalefactor register, used to convert the FOFB input
+   	    //which is in Amps to DAC bits.
+   	    data.f = 1 / data.f * CONVVOLTSTODACBITS;
+   	    printf("FOFB ScaleFactor = %f\r\n",data.f);
+   	    Xil_Out32(XPAR_M_AXI_BASEADDR + FOFB_SCALEFACTOR_REG + chan*CHBASEADDR, data.u);
+		//Now safe to switch to FOFB
+		Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_OPMODE_REG + chan*CHBASEADDR, FOFB);
+	}
+
+
 	//if changing from jump mode to smooth/ramp mode
-	if ((dac_mode == JUMP) && ((new_opmode == SMOOTH) || (new_opmode == RAMP))) {
-		xil_printf("Switching from Jump to Smooth/Ramp Mode\r\n");
+	if (((new_opmode == SMOOTH) || (new_opmode == RAMP))) {
+		xil_printf("Switching to Smooth/Ramp Mode\r\n");
 		// Smooth the DAC to 0
-		Calc_WriteSmooth(chan, 0);
+		//Calc_WriteSmooth(chan, 0);
 		//Set the Jump set point to 0 too
-		Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_SETPT_REG + chan*CHBASEADDR, 0);
+		//Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_SETPT_REG + chan*CHBASEADDR, 0);
 		//Now safe to switch to smooth/ramp
 		Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_OPMODE_REG + chan*CHBASEADDR, new_opmode);
 	}
@@ -261,8 +276,9 @@ void Set_dac(u32 chan, float new_setpt_amps) {
 
 	else if (dac_mode == JUMP) {
         xil_printf("In Jump Mode\r\n");
-		  Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_SETPT_REG + chan*CHBASEADDR, new_setpt);
+		Xil_Out32(XPAR_M_AXI_BASEADDR + DAC_SETPT_REG + chan*CHBASEADDR, new_setpt);
 	}
+
 }
 
 
@@ -644,6 +660,10 @@ void chan_settings(u32 chan, void *msg, u32 msglen) {
         case SF_DAC_DCCTS_MSG:
        	    printf("Setting ScaleFactor DAC DCCT's Amps/Volt CH%d :   Value=%f\r\n",(int)chan,data.f);
        	    scalefactors[chan-1].dac_dccts = data.f;
+       	    //update FOFB scalefactor register
+       	    data.f = 1 / data.f * CONVVOLTSTODACBITS;
+       	    printf("FOFB ScaleFactor = %f\r\n",data.f);
+       	    Xil_Out32(XPAR_M_AXI_BASEADDR + FOFB_SCALEFACTOR_REG + chan*CHBASEADDR, data.u);
        	    break;
 
         case SF_VOUT_MSG:

@@ -24,6 +24,7 @@ entity ramptable_ramp is
     clk                  : in std_logic; 
     reset                : in std_logic; 
     tenkhz_trig          : in std_logic;
+    mode                 : in std_logic_vector(1 downto 0);
     dac_cntrl            : in t_dac_cntrl_onech;
     ramp_active          : out std_logic;
     ramp_dac_setpt       : out signed(19 downto 0)
@@ -89,7 +90,8 @@ begin
       case(state) is 
         when IDLE => 
           ramp_active <= '0';
-          if dac_cntrl.ramprun = '1' then 
+          --run the ramp when ramprun is asserted and dac_opmode is RAMP
+          if (dac_cntrl.ramprun = '1') and (mode = "01") then 
             state <= run_ramp;
             dac_rdaddr <= 16d"0";
             dac_rden <= '1';

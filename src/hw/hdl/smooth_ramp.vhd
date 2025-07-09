@@ -7,6 +7,7 @@ entity smooth_ramp is
     clk           : in std_logic;
     reset         : in std_logic;
     tenkhz_trig   : in std_logic;
+    mode          : in std_logic_vector(1 downto 0);
     cur_setpt     : in signed(19 downto 0);
     new_setpt     : in signed(19 downto 0);
     phase_inc     : in signed(31 downto 0);
@@ -117,7 +118,8 @@ process(clk)
             new_setpt_prev <= new_setpt;
             last_point <= '0';
             smooth_active <= '0';
-            if (new_setpt_prev /= new_setpt) then
+            -- run if dac setpt changes and dac_opmode is Smooth
+            if (new_setpt_prev /= new_setpt) and (mode = "00")then
               old_setpt <= cur_setpt;
               state <= run_ramp;
               phase <= NEG_PI; 

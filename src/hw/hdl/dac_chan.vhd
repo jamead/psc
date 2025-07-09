@@ -68,7 +68,9 @@ type state_type is (IDLE, RUN_RAMP, UPDATE_DAC);
    attribute mark_debug of smooth_dac_setpt: signal is "true";
    attribute mark_debug of dac_setpt: signal is "true";
    attribute mark_debug of ramp_active: signal is "true";  
-   attribute mark_debug of smooth_active: signal is "true";   
+   attribute mark_debug of smooth_active: signal is "true";  
+   attribute mark_debug of dac_setpt_raw: signal is "true";
+   attribute mark_debug of fofb_dac_setpt: signal is "true"; 
 
 
 begin
@@ -112,6 +114,7 @@ rampmode: entity work.ramptable_ramp
     clk => clk,  
     reset => reset,  
     tenkhz_trig => tenkhz_trig, 
+    mode => dac_cntrl.mode,    
     dac_cntrl => dac_cntrl, 
     ramp_active => ramp_active,
     ramp_dac_setpt => ramp_dac_setpt
@@ -124,6 +127,7 @@ smoothmode: entity work.smooth_ramp
     clk => clk,
     reset => reset,
     tenkhz_trig => tenkhz_trig,
+    mode => dac_cntrl.mode,
     cur_setpt => dac_setpt, 
     new_setpt => dac_cntrl.setpoint, 
     phase_inc => dac_cntrl.smooth_phaseinc, 
