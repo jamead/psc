@@ -7,23 +7,22 @@ use ieee.numeric_std.all;
 
 
 entity tenkhz_mux is
-    port(
-		  clk        		: in std_logic; 
-		  reset      		: in std_logic; 
+  port(
+    clk        		: in std_logic; 
+    reset      		: in std_logic; 
 		  
-		  disable_fldbck    : in std_logic;  					--Used to disable the pulse muxing, if disable = '1' then 
-																--the system will not foldback to internal clock if external clock is lost
-																
-		  switch     		: in std_logic;  					--When switch = '1' then the EVR 10 kHz pulse is used, when '0' the FOFB 10 kHz pulse is used. 
+    disable_fldbck  : in std_logic;  					--Used to disable the pulse muxing, if disable = '1' then 
+																--the system will not foldback to internal clock if external clock is lost															
+    switch     		: in std_logic;  					--When switch = '1' then the EVR 10 kHz pulse is used, when '0' the FOFB 10 kHz pulse is used. 
 							
-		  evr_10khz  		: in std_logic;  					--EVR 10 kHz pulse input 
-		  fofb_10khz 		: in std_logic;  					--FOFB 10 kHz pulse input
+    evr_10khz  		: in std_logic;  					--EVR 10 kHz pulse input 
+    fofb_10khz      : in std_logic;  					--FOFB 10 kHz pulse input
 		  
-		  timer      		: in std_logic_vector(15 downto 0); --Timer input for designating how many pulses can be lost before switching
+    timer           : in std_logic_vector(15 downto 0); --Timer input for designating how many pulses can be lost before switching
 		  
-		  --Outputs
-		  flt_10kHz    		: out std_logic; 					--fault signal produce when an external 10 kHz pulse is lost temporarily
-		  O          		: out std_logic                     --pulse output from Mux
+    --Outputs
+    flt_10kHz       : out std_logic; 					--fault signal produce when an external 10 kHz pulse is lost temporarily
+    O          		: out std_logic                     --pulse output from Mux
     ); 
 
 end entity; 
@@ -96,7 +95,7 @@ begin
 	end process; 
 	
 
---generate internal 10KHz
+--generate internal 10KHz from pl_clk0 (100MHz)
 process (clk)
   begin
     if rising_edge(clk) then 

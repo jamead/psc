@@ -314,7 +314,7 @@ accum: entity work.adc_accumulator_top
 );
     
     
---select the source for ADC converts
+--select the source for 10KHz events
 clk_src: entity work.tenkhz_mux 
   port map(
     clk => pl_clk0,  

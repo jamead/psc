@@ -57,6 +57,9 @@ proc setSources {} {
   lappend Sources {"../hdl/average.vhd" "VHDL 2008"} 
   
   lappend Sources {"../hdl/tenkhz_mux.vhd" "VHDL 2008"}  
+  lappend Sources {"../hdl/eventMarkerWatchdog.vhd" "VHDL 2008"} 
+  lappend Sources {"../hdl/evr_sroc.vhd" "VHDL 2008"}  
+  lappend Sources {"../hdl/evr_sroc_tb.vhd" "VHDL 2008"} 
   
   lappend Sources {"../hdl/adc2ddr.vhd" "VHDL 2008"}  
   
@@ -125,6 +128,9 @@ proc doOnCreate {} {
   
   set_property used_in_synthesis false [get_files ${::fwfwk::SrcPath}/hw/hdl/fofb_top_tb.vhd] 
   set_property used_in_simulation true [get_files ${::fwfwk::SrcPath}/hw/hdl/fofb_top_tb.vhd] 
+  
+  set_property used_in_synthesis false [get_files ${::fwfwk::SrcPath}/hw/hdl/evr_sroc_tb.vhd] 
+  set_property used_in_simulation true [get_files ${::fwfwk::SrcPath}/hw/hdl/evr_sroc_tb.vhd]   
   
   #get error message, open manually in tcl window for now.
   #open_wave_config "${::fwfwk::SrcPath}/hw/sim/top_tb_behav.wcfg"

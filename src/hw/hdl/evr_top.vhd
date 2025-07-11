@@ -114,74 +114,72 @@ evr_refclk : IBUFDS_GTE2
 
 
 
-rxoutclk_bufg0_i : BUFG
-        port map ( I => rxout_clk, O => rxusr_clk);  
+rxoutclk_bufg0_i : BUFG   port map ( I => rxout_clk, O => rxusr_clk);  
 
 
 
- process(sys_clk)
-    begin
-        if rising_edge(sys_clk) then
-            inj_trig_sync(0) <= inj_trig;
-            inj_trig_sync(1) <= inj_trig_sync(0); 
-            evr_trigs.inj_trig <= inj_trig_sync(1);
-            onehz_trig_sync(0) <= onehz_trig;
-            onehz_trig_sync(1) <= onehz_trig_sync(0); 
-            evr_trigs.onehz_trig <= onehz_trig_sync(1);           
-            
-        end if;
-    end process;
-
-
-
-
-
-process (sys_rst, rxusr_clk)
-begin
-   if (sys_rst = '1') then
-      tbt_trig_stretch <= '0';
-      tbt_cnt <= "000";
-      state <= idle;
-   elsif (rxusr_clk'event and rxusr_clk = '1') then
-      case state is 
-         when IDLE => 
-             if (tbt_trig_i = '1') then
-                tbt_trig_stretch <= '1';
-                state <= active;
-             end if;
-
-         when ACTIVE =>
-             tbt_cnt <= tbt_cnt + 1;
-             if (tbt_cnt = "111") then
-                tbt_trig_stretch <= '0';
-                tbt_cnt <= "000";
-                state <= idle;
-             end if;         
-          end case;          
-      end if;
-end process;
-
-
-
---tbt_trig <= datastream(0);
---datastream 0 toggles high/low for half of Frev.  Filter on the first low to high transition
---and ignore the rest
-process (sys_rst, rxusr_clk)
-begin
-    if (sys_rst = '1') then
-       tbt_trig_i <= '0';
-    elsif (rxusr_clk'event and rxusr_clk = '1') then
-       prev_datastream(0) <= datastream(0);
-       prev_datastream(1) <= prev_datastream(0);
-       prev_datastream(2) <= prev_datastream(1);
-       prev_datastream(3) <= prev_datastream(2);
-       if (prev_datastream = "0001") then
-           tbt_trig_i <= '1';
-       else
-           tbt_trig_i <= '0';
-       end if;
+process(sys_clk)
+  begin
+    if rising_edge(sys_clk) then
+        inj_trig_sync(0) <= inj_trig;
+        inj_trig_sync(1) <= inj_trig_sync(0); 
+        evr_trigs.inj_trig <= inj_trig_sync(1);
+        onehz_trig_sync(0) <= onehz_trig;
+        onehz_trig_sync(1) <= onehz_trig_sync(0); 
+        evr_trigs.onehz_trig <= onehz_trig_sync(1);               
     end if;
 end process;
+
+
+
+
+
+--process (sys_rst, rxusr_clk)
+--begin
+--   if (sys_rst = '1') then
+--      tbt_trig_stretch <= '0';
+--      tbt_cnt <= "000";
+--      state <= idle;
+--   elsif (rxusr_clk'event and rxusr_clk = '1') then
+--      case state is 
+--         when IDLE => 
+--             if (tbt_trig_i = '1') then
+--                tbt_trig_stretch <= '1';
+--                state <= active;
+--             end if;
+
+--         when ACTIVE =>
+--             tbt_cnt <= tbt_cnt + 1;
+--             if (tbt_cnt = "111") then
+--                tbt_trig_stretch <= '0';
+--                tbt_cnt <= "000";
+--                state <= idle;
+--             end if;         
+--          end case;          
+--      end if;
+--end process;
+
+
+
+----tbt_trig <= datastream(0);
+----datastream 0 toggles high/low for half of Frev.  Filter on the first low to high transition
+----and ignore the rest
+--process (sys_rst, rxusr_clk)
+--begin
+--    if (sys_rst = '1') then
+--       tbt_trig_i <= '0';
+--    elsif (rxusr_clk'event and rxusr_clk = '1') then
+--       prev_datastream(0) <= datastream(0);
+--       prev_datastream(1) <= prev_datastream(0);
+--       prev_datastream(2) <= prev_datastream(1);
+--       prev_datastream(3) <= prev_datastream(2);
+--       if (prev_datastream = "0001") then
+--           tbt_trig_i <= '1';
+--       else
+--           tbt_trig_i <= '0';
+--       end if;
+--    end if;
+--end process;
 
 
 --datastream <= gt0_rxdata(7 downto 0);
@@ -189,6 +187,8 @@ end process;
 --switch byte locations of datastream and eventstream  9-20-18
 datastream <= rxdata(15 downto 8);
 eventstream <= rxdata(7 downto 0);
+
+
 
 
 evr_trigs.ts_s <= timestamp(63 downto 32);
