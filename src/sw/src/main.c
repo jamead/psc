@@ -19,6 +19,8 @@
 #include "pl_regs.h"
 #include "qspi_flash.h"
 
+#include "xuartps.h"
+
 psc_key* the_server;
 
 struct ScaleFactorType scalefactors[4];
@@ -173,8 +175,20 @@ int main(void) {
 	u32 i, base;
 
 
+	//XUartPs uart;
+	//XUartPs_Config *config;
+	//config = XUartPs_LookupConfig(XPAR_XUARTPS_0_DEVICE_ID);
+	//XUartPs_CfgInitialize(&uart, config, config->BaseAddress);
+	// Set to 9600 baud
+	//XUartPs_SetBaudRate(&uart, 9600);
+
+
     xil_printf("Power Supply Controller\r\n");
     print_firmware_version();
+
+
+
+
 
 	init_i2c();
 	prog_si570();
