@@ -1,28 +1,23 @@
-Library UNISIM;
-use UNISIM.vcomponents.all;
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all; 
 
+library work;
+use work.psc_pkg.ALL;
+
 
 entity tenkhz_mux is
   port(
-    clk        		: in std_logic; 
+    pl_clk    		: in std_logic; 
+    evr_clk         : in std_logic;
     reset      		: in std_logic; 
-		  
-    disable_fldbck  : in std_logic;  					--Used to disable the pulse muxing, if disable = '1' then 
-																--the system will not foldback to internal clock if external clock is lost															
-    switch     		: in std_logic;  					--When switch = '1' then the EVR 10 kHz pulse is used, when '0' the FOFB 10 kHz pulse is used. 
-							
-    evr_10khz  		: in std_logic;  					--EVR 10 kHz pulse input 
-    fofb_10khz      : in std_logic;  					--FOFB 10 kHz pulse input
-		  
-    timer           : in std_logic_vector(15 downto 0); --Timer input for designating how many pulses can be lost before switching
-		  
+		  				
+    evr_trigs       : in t_evr_trigs;
+    evr_params      : in t_evr_params;
+
     --Outputs
-    flt_10kHz       : out std_logic; 					--fault signal produce when an external 10 kHz pulse is lost temporarily
-    O          		: out std_logic                     --pulse output from Mux
+    flt_10kHz       : out std_logic; 		--fault signal produce when an external 10 kHz pulse is lost temporarily
+    tenkhz_out      : out std_logic         --pulse output from Mux
     ); 
 
 end entity; 
@@ -39,66 +34,76 @@ architecture arch of tenkhz_mux is
 	signal cnt_int : std_logic_vector(15 downto 0);
 	signal internal_10khz : std_logic;
 	signal trig : std_logic;
+	signal evr_onehz_trig: std_logic;
+	
+	signal tenkhz_cnt    : unsigned(31 downto 0);
+	signal tenkhz_cnt_hi : unsigned(31 downto 0);
+	signal tenkhz_cnt_lo : unsigned(31 downto 0);
+	
+	signal alsu_evr_10khz : std_logic;
+	signal alsu_evr_10khz_pulse : std_logic;
+	signal alsu_evr_10khz_pulse_prev : std_logic;	
+	signal nsls_evr_10khz : std_logic;
+
+	
+	
 	
 begin 
 
-    --Fault Signal 
-	flt_10kHz <= sel; 
-	
-	--Rising Edge Detection of EVR trigger 
-	process(clk) 
-	begin 
-		if rising_edge(clk) then 
-			if reset = '1' then 
-				dff0 <= '0'; 
-				dff1 <= '0'; 
-				evr_pulse <= '0'; 
-			else 
-				dff0 <= evr_10khz; 
-				dff1 <= dff0; 
-				evr_pulse <= dff1 and not dff0; 
-			end if;         
-		end if; 
-	end process;  
-	
-	--Switch for using either evr or fofb rx pulse for 10 kHz 
-	process(clk) 
-	begin 
-		if rising_edge(clk) then 
-			if switch = '1' then 
-				external_10kHz <= evr_pulse; 
-			else 
-				external_10khz <= fofb_10kHz; 
-		    end if; 
-		end if; 
-	end process; 
-	
-	
-	--Counter for detecting if designated pulse is present
-	process(clk) 
-	begin 
-		if rising_edge(clk) then 
-			if reset = '1' then 
-				clock_count <= 0; 
-				sel <= '0'; 
-			else 
-				if external_10kHz = '1' then	
-					clock_count <= 0; 
-					sel <= '0'; 
-				elsif clock_count = to_integer(unsigned(timer)) then 
-					sel <= '1'; 
-				else 
-					clock_count <= clock_count +1; 
-				end if; 
-			end if; 	
-		end if; 
-	end process; 
+--Fault Signal 
+flt_10kHz <= sel; 
+
+tenkhz_cnt_lo <= shift_right(unsigned(evr_params.tenkhz_cnt) + 1, 1) - 1;
+tenkhz_cnt_hi <= shift_right(unsigned(evr_params.tenkhz_cnt), 1) - 1;
+
+
 	
 
+---- rising edge detection of EVR trigger 
+--	process(clk) 
+--	begin 
+--		if rising_edge(clk) then 
+--			if reset = '1' then 
+--				dff0 <= '0'; 
+--				dff1 <= '0'; 
+--				evr_pulse <= '0'; 
+--			else 
+--				dff0 <= evr_trigs.fa_trig; 
+--				dff1 <= dff0; 
+--				evr_10khz_pulse <= dff1 and not dff0; 
+--			end if;         
+--		end if; 
+--	end process;  
+	
+
+	
+	
+--	--Counter for detecting if designated pulse is present
+--	process(clk) 
+--	begin 
+--		if rising_edge(clk) then 
+--			if reset = '1' then 
+--				clock_count <= 0; 
+--				sel <= '0'; 
+--			else 
+--				if external_10kHz = '1' then	
+--					clock_count <= 0; 
+--					sel <= '0'; 
+--				elsif clock_count = to_integer(unsigned(timer)) then 
+--					sel <= '1'; 
+--				else 
+--					clock_count <= clock_count +1; 
+--				end if; 
+--			end if; 	
+--		end if; 
+--	end process; 
+	
+
+
 --generate internal 10KHz from pl_clk0 (100MHz)
-process (clk)
+process (pl_clk)
   begin
-    if rising_edge(clk) then 
+    if rising_edge(pl_clk) then 
       if reset = '1' then    
         cnt_int <= 16d"0";
         internal_10khz <= '0';
@@ -115,21 +120,76 @@ process (clk)
  end process;
 
 
-O <= internal_10khz; --10 kHz clk generated internally	
---	--MUX for switching between different 10 kHz clocks 
---	process(clk)
---	begin 
---		if rising_edge(clk) then 
---			if disable_fldbck = '1' then        --disables the fold back to the internal clock
---				O <= external_10khz; 
---			else 
---				if sel = '0' then 
---					O <= external_10khz; --external 10 kHz clock either from FOFB or EVR
---				else 
---					O <= internal_10khz; --10 kHz clk generated internally
---				end if;  
---			end if; 
---		end if; 
---	end process; 
+
+-- for nsls2 evr has 10khz event
+sync_10KHz_trig: entity work.pulse_sync
+  port map(
+    pl_clk => pl_clk,
+    pulse_in => evr_trigs.fa_trig,
+    pulse_out => nsls_evr_10khz
+);
+
+-- for alsu, evr only has 1Hz event
+sync_1Hz_trig: entity work.pulse_sync
+  port map(
+    pl_clk => pl_clk,
+    pulse_in => evr_trigs.onehz_trig,
+    pulse_out => evr_onehz_trig
+);
+
+
+--generate a 10KHz pulse from 1Hz evr trigger (for ALS-U)
+process(pl_clk)
+  begin
+    if rising_edge(pl_clk) then
+      if reset = '1' then
+        tenkhz_cnt <= tenkhz_cnt_hi;
+        alsu_evr_10khz_pulse <= '1';
+      else
+        if evr_onehz_trig = '1' then
+          tenkhz_cnt <= tenkhz_cnt_hi;
+          alsu_evr_10khz_pulse <= '1';
+        elsif (tenkhz_cnt = to_unsigned(0, tenkhz_cnt'length)) then
+          alsu_evr_10khz_pulse <= not(alsu_evr_10khz_pulse);
+		  if (alsu_evr_10khz_pulse = '1') then
+            tenkhz_cnt <= tenkhz_cnt_lo;
+          else
+            tenkhz_cnt <= tenkhz_cnt_hi;
+          end if;
+        else
+          tenkhz_cnt <= tenkhz_cnt -1;
+	    end if;
+      end if;
+    end if;
+end process;
+
+
+--generate a 10KHz single clock trigger from 
+process(pl_clk)
+  begin
+    if rising_edge(pl_clk) then
+      alsu_evr_10khz_pulse_prev <= alsu_evr_10khz_pulse;
+      if (alsu_evr_10khz_pulse_prev = '0' and alsu_evr_10khz_pulse = '1') then
+        alsu_evr_10khz <= '1';
+      else
+        alsu_evr_10khz <= '0';
+      end if;
+    end if;
+end process;
+
+
+
+--	mux for switching between different 10 kHz clocks 
+process(pl_clk)
+  begin 
+    if rising_edge(pl_clk) then 
+      if evr_params.tenkhz_src = "00" then 
+        tenkhz_out <= internal_10khz; 
+      else 
+        tenkhz_out <= nsls_evr_10khz; 
+      end if;  
+    end if; 
+end process; 
+
 
 end architecture; 

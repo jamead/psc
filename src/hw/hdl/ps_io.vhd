@@ -100,6 +100,7 @@ evr_params.pm_eventno <= reg_o.evr_pm_eventno.val.data;
 evr_params.onehz_eventno <= reg_o.evr_1hz_eventno.val.data;
 evr_params.tenhz_eventno <= reg_o.evr_10hz_eventno.val.data;
 evr_params.tenkhz_eventno <= reg_o.evr_10khz_eventno.val.data;
+evr_params.nco_stepsize <= reg_o.nco_stepsize.val.data;
 
 mon_params.numchan_sel <= reg_o.num_chans.val.data(0);
 

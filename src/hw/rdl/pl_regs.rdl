@@ -71,7 +71,14 @@ reg {
     default hw = r;
     field {} val[1];
   } polarity @0x14;
-
+  
+  
+reg {
+    desc="StepSize for 10KHz NCO ";
+    default sw = rw;
+    default hw = r;
+    field {} val[32];
+  } nco_stepsize @0x18;
 
 
 reg {

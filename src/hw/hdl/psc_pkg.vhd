@@ -88,6 +88,7 @@ end record;
 
 type t_evr_params is record
    reset          : std_logic_vector(7 downto 0);
+   nco_stepsize   : std_logic_vector(31 downto 0);
    inj_eventno    : std_logic_vector(7 downto 0);
    pm_eventno     : std_logic_vector(7 downto 0);
    onehz_eventno  : std_logic_vector(7 downto 0);

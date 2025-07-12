@@ -6,7 +6,7 @@ use IEEE.numeric_std.ALL;
 library UNISIM;
 use UNISIM.VCOMPONENTS.ALL;
  
- library desyrdl;
+library desyrdl;
 use desyrdl.common.all;
 use desyrdl.pkg_pl_regs.all;
 
@@ -178,9 +178,6 @@ architecture behv of top is
    signal ioc_access_led        : std_logic;
    signal tenhz_datasend_led    : std_logic;
 
-
-
-
    signal sa_trig_stretch       : std_logic;
    
   
@@ -314,18 +311,15 @@ accum: entity work.adc_accumulator_top
 );
     
     
---select the source for 10KHz events
-clk_src: entity work.tenkhz_mux 
+--generates the 10KHz triggers
+sroc_gen: entity work.tenkhz_gen 
   port map(
     clk => pl_clk0,  
     reset => pl_reset,  	  
-    disable_fldbck => '0', 	
-    switch => '1',  
-    evr_10khz => '0', 
-    fofb_10khz => '0',
-	timer => 16d"10",
+    evr_trigs => evr_trigs,
+    evr_params => evr_params,
     flt_10kHz => open,  
-	O => tenkhz_trig
+	tenkhz_trig => tenkhz_trig
     ); 
     
     
