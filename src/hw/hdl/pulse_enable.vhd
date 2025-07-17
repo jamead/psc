@@ -63,6 +63,7 @@ begin
                     end if;     
                 else 
                     pulse_counter <= (others => '0'); 
+                    ch_enable <= '0';
                 end if;             
             else 
                 pulse_counter <= (others => '0'); 
