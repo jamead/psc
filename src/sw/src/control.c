@@ -35,6 +35,7 @@ void set_fpleds(u32 msgVal)  {
 
 
 void soft_trig(u32 msgVal) {
+	xil_printf("Soft Trig Value: %d\r\n",msgVal);
 	Xil_Out32(XPAR_M_AXI_BASEADDR + SOFTTRIG, msgVal);
 	Xil_Out32(XPAR_M_AXI_BASEADDR + SOFTTRIG, 0);
 
@@ -196,10 +197,10 @@ void Calc_WriteSmooth(u32 chan, s32 new_setpt) {
 //In Smooth/Ramp mode the dac_setpt comes from the DPRAM
 //In Jump Mode the dac_setpt comes from the register
 void Set_dacOpmode(u32 chan, s32 new_opmode) {
-	u32 dac_mode;
+	//u32 dac_mode;
 	MsgUnion data;
 
-	dac_mode = Xil_In32(XPAR_M_AXI_BASEADDR + DAC_OPMODE_REG + chan*CHBASEADDR);
+	//dac_mode = Xil_In32(XPAR_M_AXI_BASEADDR + DAC_OPMODE_REG + chan*CHBASEADDR);
 
 
 	//if changing to jump mode first ramp to 0?
@@ -696,6 +697,11 @@ void chan_settings(u32 chan, void *msg, u32 msglen) {
         	Xil_Out32(XPAR_M_AXI_BASEADDR + FOFB_FASTADDR_REG + chan*CHBASEADDR, data.u);
         	break;
 
+		case USR_TRIG_MSG:
+			xil_printf("User Trigger Message CH%d:   Value=%d\r\n",chan,data.u);
+			if (data.u == 1)
+			   soft_trig(1 << (chan - 1));
+            break;
 
         case AVE_MODE_MSG:
         	xil_printf("Setting 10Hz Average Mode CH%d : Value=%d\r\n",chan,data.u);

@@ -73,7 +73,7 @@ void sadata_push(void *unused)
 
 
     while(1) {
-        vTaskDelay(pdMS_TO_TICKS(100));
+        vTaskDelay(pdMS_TO_TICKS(95));
 
         //blink front panel LED
         Xil_Out32(XPAR_M_AXI_BASEADDR + TENHZ_DATASEND_REG, 1);
@@ -95,6 +95,9 @@ void sadata_push(void *unused)
         sadata.fofb_command = Xil_In32(XPAR_M_AXI_BASEADDR + FOFB_COMMAND_REG);
         sadata.fofb_nonce = Xil_In32(XPAR_M_AXI_BASEADDR + FOFB_NONCE_REG);
 
+        sadata.tenkhz_freq = 1 / ((float)Xil_In32(XPAR_M_AXI_BASEADDR + TENKHZ_FREQ_REG) * 10e-9);
+        sadata.onehz_freq  = 1 / ((float)Xil_In32(XPAR_M_AXI_BASEADDR + ONEHZ_FREQ_REG) * 10e-9);
+        //printf("TenKHz Freq: %f\n",sadata.tenkhz_freq);
 
         for (chan=0; chan<4; chan++) {
            base = XPAR_M_AXI_BASEADDR + (chan + 1) * CHBASEADDR;

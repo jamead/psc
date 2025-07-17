@@ -50,7 +50,8 @@ begin
     -- Initialize step_size for 9961.722 Hz output
     -- step_size = floor(2^32 * 9961.722 / 100000000) = 4279969272
     --step_size <= to_unsigned(4279969272, 32);
-    step_size <= x"FF07A008"; 
+    --step_size <= 32d"427853"; 
+    step_size <= x"1976B6F4";
 
     -- Release reset after 100 ns
     wait for 100 ns;

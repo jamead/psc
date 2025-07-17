@@ -56,6 +56,7 @@ component cordic_sine
   signal last_point          : std_logic;
   signal diff_setpt          : signed(23 downto 0);
   signal new_setpt_prev      : signed(19 downto 0);
+  signal new_setpt_lat       : signed(19 downto 0);
   signal old_setpt           : signed(19 downto 0);
 
   
@@ -121,6 +122,7 @@ process(clk)
             -- run if dac setpt changes and dac_opmode is Smooth
             if (new_setpt_prev /= new_setpt) and (mode = "00")then
               old_setpt <= cur_setpt;
+              new_setpt_lat <= new_setpt;
               state <= run_ramp;
               phase <= NEG_PI; 
               phase_out <= NEG_PI(31 downto 8);
@@ -138,8 +140,8 @@ process(clk)
               raised_cos <= ((resize(cos,24) + to_signed(2**20,24)) srl 1);
                    
               --ramp with difference
-              diff_setpt <= resize(new_setpt,24) - resize(old_setpt,24);
-              rampout_wdiff <= (resize(new_setpt,24) - resize(old_setpt,24)) * raised_cos;      
+              diff_setpt <= resize(new_setpt_lat,24) - resize(old_setpt,24);
+              rampout_wdiff <= (resize(new_setpt_lat,24) - resize(old_setpt,24)) * raised_cos;      
               
               --resize back to 24 bits and add old_setpt 
               rampout_fp <= old_setpt + rampout_wdiff(43 downto 20);

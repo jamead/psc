@@ -12,7 +12,7 @@
 
 
 
-// Control Message Offsets
+// Global Control Message Offsets
 #define SOFT_TRIG_MSG          0
 #define TEST_TRIG_MSG          4
 #define FP_LED_MSG             8
@@ -24,7 +24,7 @@
 #define EVR_10KHZ_EVENTNUM_MSG 36
 #define FOFB_IPADDR_MSG        50
 
-
+// Channel Control Message Offsets
 #define DAC_OPMODE_MSG       100
 #define DAC_SETPT_MSG        104
 #define DAC_RUNRAMP_MSG      108
@@ -85,7 +85,7 @@
 
 #define FOFB_FASTADDR_MSG    330
 
-
+#define USR_TRIG_MSG         340
 
 #define AVE_MODE_MSG         350
 #define WRITE_QSPI_MSG       400

@@ -138,7 +138,8 @@ architecture behv of top is
    signal gtx_gige_refclk       : std_logic;
    signal gtx_evr_refclk        : std_logic;
    
-   signal tenkhz_trig           : std_logic;   
+   signal tenkhz_trig           : std_logic; 
+   signal tenkhz_freq           : std_logic_vector(31 downto 0);  
    signal adc_done              : std_logic;   
  
    signal m_axi4_m2s            : t_pl_regs_m2s;
@@ -202,7 +203,7 @@ fp_leds(0) <= tenhz_datasend_led;
 fp_leds(2) <= ioc_access_led;  
 fp_leds(4) <= evr_trigs.onehz_trig_stretch; 
 fp_leds(6) <= rcom(0) or rcom(4) or rcom(8) or rcom(12);  
-fp_leds(1) <= '0';
+fp_leds(1) <= tenkhz_trig; --'0';
 fp_leds(3) <= '0';
 fp_leds(5) <= '0';
 fp_leds(7) <= '0';
@@ -319,6 +320,7 @@ sroc_gen: entity work.tenkhz_gen
     evr_trigs => evr_trigs,
     evr_params => evr_params,
     flt_10kHz => open,  
+    tenkhz_freq => tenkhz_freq,
 	tenkhz_trig => tenkhz_trig
     ); 
     
@@ -376,6 +378,7 @@ ps_regs: entity work.ps_io
     fault_stat => fault_stat,
     fofb_params => fofb_params,
 	fofb_stat => fofb_stat,
+	tenkhz_freq => tenkhz_freq,
     ioc_access_led => ioc_access_led,
     tenhz_datasend_led => tenhz_datasend_led               
   );

@@ -107,6 +107,7 @@ type t_evr_trigs is record
    inj_trig           : std_logic;
    inj_trig_stretch   : std_logic;  
    pm_trig            : std_logic;
+   onehz_freq         : std_logic_vector(31 downto 0);
    ts_s               : std_logic_vector(31 downto 0);
    ts_ns              : std_logic_vector(31 downto 0);
 end record;  

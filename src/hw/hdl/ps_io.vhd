@@ -41,6 +41,7 @@ entity ps_io is
 	fault_params       : out t_fault_params;
 	fofb_params        : out t_fofb_params;
 	fofb_stat          : in t_fofb_stat;
+	tenkhz_freq        : in std_logic_vector(31 downto 0);
 	ioc_access_led     : out std_logic;
 	tenhz_datasend_led : out std_logic
      
@@ -101,6 +102,8 @@ evr_params.onehz_eventno <= reg_o.evr_1hz_eventno.val.data;
 evr_params.tenhz_eventno <= reg_o.evr_10hz_eventno.val.data;
 evr_params.tenkhz_eventno <= reg_o.evr_10khz_eventno.val.data;
 evr_params.nco_stepsize <= reg_o.nco_stepsize.val.data;
+reg_i.tenkhz_freq.val.data <= tenkhz_freq;
+reg_i.onehz_freq.val.data <= evr_trigs.onehz_freq;
 
 mon_params.numchan_sel <= reg_o.num_chans.val.data(0);
 
@@ -119,6 +122,10 @@ fofb_params.ps4_addr <= reg_o.ps4_fofb_addr.val.data;
 reg_i.fofb_packetsrcvd.val.data <= fofb_stat.packets_rcvd;
 reg_i.fofb_command.val.data <= fofb_stat.command;
 reg_i.fofb_nonce.val.data <= fofb_stat.nonce;
+
+
+--tenkhz_freq
+--onehz_freq
 
 
 

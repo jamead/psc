@@ -10,11 +10,14 @@
 #define NUMCHANS_REG             0xC      // Number of Channels (0=2chan, 1=4chan)
 #define BANDWIDTH_REG            0x10     // Bandwidth (0=Fast, 1=Medium)
 #define POLARITY_REG             0x14     // Polarity (0=Bipolar, 1=Unipolar)
+#define NCO_STEPSIZE_REG         0x18     // Stepsize for NCO to generate the 10KHz trigger
+#define TENKHZ_FREQ_REG          0x1C     // Measurement of frequency of 10KHz pulse from NCO
 #define EVR_INJ_EVENTNUM_REG     0x20     // EVR Injection Event Code (for Shot-to-Shot)
 #define EVR_PM_EVENTNUM_REG      0x24     // EVR Post-Mortem Event Code
 #define EVR_1HZ_EVENTNUM_REG     0x28     // EVR 1Hz Event
 #define EVR_10HZ_EVENTNUM_REG    0x2C     // EVR 10Hz Event
 #define EVR_10KHZ_EVENTNUM_REG   0x30     // EVR 10KHz Event
+#define ONEHZ_FREQ_REG           0x34     // Measurement of 1Hz trigger rate frequency
 #define EVR_TS_S_REG             0X40     // EVR Timestamp (s)
 #define EVR_TS_NS_REG            0X44     // EVR Timestamp (ns)
 #define EVR_RESET_REG            0X48     // EVR Reset

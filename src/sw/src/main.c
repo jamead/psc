@@ -187,7 +187,11 @@ int main(void) {
     print_firmware_version();
 
 
-
+    //Set 10KHz trigger frequency
+    //Step Size = 2^n * fout / fclk
+    //          = 2^32 * 9.961722 KHz / 100MHz
+    //          = 427852.7
+	Xil_Out32(XPAR_M_AXI_BASEADDR + NCO_STEPSIZE_REG, 427853);
 
 
 	init_i2c();
@@ -198,6 +202,7 @@ int main(void) {
 	//EVR reset
     xil_printf("Resetting EVR GTX...\r\n");
 	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET_REG, 0xFF);
+	usleep(100);
 	Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_RESET_REG, 0);
 
 	// Set FOFB IP Address

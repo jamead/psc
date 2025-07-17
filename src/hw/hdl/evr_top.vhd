@@ -66,16 +66,24 @@ architecture behv of evr_top is
    signal inj_trig          : std_logic;
    signal inj_trig_sync     : std_logic_vector(1 downto 0);
    signal onehz_trig        : std_logic;
-   signal onehz_trig_sync   : std_logic_vector(1 downto 0);   
+   signal onehz_trig_sync   : std_logic_vector(2 downto 0);   
+   signal onehz_rate_cnt    : std_logic_vector(31 downto 0);
    
 
 
    --debug signals (connect to ila)
---   attribute mark_debug     : string;
---   attribute mark_debug of eventstream: signal is "true";
---   attribute mark_debug of datastream: signal is "true";
---   attribute mark_debug of evr_trigs: signal is "true";
---   attribute mark_debug of evr_params: signal is "true";
+   attribute mark_debug     : string;
+   attribute mark_debug of eventstream: signal is "true";
+   attribute mark_debug of datastream: signal is "true";
+   attribute mark_debug of evr_trigs: signal is "true";
+   attribute mark_debug of evr_params: signal is "true";
+   attribute mark_debug of onehz_trig: signal is "true";
+   attribute mark_debug of onehz_trig_sync: signal is "true";   
+   
+   attribute mark_debug of onehz_rate_cnt: signal is "true";
+   attribute mark_debug of evr_trigs: signal is "true";
+   attribute mark_debug of evr_params: signal is "true";  
+   
 --   attribute mark_debug of inj_trig: signal is "true";
 --   attribute mark_debug of inj_trig_sync: signal is "true";
    
@@ -126,60 +134,34 @@ process(sys_clk)
         evr_trigs.inj_trig <= inj_trig_sync(1);
         onehz_trig_sync(0) <= onehz_trig;
         onehz_trig_sync(1) <= onehz_trig_sync(0); 
-        evr_trigs.onehz_trig <= onehz_trig_sync(1);               
+        onehz_trig_sync(2) <= onehz_trig_sync(1);
+        --evr_trigs.onehz_trig <= onehz_trig_sync(1);               
     end if;
 end process;
 
 
+--check that 1Hz event is in a valid range, measure frequency
+process(sys_clk)
+  begin
+    if rising_edge(sys_clk) then
+      onehz_rate_cnt <= onehz_rate_cnt + 1;
+      if (onehz_rate_cnt > 200000000) then
+        evr_trigs.onehz_freq <= 32d"0";
+      end if;
+      evr_trigs.onehz_trig <= '0';
+      if (onehz_trig_sync(2) = '0' and onehz_trig_sync(1) = '1') then
+        onehz_rate_cnt <= 32d"0";
+        evr_trigs.onehz_freq <= onehz_rate_cnt;        
+        if (onehz_rate_cnt > 95000000 and onehz_rate_cnt < 150000000) then
+           evr_trigs.onehz_trig <= '1';
+        end if;
+      end if;
+    end if;
+end process;   
+      
 
 
 
---process (sys_rst, rxusr_clk)
---begin
---   if (sys_rst = '1') then
---      tbt_trig_stretch <= '0';
---      tbt_cnt <= "000";
---      state <= idle;
---   elsif (rxusr_clk'event and rxusr_clk = '1') then
---      case state is 
---         when IDLE => 
---             if (tbt_trig_i = '1') then
---                tbt_trig_stretch <= '1';
---                state <= active;
---             end if;
-
---         when ACTIVE =>
---             tbt_cnt <= tbt_cnt + 1;
---             if (tbt_cnt = "111") then
---                tbt_trig_stretch <= '0';
---                tbt_cnt <= "000";
---                state <= idle;
---             end if;         
---          end case;          
---      end if;
---end process;
-
-
-
-----tbt_trig <= datastream(0);
-----datastream 0 toggles high/low for half of Frev.  Filter on the first low to high transition
-----and ignore the rest
---process (sys_rst, rxusr_clk)
---begin
---    if (sys_rst = '1') then
---       tbt_trig_i <= '0';
---    elsif (rxusr_clk'event and rxusr_clk = '1') then
---       prev_datastream(0) <= datastream(0);
---       prev_datastream(1) <= prev_datastream(0);
---       prev_datastream(2) <= prev_datastream(1);
---       prev_datastream(3) <= prev_datastream(2);
---       if (prev_datastream = "0001") then
---           tbt_trig_i <= '1';
---       else
---           tbt_trig_i <= '0';
---       end if;
---    end if;
---end process;
 
 
 --datastream <= gt0_rxdata(7 downto 0);

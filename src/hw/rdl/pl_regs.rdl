@@ -82,6 +82,14 @@ reg {
 
 
 reg {
+    desc="10KHz Frequency";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } tenkhz_freq @0x1C;
+
+
+reg {
     desc="EVR Injection Event Code";
     default sw = rw;
     default hw = r;
@@ -115,6 +123,13 @@ reg {
     default hw = r;
     field {} val[8];
   } evr_10khz_eventno @0x30;
+
+reg {
+    desc="1Hz Frequency";
+    default sw = rw;
+    default hw = w;
+    field {} val[32];
+  } onehz_freq @0x34;
 
 
 reg {
