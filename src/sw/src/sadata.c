@@ -40,7 +40,6 @@ void hton_conv(char *inbuf, int len) {
 
 
 
-
 float ReadAccumSA(u32 reg_addr, u32 ave_mode) {
 
 	s32 raw;
@@ -57,7 +56,7 @@ float ReadAccumSA(u32 reg_addr, u32 ave_mode) {
     else
        averaged = NAN;
 
-   // printf("Raw: %d    Ave%f  \r\n",(int)raw, averaged);
+    //printf("AveMode: %d   Raw: %d    Ave%f  \r\n",(int)ave_mode, (int)raw, averaged);
     return averaged;
 }
 
@@ -102,6 +101,7 @@ void sadata_push(void *unused)
         for (chan=0; chan<4; chan++) {
            base = XPAR_M_AXI_BASEADDR + (chan + 1) * CHBASEADDR;
            ave_mode = Xil_In32(base + AVEMODE_REG);
+           //xil_printf("Chan: %d  Ave Mode: %d\r\n",chan, ave_mode);
 
            sadata.ps[chan].dcct1 = ReadAccumSA(base+DCCT1_REG, ave_mode) * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts;
            sadata.ps[chan].dcct1_offset = (s32)Xil_In32(base + DCCT1_OFFSET_REG) * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts;
@@ -124,6 +124,7 @@ void sadata_push(void *unused)
            sadata.ps[chan].reg = ReadAccumSA(base + REG_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan].regulator;
            sadata.ps[chan].reg_offset = (s32)Xil_In32(base + REG_OFFSET_REG) * CONV16BITSTOVOLTS * scalefactors[chan].regulator;
            sadata.ps[chan].reg_gain = (s32)Xil_In32(base + REG_GAIN_REG) / GAIN20BITFRACT;
+
            sadata.ps[chan].error = ReadAccumSA(base + ERR_REG, ave_mode) * CONV16BITSTOVOLTS * scalefactors[chan].error;
            sadata.ps[chan].error_offset = (s32)Xil_In32(base + ERR_OFFSET_REG) * CONV16BITSTOVOLTS * scalefactors[chan].error;
            sadata.ps[chan].error_gain = (s32)Xil_In32(base + ERR_GAIN_REG) / GAIN20BITFRACT;

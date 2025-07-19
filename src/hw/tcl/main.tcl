@@ -56,8 +56,7 @@ proc setSources {} {
   lappend Sources {"../hdl/adc_accumulator.vhd" "VHDL 2008"} 
   lappend Sources {"../hdl/average.vhd" "VHDL 2008"} 
   
-  lappend Sources {"../hdl/tenkhz_gen.vhd" "VHDL 2008"}  
-  lappend Sources {"../hdl/sync_pulse.vhd" "VHDL 2008"} 
+  lappend Sources {"../hdl/tenkhz_gen.vhd" "VHDL 2008"}   
   lappend Sources {"../hdl/nco_srocgen.vhd" "VHDL 2008"}  
   lappend Sources {"../hdl/nco_srocgen_tb.vhd" "VHDL 2008"} 
   

@@ -151,7 +151,7 @@ void sdcard_netconf(net_config *conf, FIL *fd)
         		printf("This is a Fast Bandwidth PSC\n");
         		Xil_Out32(XPAR_M_AXI_BASEADDR + BANDWIDTH_REG, 0);
         	} else if (strcmp(arg,"slow")==0) {
-        		printf("This is a Medium Bandwidth PSC\n");
+        		printf("This is a Slow Bandwidth PSC\n");
         		Xil_Out32(XPAR_M_AXI_BASEADDR + BANDWIDTH_REG, 1);
         	} else {
         		fprintf(stderr, "Warning: unknown %s %s\n", cmd, arg ? arg : "");

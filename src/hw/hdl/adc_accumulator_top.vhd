@@ -148,7 +148,7 @@ port map(
         start             => start, 
 		
 		--Mode inputs     
-		mode              => dcct_params.ps1.ave_mode,  
+		mode              => dcct_params.ps4.ave_mode,  
 		
 		--DCCT raw inputs
         DCCT1_in          => dcct_adcs.ps4.dcct0,  

@@ -31,6 +31,8 @@ architecture behv of digio_logic is
   attribute mark_debug     : string;
   attribute mark_debug of rcom: signal is "true";
   attribute mark_debug of rsts: signal is "true";
+  attribute mark_debug of ps_on: signal is "true";
+  
 
      
 begin
