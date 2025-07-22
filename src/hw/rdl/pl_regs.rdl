@@ -694,6 +694,13 @@ reg {
     field {} val[32];
   } ps1_dac_smooth_phaseinc @0x304;
 
+reg {
+    desc="PS1 Digital Outputs bit1=On2 Pulse Enable";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps1_digout_on2_pulseenb @0x308; 
+
 
 reg {
     desc="PS1 FOFB Address";
@@ -1207,6 +1214,14 @@ reg {
     default swmod=true;    
     field {} val[32];
   } ps2_dac_smooth_phaseinc @0x504;
+  
+reg {
+    desc="PS2 Digital Outputs bit1=On2 Pulse Enable";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps2_digout_on2_pulseenb @0x508;   
+  
 
 reg {
     desc="PS2 FOFB Address";
@@ -1722,6 +1737,13 @@ reg {
     default swmod=true;    
     field {} val[32];
   } ps3_dac_smooth_phaseinc @0x704;
+
+reg {
+    desc="PS3 Digital Outputs bit1=On2 Pulse Enable";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps3_digout_on2_pulseenb @0x708; 
 
 
 reg {
@@ -2241,7 +2263,12 @@ reg {
     field {} val[32];
   } ps4_dac_smooth_phaseinc @0x904;
 
-
+reg {
+    desc="PS4 Digital Outputs bit1=On2 Pulse Enable";
+    default sw = rw;
+    default hw = r; 
+    field {} val[1];
+  } ps4_digout_on2_pulseenb @0x908; 
 
 reg {
     desc="PS4 FOFB Address";

@@ -172,7 +172,7 @@ void InitSettingsfromQspi() {
 
 int main(void) {
 
-	u32 i, base;
+	u32 i, base, val;
 
 
 	//XUartPs uart;
@@ -192,6 +192,13 @@ int main(void) {
     //          = 2^32 * 9.961722 KHz / 100MHz
     //          = 427852.7
 	Xil_Out32(XPAR_M_AXI_BASEADDR + NCO_STEPSIZE_REG, 427853);
+
+	//Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*1, 0);
+	//val = Xil_In32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*1);
+	//xil_printf("On2 Pulse: %d\r\n",val);
+	//Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*2, 1);
+	//Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*3, 0);
+	//Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*4, 1);
 
 
 	init_i2c();

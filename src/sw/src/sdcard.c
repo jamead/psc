@@ -164,6 +164,12 @@ void sdcard_netconf(net_config *conf, FIL *fd)
          	} else if (strcmp(arg,"unipolar")==0) {
          		printf("This is a Unipolar PSC\n");
          		Xil_Out32(XPAR_M_AXI_BASEADDR + POLARITY_REG, 1);
+         		// temp - enable pulsing for ON2 if unipolar
+         		Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*1, 1);
+         		Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*2, 1);
+         		Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*3, 1);
+         		Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*4, 1);
+
          	} else {
          		fprintf(stderr, "Warning: unknown %s %s\n", cmd, arg ? arg : "");
          	}
