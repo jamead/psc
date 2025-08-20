@@ -6,9 +6,15 @@
 #include "FreeRTOS.h"
 #include "task.h"
 
+#include "pl_regs.h"
+#include "local.h"
+
 
 extern XIicPs IicPsInstance0;			/* Instance of the IIC Device */
 extern XIicPs IicPsInstance1;			/* Instance of the IIC Device */
+
+extern float CONVVOLTSTODACBITS;
+extern float CONVDACBITSTOVOLTS;
 
 #define IIC0_DEVICE_ID    XPAR_XIICPS_0_DEVICE_ID
 #define IIC1_DEVICE_ID    XPAR_XIICPS_1_DEVICE_ID
@@ -208,62 +214,81 @@ void eeprom_dump()
 
 
 
+void ReadHardwareFlavor(void)  {
 
 
-/*
-void i2c_set_port_expander(u32 addr, u32 port)  {
+    u8 rdBuf[8];
+    u8 val;
 
-    u8 buf[3];
-    u32 len=1;
+    i2c_eeprom_readBytes(0, rdBuf, 8);
+    xil_printf("\r\nReading PSC Settings from EEPROM...\r\n");
+    // 2 or 4 channel
+    val = rdBuf[0];
+    if (val == 0) {
+ 		printf("This is a 2 channel PSC\r\n");
+ 		Xil_Out32(XPAR_M_AXI_BASEADDR + NUMCHANS_REG, 0);
+    }
+	else if (val == 1) {
+ 		printf("This is a 4 channel PSC\r\n");
+ 		Xil_Out32(XPAR_M_AXI_BASEADDR + NUMCHANS_REG, 1);
+	}
+	else
+	    xil_printf("Invalid Number of Channel Setting...\r\n");
 
-    buf[0] = port;
-    buf[1] = 0;
-    buf[2] = 0;
+    // Resolution
+	val = rdBuf[1];
+    //Write FPGA register 0=MS, 1=HS
+	Xil_Out32(XPAR_M_AXI_BASEADDR + RESOLUTION_REG, val);
+	if (val == 0) {
+		xil_printf("This is an Medium Resolution (18bit) PSC\r\n");
+        CONVVOLTSTODACBITS = CONVVOLTSTO18BITS;
+        CONVDACBITSTOVOLTS = CONV18BITSTOVOLTS;
+	}
+    else if (val == 1) {
+		xil_printf("This is a High Resolution (20bit) PSC\r\n");
+	    CONVVOLTSTODACBITS = CONVVOLTSTO20BITS;
+	    CONVDACBITSTOVOLTS = CONV20BITSTOVOLTS;
+	}
+    else
+    	xil_printf("Invalid Resolution Setting...\r\n");
 
-	while (XIicPs_BusIsBusy(&IicPsInstance0));
-    XIicPs_MasterSendPolled(&IicPsInstance0, buf, len, addr);
+
+	// Bandwidth
+    val = rdBuf[2];
+	if (val == 0) {
+ 		Xil_Out32(XPAR_M_AXI_BASEADDR + BANDWIDTH_REG, 0);
+        xil_printf("This is a High Bandwidth (Fast) PSC\r\n");
+	}
+	else if (val == 1) {
+		xil_printf("This is a Low Bandwidth (Slow) PSC\r\n");
+		Xil_Out32(XPAR_M_AXI_BASEADDR + BANDWIDTH_REG, 1);
+    }
+	else
+	    xil_printf("Invalid Bandwidth Setting\r\n");
+
+
+	// Polarity
+    val = rdBuf[3];
+    if (val == 0) {
+  		xil_printf("This is a Bipolar PSC\r\n");
+  	    Xil_Out32(XPAR_M_AXI_BASEADDR + POLARITY_REG, 0);
+    }
+    else if (val == 1) {
+        xil_printf("Unipolar\r\n");
+  	    Xil_Out32(XPAR_M_AXI_BASEADDR + POLARITY_REG, 1);
+  		// Enable pulsing for ON2 if unipolar
+  		Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*1, 1);
+  		Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*2, 1);
+  		Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*3, 1);
+  		Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*4, 1);
+    }
+    else
+        xil_printf("Invalid Polarity Setting\r\n");
+
+
+    xil_printf("\r\n\r\n");
 }
-*/
 
-
-
-
-/*
-void i2c_sfp_get_stats(struct SysHealthStatsMsg *p, u8 sfp_slot) {
-
-    u8 addr = 0x51;  //SFP A2 address space
-    u8 buf[10];
-    u32 temp;
-    float tempflt;
-
-    buf[0] = 96;  //offset location
-
-
-	i2c_set_port_expander(I2C_PORTEXP0_ADDR,1);
-	i2c_set_port_expander(I2C_PORTEXP1_ADDR,0);
-	//read 10 bytes starting at address 96 (see data sheet)
-    i2c_write(buf,1,addr);
-    i2c_read(buf,10,addr);
-    temp = (buf[0] << 8) | (buf[1]);
-    p->sfp_temp[0] = (float)temp/256.0;
-    printf("SFP Temp = %f\r\n", p->sfp_temp[sfp_slot]);
-
-    temp = (buf[2] << 8) | (buf[3]);
-    tempflt = (float)temp/10000.0;
-
-    printf("SFP VCC = %f\r\n", tempflt);
-    temp = (buf[4] << 8) | (buf[5]);
-    tempflt = (float)temp/200.0;
-    printf("SFP Tx Laser Bias = %f\r\n", tempflt);
-    temp = (buf[6] << 8) | (buf[7]);
-    tempflt = (float)temp/10000.0;
-    printf("SFP Tx Pwr = %f\r\n", tempflt);
-    temp = (buf[8] << 8) | (buf[9]);
-    tempflt = (float)temp/10000.0;
-    printf("SFP Rx Pwr = %f\r\n", tempflt);
-
-}
-*/
 
 
 

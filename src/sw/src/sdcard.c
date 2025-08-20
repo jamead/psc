@@ -18,8 +18,6 @@
 #include "local.h"
 #include "pl_regs.h"
 
-float CONVVOLTSTODACBITS;
-float CONVDACBITSTOVOLTS;
 
 
 static
@@ -62,24 +60,6 @@ int parse_hex(char in, unsigned char* out)
     }
 }
 
-static
-void mshsSelect(u32 psc_resolution) {
-
-    //Write FPGA register 0=MS, 1=HS
-	Xil_Out32(XPAR_M_AXI_BASEADDR + RESOLUTION_REG, psc_resolution);
-
-	if (psc_resolution == 1) {
-		xil_printf("This is a HS (20bit) PSC\r\n");
-	    CONVVOLTSTODACBITS = CONVVOLTSTO20BITS;
-	    CONVDACBITSTOVOLTS = CONV20BITSTOVOLTS;
-	}
-	else {
-		xil_printf("This is an MS (18bit) PSC\r\n");
-        CONVVOLTSTODACBITS = CONVVOLTSTO18BITS;
-        CONVDACBITSTOVOLTS = CONV18BITSTOVOLTS;
-	}
-
-}
 
 
 
@@ -126,55 +106,7 @@ void sdcard_netconf(net_config *conf, FIL *fd)
                 fprintf(stderr, "Warning: unknown: %s %s\n", cmd, arg ? arg : "");
             }
 
-        } else if(strcmp(cmd, "numchans")==0) {
-        	if (!arg || strcmp(arg, "2")==0) {
-        		printf("This is a 2 channel PSC\r\n");
-        		Xil_Out32(XPAR_M_AXI_BASEADDR + NUMCHANS_REG, 0);
-        	} else if (strcmp(arg,"4")==0) {
-        		printf("This is a 4 channel PSC\r\n");
-        		Xil_Out32(XPAR_M_AXI_BASEADDR + NUMCHANS_REG, 1);
-        	} else {
-        		fprintf(stderr, "Warning: unknown %s %s\n", cmd, arg ? arg : "");
-        	}
-
-        } else if(strcmp(cmd, "resolution")==0) {
-        	if (!arg || strcmp(arg, "HS")==0) {
-        		mshsSelect(1);
-        	} else if (strcmp(arg,"MS")==0) {
-                mshsSelect(0);
-        	} else {
-        		fprintf(stderr, "Warning: unknown %s %s\n", cmd, arg ? arg : "");
-        	}
-
-        } else if(strcmp(cmd, "bandwidth")==0) {
-        	if (!arg || strcmp(arg, "fast")==0) {
-        		printf("This is a Fast Bandwidth PSC\n");
-        		Xil_Out32(XPAR_M_AXI_BASEADDR + BANDWIDTH_REG, 0);
-        	} else if (strcmp(arg,"slow")==0) {
-        		printf("This is a Slow Bandwidth PSC\n");
-        		Xil_Out32(XPAR_M_AXI_BASEADDR + BANDWIDTH_REG, 1);
-        	} else {
-        		fprintf(stderr, "Warning: unknown %s %s\n", cmd, arg ? arg : "");
-        	}
-
-        } else if(strcmp(cmd, "polarity")==0) {
-         	if (!arg || strcmp(arg, "bipolar")==0) {
-         		printf("This is a Bipolar PSC\n");
-         		Xil_Out32(XPAR_M_AXI_BASEADDR + POLARITY_REG, 0);
-         	} else if (strcmp(arg,"unipolar")==0) {
-         		printf("This is a Unipolar PSC\n");
-         		Xil_Out32(XPAR_M_AXI_BASEADDR + POLARITY_REG, 1);
-         		// temp - enable pulsing for ON2 if unipolar
-         		Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*1, 1);
-         		Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*2, 1);
-         		Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*3, 1);
-         		Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*4, 1);
-
-         	} else {
-         		fprintf(stderr, "Warning: unknown %s %s\n", cmd, arg ? arg : "");
-         	}
-
-        } else if(strcmp(cmd, "addr")==0) {
+        }  else if(strcmp(cmd, "addr")==0) {
             sdcard_parse_inet(cmd, arg, &conf->addr);
             conf->use_static = 1; // implied...
 

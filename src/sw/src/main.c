@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include <unistd.h>
+
 
 #include <FreeRTOS.h>
 #include <xil_cache_l.h>
@@ -12,7 +14,6 @@
 
 #include "xqspips.h"
 #include "xiicps.h"
-//#include <lwipopts.h>
 
 #include "local.h"
 #include "control.h"
@@ -30,9 +31,11 @@ XIicPs IicPsInstance1;      // eeprom, one-wire
 
 uint32_t git_hash;
 
+float CONVVOLTSTODACBITS;
+float CONVDACBITSTOVOLTS;
 
-static
-void client_event(void *pvt, psc_event evt, psc_client *ckey)
+
+static void client_event(void *pvt, psc_event evt, psc_client *ckey)
 {
     if(evt!=PSC_CONN)
         return;
@@ -49,8 +52,7 @@ void client_event(void *pvt, psc_event evt, psc_client *ckey)
     psc_send_one(ckey, 0x100, sizeof(msg), &msg);
 }
 
-static
-void client_msg(void *pvt, psc_client *ckey, uint16_t msgid, uint32_t msglen, void *msg)
+static void client_msg(void *pvt, psc_client *ckey, uint16_t msgid, uint32_t msglen, void *msg)
 {
     (void)pvt;
 
@@ -85,8 +87,7 @@ void client_msg(void *pvt, psc_client *ckey, uint16_t msgid, uint32_t msglen, vo
 
 }
 
-static
-void on_startup(void *pvt, psc_key *key)
+static void on_startup(void *pvt, psc_key *key)
 {
     (void)pvt;
     (void)key;
@@ -96,8 +97,7 @@ void on_startup(void *pvt, psc_key *key)
     console_setup();
 }
 
-static
-void realmain(void *arg)
+static void realmain(void *arg)
 {
     (void)arg;
 
@@ -128,6 +128,7 @@ void realmain(void *arg)
     }
 }
 
+
 void print_firmware_version()
 {
 
@@ -149,39 +150,15 @@ void print_firmware_version()
 
 
 
-void InitSettingsfromQspi() {
 
-    u32 chan;
-    u8 readbuf[FLASH_PAGE_SIZE];
 
-    // global values - hardcode for now
-    Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_INJ_EVENTNUM_REG, 10);
-    Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_PM_EVENTNUM_REG, 10);
 
-    //channel values, readfromflash and write FPGA registers
-    for (chan=1; chan<=4; chan++) {
-       xil_printf("Channel : %d\r\n",chan);
-   	   QspiFlashRead(chan*FLASH_SECTOR_SIZE, FLASH_PAGE_SIZE, readbuf);
-       QspiDisperseData(chan,readbuf);
-       xil_printf("\r\n\r\n");
-    }
-
-}
 
 
 
 int main(void) {
 
-	u32 i, base, val;
-
-
-	//XUartPs uart;
-	//XUartPs_Config *config;
-	//config = XUartPs_LookupConfig(XPAR_XUARTPS_0_DEVICE_ID);
-	//XUartPs_CfgInitialize(&uart, config, config->BaseAddress);
-	// Set to 9600 baud
-	//XUartPs_SetBaudRate(&uart, 9600);
-
+	u32 i, base;
 
     xil_printf("Power Supply Controller\r\n");
     print_firmware_version();
@@ -197,6 +174,8 @@ int main(void) {
 	init_i2c();
 	prog_si570();
 	QspiFlashInit();
+
+	ReadHardwareFlavor();
 
 
 	//EVR reset

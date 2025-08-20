@@ -114,16 +114,122 @@ void print_snapshot_stats(void)
 
 }
 
+void display_settings(void)
+{
+	  u8 rdBuf[128];
+	  u8 val;
+
+	  i2c_eeprom_readBytes(0, rdBuf, 128);
+
+	  val = rdBuf[0];
+	  xil_printf("Number of Channels: ");
+	  if (val == 0)
+		  xil_printf("2\r\n");
+	  else if (val == 1)
+		  xil_printf("4\r\n");
+	  else
+		  xil_printf("Invalid Setting\r\n");
+
+
+	  val = rdBuf[1];
+	  xil_printf("Resolution: ");
+	  if (val == 0)
+		  xil_printf("Medium\r\n");
+	  else if (val == 1)
+		  xil_printf("High\r\n");
+	  else
+		  xil_printf("Invalid Setting\r\n");
+
+	  val = rdBuf[2];
+	  xil_printf("Bandwidth: ");
+	  if (val == 0)
+		  xil_printf("Fast\r\n");
+	  else if (val == 1)
+		  xil_printf("Slow\r\n");
+	  else
+		  xil_printf("Invalid Setting\r\n");
+
+	  val = rdBuf[3];
+	  xil_printf("Polarity: ");
+	  if (val == 0)
+		  xil_printf("Bipolar\r\n");
+	  else if (val == 1)
+		  xil_printf("Unipolar\r\n");
+	  else
+		  xil_printf("Invalid Setting\r\n");
+
+
+
+}
+
+void clear_eeprom(void) {
+	u8 val = 0xFF;
+	xil_printf("Clearing EEPROM\r\n");
+	i2c_eeprom_writeBytes(0,&val,128);
+
+}
+
+
+
+void set_numchans(void)
+{
+  u8 val;
+
+  xil_printf("\r\nSet Number of Channels of PSC: 0 = 2 Channel, 1 = 4 Channel  ");
+  if ((val = get_binary_input()) != (u8)-1) {
+	 xil_printf("\r\n");
+	 i2c_eeprom_writeBytes(0, &val, 1);
+     vTaskDelay(pdMS_TO_TICKS(10));
+  }
+  ReadHardwareFlavor();
+}
+
+
 void set_resolution(void)
 {
   u8 val;
 
-  xil_printf("\r\nSet Resolution of PSC: 0=MS (18bit), 1=HS (20bit)");
+  xil_printf("\r\nSet Resolution of PSC: 0 = Medium (18bit), 1 = High (20bit)  ");
   if ((val = get_binary_input()) != (u8)-1) {
-     i2c_eeprom_writeBytes(48, &val, 1);
-     xil_printf("Reboot for settings to take effect\r\n");
+	 xil_printf("\r\n");
+	 i2c_eeprom_writeBytes(1, &val, 1);
+     vTaskDelay(pdMS_TO_TICKS(10));
   }
+  ReadHardwareFlavor();
 }
+
+
+void set_bandwidth(void)
+{
+  u8 val;
+
+  xil_printf("\r\nSet Bandwidth of PSC: 0 = Fast, 1 = Slow  ");
+  if ((val = get_binary_input()) != (u8)-1) {
+     xil_printf("\r\n");
+	 i2c_eeprom_writeBytes(2, &val, 1);
+     vTaskDelay(pdMS_TO_TICKS(10));
+  }
+  ReadHardwareFlavor();
+}
+
+
+void set_polarity(void)
+{
+  u8 val;
+
+  xil_printf("\r\nSet Polarity of PSC: 0 = Bipolar, 1 = Unipolar  ");
+  if ((val = get_binary_input()) != (u8)-1) {
+	 xil_printf("\r\n");
+	 i2c_eeprom_writeBytes(3, &val, 1);
+     vTaskDelay(pdMS_TO_TICKS(100));
+  }
+  ReadHardwareFlavor();
+}
+
+
+
+
+
 
 
 void program_ip(void)
@@ -326,10 +432,6 @@ void printTaskStats(void)
 
 
 
-
-
-
-
 void console_menu()
 {
 
@@ -338,13 +440,18 @@ void console_menu()
     vTaskDelay(pdMS_TO_TICKS(10));
 
     static const menu_entry_t menu[] = {
-	    {'A', "Dump EEPROM", dump_eeprom},
-		{'B', "Program IP Settings", program_ip},
-		{'C', "Set Resolution (HS or MS)", set_resolution},
-		{'D', "Reboot", reboot},
-	    {'E', "Display Snapshot Stats", print_snapshot_stats},
-	    {'F', "Print FreeRTOS Stats",  printTaskStats},
-	    {'G', "Dave Bergman Calibration Mode", receive_console_cmd}
+		{'A', "Display PSC Settings",display_settings},
+		//{'B', "Program IP Settings", program_ip},
+		{'B', "Set Number of Channels (2 or 4)", set_numchans},
+		{'C', "Set Resolution (High or Medium)", set_resolution},
+		{'D', "Set Bandwidth (Fast or Slow)", set_bandwidth},
+		{'E', "Set Polarity (Bipolar or Unipolar)", set_polarity},
+		//{'F', "Reboot", reboot},
+	    {'F', "Display Snapshot Stats", print_snapshot_stats},
+	    {'G', "Print FreeRTOS Stats",  printTaskStats},
+	    {'H', "Dump EEPROM", dump_eeprom},
+		{'I', "Clear EEPROM", clear_eeprom},
+	    {'J', "Dave Bergman Calibration Mode", receive_console_cmd}
 	};
 	static const size_t menulen = sizeof(menu)/sizeof(menu_entry_t);
 

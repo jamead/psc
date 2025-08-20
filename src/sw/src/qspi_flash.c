@@ -23,6 +23,26 @@ extern float CONVDACBITSTOVOLTS;
  *  All reads, writes to QSPI are FLASH_PAGE_LENGTH bytes long
  */
 
+void InitSettingsfromQspi() {
+
+    u32 chan;
+    u8 readbuf[FLASH_PAGE_SIZE];
+
+    // global values - hardcode for now
+    Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_INJ_EVENTNUM_REG, 10);
+    Xil_Out32(XPAR_M_AXI_BASEADDR + EVR_PM_EVENTNUM_REG, 10);
+
+    //channel values, readfromflash and write FPGA registers
+    for (chan=1; chan<=4; chan++) {
+       //xil_printf("Channel : %d\r\n",chan);
+   	   QspiFlashRead(chan*FLASH_SECTOR_SIZE, FLASH_PAGE_SIZE, readbuf);
+       QspiDisperseData(chan,readbuf);
+       //xil_printf("\r\n\r\n");
+    }
+
+}
+
+
 
 int QspiFlashInit()
 {
@@ -335,7 +355,7 @@ void QspiDisperseData(u32 chan, u8 *readbuf)
     scalefactors[chan-1].regulator = qspidata.sf_regulator;
     scalefactors[chan-1].error = qspidata.sf_error;
 
-    QspiPrintData(&qspidata, chan);
+    //QspiPrintData(&qspidata, chan);
 
 
     //Xil_Out32(base + FAULT_CLEAR_REG, 0x1);
