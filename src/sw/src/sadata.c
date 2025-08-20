@@ -133,7 +133,7 @@ void sadata_push(void *unused)
            sadata.ps[chan].dac_setpt = (s32)Xil_In32(base + DAC_CURRSETPT_REG) * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts;
            sadata.ps[chan].dac_setpt_raw = (s32)Xil_In32(base + DAC_CURRSETPT_REG);
 
-           sadata.ps[chan].dac_setpt_offset = (s32)Xil_In32(base + DAC_SETPT_OFFSET_REG) * CONVDACBITSTOVOLTS;
+           sadata.ps[chan].dac_setpt_offset = (s32)Xil_In32(base + DAC_SETPT_OFFSET_REG) * CONVDACBITSTOVOLTS * scalefactors[chan].dac_dccts;
            sadata.ps[chan].dac_setpt_gain = (s32)Xil_In32(base + DAC_SETPT_GAIN_REG) / GAIN20BITFRACT;
            sadata.ps[chan].dac_rampactive = Xil_In32(base + DAC_RAMPACTIVE_REG);
 
