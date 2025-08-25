@@ -51,9 +51,12 @@ architecture arch of adc_ltc2376 is
   signal num_bits    : integer range 0 to 40  := 0;
   signal clk_enb     : std_logic;  
   signal clk_cnt     : std_logic_vector(7 downto 0);  
+  signal start_lat   : std_logic;
 
 --debug signals (connect to ila)
    attribute mark_debug                 : string;
+   attribute mark_debug of clk_enb: signal is "true";
+   attribute mark_debug of start_lat: signal is "true";
    attribute mark_debug of state  : signal is "true";
    attribute mark_debug of cnv     : signal is "true";
    attribute mark_debug of sclk  : signal is "true";
@@ -73,6 +76,7 @@ begin
 num_bits <= 36 when resolution = '0' else 40;
 
 
+
 process(clk) 
 begin 
   if rising_edge(clk) then 
@@ -84,14 +88,19 @@ begin
       dcct2 <= 20d"0";
       data_rdy  <= '0';
       cnv <= '0';
-      state <= IDLE; 
+      start_lat <= '0';
+      state <= IDLE;      
     else 
+      if (start = '1') then
+        start_lat <= '1';
+      end if;  
       if (clk_enb = '1') then
         case(state) is 
           --IDLE: wait for start trigger
            when IDLE => 
-              if start = '1' then 
+              if start_lat = '1' then 
                  state <= SET_CNV; 
+                 start_lat <= '0';
               end if;  
               bit_count <= num_bits-1;               
               sclk     <= '0'; 
