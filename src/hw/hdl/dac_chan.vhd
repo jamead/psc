@@ -66,11 +66,12 @@ type state_type is (IDLE, RUN_RAMP, UPDATE_DAC);
    attribute mark_debug of dac_data: signal is "true";
    attribute mark_debug of ramp_dac_setpt: signal is "true";
    attribute mark_debug of smooth_dac_setpt: signal is "true";
+   attribute mark_debug of dac_setpt_raw: signal is "true";   
    attribute mark_debug of dac_setpt: signal is "true";
    attribute mark_debug of ramp_active: signal is "true";  
    attribute mark_debug of smooth_active: signal is "true";  
-   attribute mark_debug of dac_setpt_raw: signal is "true";
    attribute mark_debug of fofb_dac_setpt: signal is "true"; 
+   attribute mark_debug of dac_cntrl: signal is "true";
 
 
 begin

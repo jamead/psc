@@ -73,7 +73,12 @@ component cordic_sine
    attribute mark_debug of state: signal is "true";   
    attribute mark_debug of last_point: signal is "true";  
    attribute mark_debug of cnt: signal is "true";    
-
+   attribute mark_debug of raised_cos: signal is "true";  
+   attribute mark_debug of new_setpt_lat: signal is "true";   
+   attribute mark_debug of diff_setpt: signal is "true";  
+   attribute mark_debug of rampout_wdiff: signal is "true";  
+   attribute mark_debug of rampout_fp: signal is "true";    
+   attribute mark_debug of rampout: signal is "true";  
 
 begin
 
@@ -119,6 +124,9 @@ process(clk)
             new_setpt_prev <= new_setpt;
             last_point <= '0';
             smooth_active <= '0';
+            phase <= NEG_PI;  
+            raised_cos <= 24d"0";  
+            rampout_wdiff <= 48d"0";                
             -- run if dac setpt changes and dac_opmode is Smooth
             if (new_setpt_prev /= new_setpt) and (mode = "00")then
               old_setpt <= cur_setpt;
@@ -130,7 +138,7 @@ process(clk)
               last_point <= '0';
               smooth_active <= '1';
             end if;
-          
+                      
           when RUN_RAMP =>  
             if (tenkhz_trig = '1') then
               -- smooth ramp =  old_setpt + (new_setpt - old_setpt) * 0.5 * (1 - cos(i*pi/N)
