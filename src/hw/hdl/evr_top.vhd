@@ -91,8 +91,8 @@ architecture behv of evr_top is
 ----   attribute mark_debug of eventclock: signal is "true";
 ----   attribute mark_debug of prev_datastream: signal is "true";
 
---   attribute mark_debug of rxdata: signal is "true";
---   attribute mark_debug of rxcharisk: signal is "true";
+   attribute mark_debug of rxdata: signal is "true";
+   attribute mark_debug of rxcharisk: signal is "true";
 --   --attribute mark_debug of gtx_reset: signal is "true";
    
 --   attribute mark_debug of rxresetdone: signal is "true"; 
@@ -167,9 +167,13 @@ end process;
 --datastream <= gt0_rxdata(7 downto 0);
 --eventstream <= gt0_rxdata(15 downto 8);
 --switch byte locations of datastream and eventstream  9-20-18
-datastream <= rxdata(15 downto 8);
-eventstream <= rxdata(7 downto 0);
-
+process(rxusr_clk)
+  begin
+    if rising_edge(rxusr_clk) then
+      datastream <= rxdata(15 downto 8);
+      eventstream <= rxdata(7 downto 0);
+    end if;
+end process;
 
 
 

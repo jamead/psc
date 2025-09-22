@@ -175,6 +175,7 @@ int main(void) {
 	prog_si570();
 	QspiFlashInit();
 
+	usleep(100);
 	ReadHardwareFlavor();
 
 

@@ -32,8 +32,6 @@ typedef struct {
 
 
 
-static ip_t ip_settings;
-
 
 typedef struct {
   char entryCh;
@@ -164,10 +162,30 @@ void display_settings(void)
 
 void clear_eeprom(void) {
 	u8 val = 0xFF;
-	xil_printf("Clearing EEPROM\r\n");
-	i2c_eeprom_writeBytes(0,&val,128);
+	u32 i;
 
+	xil_printf("Clearing EEPROM\r\n");
+	for (i=0;i<128;i++) {
+	   i2c_eeprom_writeBytes(i,&val,1);
+	   xil_printf("Clearing Address: %d\r\n",i);
+	   usleep(10000); //vTaskDelay(pdMS_TO_TICKS(10));
+	}
 }
+
+
+void test_eeprom(void) {
+	u8 val;
+	u32 i;
+
+	xil_printf("Writing Test Pattern to EEPROM\r\n");
+	for (i=0;i<128;i++) {
+	   val = i;
+	   i2c_eeprom_writeBytes(127-i,&val,1);
+	   xil_printf("Writing Address: %d\r\n",i);
+	   usleep(10000); //vTaskDelay(pdMS_TO_TICKS(10));
+	}
+}
+
 
 
 
@@ -231,30 +249,6 @@ void set_polarity(void)
 
 
 
-
-void program_ip(void)
-{
-  xil_printf("\r\nProgram IP address into EEPROM\r\n");
-  xil_printf("\r\nEnter an IP address (format: x.x.x.x):  ");
-  menu_get_ipaddr(ip_settings.ipaddr);
-  xil_printf("\r\nEnter a Netmask (format: x.x.x.x):  ");
-  menu_get_ipaddr(ip_settings.ipmask);
-  xil_printf("\r\nEnter an Gateway address (format: x.x.x.x):  ");
-  menu_get_ipaddr(ip_settings.ipgw);
-  xil_printf("\r\n");
-  xil_printf("IP Addr: %u.%u.%u.%u\r\n",ip_settings.ipaddr[0],ip_settings.ipaddr[1],ip_settings.ipaddr[2],ip_settings.ipaddr[3]);
-  xil_printf("Netmask: %u.%u.%u.%u\r\n",ip_settings.ipmask[0],ip_settings.ipmask[1],ip_settings.ipmask[2],ip_settings.ipmask[3]);
-  xil_printf("Gateway: %u.%u.%u.%u\r\n",ip_settings.ipgw[0],ip_settings.ipgw[1],ip_settings.ipgw[2],ip_settings.ipgw[3]);
-
-  i2c_eeprom_writeBytes(0, ip_settings.ipaddr, 4);
-  usleep(100000);
-  i2c_eeprom_writeBytes(16, ip_settings.ipmask, 4);
-  usleep(100000);
-  i2c_eeprom_writeBytes(32, ip_settings.ipgw, 4);
-  usleep(100000);
-  xil_printf("Reboot for settings to take effect\r\n");
-
-}
 
 // Read a line (blocking) from UART into buffer
 void uart_read_line(char *buffer, int max_len) {
@@ -441,7 +435,6 @@ void console_menu()
 
     static const menu_entry_t menu[] = {
 		{'A', "Display PSC Settings",display_settings},
-		//{'B', "Program IP Settings", program_ip},
 		{'B', "Set Number of Channels (2 or 4)", set_numchans},
 		{'C', "Set Resolution (High or Medium)", set_resolution},
 		{'D', "Set Bandwidth (Fast or Slow)", set_bandwidth},
@@ -451,7 +444,8 @@ void console_menu()
 	    {'G', "Print FreeRTOS Stats",  printTaskStats},
 	    {'H', "Dump EEPROM", dump_eeprom},
 		{'I', "Clear EEPROM", clear_eeprom},
-	    {'J', "Dave Bergman Calibration Mode", receive_console_cmd}
+		{'J', "Test EEPROM", test_eeprom},
+	    {'K', "Dave Bergman Calibration Mode", receive_console_cmd}
 	};
 	static const size_t menulen = sizeof(menu)/sizeof(menu_entry_t);
 

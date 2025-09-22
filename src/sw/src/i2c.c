@@ -232,8 +232,10 @@ void ReadHardwareFlavor(void)  {
  		printf("This is a 4 channel PSC\r\n");
  		Xil_Out32(XPAR_M_AXI_BASEADDR + NUMCHANS_REG, 1);
 	}
-	else
+	else {
+		Xil_Out32(XPAR_M_AXI_BASEADDR + NUMCHANS_REG, 2);
 	    xil_printf("Invalid Number of Channel Setting...\r\n");
+	}
 
     // Resolution
 	val = rdBuf[1];
@@ -249,8 +251,10 @@ void ReadHardwareFlavor(void)  {
 	    CONVVOLTSTODACBITS = CONVVOLTSTO20BITS;
 	    CONVDACBITSTOVOLTS = CONV20BITSTOVOLTS;
 	}
-    else
+    else {
+		Xil_Out32(XPAR_M_AXI_BASEADDR + RESOLUTION_REG, 2);
     	xil_printf("Invalid Resolution Setting...\r\n");
+    }
 
 
 	// Bandwidth
@@ -263,8 +267,10 @@ void ReadHardwareFlavor(void)  {
 		xil_printf("This is a Low Bandwidth (Slow) PSC\r\n");
 		Xil_Out32(XPAR_M_AXI_BASEADDR + BANDWIDTH_REG, 1);
     }
-	else
+	else {
+		Xil_Out32(XPAR_M_AXI_BASEADDR + BANDWIDTH_REG, 2);
 	    xil_printf("Invalid Bandwidth Setting\r\n");
+	}
 
 
 	// Polarity
@@ -282,8 +288,10 @@ void ReadHardwareFlavor(void)  {
   		Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*3, 1);
   		Xil_Out32(XPAR_M_AXI_BASEADDR + DIGOUT_ON2_PULSEENB_REG + CHBASEADDR*4, 1);
     }
-    else
+    else {
         xil_printf("Invalid Polarity Setting\r\n");
+  	    Xil_Out32(XPAR_M_AXI_BASEADDR + POLARITY_REG, 2);
+    }
 
 
     xil_printf("\r\n\r\n");

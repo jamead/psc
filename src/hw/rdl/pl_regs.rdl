@@ -48,28 +48,28 @@ reg {
     desc="HiRes/MidRes Number of Bits 0=18 or 1=20";
     default sw = rw;
     default hw = r;
-    field {} val[1];
+    field {} val[8];
   } resolution @0x8;
 
 reg {
     desc="Number of Channels 0=2chan, 1=4chan";
     default sw = rw;
     default hw = r;
-    field {} val[1];
+    field {} val[8];
   } num_chans @0xC;
 
 reg {
     desc="Bandwidth 0=Fast, 1=Medium";
     default sw = rw;
     default hw = r;
-    field {} val[1];
+    field {} val[8];
   } bandwidth @0x10;
 
 reg {
     desc="Polarity 0=Bipolar, 1=Unipolar";
     default sw = rw;
     default hw = r;
-    field {} val[1];
+    field {} val[8];
   } polarity @0x14;
   
   

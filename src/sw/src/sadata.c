@@ -83,6 +83,11 @@ void sadata_push(void *unused)
         sadata.polarity = Xil_In32(XPAR_M_AXI_BASEADDR + POLARITY_REG);
         sadata.bandwidth = Xil_In32(XPAR_M_AXI_BASEADDR + BANDWIDTH_REG);
 
+        //xil_printf("Resolution: %d\r\n",sadata.resolution);
+        //xil_printf("NumChans  : %d\r\n",sadata.numchans);
+        //xil_printf("Polarity  : %d\r\n",sadata.polarity);
+        //xil_printf("Bandwidth : %d\r\n",sadata.bandwidth);
+
         //read FPGA version (git checksum) from PL register
         sadata.git_shasum = Xil_In32(XPAR_M_AXI_BASEADDR + PRJ_SHASUM);
         //xil_printf("Git : %x\r\n",sadata.git_shasum);

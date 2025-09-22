@@ -32,6 +32,20 @@ architecture behv of event_rcv_ts is
     signal pos          : unsigned(4 downto 0) := (others => '1');
     signal seconds_tmp  : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
 
+  --debug signals (connect to ila)
+   attribute mark_debug     : string;
+   attribute mark_debug of eventstream: signal is "true";
+   attribute mark_debug of pos: signal is "true";
+   attribute mark_debug of Position: signal is "true";   
+   attribute mark_debug of seconds_tmp: signal is "true";
+   attribute mark_debug of Seconds: signal is "true";   
+   attribute mark_debug of SecondsReg: signal is "true";  
+   attribute mark_debug of Offset: signal is "true";   
+   attribute mark_debug of OffsetReg: signal is "true"; 
+   attribute mark_debug of clear: signal is "true";
+   attribute mark_debug of clear_reg: signal is "true"; 
+   attribute mark_debug of eventClock: signal is "true";
+
 begin
 
     -- Position Control
