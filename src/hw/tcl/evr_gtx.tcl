@@ -22,7 +22,7 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 
 set list_projs [get_projects -quiet]
 if { $list_projs eq "" } {
-  create_project vivado vivado -part xc7z030sbg485-1
+  create_project psc_hw psc_hw -part xc7z030sbg485-1
   set_property target_language VHDL [current_project]
   set_property simulator_language Mixed [current_project]
 }
@@ -65,6 +65,7 @@ set evr_gtx [create_ip -name gtwizard -vendor xilinx.com -library ip -version 3.
 # User Parameters
 set_property -dict [list \
   CONFIG.gt0_val_align_comma_word {Two_Byte_Boundaries} \
+  CONFIG.gt0_val_cc {true} \
   CONFIG.gt0_val_clk_cor_seq_1_1 {00000000} \
   CONFIG.gt0_val_clk_cor_seq_1_2 {00000000} \
   CONFIG.gt0_val_clk_cor_seq_1_3 {00000000} \
@@ -85,6 +86,7 @@ set_property -dict [list \
   CONFIG.gt0_val_port_rxcharisk {true} \
   CONFIG.gt0_val_port_rxcommadet {true} \
   CONFIG.gt0_val_port_rxslide {false} \
+  CONFIG.gt0_val_ppm_offset {1250} \
   CONFIG.gt0_val_rx_cm_trim {800} \
   CONFIG.gt0_val_rx_data_width {16} \
   CONFIG.gt0_val_rx_int_datawidth {20} \
