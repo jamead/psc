@@ -220,7 +220,7 @@ void ReadHardwareFlavor(void)  {
     u8 rdBuf[8];
     u8 val;
 
-    i2c_eeprom_readBytes(0, rdBuf, 8);
+    i2c_eeprom_readBytes(0x10, rdBuf, 8);
     xil_printf("\r\nReading PSC Settings from EEPROM...\r\n");
     // 2 or 4 channel
     val = rdBuf[0];

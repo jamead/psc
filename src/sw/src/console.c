@@ -196,7 +196,7 @@ void set_numchans(void)
   xil_printf("\r\nSet Number of Channels of PSC: 0 = 2 Channel, 1 = 4 Channel  ");
   if ((val = get_binary_input()) != (u8)-1) {
 	 xil_printf("\r\n");
-	 i2c_eeprom_writeBytes(0, &val, 1);
+	 i2c_eeprom_writeBytes(0x10, &val, 1);
      vTaskDelay(pdMS_TO_TICKS(10));
   }
   ReadHardwareFlavor();
@@ -210,7 +210,7 @@ void set_resolution(void)
   xil_printf("\r\nSet Resolution of PSC: 0 = Medium (18bit), 1 = High (20bit)  ");
   if ((val = get_binary_input()) != (u8)-1) {
 	 xil_printf("\r\n");
-	 i2c_eeprom_writeBytes(1, &val, 1);
+	 i2c_eeprom_writeBytes(0x11, &val, 1);
      vTaskDelay(pdMS_TO_TICKS(10));
   }
   ReadHardwareFlavor();
@@ -224,7 +224,7 @@ void set_bandwidth(void)
   xil_printf("\r\nSet Bandwidth of PSC: 0 = Fast, 1 = Slow  ");
   if ((val = get_binary_input()) != (u8)-1) {
      xil_printf("\r\n");
-	 i2c_eeprom_writeBytes(2, &val, 1);
+	 i2c_eeprom_writeBytes(0x12, &val, 1);
      vTaskDelay(pdMS_TO_TICKS(10));
   }
   ReadHardwareFlavor();
@@ -238,7 +238,7 @@ void set_polarity(void)
   xil_printf("\r\nSet Polarity of PSC: 0 = Bipolar, 1 = Unipolar  ");
   if ((val = get_binary_input()) != (u8)-1) {
 	 xil_printf("\r\n");
-	 i2c_eeprom_writeBytes(3, &val, 1);
+	 i2c_eeprom_writeBytes(0x13, &val, 1);
      vTaskDelay(pdMS_TO_TICKS(100));
   }
   ReadHardwareFlavor();
