@@ -199,11 +199,7 @@ void eeprom_dump()
   rdBuf[128] = 0;
   i2c_eeprom_readBytes(0, rdBuf, 128);
 
-  printf("Read EEPROM:\r\n\r\n");
-  printf("%s\r\n", rdBuf);
-
-  for (int i = 0; i < 128; i++)
-  {
+  for (int i = 0; i < 128; i++) {
     if ((i % 16) == 0)
       printf("\r\n0x%02x:  ", i);
     printf("%02x  ", rdBuf[i]);

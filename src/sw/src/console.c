@@ -114,10 +114,10 @@ void print_snapshot_stats(void)
 
 void display_settings(void)
 {
-	  u8 rdBuf[128];
+	  u8 rdBuf[16];
 	  u8 val;
 
-	  i2c_eeprom_readBytes(0, rdBuf, 128);
+	  i2c_eeprom_readBytes(0x10, rdBuf, 16);
 
 	  val = rdBuf[0];
 	  xil_printf("Number of Channels: ");
@@ -160,29 +160,54 @@ void display_settings(void)
 
 }
 
-void clear_eeprom(void) {
-	u8 val = 0xFF;
-	u32 i;
 
-	xil_printf("Clearing EEPROM\r\n");
-	for (i=0;i<128;i++) {
-	   i2c_eeprom_writeBytes(i,&val,1);
-	   xil_printf("Clearing Address: %d\r\n",i);
-	   usleep(10000); //vTaskDelay(pdMS_TO_TICKS(10));
-	}
+void clear_eeprom(void) {
+    u8 val = 0xFF;
+    u32 i;
+    char input[10];
+
+    // Ask user for confirmation
+    xil_printf("Are you sure you want to clear the EEPROM? Type 'yes' to proceed: ");
+    scanf("%9s", input);  // Read up to 9 characters + null terminator
+
+    if (strcmp(input, "yes") != 0) {
+        xil_printf("\r\nEEPROM clear aborted.\r\n");
+        return; // Exit function if user didn't type 'yes'
+    }
+
+    xil_printf("\r\nClearing EEPROM\r\n");
+    for (i=0;i<128;i++) {
+        i2c_eeprom_writeBytes(i, &val, 1);
+        xil_printf("Clearing Address: %d\r\n", i);
+        usleep(10000);
+    }
 }
+
+
+
 
 
 void test_eeprom(void) {
 	u8 val;
 	u32 i;
+	char input[10];
 
-	xil_printf("Writing Test Pattern to EEPROM\r\n");
+    // Ask user for confirmation
+    xil_printf("Are you sure you want to write a test pattern the EEPROM? Type 'yes' to proceed: ");
+    scanf("%9s", input);  // Read up to 9 characters + null terminator
+
+    if (strcmp(input, "yes") != 0) {
+        xil_printf("\r\nEEPROM clear aborted.\r\n");
+        return; // Exit function if user didn't type 'yes'
+    }
+
+
+	xil_printf("\r\nWriting Test Pattern to EEPROM\r\n");
 	for (i=0;i<128;i++) {
 	   val = i;
 	   i2c_eeprom_writeBytes(127-i,&val,1);
 	   xil_printf("Writing Address: %d\r\n",i);
-	   usleep(10000); //vTaskDelay(pdMS_TO_TICKS(10));
+	   usleep(10000);
 	}
 }
 
